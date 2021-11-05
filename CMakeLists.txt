@@ -10,7 +10,13 @@ find_package(RapidJSON CONFIG REQUIRED)
 include_directories(${PROJECT_LIBS_DIR}/spic-api/include)
 link_directories(${PROJECT_LIBS_DIR}/spic-api/lib)
 
+add_custom_target(
+        copy_assets
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_LIST_DIR}/resources ${CMAKE_CURRENT_BINARY_DIR}/resources
+)
+
 file(GLOB_RECURSE SOURCE src/*.cpp)
 
 add_executable(${PROJECT_NAME} ${SOURCE})
+add_dependencies(${PROJECT_NAME} copy_assets)
 target_link_libraries(${PROJECT_NAME} PRIVATE spic-engine rapidjson)
