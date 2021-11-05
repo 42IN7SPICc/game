@@ -1,0 +1,9 @@
+[submodule "libs/spic-api/lib"]
+	path = libs/spic-api/lib
+	url = https://github.com/42IN7SPICc/engine-builds.git
+[submodule "libs/spic-api/include"]
+	path = libs/spic-api/include
+	url = https://github.com/42IN7SPICc/spic-prj-api-cd.git
+[submodule "vcpkg"]
+	path = vcpkg
+	url = https://github.com/microsoft/vcpkg.git
