@@ -1,0 +1,7 @@
+{
+  "name": "spic-game",
+  "version-string": "latest",
+  "dependencies": [
+    "rapidjson"
+  ]
+}
