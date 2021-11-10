@@ -71,3 +71,11 @@ jobs:
           user-email: 41898282+github-actions[bot]@users.noreply.github.com
           target-branch: main
           commit-message: ${{ github.sha }}
+
+      - name: 'Delete builds'
+        uses: geekyeggo/delete-artifact@v1
+        with:
+          name: |
+            Windows
+            Linux
+          failOnError: false
