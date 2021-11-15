@@ -11,7 +11,8 @@ set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 
 find_package(RapidJSON CONFIG REQUIRED)
 
-include_directories(${PROJECT_LIBS_DIR}/spic-api/include)
+#include_directories(${PROJECT_LIBS_DIR}/spic-api/include)
+include_directories(${PROJECT_NAME} ${PROJECT_LIBS_DIR}/spic-engine/includes/spic-api-headers)
 
 add_custom_target(
         copy_assets
