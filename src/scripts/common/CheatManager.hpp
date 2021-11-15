@@ -1,5 +1,5 @@
-#ifndef SPIC_GAME_CHEATMANAGER_H
-#define SPIC_GAME_CHEATMANAGER_H
+#ifndef SPIC_GAME_CHEATMANAGER_HPP
+#define SPIC_GAME_CHEATMANAGER_HPP
 
 #include "BehaviourScript.hpp"
 #include "Collider.hpp"

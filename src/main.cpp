@@ -1,6 +1,6 @@
 #include "Engine.hpp"
 #include "GameObject.hpp"
-#include "scripts/commen/CheatManager.hpp"
+#include "scripts/common/CheatManager.hpp"
 
 using namespace spic;
 
