@@ -7,3 +7,6 @@
 [submodule "vcpkg"]
 	path = vcpkg
 	url = https://github.com/microsoft/vcpkg.git
+[submodule "libs/spic-engine"]
+	path = libs/spic-engine
+	url = https://github.com/42IN7SPICc/engine.git
