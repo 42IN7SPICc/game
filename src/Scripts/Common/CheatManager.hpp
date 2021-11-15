@@ -23,7 +23,7 @@ public:
     void OnTriggerExit2D(const Collider& collider) override;
 
     void OnTriggerStay2D(const Collider& collider) override;
-};
+}
 
 
 #endif
