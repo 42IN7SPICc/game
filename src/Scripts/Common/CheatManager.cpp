@@ -1,48 +1,48 @@
 #include "CheatManager.hpp"
 #include "Input.hpp"
-#include <iostream>
+#include "Debug.hpp"
 
 using namespace spic;
 using namespace game;
 
 void UnlimitedMoney() {
-    std::cout << "Fired Unlimited Money Cheat" << std::endl;
+    Debug::Log("Fired Unlimited Money Cheat");
 }
 
 void Invincibility() {
-    std::cout << "Fired Invincibility Cheat" << std::endl;
+    Debug::Log("Fired Invincibility Cheat");
 }
 
 void Butcher() {
-    std::cout << "Fired Butcher Cheat" << std::endl;
+    Debug::Log("Fired Butcher Cheat");
 }
 
 void Victory() {
-    std::cout << "Fired Victory Cheat" << std::endl;
+    Debug::Log("Fired Victory Cheat");
 }
 
 void SkipWave() {
-    std::cout << "Fired Skip Wave Cheat" << std::endl;
+    Debug::Log("Fired Skip Wave Cheat");
 }
 
 void NoCoolDown() {
-    std::cout << "Fired No Cooldown Cheat" << std::endl;
+    Debug::Log("Fired No CoolDown Cheat");
 }
 
 void UnlockLevels() {
-    std::cout << "Fired Unlock Levels Cheat" << std::endl;
+    Debug::Log("Fired Unlock Levels Cheat");
 }
 
 void UnlimitedPath() {
-    std::cout << "Fired Unlimited Path Cheat" << std::endl;
+    Debug::Log("Fired Unlimited Path Cheat");
 }
 
 void StrongPath() {
-    std::cout << "Fired Strong Path Cheat" << std::endl;
+    Debug::Log("Fired Strong Path Cheat");
 }
 
 void ExpBoost() {
-    std::cout << "Fired Exp Boost Cheat" << std::endl;
+    Debug::Log("Fired Exp Boost Cheat");
 }
 
 void CheatManager::OnStart() {
@@ -70,13 +70,13 @@ void CheatManager::OnUpdate() {
 }
 
 void CheatManager::OnTriggerEnter2D(const Collider &collider) {
-    std::cout << "CheatManager trigger entered" << std::endl;
+    Debug::LogWarning("OnTriggerEnter2D Nog implemented");
 }
 
 void CheatManager::OnTriggerExit2D(const Collider &collider) {
-    std::cout << "CheatManager trigger existed" << std::endl;
+    Debug::LogWarning("OnTriggerExit2D Nog implemented");
 }
 
 void CheatManager::OnTriggerStay2D(const Collider &collider) {
-    std::cout << "CheatManager trigger stay" << std::endl;
+    Debug::LogWarning("OnTriggerStay2D Nog implemented");
 }
