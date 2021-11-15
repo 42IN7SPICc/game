@@ -19,7 +19,6 @@ add_custom_target(
         COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_LIST_DIR}/resources ${CMAKE_CURRENT_BINARY_DIR}/resources
 )
 
-vcpkg_install_deps(MANIFEST_ROOT ${PROJECT_LIBS_DIR}/spic-engine)
 add_subdirectory(${PROJECT_LIBS_DIR}/spic-engine)
 
 file(GLOB_RECURSE SOURCE src/*.cpp)
