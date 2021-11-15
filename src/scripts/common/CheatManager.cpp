@@ -45,16 +45,16 @@ void ExpBoost() {
 }
 
 void CheatManager::OnStart() {
-    _cheatMap[Input::KeyCode::U] = UnlimitedMoney();
-    _cheatMap[Input::KeyCode::I] = Invincibility();
-    _cheatMap[Input::KeyCode::B] = Butcher();
-    _cheatMap[Input::KeyCode::V] = Victory();
-    _cheatMap[Input::KeyCode::S] = SkipWave();
-    _cheatMap[Input::KeyCode::N] = NoCooldown();
-    _cheatMap[Input::KeyCode::A] = UnlockLevels();
-    _cheatMap[Input::KeyCode::P] = UnlimitedPath();
-    _cheatMap[Input::KeyCode::Q] = StrongPath();
-    _cheatMap[Input::KeyCode::E] = ExpBoost();
+    _cheats[Input::KeyCode::U] = UnlimitedMoney();
+    _cheats[Input::KeyCode::I] = Invincibility();
+    _cheats[Input::KeyCode::B] = Butcher();
+    _cheats[Input::KeyCode::V] = Victory();
+    _cheats[Input::KeyCode::S] = SkipWave();
+    _cheats[Input::KeyCode::N] = NoCooldown();
+    _cheats[Input::KeyCode::A] = UnlockLevels();
+    _cheats[Input::KeyCode::P] = UnlimitedPath();
+    _cheats[Input::KeyCode::Q] = StrongPath();
+    _cheats[Input::KeyCode::E] = ExpBoost();
 }
 
 void CheatManager::OnUpdate() {
@@ -64,6 +64,7 @@ void CheatManager::OnUpdate() {
            Input::GetKeyDown(Input::KeyCode::LEFT_SHIFT) &&
            Input::GetKeyDown(cheat.first)) {
             cheat.second();
+            break;
         }
     }
 }

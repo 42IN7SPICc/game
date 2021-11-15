@@ -5,12 +5,13 @@
 #include "Collider.hpp"
 #include "Input.hpp"
 #include <map>
+#include <functional>
 
 using namespace spic;
 
 class CheatManager : public spic::BehaviourScript {
 private:
-    std::map<Input::KeyCode, void()> _cheatMap {};
+    std::map<Input::KeyCode, std::function<void()>> _cheats {};
 
 public:
     void OnStart() override;
