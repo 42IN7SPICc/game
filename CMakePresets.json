@@ -28,7 +28,8 @@
       "name": "ninja-multi-vcpkg",
       "configurePreset": "ninja-multi-vcpkg",
       "displayName": "Build ninja-multi-vcpkg",
-      "description": "Build ninja-multi-vcpkg Configurations"
+      "description": "Build ninja-multi-vcpkg Configurations",
+      "targets": "spic-game"
     }
   ],
   "testPresets": [
