@@ -7,22 +7,22 @@
 #include <map>
 #include <functional>
 
-using namespace spic;
+namespace game {
+    class CheatManager : public spic::BehaviourScript {
+    private:
+        std::map<spic::Input::KeyCode, std::function<void()>> _cheats {};
 
-class CheatManager : public spic::BehaviourScript {
-private:
-    std::map<Input::KeyCode, std::function<void()>> _cheats {};
+    public:
+        void OnStart() override;
 
-public:
-    void OnStart() override;
+        void OnUpdate() override;
 
-    void OnUpdate() override;
+        void OnTriggerEnter2D(const spic::Collider& collider) override;
 
-    void OnTriggerEnter2D(const Collider& collider) override;
+        void OnTriggerExit2D(const spic::Collider& collider) override;
 
-    void OnTriggerExit2D(const Collider& collider) override;
-
-    void OnTriggerStay2D(const Collider& collider) override;
+        void OnTriggerStay2D(const spic::Collider& collider) override;
+    };
 }
 
 
