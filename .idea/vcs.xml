@@ -3,7 +3,9 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/libs/spic-api/include" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/libs/spic-api/lib" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/libs/spic-engine" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/libs/spic-engine/includes/spic-api-headers" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/libs/spic-engine/vcpkg" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/vcpkg" vcs="Git" />
   </component>
 </project>
