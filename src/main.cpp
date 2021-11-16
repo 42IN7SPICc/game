@@ -12,11 +12,6 @@ int main(int argc, char* args[]) {
     auto scene = std::make_shared<Scene>();
     engine.PushScene(scene);
 
-    auto cheats = std::make_shared<GameObject>("cheats", "default", 0);
-    auto cheatManager = std::make_shared<game::CheatManager>();
-    cheatManager->GameObject(cheats);
-    cheats->AddComponent(cheatManager);
-
     scene->Contents().push_back(cheats);
 
     engine.Start();
