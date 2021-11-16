@@ -11,6 +11,7 @@
 const int hero_scale = 1; //default scale on 1
 const int hero_width = 200; //width of hero image
 const int hero_mass = 50; //random chosen mass
+const int hero_velocity = 50; //random chosen velocity (looks good)
 
 std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateHero(game::HeroName name)
 {
@@ -138,7 +139,7 @@ std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateBaseHero(int at
     auto healthBehaviour = std::make_shared<game::HealthBehaviour>(defense);
     GameObjectUtil::LinkComponent(baseHero, healthBehaviour);
 
-    auto userMovementBehaviour = std::make_shared<game::UserMovementBehaviour>(50, idleAnimator, walkingAnimator); // default velocity of 50, looks alright
+    auto userMovementBehaviour = std::make_shared<game::UserMovementBehaviour>(hero_velocity, idleAnimator, walkingAnimator); // default velocity of 50, looks alright
     GameObjectUtil::LinkComponent(baseHero, userMovementBehaviour);
 
     auto attackBehaviour = std::make_shared<game::AttackBehaviour>(attack);
