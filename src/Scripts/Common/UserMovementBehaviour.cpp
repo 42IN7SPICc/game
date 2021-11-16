@@ -48,7 +48,8 @@ void game::UserMovementBehaviour::OnUpdate()
     {
         _rigidBody->AddForce(spic::Point{-_velocity, 0});
         moving = true;
-
+        auto sprite = _parent->GetComponent<spic::Sprite>();
+        sprite->FlipX(true);
     }
 
     if (Input::GetKey(Input::KeyCode::D))
