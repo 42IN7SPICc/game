@@ -3,9 +3,12 @@
 
 #include "Scene.hpp"
 
-namespace game {
-    class MainScene : spic::Scene {
-
+namespace game
+{
+    class MainScene : public spic::Scene
+    {
+        public:
+            MainScene();
     };
 }
 
