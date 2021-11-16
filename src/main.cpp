@@ -1,5 +1,4 @@
 #include "Api.hpp"
-#include "Factories/HeroPrefabFactory.hpp"
 
 using namespace spic;
 
