@@ -1,22 +1,31 @@
+#include "UserMovementBehaviour.hpp"
 #include <Debug.hpp>
 #include <RigidBody.hpp>
 #include <Input.hpp>
 #include <utility>
-#include "UserMovementBehaviour.hpp"
-#include "GameObject.hpp"
+#include <GameObject.hpp>
+#include <stdexcept>
 
 using namespace spic;
 
 void game::UserMovementBehaviour::OnStart()
 {
     _parent = GameObject().lock();
-
     _rigidBody = _parent->GetComponent<spic::RigidBody>();
+
+    if (!_walkingAnimator)
+    {
+        throw std::runtime_error("The user movement behaviour script requires the parent to have a valid walking animator.");
+    }
+
+    if (!_idleAnimator)
+    {
+        throw std::runtime_error("The user movement behaviour script requires the parent to have a valid idle animator.");
+    }
+
     if (!_rigidBody)
     {
-        _rigidBody = std::make_shared<spic::RigidBody>(1, 0, BodyType::dynamicBody);
-        _parent->AddComponent(_rigidBody);
-        _rigidBody->GameObject(_parent);
+        throw std::runtime_error("The user movement behaviour script requires the parent to have a rigidbody.");
     }
 }
 
