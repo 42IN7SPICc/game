@@ -3,8 +3,6 @@ project(spic-game)
 
 set(CMAKE_CXX_STANDARD 20)
 
-include(vcpkg_install_deps.cmake)
-
 set(PROJECT_LIBS_DIR ${PROJECT_SOURCE_DIR}/libs)
 
 set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
