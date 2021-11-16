@@ -7,7 +7,10 @@
 #include "../Scripts/common/AttackBehaviour.hpp"
 #include "../Scripts/heroes/HealAbilityBehaviour.hpp"
 #include "../Utils/GameObjectUtil.hpp"
-#include "../Utils/HeroName.hpp"
+
+const int hero_scale = 1; //default scale on 1
+const int hero_width = 200; //width of hero image
+const int hero_mass = 50; //random chosen mass
 
 std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateHero(game::HeroName name)
 {
@@ -65,7 +68,6 @@ std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateJosephStalin()
 
 std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateBaseHero(int attack, int defense)
 {
-    const int hero_scale = 1;
     auto baseHero = std::make_shared<spic::GameObject>("Hero", "Player", 1);
     baseHero->Transform().scale = hero_scale;
 
@@ -142,10 +144,10 @@ std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateBaseHero(int at
     auto attackBehaviour = std::make_shared<game::AttackBehaviour>(attack);
     GameObjectUtil::LinkComponent(baseHero, attackBehaviour);
 
-    auto heroCollider = std::make_shared<spic::CircleCollider>(100 / hero_scale); // 100 = half of the width of the player model
+    auto heroCollider = std::make_shared<spic::CircleCollider>((hero_width / 2) / hero_scale); // 100 = half of the width of the player model
     GameObjectUtil::LinkComponent(baseHero, heroCollider);
 
-    auto heroRigidBody = std::make_shared<spic::RigidBody>(0, 0, spic::BodyType::dynamicBody); // mass and gravity scale not imported because of 2D topdown
+    auto heroRigidBody = std::make_shared<spic::RigidBody>(hero_mass, 0, spic::BodyType::dynamicBody); // mass and gravity scale not imported because of 2D topdown
     GameObjectUtil::LinkComponent(baseHero, heroRigidBody);
 
     return baseHero;
