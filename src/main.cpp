@@ -17,10 +17,6 @@ int main(int argc, char* args[]) {
     cheatManager->GameObject(cheats);
     cheats->AddComponent(cheatManager);
 
-    auto rigidBody = std::make_shared<RigidBody>(5,5, BodyType::staticBody);
-    rigidBody->GameObject(cheats);
-    cheats->AddComponent(rigidBody);
-
     scene->Contents().push_back(cheats);
 
     engine.Start();
