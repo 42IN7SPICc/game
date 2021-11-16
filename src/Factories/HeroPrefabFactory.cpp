@@ -13,15 +13,15 @@ std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateHero(game::Hero
 {
     switch (name)
     {
-        case DesmondDoss:
+        case HeroName::DesmondDoss:
             return CreateDesmondDoss();
-        case BernardIJzerdraat:
+        case HeroName::BernardIJzerdraat:
             return CreateBernardIJzerdraat();
-        case FranklinDRoosevelt:
+        case HeroName::FranklinDRoosevelt:
             return CreateFranklinDRoosevelt();
-        case WinstonChurchill:
+        case HeroName::WinstonChurchill:
             return CreateWinstonChurchill();
-        case JosephStalin:
+        case HeroName::JosephStalin:
             return CreateJosephStalin();
     }
 }
