@@ -35,6 +35,7 @@ jobs:
         uses: lukka/run-vcpkg@v10
         with:
           appendedCacheKey: -${{ matrix.os }}-${{ matrix.triplet }}
+          vcpkgJsonGlob: 'vcpkg.json'
 
       - name: 'Run CMake'
         uses: lukka/run-cmake@v10
