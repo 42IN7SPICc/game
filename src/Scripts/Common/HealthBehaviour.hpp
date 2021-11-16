@@ -2,15 +2,28 @@
 #define SPIC_GAME_HEALTHBEHAVIOUR_HPP
 
 #include <BehaviourScript.hpp>
+#include <memory>
+#include <Animator.hpp>
 
 namespace game
 {
     class HealthBehaviour : public spic::BehaviourScript
     {
         private:
+            std::shared_ptr<spic::Animator> _diedAnimator;
+            int _health;
+            int _maxHealth;
 
         public:
-            explicit HealthBehaviour(int maxHealth);
+            [[nodiscard]] int Health() const;
+
+            [[nodiscard]] int MaxHealth() const;
+
+            void Health(int health);
+
+            void Damage(int damage);
+
+            HealthBehaviour(std::shared_ptr<spic::Animator> diedAnimator, int maxHealth);
 
             void OnStart() override;
 
