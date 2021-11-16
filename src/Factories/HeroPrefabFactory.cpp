@@ -2,10 +2,10 @@
 #include <CircleCollider.hpp>
 #include "HeroPrefabFactory.hpp"
 #include "Sprite.hpp"
-#include "../Scripts/common/HealthBehaviour.hpp"
-#include "../Scripts/common/UserMovementBehaviour.hpp"
-#include "../Scripts/common/AttackBehaviour.hpp"
-#include "../Scripts/heroes/HealAbilityBehaviour.hpp"
+#include "../Scripts/Common/HealthBehaviour.hpp"
+#include "../Scripts/Common/UserMovementBehaviour.hpp"
+#include "../Scripts/Common/AttackBehaviour.hpp"
+#include "../Scripts/Heroes/HealAbilityBehaviour.hpp"
 #include "../Utils/GameObjectUtil.hpp"
 
 const int hero_scale = 1; //default scale on 1
