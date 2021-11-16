@@ -1,20 +1,18 @@
-#ifndef SPIC_GAME_CHEATMANAGER_HPP
-#define SPIC_GAME_CHEATMANAGER_HPP
+#ifndef SPIC_GAME_HEALABILITYBEHAVIOUR_HPP
+#define SPIC_GAME_HEALABILITYBEHAVIOUR_HPP
 
-#include "BehaviourScript.hpp"
-#include "Collider.hpp"
-#include "Input.hpp"
-#include <map>
-#include <functional>
+#include <BehaviourScript.hpp>
+#include "CoolDownBehaviour.hpp"
 
 namespace game
 {
-    class CheatManager : public spic::BehaviourScript
+    class HealAbilityBehaviour : public spic::BehaviourScript
     {
         private:
-            std::map<spic::Input::KeyCode, std::function<void()>> _cheats{};
-
+            game::CoolDownBehaviour _coolDownBehaviour;
         public:
+            HealAbilityBehaviour();
+
             void OnStart() override;
 
             void OnUpdate() override;
@@ -26,6 +24,5 @@ namespace game
             void OnTriggerStay2D(const spic::Collider& collider) override;
     };
 }
-
 
 #endif

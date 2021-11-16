@@ -1,20 +1,17 @@
-#ifndef SPIC_GAME_CHEATMANAGER_HPP
-#define SPIC_GAME_CHEATMANAGER_HPP
+#ifndef SPIC_GAME_COOLDOWNBEHAVIOUR_HPP
+#define SPIC_GAME_COOLDOWNBEHAVIOUR_HPP
 
-#include "BehaviourScript.hpp"
-#include "Collider.hpp"
-#include "Input.hpp"
-#include <map>
-#include <functional>
+#include <BehaviourScript.hpp>
 
 namespace game
 {
-    class CheatManager : public spic::BehaviourScript
+    class CoolDownBehaviour : public spic::BehaviourScript
     {
         private:
-            std::map<spic::Input::KeyCode, std::function<void()>> _cheats{};
-
+            int _coolDown;
         public:
+            explicit CoolDownBehaviour(int coolDown);
+
             void OnStart() override;
 
             void OnUpdate() override;

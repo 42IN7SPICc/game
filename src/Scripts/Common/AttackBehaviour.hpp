@@ -1,20 +1,17 @@
-#ifndef SPIC_GAME_CHEATMANAGER_HPP
-#define SPIC_GAME_CHEATMANAGER_HPP
+#ifndef SPIC_GAME_ATTACKBEHAVIOUR_HPP
+#define SPIC_GAME_ATTACKBEHAVIOUR_HPP
 
-#include "BehaviourScript.hpp"
-#include "Collider.hpp"
-#include "Input.hpp"
-#include <map>
-#include <functional>
+#include <BehaviourScript.hpp>
 
 namespace game
 {
-    class CheatManager : public spic::BehaviourScript
+    class AttackBehaviour : public spic::BehaviourScript
     {
         private:
-            std::map<spic::Input::KeyCode, std::function<void()>> _cheats{};
 
         public:
+            explicit AttackBehaviour(int attackPower);
+
             void OnStart() override;
 
             void OnUpdate() override;
@@ -26,6 +23,5 @@ namespace game
             void OnTriggerStay2D(const spic::Collider& collider) override;
     };
 }
-
 
 #endif
