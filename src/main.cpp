@@ -12,8 +12,5 @@ int main(int argc, char* args[]) {
     auto scene = std::make_shared<Scene>();
     engine.PushScene(scene);
 
-    auto hero = game::HeroPrefabFactory::CreateHero(game::HeroName::DesmondDoss);
-    scene->Contents().push_back(hero);
-
     engine.Start();
 }
