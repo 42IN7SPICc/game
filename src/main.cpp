@@ -12,7 +12,7 @@ int main(int argc, char* args[]) {
     auto scene = std::make_shared<Scene>();
     engine.PushScene(scene);
 
-    auto hero = game::HeroPrefabFactory::CreateHero("Desmond Doss");
+    auto hero = game::HeroPrefabFactory::CreateHero(game::HeroName::DesmondDoss);
 
     engine.Start();
 }
