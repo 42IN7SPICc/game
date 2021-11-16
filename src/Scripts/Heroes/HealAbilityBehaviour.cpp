@@ -1,6 +1,7 @@
 #include "HealAbilityBehaviour.hpp"
 #include "GameObject.hpp"
 #include "Input.hpp"
+#include "../../Utils/GameObjectUtil.hpp"
 
 const int heal_ability_cool_down = 5;
 
@@ -12,8 +13,7 @@ game::HealAbilityBehaviour::HealAbilityBehaviour() : _coolDownBehaviour(std::mak
 void game::HealAbilityBehaviour::OnStart()
 {
     _parent = GameObject().lock();
-    _coolDownBehaviour->GameObject(_parent);
-    _parent->AddComponent(_coolDownBehaviour);
+    game::GameObjectUtil::LinkComponent(_parent, _coolDownBehaviour);
     _healthBehaviour = _parent->GetComponent<HealthBehaviour>();
 }
 
