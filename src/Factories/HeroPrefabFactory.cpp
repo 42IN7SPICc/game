@@ -8,55 +8,61 @@
 #include "../Utils/GameObjectUtil.hpp"
 #include "../Scripts/heroes/HealAbilityBehaviour.hpp"
 
-//TODO: maxHealth, velocity, attackPower
-
 std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateHero(game::HeroName name)
 {
-    auto base_hero = CreateBaseHero();
     switch (name)
     {
         case DesmondDoss:
-            return CreateDesmondDoss(base_hero);
+            return CreateDesmondDoss();
         case BernardIJzerdraat:
-            return CreateBernardIJzerdraat(base_hero);
+            return CreateBernardIJzerdraat();
         case FranklinDRoosevelt:
-            return CreateFranklinDRoosevelt(base_hero);
+            return CreateFranklinDRoosevelt();
         case WinstonChurchill:
-            return CreateWinstonChurchill(base_hero);
+            return CreateWinstonChurchill();
         case JosephStalin:
-            return CreateJosephStalin(base_hero);
+            return CreateJosephStalin();
     }
 }
 
-std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateDesmondDoss(std::shared_ptr<spic::GameObject> base_hero)
+std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateDesmondDoss()
 {
+    auto base_hero = CreateBaseHero(2,3);
     auto ability = std::make_shared<game::HealAbilityBehaviour>();
     GameObjectUtil::LinkComponent(base_hero, ability);
 
     return base_hero;
 }
 
-std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateBernardIJzerdraat(std::shared_ptr<spic::GameObject> base_hero)
+std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateBernardIJzerdraat()
 {
+    auto base_hero = CreateBaseHero(5,3);
+
     return base_hero;
 }
 
-std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateFranklinDRoosevelt(std::shared_ptr<spic::GameObject> base_hero)
+std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateFranklinDRoosevelt()
 {
+    auto base_hero = CreateBaseHero(4,2);
+
     return base_hero;
 }
 
-std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateWinstonChurchill(std::shared_ptr<spic::GameObject> base_hero)
+std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateWinstonChurchill()
 {
+    auto base_hero = CreateBaseHero(2,5);
+
     return base_hero;
 }
 
-std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateJosephStalin(std::shared_ptr<spic::GameObject> base_hero)
+std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateJosephStalin()
 {
+    auto base_hero = CreateBaseHero(5,5);
+
     return base_hero;
 }
 
-std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateBaseHero()
+std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateBaseHero(int attack, int defense)
 {
     auto baseHero = std::make_shared<spic::GameObject>("Hero", "Player", 1);
 
@@ -94,13 +100,13 @@ std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateBaseHero()
     auto walkingAnimator = std::make_shared<spic::Animator>(12, walkingSprites);
     GameObjectUtil::LinkComponent(baseHero, walkingAnimator);
 
-    auto healthBehaviour = std::make_shared<game::HealthBehaviour>(0);
+    auto healthBehaviour = std::make_shared<game::HealthBehaviour>(defense);
     GameObjectUtil::LinkComponent(baseHero, healthBehaviour);
 
     auto userMovementBehaviour = std::make_shared<game::UserMovementBehaviour>(50, idleAnimator, walkingAnimator);
     GameObjectUtil::LinkComponent(baseHero, userMovementBehaviour);
 
-    auto attackBehaviour = std::make_shared<game::AttackBehaviour>(0);
+    auto attackBehaviour = std::make_shared<game::AttackBehaviour>(attack);
     GameObjectUtil::LinkComponent(baseHero, attackBehaviour);
 
     auto heroCollider = std::make_shared<spic::CircleCollider>(80);

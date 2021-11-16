@@ -1,5 +1,10 @@
 #include "HealAbilityBehaviour.hpp"
 
+game::HealAbilityBehaviour::HealAbilityBehaviour() : _coolDownBehaviour(CoolDownBehaviour(5))
+{
+
+}
+
 void game::HealAbilityBehaviour::OnStart()
 {
 
@@ -23,9 +28,4 @@ void game::HealAbilityBehaviour::OnTriggerExit2D(const spic::Collider& collider)
 void game::HealAbilityBehaviour::OnTriggerStay2D(const spic::Collider& collider)
 {
     BehaviourScript::OnTriggerStay2D(collider);
-}
-
-game::HealAbilityBehaviour::HealAbilityBehaviour() : _coolDownBehaviour(nullptr)
-{
-
 }

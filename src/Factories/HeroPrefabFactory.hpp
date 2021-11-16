@@ -17,17 +17,17 @@ namespace game
     class HeroPrefabFactory
     {
         private:
-            static std::shared_ptr<spic::GameObject> CreateDesmondDoss(std::shared_ptr<spic::GameObject> base_hero);
+            static std::shared_ptr<spic::GameObject> CreateDesmondDoss();
 
-            static std::shared_ptr<spic::GameObject> CreateBernardIJzerdraat(std::shared_ptr<spic::GameObject> base_hero);
+            static std::shared_ptr<spic::GameObject> CreateBernardIJzerdraat();
 
-            static std::shared_ptr<spic::GameObject> CreateFranklinDRoosevelt(std::shared_ptr<spic::GameObject> base_hero);
+            static std::shared_ptr<spic::GameObject> CreateFranklinDRoosevelt();
 
-            static std::shared_ptr<spic::GameObject> CreateWinstonChurchill(std::shared_ptr<spic::GameObject> base_hero);
+            static std::shared_ptr<spic::GameObject> CreateWinstonChurchill();
 
-            static std::shared_ptr<spic::GameObject> CreateJosephStalin(std::shared_ptr<spic::GameObject> base_hero);
+            static std::shared_ptr<spic::GameObject> CreateJosephStalin();
 
-            static std::shared_ptr<spic::GameObject> CreateBaseHero();
+            static std::shared_ptr<spic::GameObject> CreateBaseHero(int attack, int defense);
 
         public:
             static std::shared_ptr<spic::GameObject> CreateHero(HeroName name);
