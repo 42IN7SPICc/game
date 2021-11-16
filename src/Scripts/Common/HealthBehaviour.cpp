@@ -39,20 +39,20 @@ void game::HealthBehaviour::OnStart()
 
 void game::HealthBehaviour::OnUpdate()
 {
-    //spic::Debug::Log("HealthBehaviour Updated");
+    // Not implemented
 }
 
 void game::HealthBehaviour::OnTriggerEnter2D(const spic::Collider& collider)
 {
-    BehaviourScript::OnTriggerEnter2D(collider);
+    spic::Debug::LogWarning("Not implemented");
 }
 
 void game::HealthBehaviour::OnTriggerExit2D(const spic::Collider& collider)
 {
-    BehaviourScript::OnTriggerExit2D(collider);
+    spic::Debug::LogWarning("Not implemented");
 }
 
 void game::HealthBehaviour::OnTriggerStay2D(const spic::Collider& collider)
 {
-    BehaviourScript::OnTriggerStay2D(collider);
+    spic::Debug::LogWarning("Not implemented");
 }
