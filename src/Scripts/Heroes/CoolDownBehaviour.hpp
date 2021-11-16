@@ -8,7 +8,7 @@ namespace game
     class CoolDownBehaviour : public spic::BehaviourScript
     {
         private:
-            int _coolDown;
+            double _coolDown;
             bool _cooledDown;
 
         public:
@@ -23,6 +23,10 @@ namespace game
             void OnTriggerExit2D(const spic::Collider& collider) override;
 
             void OnTriggerStay2D(const spic::Collider& collider) override;
+
+            bool CooledDown() const;
+
+            void CooledDown(bool cooledDown);
     };
 }
 
