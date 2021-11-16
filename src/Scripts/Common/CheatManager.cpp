@@ -5,47 +5,58 @@
 using namespace spic;
 using namespace game;
 
-void UnlimitedMoney() {
+void UnlimitedMoney()
+{
     Debug::Log("Fired Unlimited Money Cheat");
 }
 
-void Invincibility() {
+void Invincibility()
+{
     Debug::Log("Fired Invincibility Cheat");
 }
 
-void Butcher() {
+void Butcher()
+{
     Debug::Log("Fired Butcher Cheat");
 }
 
-void Victory() {
+void Victory()
+{
     Debug::Log("Fired Victory Cheat");
 }
 
-void SkipWave() {
+void SkipWave()
+{
     Debug::Log("Fired Skip Wave Cheat");
 }
 
-void NoCoolDown() {
+void NoCoolDown()
+{
     Debug::Log("Fired No CoolDown Cheat");
 }
 
-void UnlockLevels() {
+void UnlockLevels()
+{
     Debug::Log("Fired Unlock Levels Cheat");
 }
 
-void UnlimitedPath() {
+void UnlimitedPath()
+{
     Debug::Log("Fired Unlimited Path Cheat");
 }
 
-void StrongPath() {
+void StrongPath()
+{
     Debug::Log("Fired Strong Path Cheat");
 }
 
-void ExpBoost() {
+void ExpBoost()
+{
     Debug::Log("Fired Exp Boost Cheat");
 }
 
-void CheatManager::OnStart() {
+void CheatManager::OnStart()
+{
     _cheats[Input::KeyCode::U] = []() { return UnlimitedMoney(); };
     _cheats[Input::KeyCode::I] = []() { return Invincibility(); };
     _cheats[Input::KeyCode::B] = []() { return Butcher(); };
@@ -58,25 +69,29 @@ void CheatManager::OnStart() {
     _cheats[Input::KeyCode::E] = []() { return ExpBoost(); };
 }
 
-void CheatManager::OnUpdate() {
-    for(const auto& cheat : _cheats) {
-        if(Input::GetKey(Input::KeyCode::LEFT_CONTROL) &&
-            Input::GetKey(Input::KeyCode::LEFT_SHIFT) &&
-            Input::GetKeyDown(cheat.first)) {
+void CheatManager::OnUpdate()
+{
+    for (const auto& cheat: _cheats)
+    {
+        if (Input::GetKey(Input::KeyCode::LEFT_CONTROL) && Input::GetKey(Input::KeyCode::LEFT_SHIFT) && Input::GetKeyDown(cheat.first))
+        {
             cheat.second();
             break;
         }
     }
 }
 
-void CheatManager::OnTriggerEnter2D(const Collider &collider) {
+void CheatManager::OnTriggerEnter2D(const Collider& collider)
+{
     Debug::LogWarning("OnTriggerEnter2D Not implemented");
 }
 
-void CheatManager::OnTriggerExit2D(const Collider &collider) {
+void CheatManager::OnTriggerExit2D(const Collider& collider)
+{
     Debug::LogWarning("OnTriggerExit2D Not implemented");
 }
 
-void CheatManager::OnTriggerStay2D(const Collider &collider) {
+void CheatManager::OnTriggerStay2D(const Collider& collider)
+{
     Debug::LogWarning("OnTriggerStay2D Not implemented");
 }
