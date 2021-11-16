@@ -13,6 +13,7 @@ int main(int argc, char* args[]) {
     engine.PushScene(scene);
 
     auto hero = game::HeroPrefabFactory::CreateHero(game::HeroName::DesmondDoss);
+    scene->Contents().push_back(hero);
 
     engine.Start();
 }

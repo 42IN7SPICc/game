@@ -1,4 +1,5 @@
 #include <Animator.hpp>
+#include <CircleCollider.hpp>
 #include "HeroPrefabFactory.hpp"
 #include "Sprite.hpp"
 #include "../Scripts/common/HealthBehaviour.hpp"
@@ -97,6 +98,12 @@ std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateBaseHero()
 
     auto attackBehaviour = std::make_shared<game::AttackBehaviour>(12);
     GameObjectUtil::LinkComponent(baseHero, attackBehaviour);
+
+    auto heroCollider = std::make_shared<spic::CircleCollider>(80);
+    GameObjectUtil::LinkComponent(baseHero, heroCollider);
+
+    auto heroRigidBody = std::make_shared<spic::RigidBody>(50,0, spic::BodyType::dynamicBody);
+    GameObjectUtil::LinkComponent(baseHero, heroRigidBody);
 
     return baseHero;
 }
