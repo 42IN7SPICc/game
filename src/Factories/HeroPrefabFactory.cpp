@@ -124,22 +124,22 @@ std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateBaseHero(int at
     diedSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Died/hero_died_8.png", false, false, 0, 0));
     diedSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Died/hero_died_9.png", false, false, 0, 0));
 
-    auto idleAnimator = std::make_shared<spic::Animator>(idleSprites.size(), idleSprites);
+    auto idleAnimator = std::make_shared<spic::Animator>(static_cast<int>(idleSprites.size()), idleSprites);
     GameObjectUtil::LinkComponent(baseHero, idleAnimator);
 
-    auto walkingAnimator = std::make_shared<spic::Animator>(walkingSprites.size(), walkingSprites);
+    auto walkingAnimator = std::make_shared<spic::Animator>(static_cast<int>(walkingSprites.size()), walkingSprites);
     GameObjectUtil::LinkComponent(baseHero, walkingAnimator);
 
-    auto diedAnimator = std::make_shared<spic::Animator>(diedSprites.size(), diedSprites);
+    auto diedAnimator = std::make_shared<spic::Animator>(static_cast<int>(diedSprites.size()), diedSprites);
     GameObjectUtil::LinkComponent(baseHero, diedAnimator);
 
-    auto CelebratingAnimator = std::make_shared<spic::Animator>(celebratingSprites.size(), celebratingSprites);
+    auto CelebratingAnimator = std::make_shared<spic::Animator>(static_cast<int>(celebratingSprites.size()), celebratingSprites);
     GameObjectUtil::LinkComponent(baseHero, CelebratingAnimator);
 
-    auto healthBehaviour = std::make_shared<game::HealthBehaviour>(defense);
+    auto healthBehaviour = std::make_shared<game::HealthBehaviour>(diedAnimator, defense);
     GameObjectUtil::LinkComponent(baseHero, healthBehaviour);
 
-    auto userMovementBehaviour = std::make_shared<game::UserMovementBehaviour>(hero_velocity, idleAnimator, walkingAnimator);
+    auto userMovementBehaviour = std::make_shared<game::UserMovementBehaviour>(static_cast<float>(hero_velocity), idleAnimator, walkingAnimator, healthBehaviour);
     GameObjectUtil::LinkComponent(baseHero, userMovementBehaviour);
 
     auto attackBehaviour = std::make_shared<game::AttackBehaviour>(attack);

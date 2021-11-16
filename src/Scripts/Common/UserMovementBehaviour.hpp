@@ -5,6 +5,7 @@
 #include <BehaviourScript.hpp>
 #include <RigidBody.hpp>
 #include <Animator.hpp>
+#include "HealthBehaviour.hpp"
 
 namespace game
 {
@@ -16,8 +17,9 @@ namespace game
             std::shared_ptr<spic::RigidBody> _rigidBody;
             std::shared_ptr<spic::Animator> _idleAnimator;
             std::shared_ptr<spic::Animator> _walkingAnimator;
+            std::shared_ptr<game::HealthBehaviour> _healthBehaviour;
         public:
-            explicit UserMovementBehaviour(float velocity, std::shared_ptr<spic::Animator> idleAnimator, std::shared_ptr<spic::Animator> walkingAnimator);
+            explicit UserMovementBehaviour(float velocity, std::shared_ptr<spic::Animator> idleAnimator, std::shared_ptr<spic::Animator> walkingAnimator, std::shared_ptr<game::HealthBehaviour> healthBehaviour);
 
             void OnStart() override;
 
