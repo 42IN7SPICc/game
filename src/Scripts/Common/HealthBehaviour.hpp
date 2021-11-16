@@ -8,7 +8,8 @@ namespace game
     class HealthBehaviour : public spic::BehaviourScript
     {
         private:
-
+            int _health;
+            int _maxHealth;
         public:
             explicit HealthBehaviour(int maxHealth);
 
@@ -21,6 +22,10 @@ namespace game
             void OnTriggerExit2D(const spic::Collider& collider) override;
 
             void OnTriggerStay2D(const spic::Collider& collider) override;
+
+            void Health(int health);
+
+            int Health() const;
     };
 }
 

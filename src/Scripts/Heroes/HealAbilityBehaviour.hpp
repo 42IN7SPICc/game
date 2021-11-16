@@ -3,6 +3,7 @@
 
 #include <BehaviourScript.hpp>
 #include "CoolDownBehaviour.hpp"
+#include "../common/HealthBehaviour.hpp"
 
 namespace game
 {
@@ -10,6 +11,9 @@ namespace game
     {
         private:
             game::CoolDownBehaviour _coolDownBehaviour;
+            std::shared_ptr<spic::GameObject> _parent;
+            std::shared_ptr<game::HealthBehaviour> _healthBehaviour;
+
         public:
             HealAbilityBehaviour();
 

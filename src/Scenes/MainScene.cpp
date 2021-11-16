@@ -2,6 +2,9 @@
 
 #include "Api.hpp"
 #include "../Utils/Layer.hpp"
+#include "../Factories/HeroPrefabFactory.hpp"
+#include "../Scripts/common/HealthBehaviour.hpp"
+#include "../Utils/GameObjectUtil.hpp"
 
 using namespace spic;
 using namespace game;
@@ -28,8 +31,17 @@ MainScene::MainScene()
         Engine::Instance().PopScene();
     });
 
+    auto hero = HeroPrefabFactory::CreateHero(HeroName::DesmondDoss);
+    auto tempHealthText = std::make_shared<spic::Text>("healthText", "healthText", Layer::HUD, 1720, 100, "0", "resources/fonts/capture_it.otf", 82, Alignment::left, Color::white());
+    tempHealthText->Transform().position = {25, 25};
+    hero->AddChild(tempHealthText);
+
+    auto healthBehaviour = hero->GetComponent<HealthBehaviour>();
+
     Contents().push_back(background);
     Contents().push_back(titleText);
     Contents().push_back(playButton);
     Contents().push_back(exitButton);
+    Contents().push_back(tempHealthText);
+    Contents().push_back(hero);
 }

@@ -9,6 +9,8 @@ namespace game
     {
         private:
             int _coolDown;
+            bool _cooledDown;
+
         public:
             explicit CoolDownBehaviour(int coolDown);
 

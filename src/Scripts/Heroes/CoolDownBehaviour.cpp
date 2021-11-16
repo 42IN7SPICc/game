@@ -1,6 +1,7 @@
 #include "CoolDownBehaviour.hpp"
+#include "Time.hpp"
 
-game::CoolDownBehaviour::CoolDownBehaviour(int coolDown) : _coolDown(coolDown)
+game::CoolDownBehaviour::CoolDownBehaviour(int coolDown) : _cooledDown(true), _coolDown(coolDown)
 {
 
 }
@@ -12,7 +13,7 @@ void game::CoolDownBehaviour::OnStart()
 
 void game::CoolDownBehaviour::OnUpdate()
 {
-
+    double time_reference = spic::Time::DeltaTime() * spic::Time::TimeScale();
 }
 
 void game::CoolDownBehaviour::OnTriggerEnter2D(const spic::Collider& collider)
