@@ -1,9 +1,10 @@
 #include "HealAbilityBehaviour.hpp"
 #include "GameObject.hpp"
 #include "Input.hpp"
-#include "Text.hpp"
 
-game::HealAbilityBehaviour::HealAbilityBehaviour() : _coolDownBehaviour(std::make_shared<CoolDownBehaviour>(CoolDownBehaviour(5)))
+const int heal_ability_cool_down = 5;
+
+game::HealAbilityBehaviour::HealAbilityBehaviour() : _coolDownBehaviour(std::make_shared<CoolDownBehaviour>(CoolDownBehaviour(heal_ability_cool_down)))
 {
 
 }
@@ -18,24 +19,14 @@ void game::HealAbilityBehaviour::OnStart()
 
 void game::HealAbilityBehaviour::OnUpdate()
 {
-    auto textField1 = std::dynamic_pointer_cast<spic::Text>(GameObject().lock()->Children()[0]);
-    auto textField2 = std::dynamic_pointer_cast<spic::Text>(GameObject().lock()->Children()[1]);
-
-    if(spic::Input::GetKey(spic::Input::KeyCode::SPACE))
+    if (spic::Input::GetKey(spic::Input::KeyCode::SPACE))
     {
-        if(_coolDownBehaviour->CooledDown()) {
+        if (_coolDownBehaviour->CooledDown())
+        {
             _healthBehaviour->Health(_healthBehaviour->Health() + 1);
             _coolDownBehaviour->CooledDown(false);
         }
     }
-
-    if(spic::Input::GetKeyDown(spic::Input::KeyCode::LEFT_ALT))
-    {
-        _healthBehaviour->Health(_healthBehaviour->Health() - 1);
-    }
-
-    textField1->Content(std::to_string(_healthBehaviour->Health()));
-    textField2->Content(std::to_string(_coolDownBehaviour->CoolDown()));
 }
 
 void game::HealAbilityBehaviour::OnTriggerEnter2D(const spic::Collider& collider)

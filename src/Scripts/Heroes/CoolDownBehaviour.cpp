@@ -2,7 +2,9 @@
 #include "Time.hpp"
 #include "Debug.hpp"
 
-game::CoolDownBehaviour::CoolDownBehaviour(int coolDown) : _cooledDown(false), _coolDown(coolDown), _minCoolDown(coolDown)
+game::CoolDownBehaviour::CoolDownBehaviour(int coolDown) : _cooledDown(false),
+                                                           _coolDown(coolDown),
+                                                           _minCoolDown(coolDown)
 {
 
 }
@@ -14,14 +16,15 @@ void game::CoolDownBehaviour::OnStart()
 
 void game::CoolDownBehaviour::OnUpdate()
 {
-    if(_cooledDown) return;
+    if (_cooledDown) return;
 
     double timescale = spic::Time::TimeScale();
     double deltaTime = spic::Time::DeltaTime();
     double time_difference = timescale * deltaTime;
     _coolDown -= time_difference;
 
-    if(_coolDown <= 0) {
+    if (_coolDown <= 0)
+    {
         _cooledDown = true;
     }
 }
@@ -49,7 +52,7 @@ bool game::CoolDownBehaviour::CooledDown() const
 void game::CoolDownBehaviour::CooledDown(bool cooledDown)
 {
     _cooledDown = cooledDown;
-    if(!cooledDown) _coolDown = _minCoolDown;
+    if (!cooledDown) _coolDown = _minCoolDown;
 }
 
 double game::CoolDownBehaviour::CoolDown() const
