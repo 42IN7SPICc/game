@@ -11,7 +11,7 @@ MainScene::MainScene()
     auto background = std::make_shared<spic::GameObject>("Background", "background", Layer::Background);
     background->AddComponent(std::make_shared<spic::Sprite>("resources/sprites/menu/backgrounds/mud.png", false, false, 0, 0));
 
-    auto titleText = std::make_shared<spic::Text>("Title Text", "text_title", Layer::HUD, 1720, 100, "Avans Wars: WW2", "resources/fonts/capture_it.ttf", 82, Alignment::left, Color::white());
+    auto titleText = std::make_shared<spic::Text>("Title Text", "text_title", Layer::HUD, 1720, 100, "Avans Wars: WW2", "resources/fonts/capture_it.otf", 82, Alignment::left, Color::white());
     titleText->Transform().position = {100, 100};
 
     auto playButton = std::make_shared<spic::Button>("Play Button", "button_play", Layer::HUD, 250, 85);
