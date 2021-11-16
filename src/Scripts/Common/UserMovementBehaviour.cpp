@@ -48,7 +48,6 @@ void game::UserMovementBehaviour::OnUpdate()
     {
         _rigidBody->AddForce(spic::Point{-_velocity, 0});
         moving = true;
-
     }
 
     if (Input::GetKey(Input::KeyCode::D))
