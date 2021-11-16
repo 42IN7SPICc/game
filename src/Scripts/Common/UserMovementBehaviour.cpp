@@ -31,6 +31,12 @@ void game::UserMovementBehaviour::OnStart()
 
 void game::UserMovementBehaviour::OnUpdate()
 {
+    if (_healthBehaviour->Health() <= 0) {
+        _walkingAnimator->Stop();
+        _idleAnimator->Stop();
+        return;
+    }
+
     bool moving = false;
     if (Input::GetKey(Input::KeyCode::W))
     {
@@ -85,8 +91,9 @@ void game::UserMovementBehaviour::OnTriggerStay2D(const spic::Collider& collider
     Debug::LogWarning("Not implemented");
 }
 
-game::UserMovementBehaviour::UserMovementBehaviour(float velocity, std::shared_ptr<spic::Animator> idleAnimator, std::shared_ptr<spic::Animator> walkingAnimator) : _velocity(velocity),
-                                                                                                                                                                    _idleAnimator(std::move(idleAnimator)),
-                                                                                                                                                                    _walkingAnimator(std::move(walkingAnimator))
+game::UserMovementBehaviour::UserMovementBehaviour(float velocity, std::shared_ptr<spic::Animator> idleAnimator, std::shared_ptr<spic::Animator> walkingAnimator, std::shared_ptr<game::HealthBehaviour> healthBehaviour) : _velocity(velocity),
+                                                                                                                                                                                                                            _idleAnimator(std::move(idleAnimator)),
+                                                                                                                                                                                                                            _walkingAnimator(std::move(walkingAnimator)),
+                                                                                                                                                                                                                            _healthBehaviour(std::move(healthBehaviour))
 {
 }
