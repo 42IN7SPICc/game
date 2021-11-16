@@ -12,10 +12,11 @@ find_package(RapidJSON CONFIG REQUIRED)
 #include_directories(${PROJECT_LIBS_DIR}/spic-api/include)
 include_directories(${PROJECT_NAME} ${PROJECT_LIBS_DIR}/spic-engine/includes/spic-api-headers)
 
-add_custom_target(
-        copy_assets
-        COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_LIST_DIR}/resources ${CMAKE_CURRENT_BINARY_DIR}/resources
-)
+if (NOT DEFINED BINARY_RESOURCES_FOLDER)
+    set(BINARY_RESOURCES_FOLDER resources)
+endif ()
+
+add_custom_target(copy_assets COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_LIST_DIR}/resources ${CMAKE_CURRENT_BINARY_DIR}/${BINARY_RESOURCES_FOLDER})
 
 add_subdirectory(${PROJECT_LIBS_DIR}/spic-engine)
 
