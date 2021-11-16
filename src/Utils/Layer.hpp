@@ -1,5 +1,5 @@
-#ifndef SPIC_GAME_LAYERS_HPP
-#define SPIC_GAME_LAYERS_HPP
+#ifndef SPIC_GAME_LAYER_HPP
+#define SPIC_GAME_LAYER_HPP
 
 namespace game
 {
@@ -11,4 +11,4 @@ namespace game
     };
 }
 
-#endif //SPIC_GAME_LAYERS_HPP
+#endif //SPIC_GAME_LAYER_HPP
