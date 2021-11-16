@@ -1,4 +1,5 @@
 #include "AttackBehaviour.hpp"
+#include "Debug.hpp"
 
 game::AttackBehaviour::AttackBehaviour(int attackPower)
 {
@@ -7,12 +8,12 @@ game::AttackBehaviour::AttackBehaviour(int attackPower)
 
 void game::AttackBehaviour::OnStart()
 {
-    BehaviourScript::OnStart();
+    spic::Debug::Log("AttackBehaviour Started");
 }
 
 void game::AttackBehaviour::OnUpdate()
 {
-    BehaviourScript::OnUpdate();
+    //spic::Debug::Log("AttackBehaviour Updated");
 }
 
 void game::AttackBehaviour::OnTriggerEnter2D(const spic::Collider& collider)

@@ -6,6 +6,7 @@
 #include "../Scripts/common/UserMovementBehaviour.hpp"
 #include "../Scripts/common/AttackBehaviour.hpp"
 #include "../Utils/GameObjectUtil.hpp"
+#include "../Scripts/heroes/HealAbilityBehaviour.hpp"
 
 //TODO: maxHealth, velocity, attackPower
 
@@ -29,6 +30,9 @@ std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateHero(game::Hero
 
 std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateDesmondDoss(std::shared_ptr<spic::GameObject> base_hero)
 {
+    auto ability = std::make_shared<game::HealAbilityBehaviour>();
+    GameObjectUtil::LinkComponent(base_hero, ability);
+
     return base_hero;
 }
 
@@ -90,13 +94,13 @@ std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateBaseHero()
     auto walkingAnimator = std::make_shared<spic::Animator>(12, walkingSprites);
     GameObjectUtil::LinkComponent(baseHero, walkingAnimator);
 
-    auto healthBehaviour = std::make_shared<game::HealthBehaviour>(100);
+    auto healthBehaviour = std::make_shared<game::HealthBehaviour>(0);
     GameObjectUtil::LinkComponent(baseHero, healthBehaviour);
 
-    auto userMovementBehaviour = std::make_shared<game::UserMovementBehaviour>(12, idleAnimator, walkingAnimator);
+    auto userMovementBehaviour = std::make_shared<game::UserMovementBehaviour>(50, idleAnimator, walkingAnimator);
     GameObjectUtil::LinkComponent(baseHero, userMovementBehaviour);
 
-    auto attackBehaviour = std::make_shared<game::AttackBehaviour>(12);
+    auto attackBehaviour = std::make_shared<game::AttackBehaviour>(0);
     GameObjectUtil::LinkComponent(baseHero, attackBehaviour);
 
     auto heroCollider = std::make_shared<spic::CircleCollider>(80);

@@ -1,4 +1,5 @@
 #include "HealthBehaviour.hpp"
+#include "Debug.hpp"
 
 game::HealthBehaviour::HealthBehaviour(int maxHealth)
 {
@@ -7,12 +8,12 @@ game::HealthBehaviour::HealthBehaviour(int maxHealth)
 
 void game::HealthBehaviour::OnStart()
 {
-    BehaviourScript::OnStart();
+    spic::Debug::Log("HealthBehaviour Started");
 }
 
 void game::HealthBehaviour::OnUpdate()
 {
-    BehaviourScript::OnUpdate();
+    //spic::Debug::Log("HealthBehaviour Updated");
 }
 
 void game::HealthBehaviour::OnTriggerEnter2D(const spic::Collider& collider)
