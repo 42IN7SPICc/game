@@ -70,13 +70,13 @@ void CheatManager::OnUpdate() {
 }
 
 void CheatManager::OnTriggerEnter2D(const Collider &collider) {
-    Debug::LogWarning("OnTriggerEnter2D Nog implemented");
+    Debug::LogWarning("OnTriggerEnter2D Not implemented");
 }
 
 void CheatManager::OnTriggerExit2D(const Collider &collider) {
-    Debug::LogWarning("OnTriggerExit2D Nog implemented");
+    Debug::LogWarning("OnTriggerExit2D Not implemented");
 }
 
 void CheatManager::OnTriggerStay2D(const Collider &collider) {
-    Debug::LogWarning("OnTriggerStay2D Nog implemented");
+    Debug::LogWarning("OnTriggerStay2D Not implemented");
 }
