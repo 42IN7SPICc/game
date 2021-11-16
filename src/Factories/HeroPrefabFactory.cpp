@@ -139,16 +139,16 @@ std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateBaseHero(int at
     auto healthBehaviour = std::make_shared<game::HealthBehaviour>(defense);
     GameObjectUtil::LinkComponent(baseHero, healthBehaviour);
 
-    auto userMovementBehaviour = std::make_shared<game::UserMovementBehaviour>(hero_velocity, idleAnimator, walkingAnimator); // default velocity of 50, looks alright
+    auto userMovementBehaviour = std::make_shared<game::UserMovementBehaviour>(hero_velocity, idleAnimator, walkingAnimator);
     GameObjectUtil::LinkComponent(baseHero, userMovementBehaviour);
 
     auto attackBehaviour = std::make_shared<game::AttackBehaviour>(attack);
     GameObjectUtil::LinkComponent(baseHero, attackBehaviour);
 
-    auto heroCollider = std::make_shared<spic::CircleCollider>((hero_width / 2) / hero_scale); // 100 = half of the width of the player model
+    auto heroCollider = std::make_shared<spic::CircleCollider>((hero_width / 2) / hero_scale);
     GameObjectUtil::LinkComponent(baseHero, heroCollider);
 
-    auto heroRigidBody = std::make_shared<spic::RigidBody>(hero_mass, 0, spic::BodyType::dynamicBody); // mass and gravity scale not imported because of 2D topdown
+    auto heroRigidBody = std::make_shared<spic::RigidBody>(hero_mass, 0, spic::BodyType::dynamicBody);
     GameObjectUtil::LinkComponent(baseHero, heroRigidBody);
 
     return baseHero;
