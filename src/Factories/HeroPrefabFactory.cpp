@@ -65,13 +65,17 @@ std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateJosephStalin()
 
 std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateBaseHero(int attack, int defense)
 {
+    const int hero_scale = 1;
     auto baseHero = std::make_shared<spic::GameObject>("Hero", "Player", 1);
+    baseHero->Transform().scale = hero_scale;
 
     auto defaultSprite = std::make_shared<spic::Sprite>("resources/sprites/heroes/Idle/hero_idle_1.png", false, false, 0, 0);
     GameObjectUtil::LinkComponent(baseHero, defaultSprite);
 
     std::vector<std::shared_ptr<spic::Sprite>> idleSprites;
     std::vector<std::shared_ptr<spic::Sprite>> walkingSprites;
+    std::vector<std::shared_ptr<spic::Sprite>> celebratingSprites;
+    std::vector<std::shared_ptr<spic::Sprite>> diedSprites;
 
     idleSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Idle/hero_idle_1.png", false, false, 0, 0));
     idleSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Idle/hero_idle_2.png", false, false, 0, 0));
@@ -95,25 +99,53 @@ std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateBaseHero(int at
     walkingSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Walking/hero_walking_9.png", false, false, 0, 0));
     walkingSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Walking/hero_walking_10.png", false, false, 0, 0));
 
-    auto idleAnimator = std::make_shared<spic::Animator>(12, idleSprites);
+    celebratingSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Celebrating/hero_celebrating_1.png", false, false, 0, 0));
+    celebratingSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Celebrating/hero_celebrating_2.png", false, false, 0, 0));
+    celebratingSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Celebrating/hero_celebrating_3.png", false, false, 0, 0));
+    celebratingSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Celebrating/hero_celebrating_4.png", false, false, 0, 0));
+    celebratingSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Celebrating/hero_celebrating_5.png", false, false, 0, 0));
+    celebratingSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Celebrating/hero_celebrating_6.png", false, false, 0, 0));
+    celebratingSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Celebrating/hero_celebrating_7.png", false, false, 0, 0));
+    celebratingSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Celebrating/hero_celebrating_8.png", false, false, 0, 0));
+    celebratingSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Celebrating/hero_celebrating_9.png", false, false, 0, 0));
+    celebratingSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Celebrating/hero_celebrating_10.png", false, false, 0, 0));
+    celebratingSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Celebrating/hero_celebrating_11.png", false, false, 0, 0));
+
+    diedSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Died/hero_died_1.png", false, false, 0, 0));
+    diedSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Died/hero_died_2.png", false, false, 0, 0));
+    diedSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Died/hero_died_3.png", false, false, 0, 0));
+    diedSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Died/hero_died_4.png", false, false, 0, 0));
+    diedSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Died/hero_died_5.png", false, false, 0, 0));
+    diedSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Died/hero_died_6.png", false, false, 0, 0));
+    diedSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Died/hero_died_7.png", false, false, 0, 0));
+    diedSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Died/hero_died_8.png", false, false, 0, 0));
+    diedSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Died/hero_died_9.png", false, false, 0, 0));
+
+    auto idleAnimator = std::make_shared<spic::Animator>(idleSprites.size(), idleSprites);
     GameObjectUtil::LinkComponent(baseHero, idleAnimator);
 
-    auto walkingAnimator = std::make_shared<spic::Animator>(12, walkingSprites);
+    auto walkingAnimator = std::make_shared<spic::Animator>(walkingSprites.size(), walkingSprites);
     GameObjectUtil::LinkComponent(baseHero, walkingAnimator);
+
+    auto diedAnimator = std::make_shared<spic::Animator>(diedSprites.size(), diedSprites);
+    GameObjectUtil::LinkComponent(baseHero, diedAnimator);
+
+    auto CelebratingAnimator = std::make_shared<spic::Animator>(celebratingSprites.size(), celebratingSprites);
+    GameObjectUtil::LinkComponent(baseHero, CelebratingAnimator);
 
     auto healthBehaviour = std::make_shared<game::HealthBehaviour>(defense);
     GameObjectUtil::LinkComponent(baseHero, healthBehaviour);
 
-    auto userMovementBehaviour = std::make_shared<game::UserMovementBehaviour>(50, idleAnimator, walkingAnimator);
+    auto userMovementBehaviour = std::make_shared<game::UserMovementBehaviour>(50, idleAnimator, walkingAnimator); // default velocity of 50, looks alright
     GameObjectUtil::LinkComponent(baseHero, userMovementBehaviour);
 
     auto attackBehaviour = std::make_shared<game::AttackBehaviour>(attack);
     GameObjectUtil::LinkComponent(baseHero, attackBehaviour);
 
-    auto heroCollider = std::make_shared<spic::CircleCollider>(80);
+    auto heroCollider = std::make_shared<spic::CircleCollider>(100 / hero_scale); // 100 = half of the width of the player model
     GameObjectUtil::LinkComponent(baseHero, heroCollider);
 
-    auto heroRigidBody = std::make_shared<spic::RigidBody>(50, 0, spic::BodyType::dynamicBody);
+    auto heroRigidBody = std::make_shared<spic::RigidBody>(0, 0, spic::BodyType::dynamicBody); // mass and gravity scale not imported because of 2D topdown
     GameObjectUtil::LinkComponent(baseHero, heroRigidBody);
 
     return baseHero;
