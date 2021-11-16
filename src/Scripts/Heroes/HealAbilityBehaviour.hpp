@@ -3,7 +3,7 @@
 
 #include <BehaviourScript.hpp>
 #include "CoolDownBehaviour.hpp"
-#include "../common/HealthBehaviour.hpp"
+#include "../Common/HealthBehaviour.hpp"
 
 namespace game
 {
