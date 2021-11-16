@@ -19,6 +19,9 @@
         },
         "VCPKG_TARGET_TRIPLET": {
           "value": "$env{VCPKG_DEFAULT_TRIPLET}"
+        },
+        "BINARY_RESOURCES_FOLDER": {
+          "value": "Debug/resources"
         }
       }
     }
