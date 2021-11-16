@@ -3,8 +3,6 @@ project(spic-game)
 
 set(CMAKE_CXX_STANDARD 20)
 
-include(vcpkg_install_deps.cmake)
-
 set(PROJECT_LIBS_DIR ${PROJECT_SOURCE_DIR}/libs)
 
 set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
@@ -19,7 +17,6 @@ add_custom_target(
         COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_LIST_DIR}/resources ${CMAKE_CURRENT_BINARY_DIR}/resources
 )
 
-vcpkg_install_deps(MANIFEST_ROOT ${PROJECT_LIBS_DIR}/spic-engine)
 add_subdirectory(${PROJECT_LIBS_DIR}/spic-engine)
 
 file(GLOB_RECURSE SOURCE src/*.cpp)
