@@ -34,10 +34,6 @@ namespace game
             void OnTriggerExit2D(const spic::Collider& collider) override;
 
             void OnTriggerStay2D(const spic::Collider& collider) override;
-
-            void Health(int health);
-
-            int Health() const;
     };
 }
 

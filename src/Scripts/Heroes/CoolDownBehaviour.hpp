@@ -9,6 +9,7 @@ namespace game
     {
         private:
             double _coolDown;
+            int _minCoolDown;
             bool _cooledDown;
 
         public:
@@ -24,9 +25,13 @@ namespace game
 
             void OnTriggerStay2D(const spic::Collider& collider) override;
 
-            bool CooledDown() const;
+            [[nodiscard]] bool CooledDown() const;
 
             void CooledDown(bool cooledDown);
+
+            [[nodiscard]] double CoolDown() const;
+
+            void CooledDown(double coolDown);
     };
 }
 

@@ -10,7 +10,7 @@ namespace game
     class HealAbilityBehaviour : public spic::BehaviourScript
     {
         private:
-            game::CoolDownBehaviour _coolDownBehaviour;
+            std::shared_ptr<game::CoolDownBehaviour> _coolDownBehaviour;
             std::shared_ptr<spic::GameObject> _parent;
             std::shared_ptr<game::HealthBehaviour> _healthBehaviour;
 
