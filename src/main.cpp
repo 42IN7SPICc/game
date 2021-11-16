@@ -1,4 +1,5 @@
 #include "Engine.hpp"
+#include "Factories/HeroPrefabFactory.hpp"
 
 using namespace spic;
 
@@ -10,6 +11,8 @@ int main(int argc, char* args[]) {
 
     auto scene = std::make_shared<Scene>();
     engine.PushScene(scene);
+
+    auto hero = game::HeroPrefabFactory::CreateHero("Desmond Doss");
 
     engine.Start();
 }
