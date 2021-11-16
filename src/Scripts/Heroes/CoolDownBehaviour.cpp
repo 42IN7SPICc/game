@@ -7,7 +7,7 @@ game::CoolDownBehaviour::CoolDownBehaviour(int coolDown) : _coolDown(coolDown)
 
 void game::CoolDownBehaviour::OnStart()
 {
-    
+
 }
 
 void game::CoolDownBehaviour::OnUpdate()

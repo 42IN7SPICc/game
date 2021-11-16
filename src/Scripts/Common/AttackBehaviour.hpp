@@ -3,8 +3,10 @@
 
 #include <BehaviourScript.hpp>
 
-namespace game {
-    class AttackBehaviour : public spic::BehaviourScript {
+namespace game
+{
+    class AttackBehaviour : public spic::BehaviourScript
+    {
         private:
 
         public:

@@ -2,18 +2,10 @@
 #define SPIC_GAME_HEROPREFABFACTORY_HPP
 
 #include "GameObject.hpp"
+#include "../Utils/HeroName.hpp"
 
 namespace game
 {
-    enum HeroName
-    {
-        DesmondDoss,
-        BernardIJzerdraat,
-        FranklinDRoosevelt,
-        WinstonChurchill,
-        JosephStalin
-    };
-
     class HeroPrefabFactory
     {
         private:
@@ -30,7 +22,7 @@ namespace game
             static std::shared_ptr<spic::GameObject> CreateBaseHero(int attack, int defense);
 
         public:
-            static std::shared_ptr<spic::GameObject> CreateHero(HeroName name);
+            static std::shared_ptr<spic::GameObject> CreateHero(game::HeroName name);
     };
 }
 

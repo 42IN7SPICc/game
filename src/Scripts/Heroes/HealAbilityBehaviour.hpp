@@ -4,8 +4,10 @@
 #include <BehaviourScript.hpp>
 #include "CoolDownBehaviour.hpp"
 
-namespace game {
-    class HealAbilityBehaviour : public spic::BehaviourScript {
+namespace game
+{
+    class HealAbilityBehaviour : public spic::BehaviourScript
+    {
         private:
             game::CoolDownBehaviour _coolDownBehaviour;
         public:

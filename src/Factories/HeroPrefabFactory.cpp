@@ -5,8 +5,9 @@
 #include "../Scripts/common/HealthBehaviour.hpp"
 #include "../Scripts/common/UserMovementBehaviour.hpp"
 #include "../Scripts/common/AttackBehaviour.hpp"
-#include "../Utils/GameObjectUtil.hpp"
 #include "../Scripts/heroes/HealAbilityBehaviour.hpp"
+#include "../Utils/GameObjectUtil.hpp"
+#include "../Utils/HeroName.hpp"
 
 std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateHero(game::HeroName name)
 {
@@ -27,7 +28,7 @@ std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateHero(game::Hero
 
 std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateDesmondDoss()
 {
-    auto base_hero = CreateBaseHero(2,3);
+    auto base_hero = CreateBaseHero(2, 3);
     auto ability = std::make_shared<game::HealAbilityBehaviour>();
     GameObjectUtil::LinkComponent(base_hero, ability);
 
@@ -36,28 +37,28 @@ std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateDesmondDoss()
 
 std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateBernardIJzerdraat()
 {
-    auto base_hero = CreateBaseHero(5,3);
+    auto base_hero = CreateBaseHero(5, 3);
 
     return base_hero;
 }
 
 std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateFranklinDRoosevelt()
 {
-    auto base_hero = CreateBaseHero(4,2);
+    auto base_hero = CreateBaseHero(4, 2);
 
     return base_hero;
 }
 
 std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateWinstonChurchill()
 {
-    auto base_hero = CreateBaseHero(2,5);
+    auto base_hero = CreateBaseHero(2, 5);
 
     return base_hero;
 }
 
 std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateJosephStalin()
 {
-    auto base_hero = CreateBaseHero(5,5);
+    auto base_hero = CreateBaseHero(5, 5);
 
     return base_hero;
 }
@@ -112,7 +113,7 @@ std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateBaseHero(int at
     auto heroCollider = std::make_shared<spic::CircleCollider>(80);
     GameObjectUtil::LinkComponent(baseHero, heroCollider);
 
-    auto heroRigidBody = std::make_shared<spic::RigidBody>(50,0, spic::BodyType::dynamicBody);
+    auto heroRigidBody = std::make_shared<spic::RigidBody>(50, 0, spic::BodyType::dynamicBody);
     GameObjectUtil::LinkComponent(baseHero, heroRigidBody);
 
     return baseHero;
