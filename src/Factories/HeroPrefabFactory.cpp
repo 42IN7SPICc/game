@@ -4,14 +4,17 @@
 #include "Sprite.hpp"
 #include "../Scripts/Common/HealthBehaviour.hpp"
 #include "../Scripts/Common/UserMovementBehaviour.hpp"
-#include "../Scripts/Common/AttackBehaviour.hpp"
 #include "../Scripts/Heroes/HealAbilityBehaviour.hpp"
 #include "../Utils/GameObjectUtil.hpp"
+#include "../Utils/Layer.hpp"
+#include "../Scripts/Common/UserAttackBehaviour.hpp"
 
-const int hero_scale = 1; //default scale on 1
-const int hero_width = 200; //width of hero image
-const int hero_mass = 50; //random chosen mass
-const int hero_velocity = 50; //random chosen velocity (looks good)
+const int HeroScale = 1; //default scale on 1
+const int HeroWidth = 200; //width of hero image
+const int HeroHeight = 320; //height of hero image
+const int HeroMass = 50; //random chosen mass
+const int HeroVelocity = 50; //random chosen velocity (looks good)
+const double HeroBulletSpeed = 17.5; // random chosen bullet speed (looks alright)
 
 std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateHero(game::HeroName name)
 {
@@ -69,10 +72,10 @@ std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateJosephStalin()
 
 std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateBaseHero(int attack, int defense)
 {
-    auto baseHero = std::make_shared<spic::GameObject>("Hero", "Player", 1);
-    baseHero->Transform().scale = hero_scale;
+    auto baseHero = std::make_shared<spic::GameObject>("Hero", "Player", Layer::Game);
+    baseHero->Transform().scale = HeroScale;
 
-    auto defaultSprite = std::make_shared<spic::Sprite>("resources/sprites/heroes/Idle/hero_idle_1.png", false, false, 0, 0);
+    auto defaultSprite = std::make_shared<spic::Sprite>("resources/sprites/heroes/Idle/hero_idle_1.png", false, false, 1, 0);
     GameObjectUtil::LinkComponent(baseHero, defaultSprite);
 
     std::vector<std::shared_ptr<spic::Sprite>> idleSprites;
@@ -139,16 +142,17 @@ std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateBaseHero(int at
     auto healthBehaviour = std::make_shared<game::HealthBehaviour>(diedAnimator, defense);
     GameObjectUtil::LinkComponent(baseHero, healthBehaviour);
 
-    auto userMovementBehaviour = std::make_shared<game::UserMovementBehaviour>(static_cast<float>(hero_velocity), idleAnimator, walkingAnimator, healthBehaviour);
+    auto userMovementBehaviour = std::make_shared<game::UserMovementBehaviour>(static_cast<float>(HeroVelocity), idleAnimator, walkingAnimator, healthBehaviour);
     GameObjectUtil::LinkComponent(baseHero, userMovementBehaviour);
 
-    auto attackBehaviour = std::make_shared<game::AttackBehaviour>(attack);
+    spic::Point originPoint{(HeroWidth / 2.0) * HeroScale, (HeroHeight / 2.0) * HeroScale};
+    auto attackBehaviour = std::make_shared<game::UserAttackBehaviour>(attack, HeroBulletSpeed, originPoint);
     GameObjectUtil::LinkComponent(baseHero, attackBehaviour);
 
-    auto heroCollider = std::make_shared<spic::CircleCollider>((hero_width / 2) / hero_scale);
+    auto heroCollider = std::make_shared<spic::CircleCollider>((HeroWidth / 2.0) * HeroScale);
     GameObjectUtil::LinkComponent(baseHero, heroCollider);
 
-    auto heroRigidBody = std::make_shared<spic::RigidBody>(hero_mass, 0, spic::BodyType::dynamicBody);
+    auto heroRigidBody = std::make_shared<spic::RigidBody>(HeroMass, 0, spic::BodyType::dynamicBody);
     GameObjectUtil::LinkComponent(baseHero, heroRigidBody);
 
     return baseHero;
