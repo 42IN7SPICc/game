@@ -5,11 +5,6 @@
 
 void game::BulletBehaviour::OnStart()
 {
-    if (GameObject().expired())
-    {
-        throw std::runtime_error("The parent game object is expired");
-    }
-
     auto parent = GameObject().lock();
     _rigidBody = parent->GetComponent<spic::RigidBody>();
     if (!_rigidBody)

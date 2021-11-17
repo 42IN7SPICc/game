@@ -10,11 +10,6 @@ using namespace spic;
 
 void game::UserMovementBehaviour::OnStart()
 {
-    if (GameObject().expired())
-    {
-        throw std::runtime_error("The parent game object is expired");
-    }
-
     auto parent = GameObject().lock();
     _rigidBody = parent->GetComponent<spic::RigidBody>();
 
@@ -36,7 +31,6 @@ void game::UserMovementBehaviour::OnStart()
 
 void game::UserMovementBehaviour::OnUpdate()
 {
-    if (GameObject().expired()) return;
     auto parent = GameObject().lock();
     if (_healthBehaviour->Health() <= 0)
     {

@@ -17,7 +17,6 @@ void game::UserAttackBehaviour::OnStart()
 
 void game::UserAttackBehaviour::OnUpdate()
 {
-    if (GameObject().expired()) return;
     auto parent = GameObject().lock();
 
     if (spic::Input::GetKeyDown(spic::Input::KeyCode::SPACE))
