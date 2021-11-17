@@ -8,6 +8,7 @@
 #include "DamageBehaviour.hpp"
 #include "BulletBehaviour.hpp"
 #include "../../Utils/Layer.hpp"
+#include "../../Utils/PointUtil.hpp"
 
 using namespace game;
 
@@ -23,14 +24,16 @@ void UserAttackBehaviour::OnUpdate()
         auto parentPosition = _parent->AbsoluteTransform().position;
         auto mousePosition = spic::Input::MousePosition();
 
-        auto posDiff = spic::Point{mousePosition.x - parentPosition.x, mousePosition.y - parentPosition.y};
-        double distance = sqrt(posDiff.x * posDiff.x + posDiff.y * posDiff.y);
-        spic::Point force{posDiff.x / distance * _velocityMultiplier, posDiff.y / distance * _velocityMultiplier};
+        // Origin offsets
+        parentPosition.x += _origin->x;
+        parentPosition.y += _origin->y;
+
+        auto force = PointUtil::CalculateDirectionalPoint(parentPosition, mousePosition, _velocityMultiplier);
 
         // Bullet game object
         auto bullet = std::make_shared<spic::GameObject>("bullet", "enemies", Layer::Game);
-        bullet->Transform().position.x = parentPosition.x + _origin->x;
-        bullet->Transform().position.y = parentPosition.y + _origin->y;
+        bullet->Transform().position.x = parentPosition.x;
+        bullet->Transform().position.y = parentPosition.y;
 
         // Collider
         auto collider = std::make_shared<spic::CircleCollider>(8);
