@@ -2,6 +2,11 @@
   "name": "spic-game",
   "version-string": "latest",
   "dependencies": [
-    "rapidjson"
+    "rapidjson",
+    "sdl2",
+    "sdl2-image",
+    "sdl2-mixer",
+    "sdl2-ttf",
+    "box2d"
   ]
 }
