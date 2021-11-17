@@ -4,7 +4,8 @@
 #include <memory>
 #include "GameObject.hpp"
 
-namespace game {
+namespace game
+{
     class GameObjectUtil
     {
         public:
@@ -13,6 +14,5 @@ namespace game {
             static void LinkChild(const std::shared_ptr<spic::GameObject>& parent, const std::shared_ptr<spic::GameObject>& child);
     };
 }
-
 
 #endif
