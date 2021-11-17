@@ -3,13 +3,16 @@
 
 #include <BehaviourScript.hpp>
 #include "CoolDownBehaviour.hpp"
+#include "../Common/HealthBehaviour.hpp"
 
 namespace game
 {
     class HealAbilityBehaviour : public spic::BehaviourScript
     {
         private:
-            game::CoolDownBehaviour _coolDownBehaviour;
+            std::shared_ptr<game::CoolDownBehaviour> _coolDownBehaviour;
+            std::shared_ptr<game::HealthBehaviour> _healthBehaviour;
+
         public:
             HealAbilityBehaviour();
 

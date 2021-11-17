@@ -21,7 +21,8 @@ int game::HealthBehaviour::MaxHealth() const
 
 void game::HealthBehaviour::Health(int health)
 {
-    _health = health;
+    if(health <= _maxHealth)
+        _health = health;
 }
 
 void game::HealthBehaviour::Damage(int damage)
