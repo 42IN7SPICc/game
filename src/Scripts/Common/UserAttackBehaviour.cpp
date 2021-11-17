@@ -29,8 +29,8 @@ void UserAttackBehaviour::OnUpdate()
 
         // Bullet game object
         auto bullet = std::make_shared<spic::GameObject>("bullet", "enemies", Layer::Game);
-        bullet->Transform().position.x = parentPosition.x;
-        bullet->Transform().position.y = parentPosition.y;
+        bullet->Transform().position.x = parentPosition.x + _origin->x;
+        bullet->Transform().position.y = parentPosition.y + _origin->y;
 
         // Collider
         auto collider = std::make_shared<spic::CircleCollider>(8);
@@ -62,7 +62,8 @@ void UserAttackBehaviour::OnTriggerStay2D(const spic::Collider& collider)
     spic::Debug::LogWarning("Not implemented");
 }
 
-UserAttackBehaviour::UserAttackBehaviour(int damage, double velocityMultiplier) : _damage(damage),
-                                                                                  _velocityMultiplier(velocityMultiplier)
+UserAttackBehaviour::UserAttackBehaviour(int damage, double velocityMultiplier, spic::Point origin) : _damage(damage),
+                                                                                                      _velocityMultiplier(velocityMultiplier),
+                                                                                                      _origin(std::make_unique<spic::Point>(origin))
 {
 }

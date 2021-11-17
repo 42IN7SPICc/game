@@ -144,7 +144,7 @@ std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateBaseHero(int at
     auto userMovementBehaviour = std::make_shared<game::UserMovementBehaviour>(static_cast<float>(hero_velocity), idleAnimator, walkingAnimator, healthBehaviour);
     GameObjectUtil::LinkComponent(baseHero, userMovementBehaviour);
 
-    auto attackBehaviour = std::make_shared<game::UserAttackBehaviour>(attack, hero_bulletSpeed);
+    auto attackBehaviour = std::make_shared<game::UserAttackBehaviour>(attack, hero_bulletSpeed, spic::Point{2.5, 2.5});
     GameObjectUtil::LinkComponent(baseHero, attackBehaviour);
 
     auto heroCollider = std::make_shared<spic::CircleCollider>((hero_width / 2) / hero_scale);

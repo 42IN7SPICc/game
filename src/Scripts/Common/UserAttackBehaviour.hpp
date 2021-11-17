@@ -10,11 +10,12 @@ namespace game
     {
         private:
             std::shared_ptr<spic::GameObject> _parent;
+            std::unique_ptr<spic::Point> _origin;
             int _damage;
             double _velocityMultiplier;
 
         public:
-            explicit UserAttackBehaviour(int damage, double velocityMultiplier);
+            explicit UserAttackBehaviour(int damage, double velocityMultiplier, spic::Point origin);
 
             void OnStart() override;
 
