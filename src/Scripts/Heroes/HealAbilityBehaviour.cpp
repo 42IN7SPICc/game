@@ -12,9 +12,9 @@ game::HealAbilityBehaviour::HealAbilityBehaviour() : _coolDownBehaviour(std::mak
 
 void game::HealAbilityBehaviour::OnStart()
 {
-    _parent = GameObject().lock();
-    game::GameObjectUtil::LinkComponent(_parent, _coolDownBehaviour);
-    _healthBehaviour = _parent->GetComponent<HealthBehaviour>();
+    auto parent = GameObject().lock();
+    game::GameObjectUtil::LinkComponent(parent, _coolDownBehaviour);
+    _healthBehaviour = parent->GetComponent<HealthBehaviour>();
 }
 
 void game::HealAbilityBehaviour::OnUpdate()
