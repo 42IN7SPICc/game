@@ -14,7 +14,7 @@ namespace game
             double _velocityMultiplier;
 
         public:
-            explicit UserAttackBehaviour(int damage, double velocityMultiplier = 15.0);
+            explicit UserAttackBehaviour(int damage, double velocityMultiplier);
 
             void OnStart() override;
 
