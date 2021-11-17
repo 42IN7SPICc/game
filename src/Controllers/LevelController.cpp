@@ -24,6 +24,11 @@ std::shared_ptr<spic::GameObject> LevelController::GetLevel(const std::string& f
                          std::istreambuf_iterator<char>());
 
     levelFile.close();
+    rapidjson::Document document;
+    document.Parse(contents.c_str());
+
+    if (!document.HasMember("tiles"))
+        throw std::exception(std::string {"The tiles for `" + level.File + "` could not be parsed"}.c_str());
 
 }
 
@@ -40,23 +45,28 @@ void LevelController::InitializeLevels() {
 
 
 void LevelController::InitializeLevel(std::string file) {
-    std::ifstream levelFile(file.c_str());
-    std::string contents((std::istreambuf_iterator<char>(levelFile)),
-                         std::istreambuf_iterator<char>());
+    try {
+        std::ifstream levelFile(file.c_str());
+        std::string contents((std::istreambuf_iterator<char>(levelFile)),
+                             std::istreambuf_iterator<char>());
 
-    levelFile.close();
+        levelFile.close();
+        rapidjson::Document document;
+        document.Parse(contents.c_str());
 
-    rapidjson::Document document;
-    document.Parse(contents.c_str());
+        if (!document.HasMember("title"))
+            throw std::exception(std::string {"The title for `" + file + "` could not be parsed"}.c_str());
 
-    if (!document.HasMember("title"))
-        throw std::exception(std::string {"The title for `" + file + "` could not be parsed"}.c_str());
+        if (!document.HasMember("description"))
+            throw std::exception(std::string {"The description for `" + file + "` could not be parsed"}.c_str());
 
-    if (!document.HasMember("description"))
-        throw std::exception(std::string {"The description for `" + file + "` could not be parsed"}.c_str());
+        if (!document.HasMember("unlockThreshold"))
+            throw std::exception(std::string {"The unlockThreshold for `" + file + "` could not be parsed"}.c_str());
 
-    if (!document.HasMember("unlockThreshold"))
-        throw std::exception(std::string {"The unlockThreshold for `" + file + "` could not be parsed"}.c_str());
+        _levels.insert(std::make_pair(file.substr(0, file.size() - 5), Level {document["title"].GetString(), document["description"].GetString(), file, document["unlockThreshold"].GetInt()}));
+    }
+    catch (...) {
+        throw std::exception(std::string {"Failed to initialize level `" + file + "`."}.c_str());
+    }
 
-    _levels.insert(std::make_pair(file.substr(0, file.size() - 5), Level {document["title"].GetString(), document["description"].GetString(), file, document["unlockThreshold"].GetInt()}));
 }
