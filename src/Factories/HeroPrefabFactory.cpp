@@ -7,6 +7,7 @@
 #include "../Scripts/Common/AttackBehaviour.hpp"
 #include "../Scripts/Heroes/HealAbilityBehaviour.hpp"
 #include "../Utils/GameObjectUtil.hpp"
+#include "../Utils/Layer.hpp"
 
 const int hero_scale = 1; //default scale on 1
 const int hero_width = 200; //width of hero image
@@ -69,7 +70,7 @@ std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateJosephStalin()
 
 std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateBaseHero(int attack, int defense)
 {
-    auto baseHero = std::make_shared<spic::GameObject>("Hero", "Player", 1);
+    auto baseHero = std::make_shared<spic::GameObject>("Hero", "Player", Layer::Game);
     baseHero->Transform().scale = hero_scale;
 
     auto defaultSprite = std::make_shared<spic::Sprite>("resources/sprites/heroes/Idle/hero_idle_1.png", false, false, 0, 0);
