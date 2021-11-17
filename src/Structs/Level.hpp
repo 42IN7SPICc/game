@@ -3,7 +3,8 @@
 
 #include <string>
 
-namespace game {
+namespace game
+{
     struct Level
     {
         std::string Title;

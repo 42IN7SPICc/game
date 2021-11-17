@@ -4,7 +4,8 @@
 #include <string>
 #include "TileType.hpp"
 
-namespace game {
+namespace game
+{
     class TileUtil
     {
         public:

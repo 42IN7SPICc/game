@@ -1,5 +1,5 @@
 #include "LevelController.hpp"
-#include "../Utils/StringHelper.hpp"
+#include "../Utils/StringUtil.hpp"
 #include "../Utils/GameObjectUtil.hpp"
 #include "../Utils/TileUtil.hpp"
 #include "../Utils/Layer.hpp"
@@ -52,7 +52,7 @@ void LevelController::InitializeLevels()
     {
         std::string file{entry.path().string()};
 
-        if (StringHelper::EndsWith(file, ext))
+        if (StringUtil::EndsWith(file, ext))
         {
             auto name = file.substr(path.size() + 1, file.size() - 1);
             for (int i = 0; i < ext.size(); ++i) name.pop_back();

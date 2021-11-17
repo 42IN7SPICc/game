@@ -1,4 +1,3 @@
-
 #ifndef SPIC_GAME_TILETYPE_HPP
 #define SPIC_GAME_TILETYPE_HPP
 

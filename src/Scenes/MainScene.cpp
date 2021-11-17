@@ -1,4 +1,5 @@
 #include "MainScene.hpp"
+#include "LevelScene.hpp"
 
 #include "Api.hpp"
 #include "../Utils/Layer.hpp"
@@ -19,6 +20,13 @@ MainScene::MainScene()
     playButton->Transform().position = {100, 250};
     playButton->OnClick([]() {
         Debug::Log("Play Button clicked");
+
+        // Start level for now
+        LevelController levelController{};
+        levelController.InitializeLevels();
+
+        auto scene = std::make_shared<LevelScene>("welcome_to_the_war", levelController);
+        Engine::Instance().PushScene(scene);
     });
     GameObjectUtil::LinkComponent(playButton, std::make_shared<spic::Sprite>("resources/sprites/hud/buttons/play.png", false, false, 0, 0));
 

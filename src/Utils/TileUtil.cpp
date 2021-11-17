@@ -4,7 +4,8 @@ using namespace game;
 
 std::string TileUtil::GetSprite(const game::TileType& tileType)
 {
-    switch (tileType) {
+    switch (tileType)
+    {
         case Bridge:
             return "resources/sprites/tiles/bridge.png";
         case Grass:
