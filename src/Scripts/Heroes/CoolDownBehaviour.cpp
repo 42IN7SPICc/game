@@ -18,10 +18,8 @@ void game::CoolDownBehaviour::OnUpdate()
 {
     if (_cooledDown) return;
 
-    double timescale = spic::Time::TimeScale();
-    double deltaTime = spic::Time::DeltaTime();
-    double time_difference = timescale * deltaTime;
-    _coolDown -= time_difference;
+    double timeDiff = spic::Time::DeltaTime() * spic::Time::TimeScale();
+    _coolDown -= timeDiff;
 
     if (_coolDown <= 0)
     {
