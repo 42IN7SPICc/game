@@ -19,9 +19,9 @@ void game::BulletBehaviour::OnStart()
     }
 
     auto collider = _parent->GetComponent<spic::Collider>();
-    if (!collider)
+    if (!collider || !collider->IsTrigger())
     {
-        throw std::runtime_error("To instantiate a bullet behaviour the game object is required to have a collider");
+        throw std::runtime_error("To instantiate a bullet behaviour the game object is required to have a trigger collider");
     }
 }
 
