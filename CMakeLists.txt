@@ -7,7 +7,7 @@ set(PROJECT_LIBS_DIR ${PROJECT_SOURCE_DIR}/libs)
 
 set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 
-find_package(rapidjson CONFIG REQUIRED)
+find_package(RapidJSON CONFIG REQUIRED)
 
 #include_directories(${PROJECT_LIBS_DIR}/spic-api/include)
 include_directories(${PROJECT_NAME} ${PROJECT_LIBS_DIR}/spic-engine/includes/spic-api-headers)
