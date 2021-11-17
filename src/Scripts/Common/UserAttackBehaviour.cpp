@@ -17,10 +17,9 @@ void game::UserAttackBehaviour::OnStart()
 
 void game::UserAttackBehaviour::OnUpdate()
 {
-    auto parent = GameObject().lock();
-
     if (spic::Input::GetKeyDown(spic::Input::KeyCode::SPACE))
     {
+        auto parent = GameObject().lock();
         auto parentPosition = parent->AbsoluteTransform().position;
         auto mousePosition = spic::Input::MousePosition();
 
