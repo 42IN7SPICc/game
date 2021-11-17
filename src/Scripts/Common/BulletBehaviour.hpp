@@ -11,7 +11,6 @@ namespace game
     class BulletBehaviour : public spic::BehaviourScript
     {
         private:
-            std::shared_ptr<spic::GameObject> _parent;
             std::shared_ptr<spic::RigidBody> _rigidBody;
             std::unique_ptr<spic::Point> _direction;
 

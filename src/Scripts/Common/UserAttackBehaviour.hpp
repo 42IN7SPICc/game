@@ -1,7 +1,6 @@
 #ifndef SPIC_GAME_USERATTACKBEHAVIOUR_HPP
 #define SPIC_GAME_USERATTACKBEHAVIOUR_HPP
 
-
 #include <BehaviourScript.hpp>
 
 namespace game
@@ -9,7 +8,6 @@ namespace game
     class UserAttackBehaviour : public spic::BehaviourScript
     {
         private:
-            std::shared_ptr<spic::GameObject> _parent;
             std::unique_ptr<spic::Point> _origin;
             int _damage;
             double _velocityMultiplier;

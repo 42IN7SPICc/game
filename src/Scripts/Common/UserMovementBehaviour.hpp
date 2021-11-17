@@ -13,7 +13,6 @@ namespace game
     {
         private:
             float _velocity;
-            std::shared_ptr<spic::GameObject> _parent;
             std::shared_ptr<spic::RigidBody> _rigidBody;
             std::shared_ptr<spic::Animator> _idleAnimator;
             std::shared_ptr<spic::Animator> _walkingAnimator;

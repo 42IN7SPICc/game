@@ -5,20 +5,20 @@
 
 void game::BulletBehaviour::OnStart()
 {
-    _parent = GameObject().lock();
-    if (!_parent)
+    if (GameObject().expired())
     {
-        throw std::runtime_error("The parent game object could not be found");
+        throw std::runtime_error("The parent game object is expired");
     }
 
-    _rigidBody = _parent->GetComponent<spic::RigidBody>();
+    auto parent = GameObject().lock();
+    _rigidBody = parent->GetComponent<spic::RigidBody>();
     if (!_rigidBody)
     {
         _rigidBody = std::make_shared<spic::RigidBody>(1, 0, spic::BodyType::dynamicBody);
-        game::GameObjectUtil::LinkComponent(_parent, _rigidBody);
+        game::GameObjectUtil::LinkComponent(parent, _rigidBody);
     }
 
-    auto collider = _parent->GetComponent<spic::Collider>();
+    auto collider = parent->GetComponent<spic::Collider>();
     if (!collider || !collider->IsTrigger())
     {
         throw std::runtime_error("To instantiate a bullet behaviour the game object is required to have a trigger collider");

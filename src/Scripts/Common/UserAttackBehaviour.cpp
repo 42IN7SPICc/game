@@ -4,24 +4,25 @@
 #include <CircleCollider.hpp>
 #include <Engine.hpp>
 #include "UserAttackBehaviour.hpp"
-#include "../../Utils/GameObjectUtil.hpp"
 #include "DamageBehaviour.hpp"
 #include "BulletBehaviour.hpp"
+#include "../../Utils/GameObjectUtil.hpp"
 #include "../../Utils/Layer.hpp"
 #include "../../Utils/PointUtil.hpp"
 
-using namespace game;
-
-void UserAttackBehaviour::OnStart()
+void game::UserAttackBehaviour::OnStart()
 {
-    _parent = GameObject().lock();
+    // No implementation required
 }
 
-void UserAttackBehaviour::OnUpdate()
+void game::UserAttackBehaviour::OnUpdate()
 {
+    if (GameObject().expired()) return;
+    auto parent = GameObject().lock();
+
     if (spic::Input::GetKeyDown(spic::Input::KeyCode::SPACE))
     {
-        auto parentPosition = _parent->AbsoluteTransform().position;
+        auto parentPosition = parent->AbsoluteTransform().position;
         auto mousePosition = spic::Input::MousePosition();
 
         // Origin offsets
@@ -50,23 +51,23 @@ void UserAttackBehaviour::OnUpdate()
     }
 }
 
-void UserAttackBehaviour::OnTriggerEnter2D(const spic::Collider& collider)
+void game::UserAttackBehaviour::OnTriggerEnter2D(const spic::Collider& collider)
 {
     spic::Debug::LogWarning("Not implemented");
 }
 
-void UserAttackBehaviour::OnTriggerExit2D(const spic::Collider& collider)
+void game::UserAttackBehaviour::OnTriggerExit2D(const spic::Collider& collider)
 {
     spic::Debug::LogWarning("Not implemented");
 }
 
-void UserAttackBehaviour::OnTriggerStay2D(const spic::Collider& collider)
+void game::UserAttackBehaviour::OnTriggerStay2D(const spic::Collider& collider)
 {
     spic::Debug::LogWarning("Not implemented");
 }
 
-UserAttackBehaviour::UserAttackBehaviour(int damage, double velocityMultiplier, spic::Point origin) : _damage(damage),
-                                                                                                      _velocityMultiplier(velocityMultiplier),
-                                                                                                      _origin(std::make_unique<spic::Point>(origin))
+game::UserAttackBehaviour::UserAttackBehaviour(int damage, double velocityMultiplier, spic::Point origin) : _damage(damage),
+                                                                                                            _velocityMultiplier(velocityMultiplier),
+                                                                                                            _origin(std::make_unique<spic::Point>(origin))
 {
 }
