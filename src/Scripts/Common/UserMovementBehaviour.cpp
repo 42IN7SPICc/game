@@ -10,8 +10,8 @@ using namespace spic;
 
 void game::UserMovementBehaviour::OnStart()
 {
-    _parent = GameObject().lock();
-    _rigidBody = _parent->GetComponent<spic::RigidBody>();
+    auto parent = GameObject().lock();
+    _rigidBody = parent->GetComponent<spic::RigidBody>();
 
     if (!_walkingAnimator)
     {
@@ -31,7 +31,9 @@ void game::UserMovementBehaviour::OnStart()
 
 void game::UserMovementBehaviour::OnUpdate()
 {
-    if (_healthBehaviour->Health() <= 0) {
+    auto parent = GameObject().lock();
+    if (_healthBehaviour->Health() <= 0)
+    {
         _walkingAnimator->Stop();
         _idleAnimator->Stop();
         return;
@@ -54,7 +56,7 @@ void game::UserMovementBehaviour::OnUpdate()
     {
         _rigidBody->AddForce(spic::Point{-_velocity, 0});
         moving = true;
-        auto sprite = _parent->GetComponent<spic::Sprite>();
+        auto sprite = parent->GetComponent<spic::Sprite>();
         sprite->FlipX(true);
     }
 
