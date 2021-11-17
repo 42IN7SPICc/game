@@ -4,6 +4,7 @@
 #include "Api.hpp"
 
 #include "Scenes/MainScene.hpp"
+#include "Scenes/LevelScene.hpp"
 
 using namespace game;
 using namespace spic;
@@ -14,19 +15,15 @@ int main(int argc, char* args[])
     Engine& engine = Engine::Instance();
 
     EngineConfig config{{"Avans Wars", 1366, 786, true}};
-#if !NDEBUG
-    config.window.fullscreen = false;
-#endif
+//#if !NDEBUG
+//    config.window.fullscreen = false;
+//#endif
     engine.Init(config);
 
-    auto levelScene = std::make_shared<Scene>();
-
-    LevelController levelController {};
+    LevelController levelController{};
     levelController.InitializeLevels();
 
-    levelScene->Contents().push_back(levelController.GetLevel("welcome_to_the_war"));
-
-    auto scene = std::make_shared<MainScene>();
+    auto scene = std::make_shared<LevelScene>("welcome_to_the_war", levelController);
     engine.PushScene(scene);
 
     engine.Start();
