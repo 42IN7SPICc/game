@@ -5,7 +5,7 @@
 
 const int HealAbilityCoolDown = 5;
 
-game::HealAbilityBehaviour::HealAbilityBehaviour() : _coolDownBehaviour(std::make_shared<CoolDownBehaviour>(CoolDownBehaviour(heal_ability_cool_down)))
+game::HealAbilityBehaviour::HealAbilityBehaviour() : _coolDownBehaviour(std::make_shared<CoolDownBehaviour>(CoolDownBehaviour(HealAbilityCoolDown)))
 {
 
 }
