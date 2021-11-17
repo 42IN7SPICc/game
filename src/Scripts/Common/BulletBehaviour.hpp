@@ -3,6 +3,8 @@
 
 #include <BehaviourScript.hpp>
 #include <Point.hpp>
+#include <RigidBody.hpp>
+#include <GameObject.hpp>
 
 namespace game
 {
@@ -10,6 +12,7 @@ namespace game
     {
         private:
             std::shared_ptr<spic::GameObject> _parent;
+            std::shared_ptr<spic::RigidBody> _rigidBody;
             std::unique_ptr<spic::Point> _direction;
 
         public:
