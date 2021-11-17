@@ -31,7 +31,7 @@ namespace game
 
             [[nodiscard]] double CoolDown() const;
 
-            void CooledDown(double coolDown);
+            void CoolDown(double coolDown);
     };
 }
 

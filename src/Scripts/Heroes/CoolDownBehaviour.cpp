@@ -60,7 +60,7 @@ double game::CoolDownBehaviour::CoolDown() const
     return _coolDown;
 }
 
-void game::CoolDownBehaviour::CooledDown(double coolDown)
+void game::CoolDownBehaviour::CoolDown(double coolDown)
 {
     _coolDown = coolDown;
 }
