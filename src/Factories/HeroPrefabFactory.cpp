@@ -11,6 +11,7 @@
 
 const int hero_scale = 1; //default scale on 1
 const int hero_width = 200; //width of hero image
+const int hero_height = 320; //height of hero image
 const int hero_mass = 50; //random chosen mass
 const int hero_velocity = 50; //random chosen velocity (looks good)
 const double hero_bulletSpeed = 17.5; // random chosen bullet speed (looks alright)
@@ -74,7 +75,7 @@ std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateBaseHero(int at
     auto baseHero = std::make_shared<spic::GameObject>("Hero", "Player", Layer::Game);
     baseHero->Transform().scale = hero_scale;
 
-    auto defaultSprite = std::make_shared<spic::Sprite>("resources/sprites/heroes/Idle/hero_idle_1.png", false, false, 0, 0);
+    auto defaultSprite = std::make_shared<spic::Sprite>("resources/sprites/heroes/Idle/hero_idle_1.png", false, false, 1, 0);
     GameObjectUtil::LinkComponent(baseHero, defaultSprite);
 
     std::vector<std::shared_ptr<spic::Sprite>> idleSprites;
@@ -144,10 +145,11 @@ std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateBaseHero(int at
     auto userMovementBehaviour = std::make_shared<game::UserMovementBehaviour>(static_cast<float>(hero_velocity), idleAnimator, walkingAnimator, healthBehaviour);
     GameObjectUtil::LinkComponent(baseHero, userMovementBehaviour);
 
-    auto attackBehaviour = std::make_shared<game::UserAttackBehaviour>(attack, hero_bulletSpeed, spic::Point{2.5, 2.5});
+    spic::Point originPoint{(hero_width / 2.0) * hero_scale, (hero_height / 2.0) * hero_scale};
+    auto attackBehaviour = std::make_shared<game::UserAttackBehaviour>(attack, hero_bulletSpeed, originPoint);
     GameObjectUtil::LinkComponent(baseHero, attackBehaviour);
 
-    auto heroCollider = std::make_shared<spic::CircleCollider>((hero_width / 2) / hero_scale);
+    auto heroCollider = std::make_shared<spic::CircleCollider>((hero_width / 2.0) * hero_scale);
     GameObjectUtil::LinkComponent(baseHero, heroCollider);
 
     auto heroRigidBody = std::make_shared<spic::RigidBody>(hero_mass, 0, spic::BodyType::dynamicBody);
