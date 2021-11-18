@@ -15,6 +15,8 @@
 
 using namespace game;
 
+const int TileSize = 32;
+
 std::shared_ptr<spic::GameObject> LevelController::GetLevelGameObject(const std::string& fileName)
 {
     auto document = LoadFile(fileName);
@@ -33,8 +35,8 @@ std::shared_ptr<spic::GameObject> LevelController::GetLevelGameObject(const std:
         auto tile = std::make_shared<spic::GameObject>(name, "tile", Layer::Game);
         auto sprite = std::make_shared<spic::Sprite>(TileUtil::GetSprite((TileType) tiles[i]["type"].GetInt()), false, false, 1, 1);
 
-        tile->Transform().position.x = tiles[i]["x"].GetInt() * 32;
-        tile->Transform().position.y = tiles[i]["y"].GetInt() * 32;
+        tile->Transform().position.x = tiles[i]["x"].GetInt() * TileSize;
+        tile->Transform().position.y = tiles[i]["y"].GetInt() * TileSize;
 
         GameObjectUtil::LinkComponent(tile, sprite);
         GameObjectUtil::LinkChild(tileMap, tile);
