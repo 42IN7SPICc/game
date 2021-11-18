@@ -1,11 +1,9 @@
-#include "Engine.hpp"
 #include "Api.hpp"
 
 #include "Scenes/MainScene.hpp"
 
 using namespace game;
 using namespace spic;
-using namespace game;
 
 int main(int argc, char* args[])
 {
