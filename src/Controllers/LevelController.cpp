@@ -94,7 +94,7 @@ rapidjson::Document LevelController::LoadFile(const std::string& fileName)
 {
     try
     {
-        std::ifstream levelFile(fileName.c_str());
+        std::ifstream levelFile(fileName);
         std::string contents((std::istreambuf_iterator<char>(levelFile)), std::istreambuf_iterator<char>());
 
         levelFile.close();
