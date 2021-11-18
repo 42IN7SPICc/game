@@ -22,7 +22,7 @@ std::shared_ptr<spic::GameObject> LevelController::GetLevelGameObject(const std:
     auto tileMap = std::make_shared<spic::GameObject>("TileGrid", "tilemap", Layer::Game);
 
     if (!document.HasMember("tiles"))
-        throw std::runtime_error(std::string{"The tiles for `" + _levels[fileName].File + "` could not be parsed"}.c_str());
+        throw std::runtime_error(std::string{"The tiles for `" + _levels[fileName].File + "` could not be parsed"});
 
     const rapidjson::Value& tiles = document["tiles"];
 
@@ -69,13 +69,13 @@ void LevelController::InitializeLevel(const std::string& file, const std::string
         auto document = LoadFile(file);
 
         if (!document.HasMember("title"))
-            throw std::runtime_error(std::string{"The title for `" + file + "` could not be parsed"}.c_str());
+            throw std::runtime_error(std::string{"The title for `" + file + "` could not be parsed"});
 
         if (!document.HasMember("description"))
-            throw std::runtime_error(std::string{"The description for `" + file + "` could not be parsed"}.c_str());
+            throw std::runtime_error(std::string{"The description for `" + file + "` could not be parsed"});
 
         if (!document.HasMember("unlockThreshold"))
-            throw std::runtime_error(std::string{"The unlockThreshold for `" + file + "` could not be parsed"}.c_str());
+            throw std::runtime_error(std::string{"The unlockThreshold for `" + file + "` could not be parsed"});
 
         _levels.insert(std::make_pair(name, Level{
                 document["title"].GetString(),
@@ -86,7 +86,7 @@ void LevelController::InitializeLevel(const std::string& file, const std::string
     }
     catch (...)
     {
-        throw std::runtime_error(std::string{"Failed to initialize level `" + file + "`."}.c_str());
+        throw std::runtime_error(std::string{"Failed to initialize level `" + file + "`."});
     }
 }
 
@@ -102,14 +102,14 @@ rapidjson::Document LevelController::LoadFile(const std::string& fileName)
 
         if (document.Parse(contents.c_str()).GetParseError() != rapidjson::kParseErrorNone)
         {
-            throw std::runtime_error(std::string{"Failed to parse `" + fileName + "`."}.c_str());
+            throw std::runtime_error(std::string{"Failed to parse `" + fileName + "`."});
         }
 
         return document;
     }
     catch (std::exception&)
     {
-        throw std::runtime_error(std::string{"Something went wrong handling `" + fileName + "`."}.c_str());
+        throw std::runtime_error(std::string{"Something went wrong handling `" + fileName + "`."});
     }
 }
 
@@ -118,6 +118,6 @@ Level LevelController::GetLevelDto(const std::string& levelName)
     if (_levels.contains(levelName))
         return _levels.at(levelName);
 
-    throw std::runtime_error(std::string{"Level `" + levelName + "` does not exist."}.c_str());
+    throw std::runtime_error(std::string{"Level `" + levelName + "` does not exist."});
 }
 
