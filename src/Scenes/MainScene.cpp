@@ -19,9 +19,6 @@ MainScene::MainScene()
     auto playButton = std::make_shared<spic::Button>("Play Button", "button_play", Layer::HUD, 250, 85);
     playButton->Transform().position = {100, 250};
     playButton->OnClick([]() {
-        Debug::Log("Play Button clicked");
-
-        // Start level for now
         LevelController levelController{};
         levelController.InitializeLevels();
 
