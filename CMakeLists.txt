@@ -10,7 +10,6 @@ set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 include(vcpkg_install_deps.cmake)
 vcpkg_install_deps(MANIFEST_ROOT ${PROJECT_LIBS_DIR}/spic-engine)
 
-#include_directories(${PROJECT_LIBS_DIR}/spic-api/include)
 include_directories(${PROJECT_NAME} ${PROJECT_LIBS_DIR}/spic-engine/includes/spic-api-headers)
 
 if (NOT DEFINED BINARY_RESOURCES_FOLDER)
