@@ -1,5 +1,6 @@
 #include "CreditScene.hpp"
 
+#include "../Factories/ButtonPrefabFactory.hpp"
 #include "../Factories/BackgroundPrefabFactory.hpp"
 #include "../Utils/Layer.hpp"
 
@@ -23,7 +24,10 @@ CreditScene::CreditScene()
     creditsText->TextColor(Color::white());
     creditsText->Content("Avans Wars: WW2 has been created by\n\nDaan Hendriks\nMax van de Vossenberg\nSander Jochems\nTommy Hosewol");
 
+    auto closeButton = ButtonPrefabFactory::CreateCloseButton({25, 25});
+
     Contents().push_back(background);
+    Contents().push_back(closeButton);
     Contents().push_back(titleText);
     Contents().push_back(creditsText);
 }
