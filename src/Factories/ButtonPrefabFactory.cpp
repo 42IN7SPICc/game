@@ -8,7 +8,7 @@
 
 using namespace game;
 
-std::shared_ptr<spic::Button> ButtonPrefabFactory::CreateButton(const std::string& name, const std::string& tag, const std::string& text, const spic::Point position)
+std::shared_ptr<spic::Button> ButtonPrefabFactory::CreateOutlineButton(const std::string& name, const std::string& tag, const std::string& text, const spic::Point position)
 {
     auto button = std::make_shared<spic::Button>(name, tag, Layer::HUD, 250, 85);
     button->Transform().position = position;

@@ -22,7 +22,7 @@ MainScene::MainScene()
     auto titleText = std::make_shared<spic::Text>("Title Text", "text_title", Layer::HUD, 1720, 100, "Avans Wars: WW2", "resources/fonts/capture_it.otf", 82, Alignment::left, Color::white());
     titleText->Transform().position = {100, 100};
 
-    auto playButton = ButtonPrefabFactory::CreateButton("Play Button", "button_play", "PLAY", {100, 250});
+    auto playButton = ButtonPrefabFactory::CreateOutlineButton("Play Button", "button_play", "PLAY", {100, 250});
     playButton->OnClick([]() {
         LevelController levelController{};
         levelController.InitializeLevels();
@@ -31,12 +31,15 @@ MainScene::MainScene()
         Engine::Instance().PushScene(scene);
     });
 
-    auto exitButton = ButtonPrefabFactory::CreateButton("Exit Button", "button_exit", "EXIT", {100, 375});
+    auto exitButton = ButtonPrefabFactory::CreateOutlineButton("Exit Button", "button_exit", "EXIT", {100, 375});
     exitButton->OnClick([]() {
         Engine::Instance().PopScene();
     });
 
-    auto creditsButton = ButtonPrefabFactory::CreateButton("Credits Button", "button_credits", "CREDITS", {100, 500});
+    auto creditsButton = ButtonPrefabFactory::CreateOutlineButton("Credits Button", "button_credits", "CREDITS", {
+            100,
+            500
+    });
     creditsButton->OnClick([]() {
         Engine::Instance().PushScene(std::make_shared<CreditScene>());
     });
