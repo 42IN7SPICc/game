@@ -38,8 +38,8 @@ MainScene::MainScene()
     GameObjectUtil::LinkComponent(exitButton, std::make_shared<spic::Sprite>("resources/sprites/hud/buttons/exit.png", false, false, 0, 0));
 
     auto hero = HeroPrefabFactory::CreateHero(static_cast<HeroName>(RandomUtil::Next(HeroName::DesmondDoss, HeroName::JosephStalin)));
-    hero->GetComponent<UserMovementBehaviour>()->Controllable(false);
     hero->Transform().position = {900, 300};
+    hero->GetComponent<UserMovementBehaviour>()->Controllable(false);
 
     Contents().push_back(background);
     Contents().push_back(hero);
