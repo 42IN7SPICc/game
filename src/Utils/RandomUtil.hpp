@@ -1,5 +1,5 @@
-#ifndef KMINTAPP_RANDOM_HPP
-#define KMINTAPP_RANDOM_HPP
+#ifndef SPIC_GAME_RANDOMUTIL_HPP
+#define SPIC_GAME_RANDOMUTIL_HPP
 
 #include <random>
 
@@ -26,4 +26,4 @@ namespace game
     };
 }
 
-#endif //KMINTAPP_RANDOM_HPP
+#endif //SPIC_GAME_RANDOMUTIL_HPP
