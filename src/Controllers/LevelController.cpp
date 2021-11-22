@@ -43,6 +43,7 @@ std::shared_ptr<spic::GameObject> LevelController::GetLevelGameObject(const std:
 //    }
 //
 //    return tileMap;
+    return {};
 }
 
 void LevelController::InitializeLevels()
