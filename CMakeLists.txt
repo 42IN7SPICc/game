@@ -24,4 +24,4 @@ file(GLOB_RECURSE SOURCE src/*.cpp)
 
 add_executable(${PROJECT_NAME} ${SOURCE})
 add_dependencies(${PROJECT_NAME} copy_assets)
-target_link_libraries(${PROJECT_NAME} PRIVATE spic-engine rapidjson)
+target_link_libraries(${PROJECT_NAME} PRIVATE spic-engine)
