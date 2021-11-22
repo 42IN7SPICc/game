@@ -11,11 +11,7 @@ namespace game
             static RandomUtil _instance;
             std::default_random_engine _engine;
 
-            RandomUtil()
-            {
-                std::random_device device{};
-                _engine = std::default_random_engine{device()};
-            }
+            RandomUtil();
 
         public:
             static int Next(int min, int max)
