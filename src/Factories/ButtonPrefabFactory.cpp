@@ -1,8 +1,10 @@
 #include "ButtonPrefabFactory.hpp"
 
+#include "Engine.hpp"
 #include "Sprite.hpp"
 #include "Text.hpp"
 
+#include "../Scripts/Common/CloseSceneBehaviour.hpp"
 #include "../Utils/GameObjectUtil.hpp"
 #include "../Utils/Layer.hpp"
 
@@ -25,6 +27,23 @@ std::shared_ptr<spic::Button> ButtonPrefabFactory::CreateOutlineButton(const std
 
     GameObjectUtil::LinkComponent(button, buttonSprite);
     GameObjectUtil::LinkChild(button, buttonText);
+
+    return button;
+}
+
+std::shared_ptr<spic::Button> ButtonPrefabFactory::CreateCloseButton(const spic::Point position)
+{
+    auto button = std::make_shared<spic::Button>("Close Button", "button_close", Layer::HUD, 250, 85);
+    button->Transform().position = position;
+    button->OnClick([]() {
+        spic::Engine::Instance().PopScene();
+    });
+
+    auto buttonSprite = std::make_shared<spic::Sprite>("resources/sprites/hud/buttons/back.png", false, false, 0, 0);
+    auto closeSceneBehaviour = std::make_shared<CloseSceneBehaviour>();
+
+    GameObjectUtil::LinkComponent(button, buttonSprite);
+    GameObjectUtil::LinkComponent(button, closeSceneBehaviour);
 
     return button;
 }
