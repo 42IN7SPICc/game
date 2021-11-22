@@ -33,7 +33,7 @@ std::shared_ptr<spic::Button> ButtonPrefabFactory::CreateOutlineButton(const std
 
 std::shared_ptr<spic::Button> ButtonPrefabFactory::CreateCloseButton(const spic::Point position)
 {
-    auto button = std::make_shared<spic::Button>("Close Button", "button_close", Layer::HUD, 250, 85);
+    auto button = std::make_shared<spic::Button>("Close Button", "button_close", Layer::HUD, 48, 48);
     button->Transform().position = position;
     button->OnClick([]() {
         spic::Engine::Instance().PopScene();
