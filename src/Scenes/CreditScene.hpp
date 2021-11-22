@@ -7,6 +7,8 @@ namespace game
 {
     class CreditScene : public spic::Scene
     {
+        public:
+            CreditScene();
     };
 }
 
