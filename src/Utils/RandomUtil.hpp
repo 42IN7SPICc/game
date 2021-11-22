@@ -9,6 +9,7 @@ namespace game
     {
         private:
             static RandomUtil _instance;
+            std::random_device _randomDevice;
             std::default_random_engine _engine;
 
             RandomUtil();
