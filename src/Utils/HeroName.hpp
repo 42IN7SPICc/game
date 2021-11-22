@@ -2,7 +2,7 @@
 #define SPIC_GAME_HERONAME_HPP
 
 namespace game {
-    enum class HeroName
+    enum HeroName
     {
         DesmondDoss,
         BernardIJzerdraat,
