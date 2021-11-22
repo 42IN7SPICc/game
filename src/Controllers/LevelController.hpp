@@ -5,7 +5,7 @@
 #include <string>
 
 #include "BehaviourScript.hpp"
-#include "rapidjson/document.h"
+//#include "rapidjson/document.h"
 #include "../Structs/Level.hpp"
 
 namespace game
@@ -22,7 +22,7 @@ namespace game
         private:
             void InitializeLevel(const std::string& file, const std::string& name);
 
-            rapidjson::Document LoadFile(const std::string& fileName);
+//            rapidjson::Document LoadFile(const std::string& fileName);
 
             std::map<std::string, Level> _levels{};
     };
