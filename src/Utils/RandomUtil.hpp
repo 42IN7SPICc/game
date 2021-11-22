@@ -14,11 +14,7 @@ namespace game
             RandomUtil();
 
         public:
-            static int Next(int min, int max)
-            {
-                std::uniform_int_distribution<int> dist{min, max};
-                return dist(_instance._engine);
-            }
+            static int Next(int min, int max);
     };
 }
 
