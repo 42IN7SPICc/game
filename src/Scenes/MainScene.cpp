@@ -2,8 +2,12 @@
 #include "LevelScene.hpp"
 
 #include "Api.hpp"
+#include "../Factories/HeroPrefabFactory.hpp"
 #include "../Utils/Layer.hpp"
 #include "../Utils/GameObjectUtil.hpp"
+#include "../Utils/RandomUtil.hpp"
+#include "../Scripts/Common/UserAttackBehaviour.hpp"
+#include "../Scripts/Common/UserMovementBehaviour.hpp"
 
 using namespace spic;
 using namespace game;
@@ -34,7 +38,13 @@ MainScene::MainScene()
     });
     GameObjectUtil::LinkComponent(exitButton, std::make_shared<spic::Sprite>("resources/sprites/hud/buttons/exit.png", false, false, 0, 0));
 
+    auto hero = HeroPrefabFactory::CreateHero(static_cast<HeroName>(RandomUtil::Next(HeroName::DesmondDoss, HeroName::JosephStalin)));
+    hero->Transform().position = {900, 300};
+    hero->GetComponent<UserMovementBehaviour>()->Controllable(false);
+    hero->RemoveComponent(hero->GetComponent<UserAttackBehaviour>());
+
     Contents().push_back(background);
+    Contents().push_back(hero);
     Contents().push_back(titleText);
     Contents().push_back(playButton);
     Contents().push_back(exitButton);

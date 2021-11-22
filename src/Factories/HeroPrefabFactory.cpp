@@ -9,6 +9,8 @@
 #include "../Utils/Layer.hpp"
 #include "../Scripts/Common/UserAttackBehaviour.hpp"
 
+#include <stdexcept>
+
 const int HeroScale = 1; //default scale on 1
 const int HeroWidth = 200; //width of hero image
 const int HeroHeight = 320; //height of hero image
@@ -31,6 +33,8 @@ std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateHero(game::Hero
         case HeroName::JosephStalin:
             return CreateJosephStalin();
     }
+
+    throw std::runtime_error("Hero not implemented.");
 }
 
 std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateDesmondDoss()

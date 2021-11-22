@@ -8,6 +8,14 @@
 
 using namespace spic;
 
+game::UserMovementBehaviour::UserMovementBehaviour(float velocity, std::shared_ptr<spic::Animator> idleAnimator, std::shared_ptr<spic::Animator> walkingAnimator, std::shared_ptr<game::HealthBehaviour> healthBehaviour) : _velocity(velocity),
+                                                                                                                                                                                                                            _controllable(true),
+                                                                                                                                                                                                                            _idleAnimator(std::move(idleAnimator)),
+                                                                                                                                                                                                                            _walkingAnimator(std::move(walkingAnimator)),
+                                                                                                                                                                                                                            _healthBehaviour(std::move(healthBehaviour))
+{
+}
+
 void game::UserMovementBehaviour::OnStart()
 {
     auto parent = GameObject().lock();
@@ -40,30 +48,33 @@ void game::UserMovementBehaviour::OnUpdate()
     }
 
     bool moving = false;
-    if (Input::GetKey(Input::KeyCode::W))
+    if (_controllable)
     {
-        _rigidBody->AddForce(spic::Point{0, -_velocity});
-        moving = true;
-    }
+        if (Input::GetKey(Input::KeyCode::W))
+        {
+            _rigidBody->AddForce(spic::Point{0, -_velocity});
+            moving = true;
+        }
 
-    if (Input::GetKey(Input::KeyCode::S))
-    {
-        _rigidBody->AddForce(spic::Point{0, _velocity});
-        moving = true;
-    }
+        if (Input::GetKey(Input::KeyCode::S))
+        {
+            _rigidBody->AddForce(spic::Point{0, _velocity});
+            moving = true;
+        }
 
-    if (Input::GetKey(Input::KeyCode::A))
-    {
-        _rigidBody->AddForce(spic::Point{-_velocity, 0});
-        moving = true;
-        auto sprite = parent->GetComponent<spic::Sprite>();
-        sprite->FlipX(true);
-    }
+        if (Input::GetKey(Input::KeyCode::A))
+        {
+            _rigidBody->AddForce(spic::Point{-_velocity, 0});
+            moving = true;
+            auto sprite = parent->GetComponent<spic::Sprite>();
+            sprite->FlipX(true);
+        }
 
-    if (Input::GetKey(Input::KeyCode::D))
-    {
-        _rigidBody->AddForce(spic::Point{_velocity, 0});
-        moving = true;
+        if (Input::GetKey(Input::KeyCode::D))
+        {
+            _rigidBody->AddForce(spic::Point{_velocity, 0});
+            moving = true;
+        }
     }
 
     if (moving)
@@ -93,9 +104,12 @@ void game::UserMovementBehaviour::OnTriggerStay2D(const spic::Collider& collider
     Debug::LogWarning("Not implemented");
 }
 
-game::UserMovementBehaviour::UserMovementBehaviour(float velocity, std::shared_ptr<spic::Animator> idleAnimator, std::shared_ptr<spic::Animator> walkingAnimator, std::shared_ptr<game::HealthBehaviour> healthBehaviour) : _velocity(velocity),
-                                                                                                                                                                                                                            _idleAnimator(std::move(idleAnimator)),
-                                                                                                                                                                                                                            _walkingAnimator(std::move(walkingAnimator)),
-                                                                                                                                                                                                                            _healthBehaviour(std::move(healthBehaviour))
+bool game::UserMovementBehaviour::Controllable() const
 {
+    return _controllable;
+}
+
+void game::UserMovementBehaviour::Controllable(bool controllable)
+{
+    _controllable = controllable;
 }
