@@ -38,6 +38,7 @@ MainScene::MainScene()
 
     auto creditsButton = ButtonPrefabFactory::CreateButton("Credits Button", "button_credits", "CREDITS", {100, 500});
     creditsButton->OnClick([]() {
+        Engine::Instance().PushScene(std::make_shared<CreditScene>());
     });
 
     auto hero = HeroPrefabFactory::CreateHero(static_cast<HeroName>(RandomUtil::Next(HeroName::DesmondDoss, HeroName::JosephStalin)));
