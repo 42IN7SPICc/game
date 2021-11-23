@@ -121,6 +121,14 @@ Level LevelController::GetLevelDto(const std::string& levelName)
     if (_levels.contains(levelName))
         return _levels.at(levelName);
 
+
+    return
+    {
+        "Tile Tester",
+        "Tile Tester Description",
+        "welcome_to_the_war",
+        0,
+    };
     throw std::runtime_error(std::string{"Level `" + levelName + "` does not exist."});
 }
 
