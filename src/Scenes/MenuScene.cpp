@@ -24,12 +24,12 @@ MenuScene::MenuScene(const std::string& title, bool hasBackButton, BackgroundNam
     Contents().push_back(BackgroundPrefabFactory::CreateBackground(backgroundName));
 
     auto titleText = std::make_shared<Text>("Title Text", "text_title", Layer::HUD, 1166, 100, title, "resources/fonts/" + TitleFont, 82, Alignment::left, Color::white());
-    titleText->Transform().position = {100, 100};
+    titleText->Transform().position = {683, 141};
 
     Contents().push_back(titleText);
 
     if (hasBackButton)
     {
-        Contents().push_back(ButtonPrefabFactory::CreateCloseButton({25, 25}));
+        Contents().push_back(ButtonPrefabFactory::CreateCloseButton());
     }
 }

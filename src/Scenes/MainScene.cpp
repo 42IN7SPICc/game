@@ -16,7 +16,7 @@ using namespace game;
 MainScene::MainScene() : MenuScene("Avans Wars: WW2", false)
 {
     auto playButton = ButtonPrefabFactory::CreateOutlineButton("Play Button", "button_play", "PLAY");
-    playButton->Transform().position = {100, 250};
+    playButton->Transform().position = {225, 300};
     playButton->OnClick([]() {
         LevelController levelController{};
         levelController.InitializeLevels();
@@ -26,19 +26,19 @@ MainScene::MainScene() : MenuScene("Avans Wars: WW2", false)
     });
 
     auto exitButton = ButtonPrefabFactory::CreateOutlineButton("Exit Button", "button_exit", "EXIT");
-    exitButton->Transform().position = {100, 375};
+    exitButton->Transform().position = {225, 425};
     exitButton->OnClick([]() {
         Engine::Instance().PopScene();
     });
 
     auto creditsButton = ButtonPrefabFactory::CreateOutlineButton("Credits Button", "button_credits", "CREDITS");
-    creditsButton->Transform().position = {100, 500};
+    creditsButton->Transform().position = {225, 550};
     creditsButton->OnClick([]() {
         Engine::Instance().PushScene(std::make_shared<CreditScene>());
     });
 
     auto hero = HeroPrefabFactory::CreateHero(static_cast<HeroName>(RandomUtil::Next(HeroName::DesmondDoss, HeroName::JosephStalin)));
-    hero->Transform().position = {900, 300};
+    hero->Transform().position = {1000, 460};
     hero->GetComponent<UserMovementBehaviour>()->Controllable(false);
     hero->RemoveComponent(hero->GetComponent<UserAttackBehaviour>());
 

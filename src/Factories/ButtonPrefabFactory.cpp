@@ -22,8 +22,6 @@ std::shared_ptr<spic::Button> ButtonPrefabFactory::CreateOutlineButton(const std
     buttonText->TextColor(spic::Color::white());
     buttonText->TextAlignment(spic::Alignment::center);
 
-    buttonText->Transform().position.y = (button->Height() - buttonText->Size()) / 2;
-
     GameObjectUtil::LinkComponent(button, buttonSprite);
     GameObjectUtil::LinkChild(button, buttonText);
 
