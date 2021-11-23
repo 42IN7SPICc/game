@@ -10,6 +10,7 @@ using namespace game;
 std::shared_ptr<spic::GameObject> BackgroundPrefabFactory::CreateBackground(BackgroundName backgroundName)
 {
     auto background = std::make_shared<spic::GameObject>("Background", "background", Layer::Background);
+    background->Transform().position = {683, 384};
 
     std::string imageSrc{};
     switch (backgroundName)
