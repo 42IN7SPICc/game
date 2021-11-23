@@ -11,9 +11,9 @@ namespace game
     class ButtonPrefabFactory
     {
         public:
-            static std::shared_ptr<spic::Button> CreateOutlineButton(const std::string& name, const std::string& tag, const std::string& text, const spic::Point position);
+            static std::shared_ptr<spic::Button> CreateOutlineButton(const std::string& name, const std::string& tag, const std::string& text);
 
-            static std::shared_ptr<spic::Button> CreateCloseButton(const spic::Point& position);
+            static std::shared_ptr<spic::Button> CreateCloseButton(const spic::Point& position = {49, 49});
     };
 }
 
