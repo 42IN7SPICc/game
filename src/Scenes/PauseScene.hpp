@@ -1,11 +1,11 @@
 #ifndef SPIC_GAME_PAUSESCENE_HPP
 #define SPIC_GAME_PAUSESCENE_HPP
 
-#include "Scene.hpp"
+#include "MenuScene.hpp"
 
 namespace game
 {
-    class PauseScene : spic::Scene
+    class PauseScene : public MenuScene
     {
         public:
             PauseScene();
