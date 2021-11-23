@@ -4,7 +4,7 @@
 #include "Sprite.hpp"
 #include "Text.hpp"
 
-#include "../Scripts/Common/CloseSceneBehaviour.hpp"
+#include "../Scripts/Menu/CloseSceneBehaviour.hpp"
 #include "../Utils/GameObjectUtil.hpp"
 #include "../Utils/Layer.hpp"
 
@@ -28,7 +28,7 @@ std::shared_ptr<spic::Button> ButtonPrefabFactory::CreateOutlineButton(const std
     return button;
 }
 
-std::shared_ptr<spic::Button> ButtonPrefabFactory::CreateCloseButton(const spic::Point position)
+std::shared_ptr<spic::Button> ButtonPrefabFactory::CreateCloseButton(const spic::Point& position)
 {
     auto button = std::make_shared<spic::Button>("Close Button", "button_close", Layer::HUD, 48, 48);
     button->Transform().position = position;
