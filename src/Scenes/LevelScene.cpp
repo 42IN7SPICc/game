@@ -24,4 +24,28 @@ LevelScene::LevelScene(const std::string& levelName, LevelController& levelContr
     Contents().push_back(background);
     Contents().push_back(titleText);
     Contents().push_back(tilesMapObject);
+}{
+    auto button = std::make_shared<spic::Button>("button-tile-" + texture, "tile_button", Layer::HUD, 32,32);
+    button->Transform().scale = 4.0;
+    auto buttonSprite = std::make_shared<spic::Sprite>("resources/sprites/tiles/" + texture, false, false, 100, 1);
+    GameObjectUtil::LinkComponent(button, buttonSprite);
+
+    button->OnClick([this, button]() mutable {
+        if(_selectedButton != nullptr || _selectedButton == button) {
+            auto sprites = _selectedButton->GetComponents<spic::Sprite>();
+            _selectedButton->RemoveComponent(sprites[1]);
+        }
+
+        if(_selectedButton == button) { // deselect a button
+            _selectedButton = nullptr;
+            return;
+        };
+
+        auto selectionSprite = std::make_shared<spic::Sprite>("resources/sprites/tiles/selected.png", false, false, 100, 1);
+        GameObjectUtil::LinkComponent(button, selectionSprite);
+        _selectedButton = button;
+    });
+
+    GameObjectUtil::LinkChild(HUD, button);
+    return button;
 }
