@@ -1,6 +1,7 @@
+#include "CreditScene.hpp"
+#include "HelpScene.hpp"
 #include "MainScene.hpp"
 #include "LevelScene.hpp"
-#include "CreditScene.hpp"
 
 #include "Api.hpp"
 
@@ -31,8 +32,15 @@ MainScene::MainScene() : MenuScene("Avans Wars: WW2", false)
         Engine::Instance().PopScene();
     });
 
+    auto helpButton = ButtonPrefabFactory::CreateOutlineButton("Help Button", "button_help", "HELP");
+    helpButton->Transform().position = {225, 550};
+    helpButton->OnClick([]() {
+        Engine::Instance().PushScene(std::make_shared<HelpScene>());
+    });
+
+
     auto creditsButton = ButtonPrefabFactory::CreateOutlineButton("Credits Button", "button_credits", "CREDITS");
-    creditsButton->Transform().position = {225, 550};
+    creditsButton->Transform().position = {225, 675};
     creditsButton->OnClick([]() {
         Engine::Instance().PushScene(std::make_shared<CreditScene>());
     });
@@ -45,5 +53,6 @@ MainScene::MainScene() : MenuScene("Avans Wars: WW2", false)
     Contents().push_back(hero);
     Contents().push_back(playButton);
     Contents().push_back(exitButton);
+    Contents().push_back(helpButton);
     Contents().push_back(creditsButton);
 }
