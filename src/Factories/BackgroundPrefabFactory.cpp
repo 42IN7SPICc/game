@@ -18,6 +18,9 @@ std::shared_ptr<spic::GameObject> BackgroundPrefabFactory::CreateBackground(Back
         case BackgroundName::Menu:
             imageSrc = "mud";
             break;
+        case BackgroundName::Pause:
+            imageSrc = "mud";
+            break;
     }
 
     auto backgroundSprite = std::make_shared<spic::Sprite>("resources/sprites/menu/backgrounds/" + imageSrc + ".png", false, false, 0, 0);
