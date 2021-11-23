@@ -4,11 +4,8 @@
 
 #include "Api.hpp"
 
-#include "../Factories/BackgroundPrefabFactory.hpp"
 #include "../Factories/ButtonPrefabFactory.hpp"
 #include "../Factories/HeroPrefabFactory.hpp"
-#include "../Utils/Layer.hpp"
-#include "../Utils/GameObjectUtil.hpp"
 #include "../Utils/RandomUtil.hpp"
 #include "../Scripts/Common/UserAttackBehaviour.hpp"
 #include "../Scripts/Common/UserMovementBehaviour.hpp"
@@ -16,12 +13,10 @@
 using namespace spic;
 using namespace game;
 
-MainScene::MainScene()
+MainScene::MainScene() : MenuScene("Avans Wars: WW2", false)
 {
-    auto titleText = std::make_shared<spic::Text>("Title Text", "text_title", Layer::HUD, 1720, 100, "Avans Wars: WW2", "resources/fonts/capture_it.otf", 82, Alignment::left, Color::white());
-    titleText->Transform().position = {100, 100};
-
-    auto playButton = ButtonPrefabFactory::CreateOutlineButton("Play Button", "button_play", "PLAY", {100, 250});
+    auto playButton = ButtonPrefabFactory::CreateOutlineButton("Play Button", "button_play", "PLAY");
+    playButton->Transform().position = {225, 300};
     playButton->OnClick([]() {
         LevelController levelController{};
         levelController.InitializeLevels();
@@ -30,28 +25,24 @@ MainScene::MainScene()
         Engine::Instance().PushScene(scene);
     });
 
-    auto exitButton = ButtonPrefabFactory::CreateOutlineButton("Exit Button", "button_exit", "EXIT", {100, 375});
+    auto exitButton = ButtonPrefabFactory::CreateOutlineButton("Exit Button", "button_exit", "EXIT");
+    exitButton->Transform().position = {225, 425};
     exitButton->OnClick([]() {
         Engine::Instance().PopScene();
     });
 
-    auto creditsButton = ButtonPrefabFactory::CreateOutlineButton("Credits Button", "button_credits", "CREDITS", {
-            100,
-            500
-    });
+    auto creditsButton = ButtonPrefabFactory::CreateOutlineButton("Credits Button", "button_credits", "CREDITS");
+    creditsButton->Transform().position = {225, 550};
     creditsButton->OnClick([]() {
         Engine::Instance().PushScene(std::make_shared<CreditScene>());
     });
 
     auto hero = HeroPrefabFactory::CreateHero(static_cast<HeroName>(RandomUtil::Next(HeroName::DesmondDoss, HeroName::JosephStalin)));
-    hero->Transform().position = {900, 300};
+    hero->Transform().position = {1000, 460};
     hero->GetComponent<UserMovementBehaviour>()->Controllable(false);
     hero->RemoveComponent(hero->GetComponent<UserAttackBehaviour>());
 
-    Contents().push_back(BackgroundPrefabFactory::CreateBackground(BackgroundName::Menu));
-
     Contents().push_back(hero);
-    Contents().push_back(titleText);
     Contents().push_back(playButton);
     Contents().push_back(exitButton);
     Contents().push_back(creditsButton);

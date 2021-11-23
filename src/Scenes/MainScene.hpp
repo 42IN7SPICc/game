@@ -1,11 +1,11 @@
 #ifndef SPIC_GAME_MAINSCENE_HPP
 #define SPIC_GAME_MAINSCENE_HPP
 
-#include "Scene.hpp"
+#include "MenuScene.hpp"
 
 namespace game
 {
-    class MainScene : public spic::Scene
+    class MainScene : public MenuScene
     {
         public:
             MainScene();

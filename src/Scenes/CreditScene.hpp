@@ -1,11 +1,11 @@
 #ifndef SPIC_GAME_CREDITSCENE_HPP
 #define SPIC_GAME_CREDITSCENE_HPP
 
-#include "Scene.hpp"
+#include "MenuScene.hpp"
 
 namespace game
 {
-    class CreditScene : public spic::Scene
+    class CreditScene : public MenuScene
     {
         public:
             CreditScene();
