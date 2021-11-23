@@ -38,7 +38,6 @@ MainScene::MainScene() : MenuScene("Avans Wars: WW2", false)
         Engine::Instance().PushScene(std::make_shared<HelpScene>());
     });
 
-
     auto creditsButton = ButtonPrefabFactory::CreateOutlineButton("Credits Button", "button_credits", "CREDITS");
     creditsButton->Transform().position = {225, 675};
     creditsButton->OnClick([]() {
