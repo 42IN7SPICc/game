@@ -4,7 +4,7 @@
 #include "Sprite.hpp"
 #include "Text.hpp"
 
-#include "../Scripts/Common/CloseSceneBehaviour.hpp"
+#include "../Scripts/Menu/CloseSceneBehaviour.hpp"
 #include "../Utils/GameObjectUtil.hpp"
 #include "../Utils/Layer.hpp"
 
