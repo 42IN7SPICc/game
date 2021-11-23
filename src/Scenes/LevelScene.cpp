@@ -28,6 +28,7 @@ LevelScene::LevelScene(const std::string& levelName, LevelController& levelContr
     int width = 1366;
     int height = 786;
     int hudWidth = 250;
+    int totalTileAmount = 22;
 
     auto rightHud = std::make_shared<GameObject>("RightHud", "hud", Layer::HUD);
     auto rightHudSprite = std::make_shared<spic::Sprite>("resources/sprites/hud/white_block.png", false, false, 100, 1);
@@ -36,24 +37,37 @@ LevelScene::LevelScene(const std::string& levelName, LevelController& levelContr
     rightHud->Transform().position.x = width - (hudWidth / 2.0);
     rightHud->Transform().position.y = height / 2.0;
 
-    auto streetButton = InitializeTileButton(rightHud, "street.png");
-    streetButton->Transform().position.y = -34 * 4;
+    auto buttonText = std::make_shared<spic::Text>("tile-title-text", "tile_title_text", Layer::HUD, hudWidth, 100);
+    buttonText->Content("Tegels (" + std::to_string(totalTileAmount) + ")");
+    buttonText->Size(36);
+    buttonText->TextAlignment(Alignment::center);
+    buttonText->Transform().position.y = -34 * 6;
+    GameObjectUtil::LinkChild(rightHud, buttonText);
 
-    auto grassButton = InitializeTileButton(rightHud, "grass.png");
+    auto streetButton = InitializeTileButton(rightHud, "street.png", 10);
+    streetButton->Transform().position.y = -34 * 3;
+
+    auto grassButton = InitializeTileButton(rightHud, "grass.png", 6);
     grassButton->Transform().position.y = 0;
 
-    auto sandButton = InitializeTileButton(rightHud, "sand.png");
-    sandButton->Transform().position.y = 34 * 4;
+    auto sandButton = InitializeTileButton(rightHud, "sand.png", 6);
+    sandButton->Transform().position.y = 34 * 3;
 
     Contents().push_back(rightHud);
+    Contents().push_back(buttonText);
 }
 
-std::shared_ptr<spic::Button> LevelScene::InitializeTileButton(const std::shared_ptr<GameObject>& HUD, const std::string& texture)
+std::shared_ptr<spic::Button> LevelScene::InitializeTileButton(const std::shared_ptr<GameObject>& HUD, const std::string& texture, int tileAmount)
 {
-    auto button = std::make_shared<spic::Button>("button-tile-" + texture, "tile_button", Layer::HUD, 32,32);
-    button->Transform().scale = 4.0;
+    auto button = std::make_shared<spic::Button>("tile-button-" + texture, "tile_button", Layer::HUD, 32,32);
+    button->Transform().scale = 3.0;
     auto buttonSprite = std::make_shared<spic::Sprite>("resources/sprites/tiles/" + texture, false, false, 100, 1);
     GameObjectUtil::LinkComponent(button, buttonSprite);
+
+    auto buttonText = std::make_shared<spic::Text>("tile-button-text-" + texture, "tile_button_text", Layer::HUD, 32, 32);
+    buttonText->TextAlignment(Alignment::center);
+    buttonText->Content(std::to_string(tileAmount));
+    GameObjectUtil::LinkChild(button, buttonText);
 
     button->OnClick([this, button]() mutable {
         if(_selectedButton != nullptr || _selectedButton == button) {

@@ -16,7 +16,7 @@ namespace game
         public:
             LevelScene(const std::string& levelName, LevelController& levelController);
 
-            std::shared_ptr<spic::Button> InitializeTileButton(const std::shared_ptr<spic::GameObject>& HUD, const std::string& texture);
+            std::shared_ptr<spic::Button> InitializeTileButton(const std::shared_ptr<spic::GameObject>& HUD, const std::string& texture, int tileAmount);
     };
 }
 
