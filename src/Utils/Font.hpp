@@ -8,11 +8,11 @@ namespace game
     class Font
     {
         public:
-            static const std::string& Default;
-            static const std::string& Title;
+            static std::string Default;
+            static std::string Title;
 
-            static const std::string& Arial;
-            static const std::string& CaptureIt;
+            static std::string Arial;
+            static std::string CaptureIt;
     };
 }
 

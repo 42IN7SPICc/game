@@ -2,8 +2,8 @@
 
 using namespace game;
 
-const std::string& Font::Default = Arial;
-const std::string& Font::Title = CaptureIt;
+std::string Font::Arial = "resources/fonts/arial.ttf";
+std::string Font::CaptureIt = "resources/fonts/capture_it.otf";
 
-const std::string& Font::Arial = "resources/fonts/arial.ttf";
-const std::string& Font::CaptureIt = "resources/fonts/capture_it.ttf";
+std::string Font::Default = Arial;
+std::string Font::Title = CaptureIt;
