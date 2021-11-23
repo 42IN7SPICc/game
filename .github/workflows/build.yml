@@ -30,6 +30,7 @@ jobs:
       - name: 'Setup vcpkg'
         uses: lukka/run-vcpkg@v10
         with:
+          vcpkgDirectory: ${{ github.workspace }}/libs/spic-engine/vcpkg
           appendedCacheKey: -${{ matrix.os }}-${{ matrix.triplet }}
 
       - name: 'Run CMake'
