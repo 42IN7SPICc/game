@@ -26,22 +26,22 @@ MainScene::MainScene() : MenuScene("Avans Wars: WW2", false)
         Engine::Instance().PushScene(scene);
     });
 
-    auto exitButton = ButtonPrefabFactory::CreateOutlineButton("Exit Button", "button_exit", "EXIT");
-    exitButton->Transform().position = {225, 425};
-    exitButton->OnClick([]() {
-        Engine::Instance().PopScene();
-    });
-
     auto helpButton = ButtonPrefabFactory::CreateOutlineButton("Help Button", "button_help", "HELP");
-    helpButton->Transform().position = {225, 550};
+    helpButton->Transform().position = {225, 425};
     helpButton->OnClick([]() {
         Engine::Instance().PushScene(std::make_shared<HelpScene>());
     });
 
     auto creditsButton = ButtonPrefabFactory::CreateOutlineButton("Credits Button", "button_credits", "CREDITS");
-    creditsButton->Transform().position = {225, 675};
+    creditsButton->Transform().position = {225, 550};
     creditsButton->OnClick([]() {
         Engine::Instance().PushScene(std::make_shared<CreditScene>());
+    });
+
+    auto exitButton = ButtonPrefabFactory::CreateOutlineButton("Exit Button", "button_exit", "EXIT");
+    exitButton->Transform().position = {225, 675};
+    exitButton->OnClick([]() {
+        Engine::Instance().Shutdown();
     });
 
     auto hero = HeroPrefabFactory::CreateHero(static_cast<HeroName>(RandomUtil::Next(HeroName::DesmondDoss, HeroName::JosephStalin)));
@@ -49,9 +49,9 @@ MainScene::MainScene() : MenuScene("Avans Wars: WW2", false)
     hero->GetComponent<UserMovementBehaviour>()->Controllable(false);
     hero->RemoveComponent(hero->GetComponent<UserAttackBehaviour>());
 
-    Contents().push_back(hero);
     Contents().push_back(playButton);
-    Contents().push_back(exitButton);
-    Contents().push_back(helpButton);
     Contents().push_back(creditsButton);
+    Contents().push_back(helpButton);
+    Contents().push_back(exitButton);
+    Contents().push_back(hero);
 }
