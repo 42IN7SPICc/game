@@ -1,7 +1,8 @@
 #include "GameWonBehaviour.hpp"
+#include "../../Scenes/VictoryScene.hpp"
 
-#include <utility>
 #include <Debug.hpp>
+#include <Engine.hpp>
 
 using namespace game;
 
@@ -48,5 +49,6 @@ void GameWonBehaviour::OnLevelCompleted()
     if (_won) return;
     _won = true;
     spic::Debug::Log("Game won!");
-
+    spic::Engine::Instance().PopScene();
+    spic::Engine::Instance().PushScene(std::make_shared<game::VictoryScene>());
 }
