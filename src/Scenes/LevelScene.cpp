@@ -12,15 +12,14 @@ using namespace game;
 const double TileButtonScale = 2.0;
 const double TileSize = 32;
 
-LevelScene::LevelScene(const std::string& levelName, LevelController& levelController)
+LevelScene::LevelScene(const Level& level)
 {
-    auto level = levelController.GetLevelDto(levelName);
-
+    auto mainGameObject = std::make_shared<spic::GameObject>("LevelController", "default", Layer::Background);
     auto background = BackgroundPrefabFactory::CreateBackground(BackgroundName::Menu);
     auto titleText = std::make_shared<spic::Text>("Title Text", "text_title", Layer::HUD, 1720, 100, level.Title, "resources/fonts/capture_it.otf", 35, Alignment::left, Color::white());
     titleText->Transform().position = {25, 25};
 
-    auto tilesMapObject = levelController.GetLevelGameObject(level.File);
+    //auto tilesMapObject = levelController.GetLevelGameObject(level.File);
     //tilesMapObject->Transform().position.x = 75;
     //->Transform().position.y = 75;
 

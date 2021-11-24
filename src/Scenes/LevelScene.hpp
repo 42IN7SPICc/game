@@ -20,7 +20,7 @@ namespace game
             void CreateHUD();
 
         public:
-            LevelScene(const std::string& levelName, LevelController& levelController);
+            LevelScene(const Level& level);
     };
 }
 
