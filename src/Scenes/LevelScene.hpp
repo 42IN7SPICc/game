@@ -20,7 +20,7 @@ namespace game
             void CreateHUD();
 
         public:
-            LevelScene(const Level& level);
+            explicit LevelScene(const Level& level);
     };
 }
 

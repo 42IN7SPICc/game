@@ -1,10 +1,11 @@
 #include "LevelScene.hpp"
 
-#include <algorithm>
 #include "Api.hpp"
 #include "../Enums/Layer.hpp"
 #include "../Utils/GameObjectUtil.hpp"
 #include "../Factories/BackgroundPrefabFactory.hpp"
+#include "../Factories/HeroPrefabFactory.hpp"
+#include "../Scripts/Common/CheatManager.hpp"
 
 using namespace spic;
 using namespace game;
@@ -16,16 +17,22 @@ LevelScene::LevelScene(const Level& level)
 {
     auto mainGameObject = std::make_shared<spic::GameObject>("LevelController", "default", Layer::Background);
     auto background = BackgroundPrefabFactory::CreateBackground(BackgroundName::Menu);
+
     auto titleText = std::make_shared<spic::Text>("Title Text", "text_title", Layer::HUD, 1166, 100, level.Title, "resources/fonts/capture_it.otf", 35, Alignment::left, Color::white());
-    titleText->Transform().position = {1366/2, 50};
+    titleText->Transform().position = {1366 / 2, 50};
 
-    //auto tilesMapObject = levelController.GetLevelGameObject(level.File);
-    //tilesMapObject->Transform().position.x = 75;
-    //->Transform().position.y = 75;
+    auto hero = game::HeroPrefabFactory::CreateHero(DesmondDoss);
+    auto heroHealth = hero->GetComponent<HealthBehaviour>();
+    auto endTowerHealth = std::make_shared<game::HealthBehaviour>(std::make_shared<spic::Animator>(0, std::vector<std::shared_ptr<Sprite>>()), 10);
 
+    auto levelController = std::make_shared<game::LevelController>(level, heroHealth, endTowerHealth, std::queue<WaveData>());
+    auto cheatManager = std::make_shared<game::CheatManager>();
+    GameObjectUtil::LinkComponent(mainGameObject, levelController);
+    GameObjectUtil::LinkComponent(mainGameObject, cheatManager);
+
+    Contents().push_back(mainGameObject);
     Contents().push_back(background);
     Contents().push_back(titleText);
-    //Contents().push_back(tilesMapObject);
 
     CreateHUD();
 }

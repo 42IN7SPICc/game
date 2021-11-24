@@ -1,10 +1,14 @@
 #include "LevelController.hpp"
+#include "../Scripts/Common/GameWonBehaviour.hpp"
+#include "../Utils/GameObjectUtil.hpp"
 
 using namespace game;
 
 void LevelController::OnStart()
 {
-
+    auto gameWonBehaviour = std::make_shared<game::GameWonBehaviour>(_levelData);
+    auto parent = GameObject().lock();
+    GameObjectUtil::LinkComponent(parent, gameWonBehaviour);
 }
 
 void LevelController::OnUpdate()
