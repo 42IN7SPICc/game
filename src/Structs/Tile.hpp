@@ -13,9 +13,9 @@ namespace game
             ar(Type, X, Y);
         }
 
-        TileType Type;
-        int Y;
+        int Type;
         int X;
+        int Y;
     };
 }
 

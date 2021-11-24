@@ -15,8 +15,8 @@ namespace game
 
         std::string Title;
         std::string Description;
-        std::string File;
         int UnlockThreshold;
+        std::string File{};
     };
 }
 
