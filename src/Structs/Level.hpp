@@ -2,7 +2,7 @@
 #define SPIC_GAME_LEVEL_HPP
 
 #include <string>
-#include "../Utils/TileType.hpp"
+#include "../Enums/TileType.hpp"
 
 namespace game
 {
