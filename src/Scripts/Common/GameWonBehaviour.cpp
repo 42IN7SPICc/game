@@ -48,7 +48,7 @@ void GameWonBehaviour::OnLevelCompleted()
 {
     if (_won) return;
     _won = true;
-    spic::Debug::Log("Game won!");
+    spic::Debug::Log("Level completed!");
 
     // TODO Implement adding currency to PlayerData object that's currently inaccessible here
 
