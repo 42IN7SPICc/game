@@ -8,7 +8,7 @@ namespace game
     class VictoryScene : public MenuScene
     {
         private:
-            std::shared_ptr<spic::GameObject> GenerateConfetti();
+            static std::shared_ptr<spic::GameObject> GenerateConfetti();
         public:
             VictoryScene();
     };
