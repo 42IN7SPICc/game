@@ -4,7 +4,7 @@
 #include <map>
 #include "Scene.hpp"
 #include "Button.hpp"
-#include "../Structs/Level.hpp"
+#include "../Structs/LevelWithTiles.hpp"
 #include "../Controllers/LevelSelectionController.hpp"
 
 namespace game
@@ -21,7 +21,7 @@ namespace game
             void CreateHUD();
 
         public:
-            explicit LevelScene(const Level& level);
+            explicit LevelScene(const LevelWithTiles& level);
     };
 }
 
