@@ -2,6 +2,7 @@
 #define SPIC_GAME_LEVEL_HPP
 
 #include <string>
+#include "../Utils/TileType.hpp"
 
 namespace game
 {
@@ -11,6 +12,7 @@ namespace game
         std::string Description;
         std::string File;
         int UnlockThreshold;
+        std::map<game::TileType, size_t> AmountOfTiles;
     };
 }
 
