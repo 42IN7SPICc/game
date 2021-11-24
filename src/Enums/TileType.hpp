@@ -17,4 +17,4 @@ namespace game
     };
 }
 
-#endif
+#endif //SPIC_GAME_TILETYPE_HPP

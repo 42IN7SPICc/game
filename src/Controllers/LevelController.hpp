@@ -2,31 +2,35 @@
 #define SPIC_GAME_LEVELCONTROLLER_HPP
 
 #include <map>
+#include <vector>
+#include <memory>
 #include <string>
 
 #include "BehaviourScript.hpp"
-//#include "rapidjson/document.h"
 #include "../Structs/Level.hpp"
+#include "../Structs/LevelData.hpp"
 
 namespace game
 {
-    class LevelController : spic::BehaviourScript
+    class LevelController : public spic::BehaviourScript
     {
         public:
-            void InitializeLevels();
+            LevelController(game::Level level, std::shared_ptr<game::HealthBehaviour> heroHealth, std::shared_ptr<game::HealthBehaviour> militaryBaseHealth, std::queue<game::WaveData> waves);
 
-            std::shared_ptr<spic::GameObject> GetLevelGameObject(const std::string& fileName);
+            void OnStart() override;
 
-            Level GetLevelDto(const std::string& levelName);
+            void OnUpdate() override;
+
+            void OnTriggerEnter2D(const spic::Collider& collider) override;
+
+            void OnTriggerExit2D(const spic::Collider& collider) override;
+
+            void OnTriggerStay2D(const spic::Collider& collider) override;
 
         private:
-            void InitializeLevel(const std::string& file, const std::string& name);
-
-//            rapidjson::Document LoadFile(const std::string& fileName);
-
-            std::map<std::string, Level> _levels{};
+            const game::Level _level;
+            game::LevelData _levelData;
     };
 }
-
 
 #endif

@@ -6,7 +6,8 @@ namespace game
     enum class BackgroundName
     {
         Menu,
-        Pause
+        Pause,
+        Victory
     };
 }
 

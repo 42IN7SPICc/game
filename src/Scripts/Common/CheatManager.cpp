@@ -1,6 +1,8 @@
 #include "CheatManager.hpp"
 #include "Input.hpp"
 #include "Debug.hpp"
+#include "GameObject.hpp"
+#include "GameWonBehaviour.hpp"
 
 using namespace spic;
 using namespace game;
@@ -23,6 +25,15 @@ void Butcher()
 void Victory()
 {
     Debug::Log("Fired Victory Cheat");
+    auto levelController = GameObject::Find("LevelController");
+    if (levelController)
+    {
+        auto gameWonBehaviour = levelController->GetComponent<game::GameWonBehaviour>();
+        if (gameWonBehaviour)
+        {
+            gameWonBehaviour->OnLevelCompleted();
+        }
+    }
 }
 
 void SkipWave()
