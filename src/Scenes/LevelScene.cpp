@@ -50,7 +50,9 @@ std::shared_ptr<spic::Button> LevelScene::InitializeTileButton(const std::shared
     labelText->Content(tileTitle);
     GameObjectUtil::LinkChild(button, labelText);
 
+    _buttonTileAmounts[button] = tileAmount;
     button->OnClick([this, button]() mutable {
+        if(_buttonTileAmounts[button] == 0) return;
         if(_selectedButton != nullptr || _selectedButton == button) {
             auto sprites = _selectedButton->GetComponents<spic::Sprite>();
             _selectedButton->RemoveComponent(sprites[1]);
@@ -91,7 +93,7 @@ void LevelScene::CreateHUD()
     buttonText->Transform().position.y = -(TileSize + 2) * (TileButtonScale * 5);
     GameObjectUtil::LinkChild(rightHud, buttonText);
 
-    auto streetButton = InitializeTileButton(rightHud, "street.png", 10, "Straat");
+    auto streetButton = InitializeTileButton(rightHud, "street.png", 0, "Straat");
     streetButton->Transform().position.y = -(TileSize + 2) * (TileButtonScale * 4);
 
     auto grassButton = InitializeTileButton(rightHud, "grass.png", 6, "Gras");
