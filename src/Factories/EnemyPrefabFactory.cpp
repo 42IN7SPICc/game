@@ -16,8 +16,7 @@ const int EnemyScale = 1; //default scale on 1
 const int EnemyWidth = 200; //width of enemy image
 const int EnemyHeight = 320; //height of enemy image
 const int EnemyMass = 50; //random chosen mass
-const int EnemyVelocity = 50; //random chosen velocity (looks good)
-const double EnemyBulletSpeed = 17.5; // random chosen bullet speed (looks alright)
+const int EnemyVelocity = 50; //random chosen velocity
 
 std::shared_ptr<spic::GameObject> game::EnemyPrefabFactory::CreateEnemy(game::EnemyName name)
 {
