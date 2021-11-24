@@ -3,5 +3,5 @@ using namespace game;
 
 size_t WaveData::RemainingEnemies() const
 {
-    return 0;
+    return EnemyQueue.size() + CurrentEnemies.size();
 }
