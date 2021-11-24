@@ -52,13 +52,15 @@ std::shared_ptr<spic::Button> LevelScene::InitializeTileButton(const std::shared
 
     _buttonTileAmounts[button] = tileAmount;
     button->OnClick([this, button]() mutable {
-        if(_buttonTileAmounts[button] == 0) return;
-        if(_selectedButton != nullptr || _selectedButton == button) {
+        if (_buttonTileAmounts[button] == 0) return;
+        if (_selectedButton != nullptr || _selectedButton == button)
+        {
             auto sprites = _selectedButton->GetComponents<spic::Sprite>();
             _selectedButton->RemoveComponent(sprites[1]);
         }
 
-        if(_selectedButton == button) { // deselect a button
+        if (_selectedButton == button)
+        { // deselect a button
             _selectedButton = nullptr;
             return;
         };
