@@ -12,7 +12,7 @@ using namespace game;
 const double TileButtonScale = 2.0;
 const double TileSize = 32;
 
-LevelScene::LevelScene(const std::string& levelName, LevelController& levelController)
+LevelScene::LevelScene(const std::string& levelName, LevelSelectionController& levelController)
 {
     auto level = levelController.GetLevelDto(levelName);
 

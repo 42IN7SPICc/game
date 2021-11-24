@@ -5,7 +5,7 @@
 #include "Scene.hpp"
 #include "Button.hpp"
 #include "../Structs/Level.hpp"
-#include "../Controllers/LevelController.hpp"
+#include "../Controllers/LevelSelectionController.hpp"
 
 namespace game
 {
@@ -20,7 +20,7 @@ namespace game
             void CreateHUD();
 
         public:
-            LevelScene(const std::string& levelName, LevelController& levelController);
+            LevelScene(const std::string& levelName, LevelSelectionController& levelController);
     };
 }
 
