@@ -49,6 +49,9 @@ void GameWonBehaviour::OnLevelCompleted()
     if (_won) return;
     _won = true;
     spic::Debug::Log("Game won!");
+
+    // TODO Implement adding currency to PlayerData object that's currently inaccessible here
+
     spic::Engine::Instance().PopScene();
     spic::Engine::Instance().PushScene(std::make_shared<game::VictoryScene>());
 }
