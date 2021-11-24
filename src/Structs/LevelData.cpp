@@ -4,5 +4,5 @@ using namespace game;
 
 size_t LevelData::CurrentWave() const
 {
-    return TotalWaves - Waves.size();
+    return TotalWaves - Waves.size() + 1;
 }
