@@ -18,30 +18,81 @@ const int EnemyHeight = 320; //height of enemy image
 const int EnemyMass = 50; //random chosen mass
 const int EnemyVelocity = 50; //random chosen velocity
 
-std::shared_ptr<spic::GameObject> game::EnemyPrefabFactory::CreateEnemy(game::EnemyName name)
+using namespace game;
+
+std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreateEnemy(EnemyName name)
 {
     switch (name)
     {
         case EnemyName::Panzer:
-            return CreateBaseEnemy(15, 200);
+            return CreatePanzer();
         case EnemyName::Gruppenfuhrer:
-            return CreateBaseEnemy(4, 80);
+            return CreateGruppenfuhrer();
         case EnemyName::Schutze:
-            return CreateBaseEnemy(2, 25);
+            return CreateSchutze();
         case EnemyName::Erkunder:
-            return CreateBaseEnemy(2, 50);
+            return CreateErkunder();
         case EnemyName::GhillieAnzugSchutze:
-            return CreateBaseEnemy(3, 60);
+            return CreateGhillieAnzugSchutze();
         case EnemyName::Stabsarzt:
-            return CreateBaseEnemy(1, 75);
+            return CreateStabsarzt();
         case EnemyName::Raupenschlepper:
-            return CreateBaseEnemy(12, 150);
+            return CreateRaupenschlepper();
     }
 
     throw std::runtime_error("Enemy not implemented.");
 }
 
-std::shared_ptr<spic::GameObject> game::EnemyPrefabFactory::CreateBaseEnemy(int attack, int defense)
+std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreatePanzer()
+{
+    auto enemy = CreateBaseEnemy(15, 200);
+
+    return enemy;
+}
+
+std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreateGruppenfuhrer()
+{
+    auto enemy = CreateBaseEnemy(4, 80);
+
+    return enemy;
+}
+
+std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreateSchutze()
+{
+    auto enemy = CreateBaseEnemy(2, 25);
+
+    return enemy;
+}
+
+std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreateErkunder()
+{
+    auto enemy = CreateBaseEnemy(2, 50);
+
+    return enemy;
+}
+
+std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreateGhillieAnzugSchutze()
+{
+    auto enemy = CreateBaseEnemy(3, 60);
+
+    return enemy;
+}
+
+std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreateStabsarzt()
+{
+    auto enemy = CreateBaseEnemy(1, 75);
+
+    return enemy;
+}
+
+std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreateRaupenschlepper()
+{
+    auto enemy = CreateBaseEnemy(12, 150);
+
+    return enemy;
+}
+
+std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreateBaseEnemy(int attack, int defense)
 {
     auto baseEnemy = std::make_shared<spic::GameObject>("Enemy", "enemy", Layer::Game);
     baseEnemy->Transform().scale = EnemyScale;
@@ -95,10 +146,10 @@ std::shared_ptr<spic::GameObject> game::EnemyPrefabFactory::CreateBaseEnemy(int 
     auto diedAnimator = std::make_shared<spic::Animator>(static_cast<int>(diedSprites.size()), diedSprites);
     GameObjectUtil::LinkComponent(baseEnemy, diedAnimator);
 
-    auto healthBehaviour = std::make_shared<game::HealthBehaviour>(diedAnimator, defense);
+    auto healthBehaviour = std::make_shared<HealthBehaviour>(diedAnimator, defense);
     GameObjectUtil::LinkComponent(baseEnemy, healthBehaviour);
 
-    auto movementBehaviour = std::make_shared<game::EnemyMovementBehaviour>();
+    auto movementBehaviour = std::make_shared<EnemyMovementBehaviour>();
     GameObjectUtil::LinkComponent(baseEnemy, movementBehaviour);
 
     auto enemyCollider = std::make_shared<spic::CircleCollider>((EnemyWidth / 2.0) * EnemyScale);

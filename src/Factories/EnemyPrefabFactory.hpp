@@ -13,6 +13,20 @@ namespace game
             static std::shared_ptr<spic::GameObject> CreateEnemy(game::EnemyName name);
 
         private:
+            static std::shared_ptr<spic::GameObject> CreatePanzer();
+
+            static std::shared_ptr<spic::GameObject> CreateGruppenfuhrer();
+
+            static std::shared_ptr<spic::GameObject> CreateSchutze();
+
+            static std::shared_ptr<spic::GameObject> CreateErkunder();
+
+            static std::shared_ptr<spic::GameObject> CreateGhillieAnzugSchutze();
+
+            static std::shared_ptr<spic::GameObject> CreateStabsarzt();
+
+            static std::shared_ptr<spic::GameObject> CreateRaupenschlepper();
+
             static std::shared_ptr<spic::GameObject> CreateBaseEnemy(int attack, int defense);
     };
 }
