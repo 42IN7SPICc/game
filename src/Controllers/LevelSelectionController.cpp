@@ -8,17 +8,21 @@
 #include <filesystem>
 #include <fstream>
 #include <exception>
+#include <string>
 
 using namespace game;
 
 const int TileSize = 32;
+
+
 
 LevelWithTiles LevelSelectionController::LoadLevel(const std::string& file)
 {
     try
     {
         auto contents = LoadFile(file);
-        auto level = spic::JsonFacade::Deserialize<LevelWithTiles>("[" + contents + "]");
+        std::string value {"[" + contents + "]"};
+        auto level = spic::JsonFacade::Deserialize<LevelWithTiles>(value);
         level.File = file;
 
         return level;

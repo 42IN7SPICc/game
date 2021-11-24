@@ -13,19 +13,19 @@ using namespace game;
 const double TileButtonScale = 2.0;
 const double TileSize = 32;
 
-
-
 LevelScene::LevelScene(const std::string& levelName, LevelSelectionController& levelController)
 {
-    auto level = levelController.LoadLevel(levelName);
+    auto level = levelController.GetLevelDto(levelName);
+    auto levelWithTiles = levelController.LoadLevel(level.File);
 
     auto background = BackgroundPrefabFactory::CreateBackground(BackgroundName::Menu);
-    auto titleText = std::make_shared<spic::Text>("Title Text", "text_title", Layer::HUD, 1720, 100, level.Title, "resources/fonts/capture_it.otf", 35, Alignment::left, Color::white());
+    auto titleText = std::make_shared<spic::Text>("Title Text", "text_title", Layer::HUD, 1720, 100, levelWithTiles.Title, "resources/fonts/capture_it.otf", 35, Alignment::left, Color::white());
     titleText->Transform().position = {25, 25};
 
-    auto tilesMapObject = BuildLevel(level);
+    auto tilesMapObject = BuildLevel(levelWithTiles);
     tilesMapObject->Transform().position.x = 75;
     tilesMapObject->Transform().position.y = 75;
+    tilesMapObject->Transform().scale = 0.5;
 
     Contents().push_back(background);
     Contents().push_back(titleText);
