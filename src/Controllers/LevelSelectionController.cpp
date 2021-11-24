@@ -14,8 +14,6 @@ using namespace game;
 
 const int TileSize = 32;
 
-
-
 LevelWithTiles LevelSelectionController::LoadLevel(const std::string& file)
 {
     try
