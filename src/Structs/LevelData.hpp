@@ -11,7 +11,7 @@ namespace game
     {
         std::shared_ptr<game::HealthBehaviour> HeroHealth;
         std::shared_ptr<game::HealthBehaviour> MilitaryBaseHealth;
-        size_t TotalWaves;
+        const size_t TotalWaves;
         size_t Balance;
         std::queue<WaveData> Waves;
 
