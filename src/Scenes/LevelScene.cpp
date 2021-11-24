@@ -9,6 +9,9 @@
 using namespace spic;
 using namespace game;
 
+const double TileButtonScale = 2.0;
+const double TileSize = 32;
+
 LevelScene::LevelScene(const std::string& levelName, LevelController& levelController)
 {
     auto level = levelController.GetLevelDto(levelName);
@@ -30,21 +33,22 @@ LevelScene::LevelScene(const std::string& levelName, LevelController& levelContr
 
 std::shared_ptr<spic::Button> LevelScene::InitializeTileButton(const std::shared_ptr<GameObject>& HUD, const std::string& texture, int tileAmount, const std::string& tileTitle)
 {
-    auto button = std::make_shared<spic::Button>("tile-button-" + texture, "tile_button", Layer::HUD, 32,32);
-    button->Transform().scale = 2.0;
+    auto button = std::make_shared<spic::Button>("tile-button-" + texture, "tile_button", Layer::HUD, TileSize, TileSize);
+    button->Transform().scale = TileButtonScale;
     button->Transform().position.x = -50;
     auto buttonSprite = std::make_shared<spic::Sprite>("resources/sprites/tiles/" + texture, false, false, 100, 1);
     GameObjectUtil::LinkComponent(button, buttonSprite);
 
-    auto buttonText = std::make_shared<spic::Text>("tile-button-text-" + texture, "tile_button_text", Layer::HUD, 32, 32);
+    auto buttonText = std::make_shared<spic::Text>("tile-button-text-" + texture, "tile_button_text", Layer::HUD, TileSize, TileSize);
     buttonText->TextAlignment(Alignment::center);
     buttonText->Content(std::to_string(tileAmount));
     GameObjectUtil::LinkChild(button, buttonText);
 
-//    auto helperText = std::make_shared<spic::Text>("button-helper-text-" + texture, "tile_helper_text", Layer::HUD, 250, 32);
-//    buttonText->Size(16);
-//    buttonText->Content(tileTitle);
-//    GameObjectUtil::LinkChild(button, helperText);
+    auto labelText = std::make_shared<spic::Text>("button-label-text-" + texture, "tile_label_text", Layer::HUD, 100, TileSize);
+    labelText->Transform().position.x = TileSize * TileButtonScale + 5;
+    labelText->Size(11);
+    labelText->Content(tileTitle);
+    GameObjectUtil::LinkChild(button, labelText);
 
     button->OnClick([this, button]() mutable {
         if(_selectedButton != nullptr || _selectedButton == button) {
@@ -68,8 +72,8 @@ std::shared_ptr<spic::Button> LevelScene::InitializeTileButton(const std::shared
 
 void LevelScene::CreateHUD()
 {
-    int width = 1366;
-    int height = 786;
+    int screenWidth = 1366;
+    int screenHeight = 786;
     int hudWidth = 250;
     int totalTileAmount = 22;
 
@@ -77,24 +81,24 @@ void LevelScene::CreateHUD()
     auto rightHudSprite = std::make_shared<spic::Sprite>("resources/sprites/hud/white_block.png", false, false, 100, 1);
     GameObjectUtil::LinkComponent(rightHud, rightHudSprite);
 
-    rightHud->Transform().position.x = width - (hudWidth / 2.0);
-    rightHud->Transform().position.y = height / 2.0;
+    rightHud->Transform().position.x = screenWidth - (hudWidth / TileButtonScale);
+    rightHud->Transform().position.y = screenHeight / TileButtonScale;
 
     auto buttonText = std::make_shared<spic::Text>("tile-title-text", "tile_title_text", Layer::HUD, hudWidth, 100);
     buttonText->Content("Tegels (" + std::to_string(totalTileAmount) + ")");
     buttonText->Size(24);
     buttonText->TextAlignment(Alignment::center);
-    buttonText->Transform().position.y = -34 * 10;
+    buttonText->Transform().position.y = -(TileSize + 2) * (TileButtonScale * 5);
     GameObjectUtil::LinkChild(rightHud, buttonText);
 
     auto streetButton = InitializeTileButton(rightHud, "street.png", 10, "Straat");
-    streetButton->Transform().position.y = -34 * 8;
+    streetButton->Transform().position.y = -(TileSize + 2) * (TileButtonScale * 4);
 
     auto grassButton = InitializeTileButton(rightHud, "grass.png", 6, "Gras");
-    grassButton->Transform().position.y = -34 * 6;
+    grassButton->Transform().position.y = -(TileSize + 2) * (TileButtonScale * 3);
 
     auto sandButton = InitializeTileButton(rightHud, "sand.png", 6, "Zand");
-    sandButton->Transform().position.y = -34 * 4;
+    sandButton->Transform().position.y = -(TileSize + 2) * (TileButtonScale * 2);
 
     Contents().push_back(rightHud);
     Contents().push_back(buttonText);
