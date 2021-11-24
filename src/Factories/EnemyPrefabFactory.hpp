@@ -2,11 +2,17 @@
 #define SPIC_GAME_ENEMYPREFABFACTORY_HPP
 
 #include "GameObject.hpp"
+#include "Sprite.hpp"
 
 #include "../Enums/EnemyName.hpp"
 
 namespace game
 {
+    namespace types
+    {
+        using sprite_vector = std::vector<std::shared_ptr<spic::Sprite>>;
+    }
+
     class EnemyPrefabFactory
     {
         public:
@@ -27,7 +33,9 @@ namespace game
 
             static std::shared_ptr<spic::GameObject> CreateRaupenschlepper();
 
-            static std::shared_ptr<spic::GameObject> CreateBaseEnemy(int attack, int defense);
+            static std::shared_ptr<spic::GameObject> CreateBaseEnemy(int attack, int defense, const types::sprite_vector& idleSprites, const types::sprite_vector& walkingSprites, const types::sprite_vector& diedSprites);
+
+            static types::sprite_vector CreateSpriteVector(int max, const std::string& prefix, const std::string& extension = ".png", bool flipX = false, bool flipY = false);
     };
 }
 

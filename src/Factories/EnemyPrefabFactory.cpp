@@ -8,7 +8,6 @@
 #include "Animator.hpp"
 #include "CircleCollider.hpp"
 #include "RigidBody.hpp"
-#include "Sprite.hpp"
 
 #include <stdexcept>
 
@@ -45,97 +44,88 @@ std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreateEnemy(EnemyName name
 
 std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreatePanzer()
 {
-    auto enemy = CreateBaseEnemy(15, 200);
+    types::sprite_vector idleSprites = CreateSpriteVector(10, "resources/sprites/heroes/Idle/hero_idle_");
+    types::sprite_vector walkingSprites = CreateSpriteVector(10, "resources/sprites/heroes/Walking/hero_walking_");
+    types::sprite_vector diedSprites = CreateSpriteVector(9, "resources/sprites/heroes/Died/hero_died_");
+
+    auto enemy = CreateBaseEnemy(15, 200, idleSprites, walkingSprites, diedSprites);
 
     return enemy;
 }
 
 std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreateGruppenfuhrer()
 {
-    auto enemy = CreateBaseEnemy(4, 80);
+    types::sprite_vector idleSprites = CreateSpriteVector(0, "resources/sprites/heroes/Gruppenfuhrer/idle/idle_");
+    types::sprite_vector walkingSprites = CreateSpriteVector(0, "resources/sprites/heroes/Gruppenfuhrer/walking/walking_");
+    types::sprite_vector diedSprites = CreateSpriteVector(0, "resources/sprites/heroes/Gruppenfuhrer/died/died_");
+
+    auto enemy = CreateBaseEnemy(4, 80, idleSprites, walkingSprites, diedSprites);
 
     return enemy;
 }
 
 std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreateSchutze()
 {
-    auto enemy = CreateBaseEnemy(2, 25);
+    types::sprite_vector idleSprites = CreateSpriteVector(0, "resources/sprites/heroes/Schutze/idle/idle_");
+    types::sprite_vector walkingSprites = CreateSpriteVector(0, "resources/sprites/heroes/Schutze/walking/walking_");
+    types::sprite_vector diedSprites = CreateSpriteVector(0, "resources/sprites/heroes/Schutze/died/died_");
+
+    auto enemy = CreateBaseEnemy(2, 25, idleSprites, walkingSprites, diedSprites);
 
     return enemy;
 }
 
 std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreateErkunder()
 {
-    auto enemy = CreateBaseEnemy(2, 50);
+    types::sprite_vector idleSprites = CreateSpriteVector(0, "resources/sprites/heroes/Erkunder/idle/idle_");
+    types::sprite_vector walkingSprites = CreateSpriteVector(0, "resources/sprites/heroes/Erkunder/walking/walking_");
+    types::sprite_vector diedSprites = CreateSpriteVector(0, "resources/sprites/heroes/Erkunder/died/died_");
+
+    auto enemy = CreateBaseEnemy(2, 50, idleSprites, walkingSprites, diedSprites);
 
     return enemy;
 }
 
 std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreateGhillieAnzugSchutze()
 {
-    auto enemy = CreateBaseEnemy(3, 60);
+    types::sprite_vector idleSprites = CreateSpriteVector(0, "resources/sprites/heroes/GhillieAnzugSchutze/idle/idle_");
+    types::sprite_vector walkingSprites = CreateSpriteVector(0, "resources/sprites/heroes/GhillieAnzugSchutze/walking/walking_");
+    types::sprite_vector diedSprites = CreateSpriteVector(0, "resources/sprites/heroes/GhillieAnzugSchutze/died/died_");
+
+    auto enemy = CreateBaseEnemy(3, 60, idleSprites, walkingSprites, diedSprites);
 
     return enemy;
 }
 
 std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreateStabsarzt()
 {
-    auto enemy = CreateBaseEnemy(1, 75);
+    types::sprite_vector idleSprites = CreateSpriteVector(0, "resources/sprites/heroes/Stabsarzt/idle/idle_");
+    types::sprite_vector walkingSprites = CreateSpriteVector(0, "resources/sprites/heroes/Stabsarzt/walking/walking_");
+    types::sprite_vector diedSprites = CreateSpriteVector(0, "resources/sprites/heroes/Stabsarzt/died/died_");
+
+    auto enemy = CreateBaseEnemy(1, 75, idleSprites, walkingSprites, diedSprites);
 
     return enemy;
 }
 
 std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreateRaupenschlepper()
 {
-    auto enemy = CreateBaseEnemy(12, 150);
+    types::sprite_vector idleSprites = CreateSpriteVector(0, "resources/sprites/heroes/Raupenschlepper/idle/idle_");
+    types::sprite_vector walkingSprites = CreateSpriteVector(0, "resources/sprites/heroes/Raupenschlepper/walking/walking_");
+    types::sprite_vector diedSprites = CreateSpriteVector(0, "resources/sprites/heroes/Raupenschlepper/died/died_");
+
+    auto enemy = CreateBaseEnemy(12, 150, idleSprites, walkingSprites, diedSprites);
 
     return enemy;
 }
 
-std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreateBaseEnemy(int attack, int defense)
+std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreateBaseEnemy(int attack, int defense, const types::sprite_vector& idleSprites, const types::sprite_vector& walkingSprites, const types::sprite_vector& diedSprites)
 {
     auto baseEnemy = std::make_shared<spic::GameObject>("Enemy", "enemy", Layer::Game);
     baseEnemy->Transform().scale = EnemyScale;
 
-    auto defaultSprite = std::make_shared<spic::Sprite>("resources/sprites/heroes/Idle/hero_idle_1.png", false, false, 1, 0);
+    auto defaultSprite = std::make_shared<spic::Sprite>(idleSprites[0]->Texture(), false, false, 1, 0);
     GameObjectUtil::LinkComponent(baseEnemy, defaultSprite);
-
-    std::vector<std::shared_ptr<spic::Sprite>> idleSprites;
-    std::vector<std::shared_ptr<spic::Sprite>> walkingSprites;
-    std::vector<std::shared_ptr<spic::Sprite>> celebratingSprites;
-    std::vector<std::shared_ptr<spic::Sprite>> diedSprites;
-
-    idleSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Idle/hero_idle_1.png", false, false, 0, 0));
-    idleSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Idle/hero_idle_2.png", false, false, 0, 0));
-    idleSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Idle/hero_idle_3.png", false, false, 0, 0));
-    idleSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Idle/hero_idle_4.png", false, false, 0, 0));
-    idleSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Idle/hero_idle_5.png", false, false, 0, 0));
-    idleSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Idle/hero_idle_6.png", false, false, 0, 0));
-    idleSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Idle/hero_idle_7.png", false, false, 0, 0));
-    idleSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Idle/hero_idle_8.png", false, false, 0, 0));
-    idleSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Idle/hero_idle_9.png", false, false, 0, 0));
-    idleSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Idle/hero_idle_10.png", false, false, 0, 0));
-
-    walkingSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Walking/hero_walking_1.png", false, false, 0, 0));
-    walkingSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Walking/hero_walking_2.png", false, false, 0, 0));
-    walkingSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Walking/hero_walking_3.png", false, false, 0, 0));
-    walkingSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Walking/hero_walking_4.png", false, false, 0, 0));
-    walkingSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Walking/hero_walking_5.png", false, false, 0, 0));
-    walkingSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Walking/hero_walking_6.png", false, false, 0, 0));
-    walkingSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Walking/hero_walking_7.png", false, false, 0, 0));
-    walkingSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Walking/hero_walking_8.png", false, false, 0, 0));
-    walkingSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Walking/hero_walking_9.png", false, false, 0, 0));
-    walkingSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Walking/hero_walking_10.png", false, false, 0, 0));
-
-    diedSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Died/hero_died_1.png", false, false, 0, 0));
-    diedSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Died/hero_died_2.png", false, false, 0, 0));
-    diedSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Died/hero_died_3.png", false, false, 0, 0));
-    diedSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Died/hero_died_4.png", false, false, 0, 0));
-    diedSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Died/hero_died_5.png", false, false, 0, 0));
-    diedSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Died/hero_died_6.png", false, false, 0, 0));
-    diedSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Died/hero_died_7.png", false, false, 0, 0));
-    diedSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Died/hero_died_8.png", false, false, 0, 0));
-    diedSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Died/hero_died_9.png", false, false, 0, 0));
 
     auto idleAnimator = std::make_shared<spic::Animator>(static_cast<int>(idleSprites.size()), idleSprites);
     GameObjectUtil::LinkComponent(baseEnemy, idleAnimator);
@@ -160,4 +150,16 @@ std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreateBaseEnemy(int attack
     GameObjectUtil::LinkComponent(baseEnemy, enemyRigidBody);
 
     return baseEnemy;
+}
+
+types::sprite_vector EnemyPrefabFactory::CreateSpriteVector(int max, const std::string& prefix, const std::string& extension, bool flipX, bool flipY)
+{
+    types::sprite_vector sprites{};
+
+    for (int i = 1; i <= max; ++i)
+    {
+        sprites.push_back(std::make_shared<spic::Sprite>(prefix + std::to_string(i) + extension, flipX, flipY, 0, 0));
+    }
+
+    return sprites;
 }
