@@ -25,7 +25,13 @@ LevelScene::LevelScene(const Level& level)
     auto heroHealth = hero->GetComponent<HealthBehaviour>();
     auto endTowerHealth = std::make_shared<game::HealthBehaviour>(std::make_shared<spic::Animator>(0, std::vector<std::shared_ptr<Sprite>>()), 10);
 
-    auto levelController = std::make_shared<game::LevelController>(level, heroHealth, endTowerHealth, std::queue<WaveData>());
+    auto waves = std::queue<WaveData>();
+
+    auto wave1 = WaveData{{}, {}};
+    wave1.EnemyQueue.push(std::make_tuple<size_t, std::shared_ptr<spic::GameObject>>(1, std::make_shared<spic::GameObject>("test", "test", 0)));
+    waves.push(wave1);
+
+    auto levelController = std::make_shared<game::LevelController>(level, heroHealth, endTowerHealth, waves);
     auto cheatManager = std::make_shared<game::CheatManager>();
     GameObjectUtil::LinkComponent(mainGameObject, levelController);
     GameObjectUtil::LinkComponent(mainGameObject, cheatManager);
