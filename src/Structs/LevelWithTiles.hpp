@@ -8,7 +8,7 @@
 
 namespace game
 {
-    struct LevelWithTiles : public Level
+    struct LevelWithTiles
     {
         template<class Archive>
         void serialize(Archive& ar)
@@ -16,6 +16,10 @@ namespace game
             ar(Title, Description, UnlockThreshold, Tiles);
         }
 
+        std::string Title;
+        std::string Description;
+        std::string File;
+        int UnlockThreshold;
         std::vector<Tile> Tiles;
     };
 }

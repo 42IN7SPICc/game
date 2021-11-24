@@ -12,6 +12,7 @@ namespace game
     class LevelScene : public spic::Scene
     {
         private:
+            std::shared_ptr<spic::GameObject> BuildLevel(const LevelWithTiles &level);
             std::shared_ptr<spic::Button> _selectedButton;
             std::map<std::shared_ptr<spic::Button>, int> _buttonTileAmounts;
 

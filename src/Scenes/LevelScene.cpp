@@ -5,6 +5,7 @@
 #include "../Enums/Layer.hpp"
 #include "../Utils/GameObjectUtil.hpp"
 #include "../Factories/BackgroundPrefabFactory.hpp"
+#include "../Utils/TileUtil.hpp"
 
 using namespace spic;
 using namespace game;
@@ -12,24 +13,47 @@ using namespace game;
 const double TileButtonScale = 2.0;
 const double TileSize = 32;
 
+
+
 LevelScene::LevelScene(const std::string& levelName, LevelSelectionController& levelController)
 {
-    auto level = levelController.GetLevelDto(levelName);
+    auto level = levelController.LoadLevel(levelName);
 
     auto background = BackgroundPrefabFactory::CreateBackground(BackgroundName::Menu);
     auto titleText = std::make_shared<spic::Text>("Title Text", "text_title", Layer::HUD, 1720, 100, level.Title, "resources/fonts/capture_it.otf", 35, Alignment::left, Color::white());
     titleText->Transform().position = {25, 25};
 
-    auto tilesMapObject = levelController.GetLevelGameObject(level.File);
-    //tilesMapObject->Transform().position.x = 75;
-    //->Transform().position.y = 75;
+    auto tilesMapObject = BuildLevel(level);
+    tilesMapObject->Transform().position.x = 75;
+    tilesMapObject->Transform().position.y = 75;
 
     Contents().push_back(background);
     Contents().push_back(titleText);
-    //Contents().push_back(tilesMapObject);
+    Contents().push_back(tilesMapObject);
 
     CreateHUD();
 }
+
+std::shared_ptr<spic::GameObject> LevelScene::BuildLevel(const LevelWithTiles& level)
+{
+    auto tileMap = std::make_shared<spic::GameObject>("TileGrid", "tilemap", Layer::Game);
+    for (int i = 0; i < level.Tiles.size(); ++i)
+    {
+        auto name = "Tile_" + std::to_string(i) + "_Type_" + std::to_string(level.Tiles[i].Type);
+
+        auto tile = std::make_shared<spic::GameObject>(name, "tile", Layer::Game);
+        auto sprite = std::make_shared<spic::Sprite>(TileUtil::GetSprite((TileType) level.Tiles[i].Type), false, false, 1, 1);
+
+        tile->Transform().position.x = level.Tiles[i].X * TileSize;
+        tile->Transform().position.y = level.Tiles[i].Y * TileSize;
+
+        GameObjectUtil::LinkComponent(tile, sprite);
+        GameObjectUtil::LinkChild(tileMap, tile);
+    }
+
+    return tileMap;
+}
+
 
 std::shared_ptr<spic::Button> LevelScene::InitializeTileButton(const std::shared_ptr<GameObject>& HUD, const std::string& texture, int tileAmount, const std::string& tileTitle)
 {

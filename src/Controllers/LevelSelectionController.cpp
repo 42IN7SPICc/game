@@ -1,14 +1,10 @@
 #include "LevelSelectionController.hpp"
 #include "../Utils/StringUtil.hpp"
-#include "../Utils/GameObjectUtil.hpp"
-#include "../Utils/TileUtil.hpp"
-#include "../Enums/Layer.hpp"
 
 #include <JsonFacade.hpp>
 
 #include <iostream>
 #include <GameObject.hpp>
-#include <Sprite.hpp>
 #include <filesystem>
 #include <fstream>
 #include <exception>
