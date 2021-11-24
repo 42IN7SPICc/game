@@ -5,7 +5,8 @@ namespace game
 {
     enum class BackgroundName
     {
-        Menu
+        Menu,
+        Pause
     };
 }
 
