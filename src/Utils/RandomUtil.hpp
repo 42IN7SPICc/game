@@ -16,6 +16,8 @@ namespace game
 
         public:
             static int Next(int min, int max);
+
+            static double NextDouble(double min, double max);
     };
 }
 

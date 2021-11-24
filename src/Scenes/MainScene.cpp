@@ -22,7 +22,9 @@ MainScene::MainScene() : MenuScene("Avans Wars: WW2", false)
         LevelSelectionController levelController{};
         levelController.InitializeLevels();
 
-        auto scene = std::make_shared<LevelScene>("welcome_to_the_war", levelController);
+        auto level = levelController.GetLevelDto("welcome_to_the_war");
+
+        auto scene = std::make_shared<LevelScene>(level);
         Engine::Instance().PushScene(scene);
     });
 
