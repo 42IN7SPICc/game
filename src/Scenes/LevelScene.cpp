@@ -16,8 +16,8 @@ LevelScene::LevelScene(const Level& level)
 {
     auto mainGameObject = std::make_shared<spic::GameObject>("LevelController", "default", Layer::Background);
     auto background = BackgroundPrefabFactory::CreateBackground(BackgroundName::Menu);
-    auto titleText = std::make_shared<spic::Text>("Title Text", "text_title", Layer::HUD, 1720, 100, level.Title, "resources/fonts/capture_it.otf", 35, Alignment::left, Color::white());
-    titleText->Transform().position = {25, 25};
+    auto titleText = std::make_shared<spic::Text>("Title Text", "text_title", Layer::HUD, 1166, 100, level.Title, "resources/fonts/capture_it.otf", 35, Alignment::left, Color::white());
+    titleText->Transform().position = {1366/2, 50};
 
     //auto tilesMapObject = levelController.GetLevelGameObject(level.File);
     //tilesMapObject->Transform().position.x = 75;
