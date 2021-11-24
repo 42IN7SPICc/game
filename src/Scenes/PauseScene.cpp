@@ -1,8 +1,8 @@
 #include "PauseScene.hpp"
 
 #include "../Factories/ButtonPrefabFactory.hpp"
-#include "../Utils/Layer.hpp"
-#include "../Utils/Font.hpp"
+#include "../Enums/Layer.hpp"
+#include "../Enums/Font.hpp"
 
 #include "Engine.hpp"
 #include "Text.hpp"

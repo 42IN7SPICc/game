@@ -2,7 +2,7 @@
 #define SPIC_GAME_HEROPREFABFACTORY_HPP
 
 #include "GameObject.hpp"
-#include "../Utils/HeroName.hpp"
+#include "../Enums/HeroName.hpp"
 
 namespace game
 {

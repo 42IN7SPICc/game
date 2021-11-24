@@ -2,7 +2,7 @@
 
 #include "../Factories/ButtonPrefabFactory.hpp"
 #include "../Factories/BackgroundPrefabFactory.hpp"
-#include "../Utils/Layer.hpp"
+#include "../Enums/Layer.hpp"
 
 #include "Text.hpp"
 

@@ -7,7 +7,7 @@
 #include "DamageBehaviour.hpp"
 #include "BulletBehaviour.hpp"
 #include "../../Utils/GameObjectUtil.hpp"
-#include "../../Utils/Layer.hpp"
+#include "../../Enums/Layer.hpp"
 #include "../../Utils/PointUtil.hpp"
 
 void game::UserAttackBehaviour::OnStart()

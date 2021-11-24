@@ -6,7 +6,7 @@
 #include "../Scripts/Common/UserMovementBehaviour.hpp"
 #include "../Scripts/Heroes/HealAbilityBehaviour.hpp"
 #include "../Utils/GameObjectUtil.hpp"
-#include "../Utils/Layer.hpp"
+#include "../Enums/Layer.hpp"
 #include "../Scripts/Common/UserAttackBehaviour.hpp"
 
 #include <stdexcept>
