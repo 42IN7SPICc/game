@@ -2,7 +2,7 @@
 #include "../Utils/StringUtil.hpp"
 #include "../Utils/GameObjectUtil.hpp"
 #include "../Utils/TileUtil.hpp"
-#include "../Utils/Layer.hpp"
+#include "../Enums/Layer.hpp"
 
 #include <iostream>
 #include <GameObject.hpp>

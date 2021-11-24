@@ -1,7 +1,7 @@
 #include "BackgroundPrefabFactory.hpp"
 
 #include "../Utils/GameObjectUtil.hpp"
-#include "../Utils/Layer.hpp"
+#include "../Enums/Layer.hpp"
 
 #include "Sprite.hpp"
 

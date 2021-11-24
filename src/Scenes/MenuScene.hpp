@@ -3,7 +3,7 @@
 
 #include "Scene.hpp"
 
-#include "../Utils/BackgroundName.hpp"
+#include "../Enums/BackgroundName.hpp"
 
 #include <string>
 

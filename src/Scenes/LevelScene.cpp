@@ -2,7 +2,7 @@
 
 #include <algorithm>
 #include "Api.hpp"
-#include "../Utils/Layer.hpp"
+#include "../Enums/Layer.hpp"
 #include "../Utils/GameObjectUtil.hpp"
 #include "../Factories/BackgroundPrefabFactory.hpp"
 

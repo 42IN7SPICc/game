@@ -6,7 +6,7 @@
 
 #include "../Scripts/Menu/CloseSceneBehaviour.hpp"
 #include "../Utils/GameObjectUtil.hpp"
-#include "../Utils/Layer.hpp"
+#include "../Enums/Layer.hpp"
 
 using namespace game;
 

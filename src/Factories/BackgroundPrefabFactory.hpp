@@ -1,7 +1,7 @@
 #ifndef SPIC_GAME_BACKGROUNDPREFABFACTORY_HPP
 #define SPIC_GAME_BACKGROUNDPREFABFACTORY_HPP
 
-#include "../Utils/BackgroundName.hpp"
+#include "../Enums/BackgroundName.hpp"
 
 #include "GameObject.hpp"
 
