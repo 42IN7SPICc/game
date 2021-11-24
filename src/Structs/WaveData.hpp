@@ -4,6 +4,7 @@
 #include <map>
 #include <memory>
 #include <queue>
+#include <GameObject.hpp>
 
 namespace game
 {
