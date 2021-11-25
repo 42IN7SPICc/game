@@ -29,7 +29,7 @@ void game::HealthBehaviour::Damage(int damage)
 {
     if (_health <= 0) return;
     _health -= damage;
-    if (_health <= 0)
+    if (_health <= 0 && _diedAnimator)
         _diedAnimator->Play(false);
 }
 

@@ -9,6 +9,7 @@
 #include "../../Utils/GameObjectUtil.hpp"
 #include "../../Enums/Layer.hpp"
 #include "../../Utils/PointUtil.hpp"
+#include "../../Enums/SortingLayer.hpp"
 
 void game::UserAttackBehaviour::OnStart()
 {
@@ -40,11 +41,11 @@ void game::UserAttackBehaviour::OnUpdate()
         GameObjectUtil::LinkComponent(bullet, collider);
 
         // Behaviour scripts
-        GameObjectUtil::LinkComponent(bullet, std::make_shared<BulletBehaviour>(force));
+        GameObjectUtil::LinkComponent(bullet, std::make_shared<BulletBehaviour>(force, 1000));
         GameObjectUtil::LinkComponent(bullet, std::make_shared<DamageBehaviour>(_damage));
 
         // Sprite
-        GameObjectUtil::LinkComponent(bullet, std::make_shared<spic::Sprite>("resources/sprites/bullet.png", false, false, 0, 0));
+        GameObjectUtil::LinkComponent(bullet, std::make_shared<spic::Sprite>("resources/sprites/bullet.png", false, false, SortingLayer::Bullet, 0));
         spic::Engine::Instance().PeekScene()->Contents().push_back(bullet);
     }
 }

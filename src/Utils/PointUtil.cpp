@@ -1,9 +1,26 @@
-#include <cmath>
 #include "PointUtil.hpp"
+
+#include <cmath>
 
 spic::Point game::PointUtil::CalculateDirectionalPoint(const spic::Point& from, const spic::Point& to, double multiplier)
 {
-    auto posDiff = spic::Point{to.x - from.x, to.y - from.y};
-    double distance = sqrt(posDiff.x * posDiff.x + posDiff.y * posDiff.y);
-    return {posDiff.x / distance * multiplier, posDiff.y / distance * multiplier};
+    auto pointDiff = PointDiff(from, to);
+    auto distance = Distance(pointDiff);
+    return {pointDiff.x / distance * multiplier, pointDiff.y / distance * multiplier};
+}
+
+double game::PointUtil::Distance(const spic::Point& from, const spic::Point& to)
+{
+    auto pointDiff = PointDiff(from, to);
+    return sqrt(pointDiff.x * pointDiff.x + pointDiff.y * pointDiff.y);
+}
+
+double game::PointUtil::Distance(const spic::Point& pointDiff)
+{
+    return sqrt(pointDiff.x * pointDiff.x + pointDiff.y * pointDiff.y);
+}
+
+spic::Point game::PointUtil::PointDiff(const spic::Point& point1, const spic::Point& point2)
+{
+    return {point2.x - point1.x, point2.y - point1.y};
 }

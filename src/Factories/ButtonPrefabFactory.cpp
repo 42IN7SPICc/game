@@ -7,6 +7,7 @@
 #include "../Scripts/Menu/CloseSceneBehaviour.hpp"
 #include "../Utils/GameObjectUtil.hpp"
 #include "../Enums/Layer.hpp"
+#include "../Enums/SortingLayer.hpp"
 
 using namespace game;
 
@@ -14,7 +15,7 @@ std::shared_ptr<spic::Button> ButtonPrefabFactory::CreateOutlineButton(const std
 {
     auto button = std::make_shared<spic::Button>(name, tag, Layer::HUD, 250, 85);
 
-    auto buttonSprite = std::make_shared<spic::Sprite>("resources/sprites/hud/buttons/outline.png", false, false, 0, 0);
+    auto buttonSprite = std::make_shared<spic::Sprite>("resources/sprites/hud/buttons/outline.png", false, false, SortingLayer::HudButton, 0);
 
     auto buttonText = std::make_shared<spic::Text>(name + "_text", tag + "_text", Layer::HUD, 250, 85);
     buttonText->Content(text);
@@ -36,7 +37,7 @@ std::shared_ptr<spic::Button> ButtonPrefabFactory::CreateCloseButton(const spic:
         spic::Engine::Instance().PopScene();
     });
 
-    auto buttonSprite = std::make_shared<spic::Sprite>("resources/sprites/hud/buttons/back.png", false, false, 0, 0);
+    auto buttonSprite = std::make_shared<spic::Sprite>("resources/sprites/hud/buttons/back.png", false, false, SortingLayer::HudButton, 0);
     auto closeSceneBehaviour = std::make_shared<CloseSceneBehaviour>();
 
     GameObjectUtil::LinkComponent(button, buttonSprite);

@@ -5,6 +5,7 @@
 #include "../Enums/Layer.hpp"
 #include "../Utils/GameObjectUtil.hpp"
 #include "../Utils/TileUtil.hpp"
+#include "../Scripts/Common/GameLostBehaviour.hpp"
 
 using namespace spic;
 using namespace game;
@@ -17,9 +18,13 @@ const int MapY = 110;
 
 void LevelController::OnStart()
 {
-    auto gameWonBehaviour = std::make_shared<game::GameWonBehaviour>(_levelData);
     auto parent = GameObject().lock();
+
+    auto gameWonBehaviour = std::make_shared<game::GameWonBehaviour>(_levelData);
     GameObjectUtil::LinkComponent(parent, gameWonBehaviour);
+
+    auto gameLostBehaviour = std::make_shared<game::GameLostBehaviour>(_levelData);
+    GameObjectUtil::LinkComponent(parent, gameLostBehaviour);
 }
 
 void LevelController::OnUpdate()
@@ -101,7 +106,7 @@ bool TileWasPlaced(TileType tileType) {
         tileType == TileType::Grass;
 }
 
-std::shared_ptr<spic::GameObject> LevelController::BuildLevel()
+std::shared_ptr<spic::GameObject> LevelController::BuildLevel(const std::shared_ptr<game::HealthBehaviour>& endTowerHealthBehaviour)
 {
     auto tileMap = std::make_shared<spic::GameObject>("TileGrid", "tilemap", Layer::Game);
     for (auto levelTile : _level.Tiles)
@@ -110,6 +115,14 @@ std::shared_ptr<spic::GameObject> LevelController::BuildLevel()
 
         auto tile = std::make_shared<spic::GameObject>(name, "tile", Layer::Game);
         auto sprite = std::make_shared<spic::Sprite>(TileUtil::GetSprite((TileType) levelTile.Type), false, false, 1, 1);
+
+        if (levelTile.TileType() == TileType::End)
+        {
+            auto endTileCollider = std::make_shared<spic::BoxCollider>(TileSize * TileMapScale, TileSize * TileMapScale);
+            endTileCollider->IsTrigger(true);
+            GameObjectUtil::LinkComponent(tile, endTileCollider);
+            GameObjectUtil::LinkComponent(tile, endTowerHealthBehaviour);
+        }
 
         tile->Transform().position.x = levelTile.X * TileSize;
         tile->Transform().position.y = levelTile.Y * TileSize;

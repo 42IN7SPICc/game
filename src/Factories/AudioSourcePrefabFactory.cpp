@@ -1,6 +1,7 @@
 #include "AudioSourcePrefabFactory.hpp"
 #include "../Enums/Layer.hpp"
 #include "../Utils/GameObjectUtil.hpp"
+#include "../Utils/RandomUtil.hpp"
 #include <stdexcept>
 
 std::shared_ptr<spic::AudioSource> game::AudioSourcePrefabFactory::CreateAudioSource(game::AudioClipName audioClipName, bool playOnAwake, bool looping, double volume)
@@ -20,6 +21,9 @@ std::shared_ptr<spic::AudioSource> game::AudioSourcePrefabFactory::CreateAudioSo
         case AudioClipName::Game:
             audioSrc = "game.wav";
             break;
+        case AudioClipName::Explosion:
+            audioSrc = "explosion.wav";
+            break;
         default:
             throw std::runtime_error("Audio clip has not been defined");
     }
@@ -30,7 +34,8 @@ std::shared_ptr<spic::AudioSource> game::AudioSourcePrefabFactory::CreateAudioSo
 
 std::shared_ptr<spic::GameObject> game::AudioSourcePrefabFactory::CreateAudioObject(game::AudioClipName audioClipName, bool playOnAwake, bool looping, double volume)
 {
-    auto audioObject = std::make_shared<spic::GameObject>("audioSource", "audio", Layer::Background);
+
+    auto audioObject = std::make_shared<spic::GameObject>("audioSource_" + game::RandomUtil::NextString(32), "audio", Layer::Background);
     audioObject->Active(false);
     game::GameObjectUtil::LinkComponent(audioObject, CreateAudioSource(audioClipName, playOnAwake, looping, volume));
     return audioObject;

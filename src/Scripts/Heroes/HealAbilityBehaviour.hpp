@@ -2,7 +2,7 @@
 #define SPIC_GAME_HEALABILITYBEHAVIOUR_HPP
 
 #include <BehaviourScript.hpp>
-#include "CoolDownBehaviour.hpp"
+#include "../Common/CoolDownBehaviour.hpp"
 #include "../Common/HealthBehaviour.hpp"
 
 namespace game

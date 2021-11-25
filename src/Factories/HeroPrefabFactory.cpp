@@ -1,13 +1,17 @@
+#include "HeroPrefabFactory.hpp"
+
 #include <Animator.hpp>
 #include <CircleCollider.hpp>
-#include "HeroPrefabFactory.hpp"
 #include "Sprite.hpp"
+
+#include "../Enums/Layer.hpp"
+#include "../Enums/SortingLayer.hpp"
+#include "../Scripts/Heroes/HealAbilityBehaviour.hpp"
 #include "../Scripts/Common/HealthBehaviour.hpp"
 #include "../Scripts/Common/UserMovementBehaviour.hpp"
-#include "../Scripts/Heroes/HealAbilityBehaviour.hpp"
-#include "../Utils/GameObjectUtil.hpp"
-#include "../Enums/Layer.hpp"
 #include "../Scripts/Common/UserAttackBehaviour.hpp"
+#include "../Utils/AnimatorUtil.hpp"
+#include "../Utils/GameObjectUtil.hpp"
 
 #include <stdexcept>
 
@@ -79,57 +83,13 @@ std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateBaseHero(int at
     auto baseHero = std::make_shared<spic::GameObject>("Hero", "Player", Layer::Game);
     baseHero->Transform().scale = HeroScale;
 
-    auto defaultSprite = std::make_shared<spic::Sprite>("resources/sprites/heroes/Idle/hero_idle_1.png", false, false, 1, 0);
+    std::vector<std::shared_ptr<spic::Sprite>> idleSprites = AnimatorUtil::CreateSpriteVector(10, "resources/sprites/heroes/Idle/hero_idle_", SortingLayer::Hero);
+    std::vector<std::shared_ptr<spic::Sprite>> walkingSprites = AnimatorUtil::CreateSpriteVector(10, "resources/sprites/heroes/Walking/hero_walking_", SortingLayer::Hero);
+    std::vector<std::shared_ptr<spic::Sprite>> celebratingSprites = AnimatorUtil::CreateSpriteVector(11, "resources/sprites/heroes/Celebrating/hero_celebrating_", SortingLayer::Hero);
+    std::vector<std::shared_ptr<spic::Sprite>> diedSprites = AnimatorUtil::CreateSpriteVector(9, "resources/sprites/heroes/Died/hero_died_", SortingLayer::Hero);
+
+    auto defaultSprite = std::make_shared<spic::Sprite>(idleSprites[0]->Texture(), false, false, SortingLayer::Hero, 0);
     GameObjectUtil::LinkComponent(baseHero, defaultSprite);
-
-    std::vector<std::shared_ptr<spic::Sprite>> idleSprites;
-    std::vector<std::shared_ptr<spic::Sprite>> walkingSprites;
-    std::vector<std::shared_ptr<spic::Sprite>> celebratingSprites;
-    std::vector<std::shared_ptr<spic::Sprite>> diedSprites;
-
-    idleSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Idle/hero_idle_1.png", false, false, 0, 0));
-    idleSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Idle/hero_idle_2.png", false, false, 0, 0));
-    idleSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Idle/hero_idle_3.png", false, false, 0, 0));
-    idleSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Idle/hero_idle_4.png", false, false, 0, 0));
-    idleSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Idle/hero_idle_5.png", false, false, 0, 0));
-    idleSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Idle/hero_idle_6.png", false, false, 0, 0));
-    idleSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Idle/hero_idle_7.png", false, false, 0, 0));
-    idleSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Idle/hero_idle_8.png", false, false, 0, 0));
-    idleSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Idle/hero_idle_9.png", false, false, 0, 0));
-    idleSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Idle/hero_idle_10.png", false, false, 0, 0));
-
-    walkingSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Walking/hero_walking_1.png", false, false, 0, 0));
-    walkingSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Walking/hero_walking_2.png", false, false, 0, 0));
-    walkingSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Walking/hero_walking_3.png", false, false, 0, 0));
-    walkingSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Walking/hero_walking_4.png", false, false, 0, 0));
-    walkingSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Walking/hero_walking_5.png", false, false, 0, 0));
-    walkingSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Walking/hero_walking_6.png", false, false, 0, 0));
-    walkingSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Walking/hero_walking_7.png", false, false, 0, 0));
-    walkingSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Walking/hero_walking_8.png", false, false, 0, 0));
-    walkingSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Walking/hero_walking_9.png", false, false, 0, 0));
-    walkingSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Walking/hero_walking_10.png", false, false, 0, 0));
-
-    celebratingSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Celebrating/hero_celebrating_1.png", false, false, 0, 0));
-    celebratingSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Celebrating/hero_celebrating_2.png", false, false, 0, 0));
-    celebratingSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Celebrating/hero_celebrating_3.png", false, false, 0, 0));
-    celebratingSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Celebrating/hero_celebrating_4.png", false, false, 0, 0));
-    celebratingSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Celebrating/hero_celebrating_5.png", false, false, 0, 0));
-    celebratingSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Celebrating/hero_celebrating_6.png", false, false, 0, 0));
-    celebratingSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Celebrating/hero_celebrating_7.png", false, false, 0, 0));
-    celebratingSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Celebrating/hero_celebrating_8.png", false, false, 0, 0));
-    celebratingSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Celebrating/hero_celebrating_9.png", false, false, 0, 0));
-    celebratingSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Celebrating/hero_celebrating_10.png", false, false, 0, 0));
-    celebratingSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Celebrating/hero_celebrating_11.png", false, false, 0, 0));
-
-    diedSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Died/hero_died_1.png", false, false, 0, 0));
-    diedSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Died/hero_died_2.png", false, false, 0, 0));
-    diedSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Died/hero_died_3.png", false, false, 0, 0));
-    diedSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Died/hero_died_4.png", false, false, 0, 0));
-    diedSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Died/hero_died_5.png", false, false, 0, 0));
-    diedSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Died/hero_died_6.png", false, false, 0, 0));
-    diedSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Died/hero_died_7.png", false, false, 0, 0));
-    diedSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Died/hero_died_8.png", false, false, 0, 0));
-    diedSprites.push_back(std::make_shared<spic::Sprite>("resources/sprites/heroes/Died/hero_died_9.png", false, false, 0, 0));
 
     auto idleAnimator = std::make_shared<spic::Animator>(static_cast<int>(idleSprites.size()), idleSprites);
     GameObjectUtil::LinkComponent(baseHero, idleAnimator);

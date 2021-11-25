@@ -7,7 +7,8 @@ namespace game
     {
         Menu,
         Pause,
-        Victory
+        Victory,
+        GameOver
     };
 }
 
