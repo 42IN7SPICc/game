@@ -11,6 +11,7 @@ using namespace spic;
 game::GameOverScene::GameOverScene() : MenuScene("", false, BackgroundName::GameOver)
 {
     auto gameOverAudioSource = game::AudioSourcePrefabFactory::CreateAudioObject(AudioClipName::GameOver, true, true, 1.0);
+    auto explosionAudioSource = game::AudioSourcePrefabFactory::CreateAudioObject(AudioClipName::Explosion, true, false, 1.0);
 
     auto titleText = std::make_shared<Text>("Game Over Text", "text_pause", game::Layer::HUD, 1166, 100, "GAME OVER!", game::Font::Title, 64, Alignment::center, Color::white());
     titleText->Transform().position = {683, 132};
@@ -22,6 +23,7 @@ game::GameOverScene::GameOverScene() : MenuScene("", false, BackgroundName::Game
     });
 
     Contents().push_back(gameOverAudioSource);
+    Contents().push_back(explosionAudioSource);
     Contents().push_back(titleText);
     Contents().push_back(exitButton);
 }
