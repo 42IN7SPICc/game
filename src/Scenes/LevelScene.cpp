@@ -9,6 +9,7 @@
 #include "../Scripts/Common/CheatManager.hpp"
 #include "../Controllers/LevelController.hpp"
 #include "../Factories/AudioSourcePrefabFactory.hpp"
+#include "../Enums/SortingLayer.hpp"
 
 using namespace spic;
 using namespace game;
@@ -63,7 +64,7 @@ std::shared_ptr<spic::GameObject> LevelScene::BuildLevel(const LevelWithTiles& l
         auto name = "Tile_" + std::to_string(i) + "_Type_" + std::to_string(level.Tiles[i].Type);
 
         auto tile = std::make_shared<spic::GameObject>(name, "tile", Layer::Game);
-        auto sprite = std::make_shared<spic::Sprite>(TileUtil::GetSprite((TileType) level.Tiles[i].Type), false, false, 1, 1);
+        auto sprite = std::make_shared<spic::Sprite>(TileUtil::GetSprite((TileType) level.Tiles[i].Type), false, false, SortingLayer::Map, 1);
 
         tile->Transform().position.x = level.Tiles[i].X * TileSize;
         tile->Transform().position.y = level.Tiles[i].Y * TileSize;
@@ -81,7 +82,7 @@ std::shared_ptr<spic::Button> LevelScene::InitializeTileButton(const std::shared
     auto button = std::make_shared<spic::Button>("tile-button-" + texture, "tile_button", Layer::HUD, TileSize, TileSize);
     button->Transform().scale = TileButtonScale;
     button->Transform().position.x = -50;
-    auto buttonSprite = std::make_shared<spic::Sprite>("resources/sprites/tiles/" + texture, false, false, 100, 1);
+    auto buttonSprite = std::make_shared<spic::Sprite>("resources/sprites/tiles/" + texture, false, false, SortingLayer::HudButton, 1);
     GameObjectUtil::LinkComponent(button, buttonSprite);
 
     auto buttonText = std::make_shared<spic::Text>("tile-button-text-" + texture, "tile_button_text", Layer::HUD, TileSize, TileSize);
@@ -110,7 +111,7 @@ std::shared_ptr<spic::Button> LevelScene::InitializeTileButton(const std::shared
             return;
         };
 
-        auto selectionSprite = std::make_shared<spic::Sprite>("resources/sprites/tiles/selected.png", false, false, 100, 1);
+        auto selectionSprite = std::make_shared<spic::Sprite>("resources/sprites/tiles/selected.png", false, false, SortingLayer::HudButton + 1, 1);
         GameObjectUtil::LinkComponent(button, selectionSprite);
         _selectedButton = button;
     });
@@ -127,7 +128,7 @@ void LevelScene::CreateHUD()
     int totalTileAmount = 22;
 
     auto rightHud = std::make_shared<GameObject>("RightHud", "hud", Layer::HUD);
-    auto rightHudSprite = std::make_shared<spic::Sprite>("resources/sprites/hud/white_block.png", false, false, 100, 1);
+    auto rightHudSprite = std::make_shared<spic::Sprite>("resources/sprites/hud/white_block.png", false, false, SortingLayer::HudBackground, 1);
     GameObjectUtil::LinkComponent(rightHud, rightHudSprite);
 
     rightHud->Transform().position.x = screenWidth - (hudWidth / TileButtonScale);
