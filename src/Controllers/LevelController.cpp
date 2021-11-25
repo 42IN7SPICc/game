@@ -88,9 +88,7 @@ std::shared_ptr<spic::GameObject> LevelController::CreateHUD()
     auto sandButton = InitializeTileButton(rightHud, "sand.png", 6, "Zand");
     sandButton->Transform().position.y = -(TileSize + 2) * (TileButtonScale * 2);
 
-    int result = std::accumulate(_buttonTileAmounts.begin(), _buttonTileAmounts.end(), 0,
-                                               [](const int previous, const std::pair<std::shared_ptr<spic::Button>, int>& p)
-                                               { return previous + p.second; });
+    int result = std::accumulate(_buttonTileAmounts.begin(), _buttonTileAmounts.end(), 0, [](const int previous, const std::pair<std::shared_ptr<spic::Button>, int>& p) { return previous + p.second; });
     buttonText->Content("Tegels (" + std::to_string(result) + ")");
 
     return rightHud;
@@ -193,11 +191,11 @@ std::string TileTypeToTexture(TileType tileType)
 
 std::string TextureToPrefix(const std::string& texture)
 {
-    if(texture == "resources/sprites/tiles/street.png")
+    if (texture == "resources/sprites/tiles/street.png")
         return "street.png";
-    else if(texture == "resources/sprites/tiles/grass.png")
+    else if (texture == "resources/sprites/tiles/grass.png")
         return "grass.png";
-    else if(texture == "resources/sprites/tiles/sand.png")
+    else if (texture == "resources/sprites/tiles/sand.png")
         return "sand.png";
 }
 
@@ -236,7 +234,8 @@ std::shared_ptr<spic::GameObject> LevelController::CreateMapButton()
                 else
                 {
                     //Check if tile you've clicked isn't a bush, if it is put back the tile in HUD that was already there
-                    if(overrideSprite->Texture() != "resources/sprites/tiles/bushes.png") {
+                    if (overrideSprite->Texture() != "resources/sprites/tiles/bushes.png")
+                    {
                         auto writeBackButton = std::dynamic_pointer_cast<Button>(GameObject::Find("tile-button-" + TextureToPrefix(overrideSprite->Texture())));
                         auto writeBackText = std::dynamic_pointer_cast<Text>(GameObject::Find("tile-button-text-" + TextureToPrefix(overrideSprite->Texture())));
 
@@ -251,9 +250,7 @@ std::shared_ptr<spic::GameObject> LevelController::CreateMapButton()
                 auto textChange = std::dynamic_pointer_cast<spic::Text>(_selectedButton->Children()[0]);
                 textChange->Content(std::to_string(_buttonTileAmounts[_selectedButton]));
 
-                int result = std::accumulate(_buttonTileAmounts.begin(), _buttonTileAmounts.end(), 0,
-                                             [](const int previous, const std::pair<std::shared_ptr<spic::Button>, int>& p)
-                                             { return previous + p.second; });
+                int result = std::accumulate(_buttonTileAmounts.begin(), _buttonTileAmounts.end(), 0, [](const int previous, const std::pair<std::shared_ptr<spic::Button>, int>& p) { return previous + p.second; });
                 auto totalTilesText = std::dynamic_pointer_cast<Text>(GameObject::Find("tile-title-text"));
                 totalTilesText->Content("Tegels (" + std::to_string(result) + ")");
             }
