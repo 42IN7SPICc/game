@@ -1,7 +1,6 @@
 #include "LevelScene.hpp"
 
 #include "Api.hpp"
-#include <GameObject.hpp>
 #include "../Enums/Layer.hpp"
 #include "../Utils/GameObjectUtil.hpp"
 #include "../Factories/BackgroundPrefabFactory.hpp"
