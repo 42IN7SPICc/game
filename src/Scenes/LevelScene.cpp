@@ -1,7 +1,6 @@
 #include "LevelScene.hpp"
 
 #include "Api.hpp"
-#include <GameObject.hpp>
 #include "../Enums/Layer.hpp"
 #include "../Utils/GameObjectUtil.hpp"
 #include "../Factories/BackgroundPrefabFactory.hpp"
@@ -9,6 +8,7 @@
 #include "../Factories/HeroPrefabFactory.hpp"
 #include "../Scripts/Common/CheatManager.hpp"
 #include "../Controllers/LevelController.hpp"
+#include "../Factories/AudioSourcePrefabFactory.hpp"
 
 using namespace spic;
 using namespace game;
@@ -19,6 +19,7 @@ const double TileMapScale = 0.8;
 
 LevelScene::LevelScene(const LevelWithTiles& level)
 {
+    auto levelAudioSource = game::AudioSourcePrefabFactory::CreateAudioObject(AudioClipName::Game, true, true, 0.2);
     auto mainGameObject = std::make_shared<spic::GameObject>("LevelController", "default", Layer::Background);
     auto background = BackgroundPrefabFactory::CreateBackground(BackgroundName::Menu);
 
@@ -45,6 +46,7 @@ LevelScene::LevelScene(const LevelWithTiles& level)
     GameObjectUtil::LinkComponent(mainGameObject, levelController);
     GameObjectUtil::LinkComponent(mainGameObject, cheatManager);
 
+    Contents().push_back(levelAudioSource);
     Contents().push_back(mainGameObject);
     Contents().push_back(background);
     Contents().push_back(titleText);
