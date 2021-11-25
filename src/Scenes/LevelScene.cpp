@@ -27,7 +27,6 @@ LevelScene::LevelScene(const LevelWithTiles& level)
     auto tilesMapObject = BuildLevel(level);
     tilesMapObject->Transform().position.x = 75;
     tilesMapObject->Transform().position.y = 75;
-    tilesMapObject->Transform().scale = 0.5;
 
     auto hero = game::HeroPrefabFactory::CreateHero(DesmondDoss);
     auto heroHealth = hero->GetComponent<HealthBehaviour>();
