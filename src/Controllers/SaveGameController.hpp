@@ -25,6 +25,7 @@ namespace game
             void InitializeSaves();
 
             void Load(const std::string& saveGameName);
+
             void Save();
 
         private:
