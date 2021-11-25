@@ -12,6 +12,7 @@
 #include "../Enums/Layer.hpp"
 #include "../Utils/RandomUtil.hpp"
 #include "../Utils/GameObjectUtil.hpp"
+#include "../Factories/AudioSourcePrefabFactory.hpp"
 
 using namespace spic;
 const int AmountOfConfetti = 100;
@@ -59,6 +60,8 @@ class ConfettiBehaviour : public spic::BehaviourScript
 
 game::VictoryScene::VictoryScene() : MenuScene("", false, BackgroundName::Victory)
 {
+    auto victoryAudioSource = game::AudioSourcePrefabFactory::CreateAudioObject(AudioClipName::Victory, true, true, 1.0);
+
     auto titleText = std::make_shared<Text>("Pause Text", "text_pause", game::Layer::HUD, 1166, 100, "VICTORY!", game::Font::Title, 64, Alignment::center, Color::white());
     titleText->Transform().position = {683, 132};
 
@@ -80,6 +83,7 @@ game::VictoryScene::VictoryScene() : MenuScene("", false, BackgroundName::Victor
     GameObjectUtil::LinkComponent(bottomBound, bottomBoundCollider);
     GameObjectUtil::LinkComponent(bottomBound, std::make_shared<RigidBody>(1, 0, BodyType::staticBody));
 
+    Contents().push_back(victoryAudioSource);
     Contents().push_back(titleText);
     Contents().push_back(exitButton);
     Contents().push_back(bottomBound);
