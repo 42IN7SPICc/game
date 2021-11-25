@@ -7,6 +7,7 @@
 #include "../Utils/TileUtil.hpp"
 #include "../Scripts/Common/GameLostBehaviour.hpp"
 #include <numeric>
+#include <cmath>
 
 using namespace spic;
 using namespace game;
