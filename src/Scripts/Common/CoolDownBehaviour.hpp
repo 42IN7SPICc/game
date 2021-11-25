@@ -9,7 +9,7 @@ namespace game
     {
         private:
             double _coolDown;
-            int _minCoolDown;
+            double _minCoolDown;
             bool _cooledDown;
 
         public:
@@ -32,6 +32,10 @@ namespace game
             [[nodiscard]] double CoolDown() const;
 
             void CoolDown(double coolDown);
+
+            [[nodiscard]] double MinCoolDown() const;
+
+            void MinCoolDown(double minCoolDown);
     };
 }
 

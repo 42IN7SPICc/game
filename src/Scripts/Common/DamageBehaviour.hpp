@@ -1,8 +1,7 @@
 #ifndef SPIC_GAME_DAMAGEBEHAVIOUR_HPP
 #define SPIC_GAME_DAMAGEBEHAVIOUR_HPP
 
-
-#include <BehaviourScript.hpp>
+#include "BehaviourScript.hpp"
 
 namespace game
 {

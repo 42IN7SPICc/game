@@ -1,6 +1,7 @@
 #include "EnemyPrefabFactory.hpp"
 
 #include "../Enums/Layer.hpp"
+#include "../Scripts/Common/AttackBehaviour.hpp"
 #include "../Scripts/Common/HealthBehaviour.hpp"
 #include "../Scripts/Enemies/EnemyMovementBehaviour.hpp"
 #include "../Utils/GameObjectUtil.hpp"
@@ -49,6 +50,9 @@ std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreatePanzer()
     types::sprite_vector diedSprites = CreateSpriteVector(9, "resources/sprites/heroes/Died/hero_died_");
 
     auto enemy = CreateBaseEnemy(15, 200, idleSprites, walkingSprites, diedSprites);
+
+    auto attackBehaviour = std::make_shared<AttackBehaviour>("Player", 3, 500, 15, false, 25);
+    GameObjectUtil::LinkComponent(enemy, attackBehaviour);
 
     return enemy;
 }
