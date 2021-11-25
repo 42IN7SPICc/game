@@ -39,7 +39,6 @@ std::map<std::string, PlayerData> SaveGameManager::GetAll()
         playerData.File = file.File;
 
         result.insert(std::make_pair(file.Name, playerData));
-
     }
 
     if (result.empty())

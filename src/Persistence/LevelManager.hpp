@@ -12,6 +12,7 @@ namespace game
     {
         public:
             static LevelWithTiles LoadLevelWithTiles(const std::string& file);
+
             static Level LoadLevel(const std::string& file);
 
             static std::map<std::string, Level> GetAll();

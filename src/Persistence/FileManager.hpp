@@ -6,7 +6,8 @@
 #include <string>
 #include <vector>
 
-namespace game {
+namespace game
+{
     class FileManager
     {
         public:
