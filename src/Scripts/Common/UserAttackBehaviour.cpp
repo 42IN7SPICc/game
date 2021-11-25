@@ -41,7 +41,7 @@ void game::UserAttackBehaviour::OnUpdate()
         GameObjectUtil::LinkComponent(bullet, collider);
 
         // Behaviour scripts
-        GameObjectUtil::LinkComponent(bullet, std::make_shared<BulletBehaviour>(force));
+        GameObjectUtil::LinkComponent(bullet, std::make_shared<BulletBehaviour>(force, 1000));
         GameObjectUtil::LinkComponent(bullet, std::make_shared<DamageBehaviour>(_damage));
 
         // Sprite
