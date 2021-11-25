@@ -3,6 +3,7 @@
 #include "Debug.hpp"
 #include "GameObject.hpp"
 #include "GameWonBehaviour.hpp"
+#include "GameLostBehaviour.hpp"
 
 using namespace spic;
 using namespace game;
@@ -32,6 +33,20 @@ void Victory()
         if (gameWonBehaviour)
         {
             gameWonBehaviour->OnLevelCompleted();
+        }
+    }
+}
+
+void GameOver()
+{
+    Debug::Log("Fired Game Over Cheat");
+    auto levelController = GameObject::Find("LevelController");
+    if (levelController)
+    {
+        auto gameLostBehaviour = levelController->GetComponent<game::GameLostBehaviour>();
+        if (gameLostBehaviour)
+        {
+            gameLostBehaviour->OnLevelFailed();
         }
     }
 }
@@ -72,6 +87,7 @@ void CheatManager::OnStart()
     _cheats[Input::KeyCode::I] = []() { return Invincibility(); };
     _cheats[Input::KeyCode::B] = []() { return Butcher(); };
     _cheats[Input::KeyCode::V] = []() { return Victory(); };
+    _cheats[Input::KeyCode::L] = []() { return GameOver(); };
     _cheats[Input::KeyCode::S] = []() { return SkipWave(); };
     _cheats[Input::KeyCode::N] = []() { return NoCoolDown(); };
     _cheats[Input::KeyCode::A] = []() { return UnlockLevels(); };
