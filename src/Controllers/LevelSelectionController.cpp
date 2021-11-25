@@ -19,7 +19,7 @@ LevelWithTiles LevelSelectionController::LoadLevel(const std::string& file)
     try
     {
         auto contents = LoadFile(file);
-        std::string value {"[" + contents + "]"};
+        std::string value{"[" + contents + "]"};
         auto level = spic::JsonFacade::Deserialize<LevelWithTiles>(value);
         level.File = file;
 

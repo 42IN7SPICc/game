@@ -31,12 +31,12 @@ LevelScene::LevelScene(const LevelWithTiles& level)
 
     auto hero = game::HeroPrefabFactory::CreateHero(DesmondDoss);
     auto heroHealth = hero->GetComponent<HealthBehaviour>();
-    auto endTowerHealth = std::make_shared<game::HealthBehaviour>(std::make_shared<spic::Animator>(0, std::vector < std::shared_ptr < Sprite >> ()), 10);
+    auto endTowerHealth = std::make_shared<game::HealthBehaviour>(std::make_shared<spic::Animator>(0, std::vector<std::shared_ptr<Sprite >>()), 10);
 
     auto waves = std::queue<WaveData>();
 
     auto wave1 = WaveData{{}, {}};
-    wave1.EnemyQueue.push(std::make_tuple < size_t, std::shared_ptr < spic::GameObject >> (1, std::make_shared<spic::GameObject>("test", "test", 0)));
+    wave1.EnemyQueue.push(std::make_tuple<size_t, std::shared_ptr<spic::GameObject >>(1, std::make_shared<spic::GameObject>("test", "test", 0)));
     waves.push(wave1);
 
     auto levelController = std::make_shared<game::LevelController>(level, heroHealth, endTowerHealth, waves);
@@ -52,7 +52,7 @@ LevelScene::LevelScene(const LevelWithTiles& level)
     CreateHUD();
 }
 
-std::shared_ptr <spic::GameObject> LevelScene::BuildLevel(const LevelWithTiles& level)
+std::shared_ptr<spic::GameObject> LevelScene::BuildLevel(const LevelWithTiles& level)
 {
     auto tileMap = std::make_shared<spic::GameObject>("TileGrid", "tilemap", Layer::Game);
     for (int i = 0; i < level.Tiles.size(); ++i)
@@ -73,7 +73,7 @@ std::shared_ptr <spic::GameObject> LevelScene::BuildLevel(const LevelWithTiles& 
 }
 
 
-std::shared_ptr <spic::Button> LevelScene::InitializeTileButton(const std::shared_ptr <GameObject>& HUD, const std::string& texture, int tileAmount, const std::string& tileTitle)
+std::shared_ptr<spic::Button> LevelScene::InitializeTileButton(const std::shared_ptr<GameObject>& HUD, const std::string& texture, int tileAmount, const std::string& tileTitle)
 {
     auto button = std::make_shared<spic::Button>("tile-button-" + texture, "tile_button", Layer::HUD, TileSize, TileSize);
     button->Transform().scale = TileButtonScale;
