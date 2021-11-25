@@ -15,6 +15,7 @@ using namespace game;
 
 const double TileButtonScale = 2.0;
 const double TileSize = 32;
+const double TileMapScale = 0.8;
 
 LevelScene::LevelScene(const LevelWithTiles& level)
 {
@@ -26,7 +27,8 @@ LevelScene::LevelScene(const LevelWithTiles& level)
 
     auto tilesMapObject = BuildLevel(level);
     tilesMapObject->Transform().position.x = 75;
-    tilesMapObject->Transform().position.y = 75;
+    tilesMapObject->Transform().position.y = 110;
+    tilesMapObject->Transform().scale = TileMapScale;
 
     auto hero = game::HeroPrefabFactory::CreateHero(DesmondDoss);
     auto heroHealth = hero->GetComponent<HealthBehaviour>();
