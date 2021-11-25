@@ -6,6 +6,7 @@
 
 #include "../Structs/LevelWithTiles.hpp"
 #include "../Controllers/LevelSelectionController.hpp"
+#include "../Scripts/Common/HealthBehaviour.hpp"
 
 #include <map>
 
@@ -21,7 +22,7 @@ namespace game
 
             void CreateHUD();
 
-            std::shared_ptr<spic::GameObject> BuildLevel(const LevelWithTiles& level);
+            std::shared_ptr<spic::GameObject> BuildLevel(const LevelWithTiles& level, const std::shared_ptr<game::HealthBehaviour>& endTowerHealthBehaviour);
 
         public:
             explicit LevelScene(const LevelWithTiles& level);
