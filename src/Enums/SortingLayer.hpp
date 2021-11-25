@@ -10,6 +10,10 @@ namespace game
         Enemy = 40,
         Hero = 60,
         Bullet = 80,
+
+        HudBackground = 1000,
+        HudText = 1100,
+        HudButton = 1200,
     };
 }
 
