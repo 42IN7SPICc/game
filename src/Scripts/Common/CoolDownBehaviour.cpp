@@ -62,3 +62,13 @@ void game::CoolDownBehaviour::CoolDown(double coolDown)
 {
     _coolDown = coolDown;
 }
+
+double game::CoolDownBehaviour::MinCoolDown() const
+{
+    return _minCoolDown;
+}
+
+void game::CoolDownBehaviour::MinCoolDown(double minCoolDown)
+{
+    _minCoolDown = minCoolDown;
+}
