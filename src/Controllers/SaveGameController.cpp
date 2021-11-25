@@ -39,9 +39,7 @@ void SaveGameController::InitializeSaves()
 void SaveGameController::Load(const std::string& saveGameName)
 {
     if (!_saves.contains(saveGameName))
-    {
-
-    }
+        throw std::runtime_error(std::string{"Save game `" + saveGameName + "` does not exist."});
 
     PlayerData::Instance(_saves.at(saveGameName));
 }
