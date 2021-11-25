@@ -18,7 +18,6 @@ using namespace game;
 MainScene::MainScene() : MenuScene("Avans Wars: WW2", false)
 {
     auto mainMenuAudioSource = game::AudioSourcePrefabFactory::CreateAudioObject(AudioClipName::MainMenu, true, true, 1.0);
-    mainMenuAudioSource->GetComponent<spic::AudioSource>()->Play(true);
 
     auto playButton = ButtonPrefabFactory::CreateOutlineButton("Play Button", "button_play", "PLAY");
     playButton->Transform().position = {225, 300};
