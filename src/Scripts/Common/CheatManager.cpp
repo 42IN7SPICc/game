@@ -10,8 +10,8 @@ using namespace game;
 
 void UnlimitedMoney()
 {
-    Debug::Log("Fired Unlimited Money Cheat");
-    PlayerData::Instance().Balance = INT_MAX;
+    Debug::Log("Fired `Unlimited` Money Cheat");
+    PlayerData::Instance().Balance += 100000;
 }
 
 void Invincibility()
@@ -51,7 +51,7 @@ void NoCoolDown()
 void UnlockLevels()
 {
     Debug::Log("Fired Unlock Levels Cheat");
-    PlayerData::Instance().LevelsCompleted = INT_MAX;
+    PlayerData::Instance().LevelsCompleted = 1000;
 }
 
 void UnlimitedPath()
