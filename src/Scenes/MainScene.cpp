@@ -10,6 +10,7 @@
 #include "../Utils/RandomUtil.hpp"
 #include "../Scripts/Common/UserAttackBehaviour.hpp"
 #include "../Scripts/Common/UserMovementBehaviour.hpp"
+#include "../Controllers/SaveGameController.hpp"
 
 using namespace spic;
 using namespace game;
