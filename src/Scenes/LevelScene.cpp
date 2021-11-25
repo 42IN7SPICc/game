@@ -70,7 +70,9 @@ std::shared_ptr <spic::GameObject> LevelScene::BuildLevel(const LevelWithTiles& 
         GameObjectUtil::LinkComponent(tile, sprite);
         GameObjectUtil::LinkChild(tileMap, tile);
     }
-    auto mapButton = std::make_shared<spic::Button>("Map_Button", "map_button", Layer::Game, 25 * 32, 25 * 32);
+
+    auto mapSize = sqrt(level.Tiles.size());
+    auto mapButton = std::make_shared<spic::Button>("Map_Button", "map_button", Layer::Game, mapSize * TileSize, mapSize * TileSize);
     mapButton->OnClick([]() {
         auto currentMousePosition = Input::MousePosition();
         Debug::Log("CurrentX: " + std::to_string(currentMousePosition.x) +  ", CurrentY: " + std::to_string(currentMousePosition.y));
