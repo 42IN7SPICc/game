@@ -8,3 +8,8 @@ PlayerData& PlayerData::Instance()
 {
     return _instance;
 }
+
+void PlayerData::Instance(const PlayerData& playerData)
+{
+    _instance = playerData;
+}

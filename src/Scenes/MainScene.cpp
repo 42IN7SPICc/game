@@ -16,14 +16,18 @@ using namespace game;
 
 MainScene::MainScene() : MenuScene("Avans Wars: WW2", false)
 {
+    SaveGameController saveGameController{};
+    saveGameController.InitializeSaves();
+    saveGameController.Load("save1");
+
+    LevelSelectionController levelSelectionController{};
+    levelSelectionController.InitializeLevels();
+
     auto playButton = ButtonPrefabFactory::CreateOutlineButton("Play Button", "button_play", "PLAY");
     playButton->Transform().position = {225, 300};
-    playButton->OnClick([]() {
-        LevelSelectionController levelController{};
-        levelController.InitializeLevels();
-
-        auto level = levelController.GetLevelDto("welcome_to_the_war");
-        auto levelWithTiles = levelController.LoadLevel(level.File);
+    playButton->OnClick([levelSelectionController]() {
+        auto level = levelSelectionController.GetLevelDto("welcome_to_the_war");
+        auto levelWithTiles = levelSelectionController.LoadLevel(level.File);
 
         auto scene = std::make_shared<LevelScene>(levelWithTiles);
         Engine::Instance().PushScene(scene);
@@ -43,7 +47,8 @@ MainScene::MainScene() : MenuScene("Avans Wars: WW2", false)
 
     auto exitButton = ButtonPrefabFactory::CreateOutlineButton("Exit Button", "button_exit", "EXIT");
     exitButton->Transform().position = {225, 675};
-    exitButton->OnClick([]() {
+    exitButton->OnClick([&saveGameController]() {
+        saveGameController.Save();
         Engine::Instance().Shutdown();
     });
 
