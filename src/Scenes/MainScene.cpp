@@ -19,8 +19,13 @@ MainScene::MainScene() : MenuScene("Avans Wars: WW2", false)
     auto playButton = ButtonPrefabFactory::CreateOutlineButton("Play Button", "button_play", "PLAY");
     playButton->Transform().position = {225, 300};
     playButton->OnClick([]() {
-        Level level {"Test Level", "Test Description", "none", 10, {}};
-        auto scene = std::make_shared<LevelScene>(level);
+        LevelSelectionController levelController{};
+        levelController.InitializeLevels();
+
+        auto level = levelController.GetLevelDto("welcome_to_the_war");
+        auto levelWithTiles = levelController.LoadLevel(level.File);
+
+        auto scene = std::make_shared<LevelScene>(levelWithTiles);
         Engine::Instance().PushScene(scene);
     });
 

@@ -11,6 +11,7 @@ include(vcpkg_install_deps.cmake)
 vcpkg_install_deps(MANIFEST_ROOT ${PROJECT_LIBS_DIR}/spic-engine)
 
 include_directories(${PROJECT_NAME} ${PROJECT_LIBS_DIR}/spic-engine/includes/spic-api-headers)
+include_directories(${PROJECT_NAME} ${PROJECT_LIBS_DIR}/spic-engine/includes/Engine)
 
 if (NOT DEFINED BINARY_RESOURCES_FOLDER)
     set(BINARY_RESOURCES_FOLDER resources)
