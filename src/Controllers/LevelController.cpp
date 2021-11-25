@@ -138,37 +138,6 @@ std::shared_ptr<spic::GameObject> LevelController::BuildLevel(const std::shared_
         GameObjectUtil::LinkChild(tileMap, tile);
     }
 
-    double mapSize = sqrt(_level.Tiles.size());
-    double buttonSize = mapSize * TileSize;
-    auto mapTileButton = std::make_shared<spic::Button>("Map_Button", "map_button", Layer::Game, buttonSize, buttonSize);
-    mapTileButton->Transform().position.x += (buttonSize / 2.0) - TileSize / 2.0;
-    mapTileButton->Transform().position.y += (buttonSize / 2.0) - TileSize / 2.0;
-
-    mapTileButton->OnClick([this]() {
-        if(_buttonTileAmounts[_selectedButton] == 0) return;
-
-        auto mousePositions = Input::MousePosition();
-        double scaledTileSize = TileSize * TileMapScale;
-        int x = ((mousePositions.x - MapX) + (scaledTileSize / 2)) / scaledTileSize;
-        int y = ((mousePositions.y - MapY) + (scaledTileSize / 2)) / scaledTileSize;
-
-        auto clickedTile = _levelData.Graph[std::to_string(x) + "-" + std::to_string(y)];
-        if(_selectedButton != nullptr) {
-            if(TileIsValid(clickedTile.TileType)) {
-                auto selectedSprite = _selectedButton->GetComponent<spic::Sprite>();
-                auto sprite = clickedTile.TileObject->GetComponent<spic::Sprite>();
-                sprite->Texture(selectedSprite->Texture());
-
-                auto textChange = std::dynamic_pointer_cast<spic::Text>(_selectedButton->Children()[0]);
-                _buttonTileAmounts[_selectedButton]--;
-                if(textChange) {
-                    textChange->Content(std::to_string(_buttonTileAmounts[_selectedButton]));
-                }
-            }
-        }
-    });
-    GameObjectUtil::LinkChild(tileMap, mapTileButton);
-
     return tileMap;
 }
 
@@ -213,5 +182,40 @@ std::shared_ptr<spic::Button> LevelController::InitializeTileButton(const std::s
 
     GameObjectUtil::LinkChild(HUD, button);
     return button;
+}
+
+std::shared_ptr<spic::GameObject> LevelController::CreateMapButton()
+{
+    double mapSize = sqrt(_level.Tiles.size());
+    double buttonSize = mapSize * TileSize;
+    auto mapTileButton = std::make_shared<spic::Button>("Map_Button", "map_button", Layer::Game, buttonSize, buttonSize);
+    mapTileButton->Transform().position.x += (buttonSize / 2.0) - TileSize / 2.0;
+    mapTileButton->Transform().position.y += (buttonSize / 2.0) - TileSize / 2.0;
+
+    mapTileButton->OnClick([this]() {
+        if(_buttonTileAmounts[_selectedButton] == 0) return;
+
+        auto mousePositions = Input::MousePosition();
+        double scaledTileSize = TileSize * TileMapScale;
+        int x = ((mousePositions.x - MapX) + (scaledTileSize / 2)) / scaledTileSize;
+        int y = ((mousePositions.y - MapY) + (scaledTileSize / 2)) / scaledTileSize;
+
+        auto clickedTile = _levelData.Graph[std::to_string(x) + "-" + std::to_string(y)];
+        if(_selectedButton != nullptr) {
+            if(TileIsValid(clickedTile.TileType)) {
+                auto selectedSprite = _selectedButton->GetComponent<spic::Sprite>();
+                auto sprite = clickedTile.TileObject->GetComponent<spic::Sprite>();
+                sprite->Texture(selectedSprite->Texture());
+
+                auto textChange = std::dynamic_pointer_cast<spic::Text>(_selectedButton->Children()[0]);
+                _buttonTileAmounts[_selectedButton]--;
+                if(textChange) {
+                    textChange->Content(std::to_string(_buttonTileAmounts[_selectedButton]));
+                }
+            }
+        }
+    });
+
+    return mapTileButton;
 }
 

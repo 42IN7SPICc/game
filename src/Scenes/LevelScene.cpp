@@ -57,6 +57,7 @@ LevelScene::LevelScene(LevelWithTiles& levelWithTiles)
     tilesMapObject->Transform().position.x = MapX;
     tilesMapObject->Transform().position.y = MapY;
     tilesMapObject->Transform().scale = TileMapScale;
+    GameObjectUtil::LinkChild(tilesMapObject, levelController->CreateMapButton());
 
     Contents().push_back(hero);
     Contents().push_back(levelAudioSource);

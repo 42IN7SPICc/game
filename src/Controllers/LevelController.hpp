@@ -33,6 +33,8 @@ namespace game
 
             std::shared_ptr<spic::GameObject> CreateHUD();
 
+            std::shared_ptr<spic::GameObject> CreateMapButton();
+
         private:
             const game::LevelWithTiles _level;
             game::LevelData _levelData;
