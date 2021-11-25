@@ -11,6 +11,15 @@ std::shared_ptr<spic::AudioSource> game::AudioSourcePrefabFactory::CreateAudioSo
         case AudioClipName::MainMenu:
             audioSrc = "main_menu.wav";
             break;
+        case AudioClipName::Victory:
+            audioSrc = "victory.wav";
+            break;
+        case AudioClipName::GameOver:
+            audioSrc = "game_over.wav";
+            break;
+        case AudioClipName::Game:
+            audioSrc = "game.wav";
+            break;
         default:
             throw std::runtime_error("Audio clip has not been defined");
     }
