@@ -1,5 +1,6 @@
 #include "LevelScene.hpp"
 
+#include "BoxCollider.hpp"
 #include "GameObject.hpp"
 #include "Sprite.hpp"
 #include "Text.hpp"
