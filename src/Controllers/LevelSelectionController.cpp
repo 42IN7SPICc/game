@@ -18,7 +18,6 @@ void LevelSelectionController::InitializeLevels()
 
 Level LevelSelectionController::GetLevelDto(const std::string& levelName) const
 {
-    auto tmp = _levels;
     if (_levels.contains(levelName))
         return _levels.at(levelName);
 
