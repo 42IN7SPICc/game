@@ -7,7 +7,7 @@
 #include <string>
 
 #include "BehaviourScript.hpp"
-#include "../Structs/Level.hpp"
+#include "../Structs/LevelWithTiles.hpp"
 #include "../Structs/LevelData.hpp"
 
 namespace game
@@ -15,7 +15,7 @@ namespace game
     class LevelController : public spic::BehaviourScript
     {
         public:
-            LevelController(game::Level level, std::shared_ptr<game::HealthBehaviour> heroHealth, std::shared_ptr<game::HealthBehaviour> militaryBaseHealth, std::queue<game::WaveData> waves);
+            LevelController(game::LevelWithTiles level, std::shared_ptr<game::HealthBehaviour> heroHealth, std::shared_ptr<game::HealthBehaviour> militaryBaseHealth, std::queue<game::WaveData> waves);
 
             void OnStart() override;
 
@@ -28,7 +28,7 @@ namespace game
             void OnTriggerStay2D(const spic::Collider& collider) override;
 
         private:
-            const game::Level _level;
+            const game::LevelWithTiles _level;
             game::LevelData _levelData;
     };
 }

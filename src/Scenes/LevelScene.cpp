@@ -8,6 +8,7 @@
 #include "../Utils/TileUtil.hpp"
 #include "../Factories/HeroPrefabFactory.hpp"
 #include "../Scripts/Common/CheatManager.hpp"
+#include "../Controllers/LevelController.hpp"
 
 using namespace spic;
 using namespace game;
@@ -23,7 +24,7 @@ LevelScene::LevelScene(const LevelWithTiles& level)
     auto titleText = std::make_shared<spic::Text>("Title Text", "text_title", Layer::HUD, 1166, 100, level.Title, "resources/fonts/capture_it.otf", 35, Alignment::left, Color::white());
     titleText->Transform().position = {1366 / 2, 50};
 
-    auto tilesMapObject = BuildLevel(levelWithTiles);
+    auto tilesMapObject = BuildLevel(level);
     tilesMapObject->Transform().position.x = 75;
     tilesMapObject->Transform().position.y = 75;
     tilesMapObject->Transform().scale = 0.5;
