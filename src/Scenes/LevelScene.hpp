@@ -6,13 +6,14 @@
 #include "Button.hpp"
 #include "../Structs/LevelWithTiles.hpp"
 #include "../Controllers/LevelSelectionController.hpp"
+#include "../Scripts/Common/HealthBehaviour.hpp"
 
 namespace game
 {
     class LevelScene : public spic::Scene
     {
         private:
-            std::shared_ptr<spic::GameObject> BuildLevel(const LevelWithTiles &level);
+            std::shared_ptr<spic::GameObject> BuildLevel(const LevelWithTiles& level, const std::shared_ptr<game::HealthBehaviour>& endTowerHealthBehaviour);
             std::shared_ptr<spic::Button> _selectedButton;
             std::map<std::shared_ptr<spic::Button>, int> _buttonTileAmounts;
 
