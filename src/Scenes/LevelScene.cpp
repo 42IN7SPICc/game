@@ -1,15 +1,19 @@
 #include "LevelScene.hpp"
 
-#include "Api.hpp"
+#include "GameObject.hpp"
+#include "Sprite.hpp"
+#include "Text.hpp"
+
+#include "../Controllers/LevelController.hpp"
 #include "../Enums/Layer.hpp"
-#include "../Utils/GameObjectUtil.hpp"
+#include "../Enums/SortingLayer.hpp"
+#include "../Factories/AudioSourcePrefabFactory.hpp"
 #include "../Factories/BackgroundPrefabFactory.hpp"
-#include "../Utils/TileUtil.hpp"
 #include "../Factories/HeroPrefabFactory.hpp"
 #include "../Scripts/Common/CheatManager.hpp"
-#include "../Controllers/LevelController.hpp"
-#include "../Factories/AudioSourcePrefabFactory.hpp"
-#include "../Enums/SortingLayer.hpp"
+#include "../Scripts/Menu/PauseSceneBehaviour.hpp"
+#include "../Utils/GameObjectUtil.hpp"
+#include "../Utils/TileUtil.hpp"
 
 using namespace spic;
 using namespace game;
@@ -46,6 +50,7 @@ LevelScene::LevelScene(const LevelWithTiles& level)
     auto cheatManager = std::make_shared<game::CheatManager>();
     GameObjectUtil::LinkComponent(mainGameObject, levelController);
     GameObjectUtil::LinkComponent(mainGameObject, cheatManager);
+    GameObjectUtil::LinkComponent(mainGameObject, std::make_shared<PauseSceneBehaviour>());
 
     Contents().push_back(levelAudioSource);
     Contents().push_back(mainGameObject);
