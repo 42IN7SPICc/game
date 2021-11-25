@@ -1,8 +1,7 @@
 #ifndef SPIC_GAME_ATTACKBEHAVIOUR_HPP
 #define SPIC_GAME_ATTACKBEHAVIOUR_HPP
 
-#include <BehaviourScript.hpp>
-
+#include "BehaviourScript.hpp"
 #include "CoolDownBehaviour.hpp"
 
 #include "Point.hpp"
