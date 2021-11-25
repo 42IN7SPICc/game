@@ -6,6 +6,7 @@
 #include "../Utils/GameObjectUtil.hpp"
 #include "../Utils/TileUtil.hpp"
 #include "../Scripts/Common/GameLostBehaviour.hpp"
+#include <numeric>
 
 using namespace spic;
 using namespace game;
@@ -73,7 +74,6 @@ std::shared_ptr<spic::GameObject> LevelController::CreateHUD()
     rightHud->Transform().position.y = screenHeight / TileButtonScale;
 
     auto buttonText = std::make_shared<spic::Text>("tile-title-text", "tile_title_text", Layer::HUD, hudWidth, 100);
-    buttonText->Content("Tegels (" + std::to_string(totalTileAmount) + ")");
     buttonText->Size(24);
     buttonText->TextAlignment(Alignment::center);
     buttonText->Transform().position.y = -(TileSize + 2) * (TileButtonScale * 5);
@@ -88,28 +88,18 @@ std::shared_ptr<spic::GameObject> LevelController::CreateHUD()
     auto sandButton = InitializeTileButton(rightHud, "sand.png", 6, "Zand");
     sandButton->Transform().position.y = -(TileSize + 2) * (TileButtonScale * 2);
 
+    int result = std::accumulate(_buttonTileAmounts.begin(), _buttonTileAmounts.end(), 0,
+                                               [](const int previous, const std::pair<std::shared_ptr<spic::Button>, int>& p)
+                                               { return previous + p.second; });
+    buttonText->Content("Tegels (" + std::to_string(result) + ")");
+
     return rightHud;
-}
-
-bool TileIsValid(TileType tileType) {
-    return
-        tileType == TileType::Bushes ||
-        tileType == TileType::Street ||
-        tileType == TileType::Sand ||
-        tileType == TileType::Grass;
-}
-
-bool TileWasPlaced(TileType tileType) {
-    return
-        tileType == TileType::Street ||
-        tileType == TileType::Sand ||
-        tileType == TileType::Grass;
 }
 
 std::shared_ptr<spic::GameObject> LevelController::BuildLevel(const std::shared_ptr<game::HealthBehaviour>& endTowerHealthBehaviour)
 {
     auto tileMap = std::make_shared<spic::GameObject>("TileGrid", "tilemap", Layer::Game);
-    for (auto levelTile : _level.Tiles)
+    for (auto levelTile: _level.Tiles)
     {
         auto name = "Tile_" + std::to_string(levelTile.X) + "-" + std::to_string(levelTile.Y);
 
@@ -130,6 +120,7 @@ std::shared_ptr<spic::GameObject> LevelController::BuildLevel(const std::shared_
         MapNode node;
         node.X = levelTile.X;
         node.Y = levelTile.Y;
+        node.OriginalTileType = levelTile.TileType();
         node.TileType = levelTile.TileType();
         node.TileObject = tile;
         _levelData.Graph[std::to_string(levelTile.X) + "-" + std::to_string(levelTile.Y)] = node;
@@ -184,6 +175,32 @@ std::shared_ptr<spic::Button> LevelController::InitializeTileButton(const std::s
     return button;
 }
 
+std::string TileTypeToTexture(TileType tileType)
+{
+    switch (tileType)
+    {
+        case game::Street:
+            return "street.png";
+        case game::Sand:
+            return "sand.png";
+        case game::Grass:
+            return "grass.png";
+        case game::Bushes:
+        default:
+            return "bushes.png";
+    }
+}
+
+std::string TextureToPrefix(const std::string& texture)
+{
+    if(texture == "resources/sprites/tiles/street.png")
+        return "street.png";
+    else if(texture == "resources/sprites/tiles/grass.png")
+        return "grass.png";
+    else if(texture == "resources/sprites/tiles/sand.png")
+        return "sand.png";
+}
+
 std::shared_ptr<spic::GameObject> LevelController::CreateMapButton()
 {
     double mapSize = sqrt(_level.Tiles.size());
@@ -193,7 +210,7 @@ std::shared_ptr<spic::GameObject> LevelController::CreateMapButton()
     mapTileButton->Transform().position.y += (buttonSize / 2.0) - TileSize / 2.0;
 
     mapTileButton->OnClick([this]() {
-        if(_buttonTileAmounts[_selectedButton] == 0) return;
+        if (_buttonTileAmounts[_selectedButton] == 0) return;
 
         auto mousePositions = Input::MousePosition();
         double scaledTileSize = TileSize * TileMapScale;
@@ -201,17 +218,44 @@ std::shared_ptr<spic::GameObject> LevelController::CreateMapButton()
         int y = ((mousePositions.y - MapY) + (scaledTileSize / 2)) / scaledTileSize;
 
         auto clickedTile = _levelData.Graph[std::to_string(x) + "-" + std::to_string(y)];
-        if(_selectedButton != nullptr) {
-            if(TileIsValid(clickedTile.TileType)) {
-                auto selectedSprite = _selectedButton->GetComponent<spic::Sprite>();
-                auto sprite = clickedTile.TileObject->GetComponent<spic::Sprite>();
-                sprite->Texture(selectedSprite->Texture());
+        if (_selectedButton != nullptr)
+        {
+            auto currentTileType = clickedTile.TileType;
+            //Check if TileType is safe to put on
+            if (currentTileType == TileType::Bushes || currentTileType == TileType::Street || currentTileType == TileType::Sand || currentTileType == TileType::Grass)
+            {
+                auto selectedButtonSprite = _selectedButton->GetComponent<spic::Sprite>();
+                auto overrideSprite = clickedTile.TileObject->GetComponent<spic::Sprite>();
 
-                auto textChange = std::dynamic_pointer_cast<spic::Text>(_selectedButton->Children()[0]);
-                _buttonTileAmounts[_selectedButton]--;
-                if(textChange) {
-                    textChange->Content(std::to_string(_buttonTileAmounts[_selectedButton]));
+                //The Tile you've placed is the same, some put it back to the original tile
+                if (overrideSprite->Texture() == selectedButtonSprite->Texture() && selectedButtonSprite->Texture() != "resources/sprites/tiles/" + TileTypeToTexture(clickedTile.OriginalTileType))
+                {
+                    overrideSprite->Texture("resources/sprites/tiles/" + TileTypeToTexture(clickedTile.OriginalTileType));
+                    _buttonTileAmounts[_selectedButton]++;
                 }
+                else
+                {
+                    //Check if tile you've clicked isn't a bush, if it is put back the tile in HUD that was already there
+                    if(overrideSprite->Texture() != "resources/sprites/tiles/bushes.png") {
+                        auto writeBackButton = std::dynamic_pointer_cast<Button>(GameObject::Find("tile-button-" + TextureToPrefix(overrideSprite->Texture())));
+                        auto writeBackText = std::dynamic_pointer_cast<Text>(GameObject::Find("tile-button-text-" + TextureToPrefix(overrideSprite->Texture())));
+
+                        _buttonTileAmounts[writeBackButton]++;
+                        writeBackText->Content(std::to_string(_buttonTileAmounts[writeBackButton]));
+                    }
+                    overrideSprite->Texture(selectedButtonSprite->Texture());
+                    _buttonTileAmounts[_selectedButton]--;
+                }
+
+                //Change text of button in HUD
+                auto textChange = std::dynamic_pointer_cast<spic::Text>(_selectedButton->Children()[0]);
+                textChange->Content(std::to_string(_buttonTileAmounts[_selectedButton]));
+
+                int result = std::accumulate(_buttonTileAmounts.begin(), _buttonTileAmounts.end(), 0,
+                                             [](const int previous, const std::pair<std::shared_ptr<spic::Button>, int>& p)
+                                             { return previous + p.second; });
+                auto totalTilesText = std::dynamic_pointer_cast<Text>(GameObject::Find("tile-title-text"));
+                totalTilesText->Content("Tegels (" + std::to_string(result) + ")");
             }
         }
     });

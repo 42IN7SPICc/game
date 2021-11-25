@@ -13,6 +13,7 @@ namespace game
         std::vector<MapNode> Neighbours;
         int X;
         int Y;
+        game::TileType OriginalTileType;
         game::TileType TileType;
         std::shared_ptr<spic::GameObject> TileObject;
     };
