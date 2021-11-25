@@ -16,15 +16,11 @@ namespace game
         public:
             void InitializeLevels();
 
-            LevelWithTiles LoadLevel(const std::string& file);
+            [[nodiscard]] LevelWithTiles LoadLevel(const std::string& file) const;
 
-            Level GetLevelDto(const std::string& levelName);
+            [[nodiscard]] Level GetLevelDto(const std::string& levelName) const;
 
         private:
-            void InitializeLevel(const std::string& file, const std::string& name);
-
-            static std::string LoadFile(const std::string& fileName);
-
             std::map<std::string, Level> _levels{};
     };
 }

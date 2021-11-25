@@ -1,7 +1,6 @@
 #include "LevelScene.hpp"
 
 #include "Api.hpp"
-#include <GameObject.hpp>
 #include "../Enums/Layer.hpp"
 #include "../Utils/GameObjectUtil.hpp"
 #include "../Factories/BackgroundPrefabFactory.hpp"
@@ -11,34 +10,37 @@
 #include "../Scripts/Common/HealthBehaviour.hpp"
 #include "../Structs/WaveData.hpp"
 #include "../Controllers/LevelController.hpp"
+#include "../Factories/AudioSourcePrefabFactory.hpp"
 
 using namespace spic;
 using namespace game;
 
 const double TileButtonScale = 2.0;
 const double TileSize = 32;
+const double TileMapScale = 0.8;
 
 LevelScene::LevelScene(const LevelWithTiles& levelWithTiles)
 {
+    auto levelAudioSource = game::AudioSourcePrefabFactory::CreateAudioObject(AudioClipName::Game, true, true, 0.2);
     auto mainGameObject = std::make_shared<spic::GameObject>("LevelController", "default", Layer::Background);
     auto background = BackgroundPrefabFactory::CreateBackground(BackgroundName::Menu);
 
     auto titleText = std::make_shared<spic::Text>("Title Text", "text_title", Layer::HUD, 1166, 100, levelWithTiles.Title, "resources/fonts/capture_it.otf", 35, Alignment::left, Color::white());
     titleText->Transform().position = {1366 / 2, 50};
 
-    auto tilesMapObject = BuildLevel(levelWithTiles);
+    auto tilesMapObject = BuildLevel(level);
     tilesMapObject->Transform().position.x = 75;
-    tilesMapObject->Transform().position.y = 75;
-    tilesMapObject->Transform().scale = 0.8;
+    tilesMapObject->Transform().position.y = 110;
+    tilesMapObject->Transform().scale = TileMapScale;
 
     auto hero = game::HeroPrefabFactory::CreateHero(DesmondDoss);
     auto heroHealth = hero->GetComponent<HealthBehaviour>();
-    auto endTowerHealth = std::make_shared<game::HealthBehaviour>(std::make_shared<spic::Animator>(0, std::vector < std::shared_ptr < Sprite >> ()), 10);
+    auto endTowerHealth = std::make_shared<game::HealthBehaviour>(std::make_shared<spic::Animator>(0, std::vector<std::shared_ptr<Sprite >>()), 10);
 
     auto waves = std::queue<WaveData>();
 
     auto wave1 = WaveData{{}, {}};
-    wave1.EnemyQueue.push(std::make_tuple < size_t, std::shared_ptr < spic::GameObject >> (1, std::make_shared<spic::GameObject>("test", "test", 0)));
+    wave1.EnemyQueue.push(std::make_tuple<size_t, std::shared_ptr<spic::GameObject >>(1, std::make_shared<spic::GameObject>("test", "test", 0)));
     waves.push(wave1);
 
     auto levelController = std::make_shared<game::LevelController>(levelWithTiles, heroHealth, endTowerHealth, waves);
@@ -46,6 +48,7 @@ LevelScene::LevelScene(const LevelWithTiles& levelWithTiles)
     GameObjectUtil::LinkComponent(mainGameObject, levelController);
     GameObjectUtil::LinkComponent(mainGameObject, cheatManager);
 
+    Contents().push_back(levelAudioSource);
     Contents().push_back(mainGameObject);
     Contents().push_back(background);
     Contents().push_back(titleText);
@@ -54,7 +57,7 @@ LevelScene::LevelScene(const LevelWithTiles& levelWithTiles)
     CreateHUD();
 }
 
-std::shared_ptr <spic::GameObject> LevelScene::BuildLevel(const LevelWithTiles& level)
+std::shared_ptr<spic::GameObject> LevelScene::BuildLevel(const LevelWithTiles& level)
 {
     auto tileMap = std::make_shared<spic::GameObject>("TileGrid", "tilemap", Layer::Game);
     for (int i = 0; i < level.Tiles.size(); ++i)
@@ -83,7 +86,7 @@ std::shared_ptr <spic::GameObject> LevelScene::BuildLevel(const LevelWithTiles& 
 }
 
 
-std::shared_ptr <spic::Button> LevelScene::InitializeTileButton(const std::shared_ptr <GameObject>& HUD, const std::string& texture, int tileAmount, const std::string& tileTitle)
+std::shared_ptr<spic::Button> LevelScene::InitializeTileButton(const std::shared_ptr<GameObject>& HUD, const std::string& texture, int tileAmount, const std::string& tileTitle)
 {
     auto button = std::make_shared<spic::Button>("tile-button-" + texture, "tile_button", Layer::HUD, TileSize, TileSize);
     button->Transform().scale = TileButtonScale;
