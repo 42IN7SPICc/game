@@ -53,12 +53,7 @@ LevelScene::LevelScene(LevelWithTiles& levelWithTiles)
     GameObjectUtil::LinkComponent(mainGameObject, cheatManager);
     GameObjectUtil::LinkComponent(mainGameObject, std::make_shared<PauseSceneBehaviour>());
 
-    auto tilesMapObject = BuildLevel(level, endTowerHealth);
-    tilesMapObject->Transform().position.x = 75;
-    tilesMapObject->Transform().position.y = 110;
-    tilesMapObject->Transform().scale = TileMapScale;
-
-    auto tilesMapObject = levelController->BuildLevel();
+    auto tilesMapObject = levelController->BuildLevel(endTowerHealth);
     tilesMapObject->Transform().position.x = MapX;
     tilesMapObject->Transform().position.y = MapY;
     tilesMapObject->Transform().scale = TileMapScale;

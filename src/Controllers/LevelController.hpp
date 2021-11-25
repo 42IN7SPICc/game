@@ -29,7 +29,7 @@ namespace game
 
             void OnTriggerStay2D(const spic::Collider& collider) override;
 
-            std::shared_ptr<spic::GameObject> BuildLevel();
+            std::shared_ptr<spic::GameObject> BuildLevel(const std::shared_ptr<game::HealthBehaviour>& endTowerHealthBehaviour);
 
             std::shared_ptr<spic::GameObject> CreateHUD();
 
