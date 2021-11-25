@@ -3,19 +3,27 @@
 
 #include <BehaviourScript.hpp>
 
+#include "CoolDownBehaviour.hpp"
+
+#include "Point.hpp"
+
+#include <string>
+
 namespace game
 {
     class AttackBehaviour : public spic::BehaviourScript
     {
         private:
-            double _fireRate;
+            std::shared_ptr<game::CoolDownBehaviour> _coolDownBehaviour;
+
+            std::string _targetTag;
             double _range;
             double _damage;
             bool _multiTargeting;
             double _bulletSpeed;
 
         public:
-            AttackBehaviour(double fireRate, double range, double damage, bool multiTargeting, double bulletSpeed);
+            AttackBehaviour(const std::string& targetTag, double fireRate, double range, double damage, bool multiTargeting, double bulletSpeed);
 
             void OnStart() override;
 
@@ -26,6 +34,8 @@ namespace game
             void OnTriggerExit2D(const spic::Collider& collider) override;
 
             void OnTriggerStay2D(const spic::Collider& collider) override;
+
+            void Shoot(const spic::Point& direction);
 
             [[nodiscard]] double FireRate() const;
 
