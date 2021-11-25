@@ -5,11 +5,16 @@ namespace game
 {
     struct PlayerData
     {
-        int LevelsCompleted; // used for unlock threshold
-        int Balance; // amount of reichsmarken the player has
-        int KillCount; // amount of enemies killed using hero or towers, for stats
-        int HeroDeathCount; // amount of times the player let his hero die, for stats
-        int WavesPlayed; // amount of waves played, for stats
+            int LevelsCompleted; // used for unlock threshold
+            int Balance; // amount of reichsmarken the player has
+            int KillCount; // amount of enemies killed using hero or towers, for stats
+            int HeroDeathCount; // amount of times the player let his hero die, for stats
+            int WavesPlayed; // amount of waves played, for stats
+
+            static PlayerData& Instance();
+
+        private:
+            static PlayerData _instance;
     };
 }
 
