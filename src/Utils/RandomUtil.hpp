@@ -18,6 +18,8 @@ namespace game
             static int Next(int min, int max);
 
             static double NextDouble(double min, double max);
+
+            static std::string NextString(int maxLength);
     };
 }
 
