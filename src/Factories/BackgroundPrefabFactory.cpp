@@ -24,6 +24,9 @@ std::shared_ptr<spic::GameObject> BackgroundPrefabFactory::CreateBackground(Back
         case BackgroundName::Victory:
             imageSrc = "victory";
             break;
+        case BackgroundName::GameOver:
+            imageSrc = "game_over";
+            break;
     }
 
     auto backgroundSprite = std::make_shared<spic::Sprite>("resources/sprites/menu/backgrounds/" + imageSrc + ".png", false, false, 0, 0);
