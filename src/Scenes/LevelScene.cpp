@@ -29,7 +29,7 @@ LevelScene::LevelScene(const LevelWithTiles& levelWithTiles)
     auto tilesMapObject = BuildLevel(levelWithTiles);
     tilesMapObject->Transform().position.x = 75;
     tilesMapObject->Transform().position.y = 75;
-    tilesMapObject->Transform().scale = 0.5;
+    tilesMapObject->Transform().scale = 0.8;
 
     auto hero = game::HeroPrefabFactory::CreateHero(DesmondDoss);
     auto heroHealth = hero->GetComponent<HealthBehaviour>();
@@ -70,6 +70,12 @@ std::shared_ptr <spic::GameObject> LevelScene::BuildLevel(const LevelWithTiles& 
         GameObjectUtil::LinkComponent(tile, sprite);
         GameObjectUtil::LinkChild(tileMap, tile);
     }
+    auto mapButton = std::make_shared<spic::Button>("Map_Button", "map_button", Layer::Game, 25 * 32, 25 * 32);
+    mapButton->OnClick([]() {
+        auto currentMousePosition = Input::MousePosition();
+        Debug::Log("CurrentX: " + std::to_string(currentMousePosition.x) +  ", CurrentY: " + std::to_string(currentMousePosition.y));
+    });
+    GameObjectUtil::LinkChild(tileMap, mapButton);
 
     return tileMap;
 }
