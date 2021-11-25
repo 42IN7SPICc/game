@@ -10,12 +10,15 @@
 #include "../Utils/RandomUtil.hpp"
 #include "../Scripts/Common/UserAttackBehaviour.hpp"
 #include "../Scripts/Common/UserMovementBehaviour.hpp"
+#include "../Factories/AudioSourcePrefabFactory.hpp"
 
 using namespace spic;
 using namespace game;
 
 MainScene::MainScene() : MenuScene("Avans Wars: WW2", false)
 {
+    auto mainMenuAudioSource = game::AudioSourcePrefabFactory::CreateAudioObject(AudioClipName::MainMenu, true, true, 1.0);
+
     auto playButton = ButtonPrefabFactory::CreateOutlineButton("Play Button", "button_play", "PLAY");
     playButton->Transform().position = {225, 300};
     playButton->OnClick([]() {
@@ -52,6 +55,7 @@ MainScene::MainScene() : MenuScene("Avans Wars: WW2", false)
     hero->GetComponent<UserMovementBehaviour>()->Controllable(false);
     hero->RemoveComponent(hero->GetComponent<UserAttackBehaviour>());
 
+    Contents().push_back(mainMenuAudioSource);
     Contents().push_back(playButton);
     Contents().push_back(creditsButton);
     Contents().push_back(helpButton);
