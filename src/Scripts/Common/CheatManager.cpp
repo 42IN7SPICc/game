@@ -3,6 +3,7 @@
 #include "Debug.hpp"
 #include "GameObject.hpp"
 #include "GameWonBehaviour.hpp"
+#include "../../Structs/PlayerData.hpp"
 
 using namespace spic;
 using namespace game;
@@ -10,6 +11,7 @@ using namespace game;
 void UnlimitedMoney()
 {
     Debug::Log("Fired Unlimited Money Cheat");
+    PlayerData::Instance().Balance = INT_MAX;
 }
 
 void Invincibility()
@@ -49,6 +51,7 @@ void NoCoolDown()
 void UnlockLevels()
 {
     Debug::Log("Fired Unlock Levels Cheat");
+    PlayerData::Instance().LevelsCompleted = INT_MAX;
 }
 
 void UnlimitedPath()
