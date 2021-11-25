@@ -8,6 +8,9 @@
 #include "../Utils/TileUtil.hpp"
 #include "../Factories/HeroPrefabFactory.hpp"
 #include "../Scripts/Common/CheatManager.hpp"
+#include "../Scripts/Common/HealthBehaviour.hpp"
+#include "../Structs/WaveData.hpp"
+#include "../Controllers/LevelController.hpp"
 
 using namespace spic;
 using namespace game;
@@ -15,12 +18,12 @@ using namespace game;
 const double TileButtonScale = 2.0;
 const double TileSize = 32;
 
-LevelScene::LevelScene(const LevelWithTiles& level)
+LevelScene::LevelScene(const LevelWithTiles& levelWithTiles)
 {
     auto mainGameObject = std::make_shared<spic::GameObject>("LevelController", "default", Layer::Background);
     auto background = BackgroundPrefabFactory::CreateBackground(BackgroundName::Menu);
 
-    auto titleText = std::make_shared<spic::Text>("Title Text", "text_title", Layer::HUD, 1166, 100, level.Title, "resources/fonts/capture_it.otf", 35, Alignment::left, Color::white());
+    auto titleText = std::make_shared<spic::Text>("Title Text", "text_title", Layer::HUD, 1166, 100, levelWithTiles.Title, "resources/fonts/capture_it.otf", 35, Alignment::left, Color::white());
     titleText->Transform().position = {1366 / 2, 50};
 
     auto tilesMapObject = BuildLevel(levelWithTiles);
@@ -38,7 +41,7 @@ LevelScene::LevelScene(const LevelWithTiles& level)
     wave1.EnemyQueue.push(std::make_tuple < size_t, std::shared_ptr < spic::GameObject >> (1, std::make_shared<spic::GameObject>("test", "test", 0)));
     waves.push(wave1);
 
-    auto levelController = std::make_shared<game::LevelController>(level, heroHealth, endTowerHealth, waves);
+    auto levelController = std::make_shared<game::LevelController>(levelWithTiles, heroHealth, endTowerHealth, waves);
     auto cheatManager = std::make_shared<game::CheatManager>();
     GameObjectUtil::LinkComponent(mainGameObject, levelController);
     GameObjectUtil::LinkComponent(mainGameObject, cheatManager);
