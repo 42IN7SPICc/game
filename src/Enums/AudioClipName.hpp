@@ -8,7 +8,8 @@ namespace game
         MainMenu,
         Game,
         Victory,
-        GameOver
+        GameOver,
+        Explosion
     };
 }
 
