@@ -85,8 +85,8 @@ std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateBaseHero(int at
 
     std::vector<std::shared_ptr<spic::Sprite>> idleSprites = AnimatorUtil::CreateSpriteVector(10, "resources/sprites/heroes/Idle/hero_idle_", SortingLayer::Hero);
     std::vector<std::shared_ptr<spic::Sprite>> walkingSprites = AnimatorUtil::CreateSpriteVector(10, "resources/sprites/heroes/Walking/hero_walking_", SortingLayer::Hero);
-    std::vector<std::shared_ptr<spic::Sprite>> celebratingSprites = AnimatorUtil::CreateSpriteVector(10, "resources/sprites/heroes/Celebrating/hero_celebrating_", SortingLayer::Hero);
-    std::vector<std::shared_ptr<spic::Sprite>> diedSprites = AnimatorUtil::CreateSpriteVector(10, "resources/sprites/heroes/Died/hero_died_", SortingLayer::Hero);
+    std::vector<std::shared_ptr<spic::Sprite>> celebratingSprites = AnimatorUtil::CreateSpriteVector(11, "resources/sprites/heroes/Celebrating/hero_celebrating_", SortingLayer::Hero);
+    std::vector<std::shared_ptr<spic::Sprite>> diedSprites = AnimatorUtil::CreateSpriteVector(9, "resources/sprites/heroes/Died/hero_died_", SortingLayer::Hero);
 
     auto defaultSprite = std::make_shared<spic::Sprite>(idleSprites[0]->Texture(), false, false, SortingLayer::Hero, 0);
     GameObjectUtil::LinkComponent(baseHero, defaultSprite);
