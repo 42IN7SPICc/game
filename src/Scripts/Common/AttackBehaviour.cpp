@@ -1,7 +1,8 @@
 #include "AttackBehaviour.hpp"
 
-#include "DamageBehaviour.hpp"
 #include "BulletBehaviour.hpp"
+#include "DamageBehaviour.hpp"
+#include "HealthBehaviour.hpp"
 #include "../../Utils/GameObjectUtil.hpp"
 #include "../../Utils/PointUtil.hpp"
 #include "../../Enums/Layer.hpp"
@@ -40,13 +41,18 @@ void AttackBehaviour::OnUpdate()
     std::map<double, std::shared_ptr<spic::GameObject>> targets{};
     for (const auto& target: spic::GameObject::FindGameObjectsWithTag(_targetTag))
     {
+        auto healthBehaviour = target->GetComponent<HealthBehaviour>();
+        if (!healthBehaviour || healthBehaviour->Health() <= 0) continue;
+
         auto distance = PointUtil::Distance(absTransform.position, target->AbsoluteTransform().position);
+        if (distance > _range) continue;
+
         targets.emplace(distance, target);
     }
 
-    auto target = *targets.begin();
+    if (targets.empty()) return;
 
-    if (target.first > _range) return;
+    auto target = *targets.begin();
 
     auto direction = PointUtil::CalculateDirectionalPoint(absTransform.position, target.second->AbsoluteTransform().position);
     direction.x *= _bulletSpeed;
@@ -68,7 +74,7 @@ void AttackBehaviour::Shoot(const spic::Point& direction)
     GameObjectUtil::LinkComponent(bullet, collider);
 
     // Behaviour scripts
-    GameObjectUtil::LinkComponent(bullet, std::make_shared<BulletBehaviour>(direction));
+    GameObjectUtil::LinkComponent(bullet, std::make_shared<BulletBehaviour>(direction, _range));
     GameObjectUtil::LinkComponent(bullet, std::make_shared<DamageBehaviour>(_damage));
 
     // Sprite
