@@ -222,8 +222,11 @@ void LevelController::HandleTileClick(const game::MapNode& clickedTile)
                     auto writeBackButton = std::dynamic_pointer_cast<Button>(GameObject::Find("tile-button-" + clickedTileSprite->Texture()));
                     auto writeBackText = std::dynamic_pointer_cast<Text>(writeBackButton->Children()[0]);
 
-                    _buttonTileAmounts[writeBackButton]++;
-                    writeBackText->Content(std::to_string(_buttonTileAmounts[writeBackButton]));
+                    auto sprite = writeBackButton->GetComponent<Sprite>();
+                    if(TileUtil::GetTileType(sprite->Texture()) != clickedTile.OriginalTileType || selectedButtonTileType == clickedTile.OriginalTileType) {
+                        _buttonTileAmounts[writeBackButton]++;
+                        writeBackText->Content(std::to_string(_buttonTileAmounts[writeBackButton]));
+                    }
                 }
                 clickedTileSprite->Texture(selectedButtonSprite->Texture());
                 _buttonTileAmounts[_selectedButton]--;
