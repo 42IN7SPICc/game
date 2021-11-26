@@ -4,6 +4,8 @@
 
 #include "HealthBehaviour.hpp"
 
+#include <stdexcept>
+
 using namespace game;
 
 DamageBehaviour::DamageBehaviour(int damage, const std::string& targetTag) : _damage(damage),
@@ -14,6 +16,13 @@ DamageBehaviour::DamageBehaviour(int damage, const std::string& targetTag) : _da
 
 void DamageBehaviour::OnStart()
 {
+    auto parent = GameObject().lock();
+
+    auto collider = parent->GetComponent<spic::Collider>();
+    if (!collider || !collider->IsTrigger())
+    {
+        throw std::runtime_error("To instantiate a damage behaviour the game object is required to have a trigger collider.");
+    }
 }
 
 void DamageBehaviour::OnUpdate()
