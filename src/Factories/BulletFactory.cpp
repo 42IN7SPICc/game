@@ -13,7 +13,7 @@
 
 using namespace game;
 
-std::shared_ptr<spic::GameObject> BulletFactory::CreateBullet(BulletType bulletType, const spic::Point& position, const std::string& targetTag, const spic::Point& direction, int range, int damage)
+std::shared_ptr<spic::GameObject> BulletFactory::CreateBullet(BulletType bulletType, const spic::Point& position, const std::string& targetTag, const spic::Point& direction, int range, int damage, double bombRadius)
 {
     auto bullet = std::make_shared<spic::GameObject>("bullet", "bullet", Layer::Game);
     bullet->Transform().position = position;
@@ -25,7 +25,7 @@ std::shared_ptr<spic::GameObject> BulletFactory::CreateBullet(BulletType bulletT
 
     // Behaviour scripts
     GameObjectUtil::LinkComponent(bullet, std::make_shared<BulletBehaviour>(bulletType, direction, range));
-    GameObjectUtil::LinkComponent(bullet, std::make_shared<DamageBehaviour>(damage, targetTag));
+    GameObjectUtil::LinkComponent(bullet, std::make_shared<DamageBehaviour>(damage, targetTag, (bulletType == BulletType::Bomb ? bombRadius : 0)));
 
     // Sprite
     GameObjectUtil::LinkComponent(bullet, std::make_shared<spic::Sprite>(GetBulletSprite(bulletType), false, false, SortingLayer::Bullet, 0));
