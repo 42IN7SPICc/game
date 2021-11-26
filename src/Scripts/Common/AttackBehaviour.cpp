@@ -5,6 +5,7 @@
 #include "HealthBehaviour.hpp"
 #include "../../Enums/Layer.hpp"
 #include "../../Enums/SortingLayer.hpp"
+#include "../../Factories/BulletFactory.hpp"
 #include "../../Utils/GameObjectUtil.hpp"
 #include "../../Utils/PointUtil.hpp"
 
@@ -54,32 +55,17 @@ void AttackBehaviour::OnUpdate()
     if (targets.empty()) return;
 
     auto target = *targets.begin();
+    auto direction = PointUtil::CalculateDirectionalPoint(absTransform.position, target.second->AbsoluteTransform().position, _bulletSpeed);
 
-    auto direction = PointUtil::CalculateDirectionalPoint(absTransform.position, target.second->AbsoluteTransform().position);
-    direction.x *= _bulletSpeed;
-    direction.y *= _bulletSpeed;
-
-    Shoot(direction);
+    Shoot(direction, absTransform.position);
 
     _coolDownBehaviour->CooledDown(false);
 }
 
-void AttackBehaviour::Shoot(const spic::Point& direction)
+void AttackBehaviour::Shoot(const spic::Point& direction, const spic::Point& position)
 {
-    auto bullet = std::make_shared<spic::GameObject>("bullet", "enemies", Layer::Game);
-    bullet->Transform().position = GameObject().lock()->AbsoluteTransform().position;
+    auto bullet = BulletFactory::CreateBullet(BulletType::Normal, position, "hero", direction, 500, _damage);
 
-    // Collider
-    auto collider = std::make_shared<spic::CircleCollider>(8);
-    collider->IsTrigger(true);
-    GameObjectUtil::LinkComponent(bullet, collider);
-
-    // Behaviour scripts
-    GameObjectUtil::LinkComponent(bullet, std::make_shared<BulletBehaviour>(direction, _range));
-    GameObjectUtil::LinkComponent(bullet, std::make_shared<DamageBehaviour>(_damage));
-
-    // Sprite
-    GameObjectUtil::LinkComponent(bullet, std::make_shared<spic::Sprite>("resources/sprites/bullet.png", false, false, SortingLayer::Bullet, 0));
     spic::Engine::Instance().PeekScene()->Contents().push_back(bullet);
 }
 

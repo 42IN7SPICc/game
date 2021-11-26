@@ -34,7 +34,7 @@ namespace game
 
             void OnTriggerStay2D(const spic::Collider& collider) override;
 
-            void Shoot(const spic::Point& direction);
+            void Shoot(const spic::Point& direction, const spic::Point& position);
 
             [[nodiscard]] double FireRate() const;
 
