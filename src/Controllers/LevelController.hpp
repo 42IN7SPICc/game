@@ -7,8 +7,11 @@
 #include <string>
 
 #include "BehaviourScript.hpp"
+#include "Button.hpp"
+#include "GameObject.hpp"
 #include "../Structs/LevelWithTiles.hpp"
 #include "../Structs/LevelData.hpp"
+#include "../Enums/LevelMode.hpp"
 
 namespace game
 {
@@ -27,9 +30,21 @@ namespace game
 
             void OnTriggerStay2D(const spic::Collider& collider) override;
 
+            std::shared_ptr<spic::GameObject> BuildLevel(const std::shared_ptr<game::HealthBehaviour>& endTowerHealthBehaviour);
+
+            std::shared_ptr<spic::GameObject> CreateHUD();
+
+            std::shared_ptr<spic::GameObject> CreateMapButton();
+
         private:
             const game::LevelWithTiles _level;
             game::LevelData _levelData;
+            std::shared_ptr<spic::Button> _selectedButton;
+            std::map<std::shared_ptr<spic::Button>, int> _buttonTileAmounts;
+            game::LevelMode _levelMode;
+
+            std::shared_ptr<spic::Button> InitializeTileButton(const std::shared_ptr<spic::GameObject>& HUD, const std::string& texture, int tileAmount, const std::string& tileTitle);
+            void HandleTileClick(const game::MapNode& clickedTile);
     };
 }
 

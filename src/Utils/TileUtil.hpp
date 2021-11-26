@@ -10,6 +10,8 @@ namespace game
     {
         public:
             static std::string GetSprite(const game::TileType& tileType);
+
+            static game::TileType GetTileType(const std::string& sprite);
     };
 }
 
