@@ -7,37 +7,50 @@
 
 #include <stdexcept>
 
-game::BulletBehaviour::BulletBehaviour(const spic::Point& direction, double maxRange) : _direction(std::make_unique<spic::Point>(direction)),
-                                                                                        _maxRange{maxRange}
+using namespace game;
+
+BulletBehaviour::BulletBehaviour(BulletType bulletType, const spic::Point& direction, double maxRange) : _bulletType(bulletType),
+                                                                                                         _direction(std::make_unique<spic::Point>(direction)),
+                                                                                                         _maxRange(maxRange),
+                                                                                                         _startPos{0, 0}
 {
 }
 
-void game::BulletBehaviour::OnStart()
+void BulletBehaviour::OnStart()
 {
     auto parent = GameObject().lock();
+
     _rigidBody = parent->GetComponent<spic::RigidBody>();
     if (!_rigidBody)
     {
         _rigidBody = std::make_shared<spic::RigidBody>(1, 0, spic::BodyType::dynamicBody);
-        game::GameObjectUtil::LinkComponent(parent, _rigidBody);
+        GameObjectUtil::LinkComponent(parent, _rigidBody);
     }
 
-    auto collider = parent->GetComponent<spic::Collider>();
-    if (!collider || !collider->IsTrigger())
+    _damageBehaviour = parent->GetComponent<DamageBehaviour>();
+    if (!_damageBehaviour)
     {
-        throw std::runtime_error("To instantiate a bullet behaviour the game object is required to have a trigger collider");
+        throw std::runtime_error("To instantiate a bullet behaviour the game object is required to have a damage behaviour.");
     }
 
     _startPos = parent->AbsoluteTransform().position;
 }
 
-void game::BulletBehaviour::OnUpdate()
+void BulletBehaviour::OnUpdate()
 {
-    auto xWithTimeScale = _direction->x * spic::Time::DeltaTime() * spic::Time::TimeScale();
-    auto yWithTimeScale = _direction->y * spic::Time::DeltaTime() * spic::Time::TimeScale();
+    auto parent = GameObject().lock();
+
+    if (_damageBehaviour->ObjectsDamaged() >= (_bulletType == BulletType::Penetrating ? 3 : 1))
+    {
+        spic::GameObject::Destroy(parent);
+        return;
+    }
+
+    auto deltaTimeScale = spic::Time::DeltaTime() * spic::Time::TimeScale();
+    auto xWithTimeScale = _direction->x * deltaTimeScale;
+    auto yWithTimeScale = _direction->y * deltaTimeScale;
     _rigidBody->AddForce(spic::Point{xWithTimeScale, yWithTimeScale});
 
-    auto parent = GameObject().lock();
     auto distance = PointUtil::Distance(_startPos, parent->AbsoluteTransform().position);
     if (distance >= _maxRange)
     {
@@ -45,17 +58,17 @@ void game::BulletBehaviour::OnUpdate()
     }
 }
 
-void game::BulletBehaviour::OnTriggerEnter2D(const spic::Collider& collider)
+void BulletBehaviour::OnTriggerEnter2D(const spic::Collider& collider)
 {
     // Not implemented
 }
 
-void game::BulletBehaviour::OnTriggerExit2D(const spic::Collider& collider)
+void BulletBehaviour::OnTriggerExit2D(const spic::Collider& collider)
 {
     // Not implemented
 }
 
-void game::BulletBehaviour::OnTriggerStay2D(const spic::Collider& collider)
+void BulletBehaviour::OnTriggerStay2D(const spic::Collider& collider)
 {
     // Not implemented
 }
