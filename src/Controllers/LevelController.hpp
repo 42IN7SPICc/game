@@ -11,6 +11,7 @@
 #include "GameObject.hpp"
 #include "../Structs/LevelWithTiles.hpp"
 #include "../Structs/LevelData.hpp"
+#include "../Enums/LevelMode.hpp"
 
 namespace game
 {
@@ -40,8 +41,10 @@ namespace game
             game::LevelData _levelData;
             std::shared_ptr<spic::Button> _selectedButton;
             std::map<std::shared_ptr<spic::Button>, int> _buttonTileAmounts;
+            game::LevelMode _levelMode;
 
             std::shared_ptr<spic::Button> InitializeTileButton(const std::shared_ptr<spic::GameObject>& HUD, const std::string& texture, int tileAmount, const std::string& tileTitle);
+            void HandleTileClick(const game::MapNode& clickedTile);
     };
 }
 
