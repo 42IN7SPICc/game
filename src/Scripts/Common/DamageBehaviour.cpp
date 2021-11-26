@@ -6,14 +6,18 @@
 
 using namespace game;
 
+DamageBehaviour::DamageBehaviour(int damage, const std::string& targetTag) : _damage(damage),
+                                                                             _targetTag(targetTag),
+                                                                             _objectsDamaged(0)
+{
+}
+
 void DamageBehaviour::OnStart()
 {
-//    spic::Debug::Log("On start");
 }
 
 void DamageBehaviour::OnUpdate()
 {
-    // Not implemented
 }
 
 void DamageBehaviour::OnTriggerEnter2D(const spic::Collider& collider)
@@ -22,24 +26,44 @@ void DamageBehaviour::OnTriggerEnter2D(const spic::Collider& collider)
 
     auto colliderGameObject = collider.GameObject().lock();
 
+    if (!_targetTag.empty() && colliderGameObject->Tag() != _targetTag) return;
+
     auto healthBehaviour = colliderGameObject->GetComponent<HealthBehaviour>();
     if (!healthBehaviour) return;
 
     healthBehaviour->Damage(_damage);
-
-    spic::GameObject::Destroy(GameObject().lock());
+    _objectsDamaged++;
 }
 
 void DamageBehaviour::OnTriggerExit2D(const spic::Collider& collider)
 {
-//    spic::Debug::Log("Not implemented");
 }
 
 void DamageBehaviour::OnTriggerStay2D(const spic::Collider& collider)
 {
-//    spic::Debug::Log("Not implemented");
 }
 
-DamageBehaviour::DamageBehaviour(int damage) : _damage(damage)
+int DamageBehaviour::Damage() const
 {
+    return _damage;
+}
+
+void DamageBehaviour::Damage(int damage)
+{
+    _damage = damage;
+}
+
+const std::string& DamageBehaviour::TargetTag() const
+{
+    return _targetTag;
+}
+
+void DamageBehaviour::TargetTag(const std::string& targetTag)
+{
+    _targetTag = targetTag;
+}
+
+int DamageBehaviour::ObjectsDamaged() const
+{
+    return _objectsDamaged;
 }
