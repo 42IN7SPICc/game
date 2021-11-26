@@ -18,7 +18,7 @@
 
 using namespace game;
 
-AttackBehaviour::AttackBehaviour(const std::string& targetTag, double fireRate, double range, double damage, bool multiTargeting, double bulletSpeed) : _coolDownBehaviour(std::make_shared<CoolDownBehaviour>(fireRate)),
+AttackBehaviour::AttackBehaviour(const std::string& targetTag, double fireRate, double range, int damage, bool multiTargeting, double bulletSpeed) : _coolDownBehaviour(std::make_shared<CoolDownBehaviour>(fireRate)),
                                                                                                                                                         _targetTag(targetTag),
                                                                                                                                                         _range(range),
                                                                                                                                                         _damage(damage),
