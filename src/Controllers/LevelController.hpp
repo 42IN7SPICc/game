@@ -45,6 +45,7 @@ namespace game
 
             std::shared_ptr<spic::Button> InitializeTileButton(const std::shared_ptr<spic::GameObject>& HUD, const std::string& texture, int tileAmount, const std::string& tileTitle);
             void HandleTileClick(const game::MapNode& clickedTile);
+            bool CheckIfPathIsComplete();
     };
 }
 

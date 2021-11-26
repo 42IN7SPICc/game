@@ -6,8 +6,10 @@
 #include "../Utils/GameObjectUtil.hpp"
 #include "../Utils/TileUtil.hpp"
 #include "../Scripts/Common/GameLostBehaviour.hpp"
+#include "../Factories/ButtonPrefabFactory.hpp"
 #include <numeric>
 #include <cmath>
+#include <vector>
 
 using namespace spic;
 using namespace game;
@@ -68,7 +70,7 @@ std::shared_ptr<spic::GameObject> LevelController::CreateHUD()
     int hudWidth = 250;
 
     auto rightHud = std::make_shared<spic::GameObject>("RightHud", "hud", Layer::HUD);
-    auto rightHudSprite = std::make_shared<spic::Sprite>("resources/sprites/hud/white_block.png", false, false, 100, 1);
+    auto rightHudSprite = std::make_shared<spic::Sprite>("resources/sprites/hud/white_block.png", false, false, 3, 1);
     GameObjectUtil::LinkComponent(rightHud, rightHudSprite);
 
     rightHud->Transform().position.x = screenWidth - (hudWidth / TileButtonScale);
@@ -89,6 +91,21 @@ std::shared_ptr<spic::GameObject> LevelController::CreateHUD()
     auto sandButton = InitializeTileButton(rightHud, "resources/sprites/tiles/sand.png", 6, "Zand");
     sandButton->Transform().position.y = -(TileSize + 2) * (TileButtonScale * 2);
 
+    auto completePathButton = ButtonPrefabFactory::CreateOutlineButton("complete-path-button", "complete_path_button", "Finish Path", true);
+    completePathButton->Transform().scale = 0.8;
+    completePathButton->OnClick([this]() {
+        bool pathCompleted = CheckIfPathIsComplete();
+        if (pathCompleted)
+        {
+            _levelMode = LevelMode::TowerMode;
+        }
+        else
+        {
+            Debug::Log("PATH IS NOT COMPLETE!!!!!!");
+        }
+    });
+    GameObjectUtil::LinkChild(rightHud, completePathButton);
+
     int result = std::accumulate(_buttonTileAmounts.begin(), _buttonTileAmounts.end(), 0, [](const int previous, const std::pair<std::shared_ptr<spic::Button>, int>& p) { return previous + p.second; });
     buttonText->Content("Tegels (" + std::to_string(result) + ")");
 
@@ -107,12 +124,18 @@ std::shared_ptr<spic::GameObject> LevelController::BuildLevel(const std::shared_
 
         if (levelTile.TileType() == TileType::End)
         {
-            tile = std::make_shared<spic::GameObject>(name, "end_tile", Layer::Game);
+            tile = std::make_shared<spic::GameObject>("end-tile", "end_tile", Layer::Game);
             auto endTileCollider = std::make_shared<spic::BoxCollider>(TileSize * TileMapScale, TileSize * TileMapScale);
             endTileCollider->IsTrigger(true);
             GameObjectUtil::LinkComponent(tile, endTileCollider);
             GameObjectUtil::LinkComponent(tile, endTowerHealthBehaviour);
-        } else {
+        }
+        else if (levelTile.TileType() == TileType::Start)
+        {
+            tile = std::make_shared<spic::GameObject>("start-tile", "start_tile", Layer::Game);
+        }
+        else
+        {
             tile = std::make_shared<spic::GameObject>(name, "tile", Layer::Game);
         }
 
@@ -129,6 +152,30 @@ std::shared_ptr<spic::GameObject> LevelController::BuildLevel(const std::shared_
 
         GameObjectUtil::LinkComponent(tile, sprite);
         GameObjectUtil::LinkChild(tileMap, tile);
+    }
+
+    for (auto& [key, node]: _levelData.Graph)
+    {
+        if (node.X > 0)
+        {
+            auto leftNeighbour = _levelData.Graph[std::to_string(node.X - 1) + "-" + std::to_string(node.Y)];
+            node.Neighbours.push_back(&leftNeighbour);
+        }
+        if (node.X < 24)
+        {
+            auto rightNeighbour = _levelData.Graph[std::to_string(node.X + 1) + "-" + std::to_string(node.Y)];
+            node.Neighbours.push_back(&rightNeighbour);
+        }
+        if (node.Y > 0)
+        {
+            auto leftNeighbour = _levelData.Graph[std::to_string(node.X) + "-" + std::to_string(node.Y - 1)];
+            node.Neighbours.push_back(&leftNeighbour);
+        }
+        if (node.Y < 24)
+        {
+            auto rightNeighbour = _levelData.Graph[std::to_string(node.X + 1) + "-" + std::to_string(node.Y + 1)];
+            node.Neighbours.push_back(&rightNeighbour);
+        }
     }
 
     return tileMap;
@@ -190,9 +237,12 @@ std::shared_ptr<spic::GameObject> LevelController::CreateMapButton()
         int x = ((mousePositions.x - MapX) + (scaledTileSize / 2)) / scaledTileSize;
         int y = ((mousePositions.y - MapY) + (scaledTileSize / 2)) / scaledTileSize;
 
-        if(_levelMode == LevelMode::TileMode) {
+        if (_levelMode == LevelMode::TileMode)
+        {
             HandleTileClick(_levelData.Graph[std::to_string(x) + "-" + std::to_string(y)]);
-        } else if(_levelMode == LevelMode::TowerMode) {
+        }
+        else if (_levelMode == LevelMode::TowerMode)
+        {
             //TODO HandleTowerClick
         }
     });
@@ -226,7 +276,8 @@ void LevelController::HandleTileClick(const game::MapNode& clickedTile)
                     auto writeBackText = std::dynamic_pointer_cast<Text>(writeBackButton->Children()[0]);
 
                     auto sprite = writeBackButton->GetComponent<Sprite>();
-                    if(TileUtil::GetTileType(sprite->Texture()) != clickedTile.OriginalTileType || selectedButtonTileType == clickedTile.OriginalTileType) {
+                    if (TileUtil::GetTileType(sprite->Texture()) != clickedTile.OriginalTileType || selectedButtonTileType == clickedTile.OriginalTileType)
+                    {
                         _buttonTileAmounts[writeBackButton]++;
                         writeBackText->Content(std::to_string(_buttonTileAmounts[writeBackButton]));
                     }
@@ -244,5 +295,24 @@ void LevelController::HandleTileClick(const game::MapNode& clickedTile)
             totalTilesText->Content("Tegels (" + std::to_string(totalTiles) + ")");
         }
     }
+}
+
+bool LevelController::CheckIfPathIsComplete()
+{
+    MapNode start;
+    MapNode end;
+    for(const auto& KeyValuePair : _levelData.Graph) {
+        if(KeyValuePair.second.TileType == TileType::Start)
+            start = KeyValuePair.second;
+        else if(KeyValuePair.second.TileType == TileType::End)
+            end = KeyValuePair.second;
+    }
+
+    Debug::Log("Start neighbour size: " + std::to_string(start.Neighbours.size()));
+    Debug::Log("End neighbour size: " + std::to_string(end.Neighbours.size()));
+
+    if(start.Neighbours.empty() || end.Neighbours.empty()) return false;
+
+    return true;
 }
 
