@@ -34,7 +34,6 @@ std::shared_ptr<spic::AudioSource> game::AudioSourcePrefabFactory::CreateAudioSo
 
 std::shared_ptr<spic::GameObject> game::AudioSourcePrefabFactory::CreateAudioObject(game::AudioClipName audioClipName, bool playOnAwake, bool looping, double volume)
 {
-
     auto audioObject = std::make_shared<spic::GameObject>("audioSource_" + game::RandomUtil::NextString(32), "audio", Layer::Background);
     game::GameObjectUtil::LinkComponent(audioObject, CreateAudioSource(audioClipName, playOnAwake, looping, volume));
     return audioObject;
