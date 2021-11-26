@@ -53,7 +53,7 @@ std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreatePanzer()
 
     auto enemy = CreateBaseEnemy(15, 200, idleSprites, walkingSprites, diedSprites);
 
-    auto attackBehaviour = std::make_shared<AttackBehaviour>("Player", 3, 500, 15, false, 25);
+    auto attackBehaviour = std::make_shared<AttackBehaviour>("hero", 3, 500, 15, false, 25);
     GameObjectUtil::LinkComponent(enemy, attackBehaviour);
 
     return enemy;
