@@ -30,7 +30,7 @@ namespace game
 
             static std::shared_ptr<spic::GameObject> CreateRaupenschlepper();
 
-            static std::shared_ptr<spic::GameObject> CreateBaseEnemy(int attack, int defense, const types::sprite_vector& idleSprites, const types::sprite_vector& walkingSprites, const types::sprite_vector& diedSprites);
+            static std::shared_ptr<spic::GameObject> CreateBaseEnemy(int attack, int health, const types::sprite_vector& idleSprites, const types::sprite_vector& walkingSprites, const types::sprite_vector& diedSprites);
     };
 }
 

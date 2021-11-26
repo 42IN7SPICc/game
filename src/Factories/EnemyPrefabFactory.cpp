@@ -11,6 +11,7 @@
 #include "Animator.hpp"
 #include "CircleCollider.hpp"
 #include "RigidBody.hpp"
+#include "../Scripts/Common/DamageBehaviour.hpp"
 
 #include <stdexcept>
 
@@ -125,7 +126,7 @@ std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreateRaupenschlepper()
     return enemy;
 }
 
-std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreateBaseEnemy(int attack, int defense, const types::sprite_vector& idleSprites, const types::sprite_vector& walkingSprites, const types::sprite_vector& diedSprites)
+std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreateBaseEnemy(int attack, int health, const types::sprite_vector& idleSprites, const types::sprite_vector& walkingSprites, const types::sprite_vector& diedSprites)
 {
     auto baseEnemy = std::make_shared<spic::GameObject>("Enemy", "enemy", Layer::Game);
     baseEnemy->Transform().scale = EnemyScale;
@@ -142,8 +143,11 @@ std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreateBaseEnemy(int attack
     auto diedAnimator = std::make_shared<spic::Animator>(static_cast<int>(diedSprites.size()), diedSprites);
     GameObjectUtil::LinkComponent(baseEnemy, diedAnimator);
 
-    auto healthBehaviour = std::make_shared<HealthBehaviour>(diedAnimator, defense);
+    auto healthBehaviour = std::make_shared<HealthBehaviour>(diedAnimator, health);
     GameObjectUtil::LinkComponent(baseEnemy, healthBehaviour);
+
+    auto damageBehaviour = std::make_shared<DamageBehaviour>(attack, "military_base");
+    GameObjectUtil::LinkComponent(baseEnemy, damageBehaviour);
 
     auto movementBehaviour = std::make_shared<EnemyMovementBehaviour>();
     GameObjectUtil::LinkComponent(baseEnemy, movementBehaviour);
