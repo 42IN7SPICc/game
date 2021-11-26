@@ -12,10 +12,13 @@ namespace game
         private:
             std::string _targetTag;
             int _damage;
+            int _radius;
             int _objectsDamaged;
 
         public:
-            explicit DamageBehaviour(int damage, const std::string& targetTag = "");
+            explicit DamageBehaviour(int damage, const std::string& targetTag = "", int radius = 0);
+
+            void Damage(const std::shared_ptr<spic::GameObject>& gameObject);
 
             [[nodiscard]] int Damage() const;
 
@@ -24,6 +27,10 @@ namespace game
             [[nodiscard]] const std::string& TargetTag() const;
 
             void TargetTag(const std::string& targetTag);
+
+            [[nodiscard]] int Radius() const;
+
+            void Radius(int radius);
 
             [[nodiscard]] int ObjectsDamaged() const;
 
