@@ -65,7 +65,6 @@ std::shared_ptr<spic::GameObject> LevelController::CreateHUD()
     int screenWidth = 1366;
     int screenHeight = 786;
     int hudWidth = 250;
-    int totalTileAmount = 22;
 
     auto rightHud = std::make_shared<spic::GameObject>("RightHud", "hud", Layer::HUD);
     auto rightHudSprite = std::make_shared<spic::Sprite>("resources/sprites/hud/white_block.png", false, false, 100, 1);
@@ -152,7 +151,6 @@ std::shared_ptr<spic::Button> LevelController::InitializeTileButton(const std::s
 
     _buttonTileAmounts[button] = tileAmount;
     button->OnClick([this, button]() {
-        if (_buttonTileAmounts[button] <= 0) return;
         if (_selectedButton != nullptr || _selectedButton == button)
         {
             auto sprites = _selectedButton->GetComponents<spic::Sprite>();
@@ -209,7 +207,7 @@ std::shared_ptr<spic::GameObject> LevelController::CreateMapButton()
     mapTileButton->Transform().position.y += (buttonSize / 2.0) - TileSize / 2.0;
 
     mapTileButton->OnClick([this]() {
-        if (_buttonTileAmounts[_selectedButton] == 0) return;
+        //if (_buttonTileAmounts[_selectedButton] == 0) return;
 
         auto mousePositions = Input::MousePosition();
         double scaledTileSize = TileSize * TileMapScale;
@@ -234,6 +232,7 @@ std::shared_ptr<spic::GameObject> LevelController::CreateMapButton()
                 }
                 else
                 {
+                    if (_buttonTileAmounts[_selectedButton] == 0) return;
                     //Check if tile you've clicked isn't a bush, if it is put back the tile in HUD that was already there
                     if (overrideSprite->Texture() != "resources/sprites/tiles/bushes.png")
                     {
