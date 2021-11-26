@@ -97,11 +97,12 @@ std::shared_ptr<spic::GameObject> LevelController::CreateHUD()
         bool pathCompleted = CheckIfPathIsComplete();
         if (pathCompleted)
         {
+            Debug::Log("Completed Correctly!!");
             _levelMode = LevelMode::TowerMode;
         }
         else
         {
-            Debug::Log("PATH IS NOT COMPLETE!!!!!!");
+            Debug::LogWarning("PATH IS NOT COMPLETE!!!!!!");
         }
     });
     GameObjectUtil::LinkChild(rightHud, completePathButton);
@@ -148,34 +149,23 @@ std::shared_ptr<spic::GameObject> LevelController::BuildLevel(const std::shared_
         node.OriginalTileType = levelTile.TileType();
         node.TileType = levelTile.TileType();
         node.TileObject = tile;
+        node.Visited = false;
         _levelData.Graph[std::to_string(levelTile.X) + "-" + std::to_string(levelTile.Y)] = node;
 
         GameObjectUtil::LinkComponent(tile, sprite);
         GameObjectUtil::LinkChild(tileMap, tile);
     }
 
-    for (auto& [key, node]: _levelData.Graph)
+    for (auto&[key, node]: _levelData.Graph)
     {
         if (node.X > 0)
-        {
-            auto leftNeighbour = _levelData.Graph[std::to_string(node.X - 1) + "-" + std::to_string(node.Y)];
-            node.Neighbours.push_back(&leftNeighbour);
-        }
+            node.Neighbours.push_back(std::to_string(node.X - 1) + "-" + std::to_string(node.Y));
         if (node.X < 24)
-        {
-            auto rightNeighbour = _levelData.Graph[std::to_string(node.X + 1) + "-" + std::to_string(node.Y)];
-            node.Neighbours.push_back(&rightNeighbour);
-        }
+            node.Neighbours.push_back(std::to_string(node.X + 1) + "-" + std::to_string(node.Y));
         if (node.Y > 0)
-        {
-            auto leftNeighbour = _levelData.Graph[std::to_string(node.X) + "-" + std::to_string(node.Y - 1)];
-            node.Neighbours.push_back(&leftNeighbour);
-        }
+            node.Neighbours.push_back(std::to_string(node.X) + "-" + std::to_string(node.Y - 1));
         if (node.Y < 24)
-        {
-            auto rightNeighbour = _levelData.Graph[std::to_string(node.X + 1) + "-" + std::to_string(node.Y + 1)];
-            node.Neighbours.push_back(&rightNeighbour);
-        }
+            node.Neighbours.push_back(std::to_string(node.X) + "-" + std::to_string(node.Y + 1));
     }
 
     return tileMap;
@@ -284,6 +274,7 @@ void LevelController::HandleTileClick(const game::MapNode& clickedTile)
                 }
                 clickedTileSprite->Texture(selectedButtonSprite->Texture());
                 _buttonTileAmounts[_selectedButton]--;
+                _levelData.Graph[std::to_string(clickedTile.X) + "-" + std::to_string(clickedTile.Y)].TileType = selectedButtonTileType;
             }
 
             //Change text of button in HUD
@@ -299,20 +290,32 @@ void LevelController::HandleTileClick(const game::MapNode& clickedTile)
 
 bool LevelController::CheckIfPathIsComplete()
 {
+    auto graphCopy = _levelData.Graph;
     MapNode start;
-    MapNode end;
-    for(const auto& KeyValuePair : _levelData.Graph) {
-        if(KeyValuePair.second.TileType == TileType::Start)
-            start = KeyValuePair.second;
-        else if(KeyValuePair.second.TileType == TileType::End)
-            end = KeyValuePair.second;
+    for (const auto&[key, value]: graphCopy)
+    {
+        if (value.TileType == TileType::Start)
+            start = value;
     }
 
-    Debug::Log("Start neighbour size: " + std::to_string(start.Neighbours.size()));
-    Debug::Log("End neighbour size: " + std::to_string(end.Neighbours.size()));
+    if (start.Neighbours.empty()) return false;
 
-    if(start.Neighbours.empty() || end.Neighbours.empty()) return false;
+    std::vector<std::string> pathTiles;
+    pathTiles.push_back(std::to_string(start.X) + "-" + std::to_string(start.Y));
+    while (!pathTiles.empty())
+    {
+        auto& tile = graphCopy[pathTiles[0]];
+        tile.Visited = true;
+        for (auto& stringNeighbour: tile.Neighbours)
+        {
+            const auto& neighbour = graphCopy[stringNeighbour];
+            if (neighbour.TileType == TileType::End) return true;
+            if ((neighbour.TileType == TileType::Street || neighbour.TileType == TileType::Sand || neighbour.TileType == TileType::Grass || neighbour.TileType == TileType::Bridge) && !neighbour.Visited)
+                pathTiles.push_back(std::to_string(neighbour.X) + "-" + std::to_string(neighbour.Y));
+        }
+        pathTiles.erase(std::find(pathTiles.begin(), pathTiles.end(), pathTiles[0]));
+    }
 
-    return true;
+    return false;
 }
 
