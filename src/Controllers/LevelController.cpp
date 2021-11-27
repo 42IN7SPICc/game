@@ -103,10 +103,15 @@ std::shared_ptr<spic::GameObject> LevelController::CreateHUD()
             for(const auto& child : childrenCopy) {
                 rightHud->RemoveChild(child);
             }
+
+            //TODO instantiate new HUD for Tower
         }
         else
         {
-            auto validationText = std::make_shared<Text>("validation-text", "text", Layer::HUD, 200, 100);
+            auto validationText = std::dynamic_pointer_cast<Text>(GameObject::Find("path-validation-text"));
+            if(validationText == nullptr) //Check if validation text allready exists
+                validationText = std::make_shared<Text>("path-validation-text", "text", Layer::HUD, 200, 100);
+
             validationText->Transform().position.y = (TileSize + 2) * TileButtonScale;
             validationText->Content("Het huidige pad is niet compleet");
             validationText->TextAlignment(Alignment::center);
@@ -264,6 +269,7 @@ void LevelController::HandleTileClick(const game::MapNode& clickedTile)
             if (clickedTileSpriteTileType == selectedButtonTileType && selectedButtonTileType != clickedTile.OriginalTileType)
             {
                 clickedTileSprite->Texture(TileUtil::GetSprite(clickedTile.OriginalTileType));
+                _levelData.Graph[std::to_string(clickedTile.X) + "-" + std::to_string(clickedTile.Y)].TileType = clickedTile.OriginalTileType;
                 _buttonTileAmounts[_selectedButton]++;
             }
             else
