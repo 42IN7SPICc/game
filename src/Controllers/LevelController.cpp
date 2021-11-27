@@ -93,16 +93,25 @@ std::shared_ptr<spic::GameObject> LevelController::CreateHUD()
 
     auto completePathButton = ButtonPrefabFactory::CreateOutlineButton("complete-path-button", "complete_path_button", "Finish Path", true);
     completePathButton->Transform().scale = 0.8;
-    completePathButton->OnClick([this]() {
+    completePathButton->OnClick([this, rightHud]() {
         bool pathCompleted = CheckIfPathIsComplete();
         if (pathCompleted)
         {
             Debug::Log("Completed Correctly!!");
             _levelMode = LevelMode::TowerMode;
+            auto childrenCopy = rightHud->Children();
+            for(const auto& child : childrenCopy) {
+                rightHud->RemoveChild(child);
+            }
         }
         else
         {
-            Debug::LogWarning("PATH IS NOT COMPLETE!!!!!!");
+            auto validationText = std::make_shared<Text>("validation-text", "text", Layer::HUD, 200, 100);
+            validationText->Transform().position.y = (TileSize + 2) * TileButtonScale;
+            validationText->Content("Het huidige pad is niet compleet");
+            validationText->TextAlignment(Alignment::center);
+            validationText->TextColor(Color::red());
+            GameObjectUtil::LinkChild(rightHud, validationText);
         }
     });
     GameObjectUtil::LinkChild(rightHud, completePathButton);
