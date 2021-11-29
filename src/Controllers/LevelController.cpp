@@ -57,6 +57,11 @@ void LevelController::OnUpdate()
             auto text = std::dynamic_pointer_cast<spic::Text>(child);
             text->Content(std::to_string(_levelData.CurrentWave()));
         }
+        else if (child->Name() == "enemies-text")
+        {
+            auto text = std::dynamic_pointer_cast<spic::Text>(child);
+            text->Content(std::to_string(_levelData.Waves.front().RemainingEnemies()));
+        }
     }
 }
 
@@ -128,6 +133,18 @@ std::shared_ptr<spic::GameObject> LevelController::CreateHUD()
                 rightHud->RemoveChild(child);
             }
 
+            auto enemiesLeftTextHeader = std::make_shared<spic::Text>("enemies-text-header", "default", Layer::HUD, HudWidth, 20);
+            enemiesLeftTextHeader->Size(18);
+            enemiesLeftTextHeader->TextAlignment(Alignment::center);
+            enemiesLeftTextHeader->Transform().position.y = 100;
+            enemiesLeftTextHeader->Content("Vijanden resterend:");
+
+            auto enemiesText = std::make_shared<spic::Text>("enemies-text", "default", Layer::HUD, HudWidth, 20);
+            enemiesText->Size(18);
+            enemiesText->TextAlignment(Alignment::center);
+            enemiesText->Transform().position.y = 120;
+            enemiesText->Content(std::to_string(_levelData.Waves.front().RemainingEnemies()));
+
             auto waveTextHeader = std::make_shared<spic::Text>("wave-text-header", "default", Layer::HUD, HudWidth, 20);
             waveTextHeader->Size(18);
             waveTextHeader->TextAlignment(Alignment::center);
@@ -177,6 +194,8 @@ std::shared_ptr<spic::GameObject> LevelController::CreateHUD()
             });
             nextWaveButton->Transform().position.y = 350;
 
+            GameObjectUtil::LinkChild(rightHud, enemiesLeftTextHeader);
+            GameObjectUtil::LinkChild(rightHud, enemiesText);
             GameObjectUtil::LinkChild(rightHud, waveTextHeader);
             GameObjectUtil::LinkChild(rightHud, waveText);
             GameObjectUtil::LinkChild(rightHud, moneyText);
