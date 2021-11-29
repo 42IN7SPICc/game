@@ -42,9 +42,9 @@ std::shared_ptr<spic::GameObject> TowerPrefabFactory::CreateBaseTower(const type
 
 std::shared_ptr<spic::GameObject> TowerPrefabFactory::CreateBomber()
 {
-    types::sprite_vector sprites = AnimatorUtil::CreateSpriteVector(10, "resources/sprites/towers/Idle/tower_idle_", SortingLayer::Enemy);
+    types::sprite_vector shootingSprites = AnimatorUtil::CreateSpriteVector(1, "resources/sprites/towers/shooting/tower_shooting_", SortingLayer::Enemy);
 
-    auto tower = CreateBaseTower(sprites);
+    auto tower = CreateBaseTower(shootingSprites);
 
     auto attackBehaviour = std::make_shared<AttackBehaviour>("enemy", BulletType::Bomb, 3, 200, 25, 10, 50);
     GameObjectUtil::LinkComponent(tower, attackBehaviour);
@@ -54,7 +54,7 @@ std::shared_ptr<spic::GameObject> TowerPrefabFactory::CreateBomber()
 
 std::shared_ptr<spic::GameObject> TowerPrefabFactory::CreateShotgun()
 {
-    types::sprite_vector sprites = AnimatorUtil::CreateSpriteVector(10, "resources/sprites/towers/Idle/tower_idle_", SortingLayer::Enemy);
+    types::sprite_vector sprites = AnimatorUtil::CreateSpriteVector(1, "resources/sprites/towers/shooting/tower_shooting_", SortingLayer::Enemy);
 
     auto tower = CreateBaseTower(sprites);
 
@@ -66,7 +66,7 @@ std::shared_ptr<spic::GameObject> TowerPrefabFactory::CreateShotgun()
 
 std::shared_ptr<spic::GameObject> TowerPrefabFactory::CreateFlamethrower()
 {
-    types::sprite_vector sprites = AnimatorUtil::CreateSpriteVector(10, "resources/sprites/towers/Idle/tower_idle_", SortingLayer::Enemy);
+    types::sprite_vector sprites = AnimatorUtil::CreateSpriteVector(1, "resources/sprites/towers/shooting/tower_shooting_", SortingLayer::Enemy);
 
     auto tower = CreateBaseTower(sprites);
 
@@ -78,7 +78,7 @@ std::shared_ptr<spic::GameObject> TowerPrefabFactory::CreateFlamethrower()
 
 std::shared_ptr<spic::GameObject> TowerPrefabFactory::CreateSniper()
 {
-    types::sprite_vector sprites = AnimatorUtil::CreateSpriteVector(10, "resources/sprites/towers/Idle/tower_idle_", SortingLayer::Enemy);
+    types::sprite_vector sprites = AnimatorUtil::CreateSpriteVector(1, "resources/sprites/towers/shooting/tower_shooting_", SortingLayer::Enemy);
 
     auto tower = CreateBaseTower(sprites);
 
