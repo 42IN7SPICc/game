@@ -13,8 +13,8 @@ namespace game
         std::vector<std::string> NeighbourStrings {};
         int X;
         int Y;
-        game::TileType OriginalTileType;
-        game::TileType TileType;
+        TileType OriginalTileType;
+        TileType TileType;
         std::shared_ptr<spic::GameObject> TileObject;
         bool Visited;
     };

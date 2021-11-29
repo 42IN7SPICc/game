@@ -19,7 +19,7 @@ namespace game
         std::string Description;
         int UnlockThreshold;
         std::string File;
-        std::map<game::TileType, size_t> AmountOfTiles;
+        std::map<TileType, size_t> AmountOfTiles;
     };
 }
 

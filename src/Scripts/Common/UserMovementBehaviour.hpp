@@ -17,9 +17,9 @@ namespace game
             std::shared_ptr<spic::RigidBody> _rigidBody;
             std::shared_ptr<spic::Animator> _idleAnimator;
             std::shared_ptr<spic::Animator> _walkingAnimator;
-            std::shared_ptr<game::HealthBehaviour> _healthBehaviour;
+            std::shared_ptr<HealthBehaviour> _healthBehaviour;
         public:
-            explicit UserMovementBehaviour(float velocity, std::shared_ptr<spic::Animator> idleAnimator, std::shared_ptr<spic::Animator> walkingAnimator, std::shared_ptr<game::HealthBehaviour> healthBehaviour);
+            explicit UserMovementBehaviour(float velocity, std::shared_ptr<spic::Animator> idleAnimator, std::shared_ptr<spic::Animator> walkingAnimator, std::shared_ptr<HealthBehaviour> healthBehaviour);
 
             [[nodiscard]] bool Controllable() const;
 

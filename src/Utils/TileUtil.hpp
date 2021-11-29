@@ -9,9 +9,9 @@ namespace game
     class TileUtil
     {
         public:
-            static std::string GetSprite(const game::TileType& tileType);
+            static std::string GetSprite(const TileType& tileType);
 
-            static game::TileType GetTileType(const std::string& sprite);
+            static TileType GetTileType(const std::string& sprite);
     };
 }
 

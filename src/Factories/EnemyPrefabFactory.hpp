@@ -13,7 +13,7 @@ namespace game
     class EnemyPrefabFactory
     {
         public:
-            static std::shared_ptr<spic::GameObject> CreateEnemy(game::EnemyName name);
+            static std::shared_ptr<spic::GameObject> CreateEnemy(EnemyName name);
 
         private:
             static std::shared_ptr<spic::GameObject> CreatePanzer();

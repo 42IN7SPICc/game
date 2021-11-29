@@ -22,7 +22,7 @@ namespace game
             static std::shared_ptr<spic::GameObject> CreateBaseHero(int attack, int defense);
 
         public:
-            static std::shared_ptr<spic::GameObject> CreateHero(game::HeroName name);
+            static std::shared_ptr<spic::GameObject> CreateHero(HeroName name);
     };
 }
 
