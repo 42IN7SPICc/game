@@ -22,9 +22,10 @@ namespace game
             int _damage;
             bool _multiTargeting;
             double _bulletSpeed;
+            double _damageRadius;
 
         public:
-            AttackBehaviour(const std::string& targetTag, BulletType bulletType, double fireRate, int range, int damage, bool multiTargeting, double bulletSpeed);
+            AttackBehaviour(const std::string& targetTag, BulletType bulletType, double fireRate, int range, int damage, bool multiTargeting, double bulletSpeed, double damageRadius = 0);
 
             void OnStart() override;
 
@@ -46,9 +47,9 @@ namespace game
 
             void Range(double range);
 
-            [[nodiscard]] double Damage() const;
+            [[nodiscard]] int Damage() const;
 
-            void Damage(double damage);
+            void Damage(int damage);
 
             [[nodiscard]] bool MultiTargeting() const;
 
@@ -57,6 +58,18 @@ namespace game
             [[nodiscard]] double BulletSpeed() const;
 
             void BulletSpeed(double bulletSpeed);
+
+            const std::string& TargetTag() const;
+
+            void TargetTag(const std::string& targetTag);
+
+            BulletType BulletType() const;
+
+            void BulletType(BulletType bulletType);
+
+            double DamageRadius() const;
+
+            void DamageRadius(double damageRadius);
     };
 }
 

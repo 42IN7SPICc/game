@@ -13,13 +13,14 @@
 
 using namespace game;
 
-AttackBehaviour::AttackBehaviour(const std::string& targetTag, BulletType bulletType, double fireRate, int range, int damage, bool multiTargeting, double bulletSpeed) : _coolDownBehaviour(std::make_shared<CoolDownBehaviour>(fireRate)),
-                                                                                                                                                                         _targetTag(targetTag),
-                                                                                                                                                                         _bulletType(bulletType),
-                                                                                                                                                                         _range(range),
-                                                                                                                                                                         _damage(damage),
-                                                                                                                                                                         _multiTargeting(multiTargeting),
-                                                                                                                                                                         _bulletSpeed(bulletSpeed)
+AttackBehaviour::AttackBehaviour(const std::string& targetTag, BulletType bulletType, double fireRate, int range, int damage, bool multiTargeting, double bulletSpeed, double damageRadius) : _coolDownBehaviour(std::make_shared<CoolDownBehaviour>(fireRate)),
+                                                                                                                                                                                              _targetTag(targetTag),
+                                                                                                                                                                                              _bulletType(bulletType),
+                                                                                                                                                                                              _range(range),
+                                                                                                                                                                                              _damage(damage),
+                                                                                                                                                                                              _multiTargeting(multiTargeting),
+                                                                                                                                                                                              _bulletSpeed(bulletSpeed),
+                                                                                                                                                                                              _damageRadius(damageRadius)
 {
 }
 
@@ -59,7 +60,7 @@ void AttackBehaviour::OnUpdate()
 
 void AttackBehaviour::Shoot(const spic::Point& direction, const spic::Point& position)
 {
-    auto bullet = BulletFactory::CreateBullet(_bulletType, position, _targetTag, direction, _range, _damage);
+    auto bullet = BulletFactory::CreateBullet(_bulletType, position, _targetTag, direction, _range, _damage, _damageRadius);
 
     spic::Engine::Instance().PeekScene()->Contents().push_back(bullet);
 }
@@ -99,12 +100,12 @@ void AttackBehaviour::Range(double range)
     _range = range;
 }
 
-double AttackBehaviour::Damage() const
+int AttackBehaviour::Damage() const
 {
     return _damage;
 }
 
-void AttackBehaviour::Damage(double damage)
+void AttackBehaviour::Damage(int damage)
 {
     _damage = damage;
 }
@@ -127,4 +128,34 @@ double AttackBehaviour::BulletSpeed() const
 void AttackBehaviour::BulletSpeed(double bulletSpeed)
 {
     _bulletSpeed = bulletSpeed;
+}
+
+const std::string& AttackBehaviour::TargetTag() const
+{
+    return _targetTag;
+}
+
+void AttackBehaviour::TargetTag(const std::string& targetTag)
+{
+    _targetTag = targetTag;
+}
+
+BulletType AttackBehaviour::BulletType() const
+{
+    return _bulletType;
+}
+
+void AttackBehaviour::BulletType(game::BulletType bulletType)
+{
+    _bulletType = bulletType;
+}
+
+double AttackBehaviour::DamageRadius() const
+{
+    return _damageRadius;
+}
+
+void AttackBehaviour::DamageRadius(double damageRadius)
+{
+    _damageRadius = damageRadius;
 }
