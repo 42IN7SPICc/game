@@ -11,16 +11,24 @@
 
 using namespace game;
 
-std::shared_ptr<spic::Button> ButtonPrefabFactory::CreateOutlineButton(const std::string& name, const std::string& tag, const std::string& text)
+std::shared_ptr<spic::Button> ButtonPrefabFactory::CreateOutlineButton(const std::string& name, const std::string& tag, const std::string& text, bool invert_color)
 {
     auto button = std::make_shared<spic::Button>(name, tag, Layer::HUD, 250, 85);
 
-    auto buttonSprite = std::make_shared<spic::Sprite>("resources/sprites/hud/buttons/outline.png", false, false, SortingLayer::HudButton, 0);
+    std::string buttonOutline = invert_color ? "outline_black.png" : "outline.png";
+    auto buttonSprite = std::make_shared<spic::Sprite>("resources/sprites/hud/buttons/" + buttonOutline, false, false, SortingLayer::HudButton, 0);
 
     auto buttonText = std::make_shared<spic::Text>(name + "_text", tag + "_text", Layer::HUD, 250, 85);
     buttonText->Content(text);
     buttonText->Size(38);
-    buttonText->TextColor(spic::Color::white());
+    if (invert_color)
+    {
+        buttonText->TextColor(spic::Color::black());
+    }
+    else
+    {
+        buttonText->TextColor(spic::Color::white());
+    }
     buttonText->TextAlignment(spic::Alignment::center);
 
     GameObjectUtil::LinkComponent(button, buttonSprite);
