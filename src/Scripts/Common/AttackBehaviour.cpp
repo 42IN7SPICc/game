@@ -13,12 +13,11 @@
 
 using namespace game;
 
-AttackBehaviour::AttackBehaviour(const std::string& targetTag, BulletType bulletType, double fireRate, int range, int damage, bool multiTargeting, double bulletSpeed, double damageRadius) : _coolDownBehaviour(std::make_shared<CoolDownBehaviour>(fireRate)),
+AttackBehaviour::AttackBehaviour(const std::string& targetTag, game::BulletType bulletType, double fireRate, int range, int damage, double bulletSpeed, double damageRadius) : _coolDownBehaviour(std::make_shared<CoolDownBehaviour>(fireRate)),
                                                                                                                                                                                               _targetTag(targetTag),
                                                                                                                                                                                               _bulletType(bulletType),
                                                                                                                                                                                               _range(range),
                                                                                                                                                                                               _damage(damage),
-                                                                                                                                                                                              _multiTargeting(multiTargeting),
                                                                                                                                                                                               _bulletSpeed(bulletSpeed),
                                                                                                                                                                                               _damageRadius(damageRadius)
 {
@@ -108,16 +107,6 @@ int AttackBehaviour::Damage() const
 void AttackBehaviour::Damage(int damage)
 {
     _damage = damage;
-}
-
-bool AttackBehaviour::MultiTargeting() const
-{
-    return _multiTargeting;
-}
-
-void AttackBehaviour::MultiTargeting(bool multiTargeting)
-{
-    _multiTargeting = multiTargeting;
 }
 
 double AttackBehaviour::BulletSpeed() const

@@ -20,12 +20,11 @@ namespace game
             BulletType _bulletType;
             int _range;
             int _damage;
-            bool _multiTargeting;
             double _bulletSpeed;
             double _damageRadius;
 
         public:
-            AttackBehaviour(const std::string& targetTag, BulletType bulletType, double fireRate, int range, int damage, bool multiTargeting, double bulletSpeed, double damageRadius = 0);
+            AttackBehaviour(const std::string& targetTag, game::BulletType bulletType, double fireRate, int range, int damage, double bulletSpeed, double damageRadius = 0);
 
             void OnStart() override;
 
