@@ -58,7 +58,8 @@ LevelController::LevelController(game::LevelWithTiles level, std::shared_ptr<gam
                                                                                                                                                                                                                        500,
                                                                                                                                                                                                                        std::move(waves)
                                                                                                                                                                                                                }),
-                                                                                                                                                                                                               _levelMode(LevelMode::TileMode)
+                                                                                                                                                                                                               _levelMode(LevelMode::TileMode),
+                                                                                                                                                                                                               _strongPathEnabled(false)
 {
 }
 
@@ -259,7 +260,7 @@ void LevelController::HandleTileClick(const game::MapNode& clickedTile)
     if (_selectedButton != nullptr)
     {
         auto currentTileType = clickedTile.TileType;
-        if (currentTileType == TileType::Bushes || currentTileType == TileType::Street || currentTileType == TileType::Sand || currentTileType == TileType::Grass)
+        if ((_strongPathEnabled && currentTileType != TileType::Start && currentTileType != TileType::End) || currentTileType == TileType::Bushes || currentTileType == TileType::Street || currentTileType == TileType::Sand || currentTileType == TileType::Grass)
         {
             auto selectedButtonSprite = _selectedButton->GetComponent<spic::Sprite>();
             auto clickedTileSprite = clickedTile.TileObject->GetComponent<spic::Sprite>();
@@ -275,7 +276,7 @@ void LevelController::HandleTileClick(const game::MapNode& clickedTile)
             else
             {
                 if (_buttonTileAmounts[_selectedButton] == 0) return;
-                if (clickedTileSpriteTileType != TileType::Bushes)
+                if (clickedTileSpriteTileType != TileType::Bushes && !_strongPathEnabled)
                 {
                     auto writeBackButton = std::dynamic_pointer_cast<Button>(GameObject::Find("tile-button-" + clickedTileSprite->Texture()));
                     auto writeBackText = std::dynamic_pointer_cast<Text>(writeBackButton->Children()[0]);
@@ -338,10 +339,14 @@ void LevelController::SetUnlimitedPath()
 {
     for(auto& [button, tileAmount] : _buttonTileAmounts)
     {
-        tileAmount = 100000;
+        tileAmount = 625;
         auto HUDButtonText = std::dynamic_pointer_cast<spic::Text>(button->Children()[0]);
         HUDButtonText->Content(std::to_string(tileAmount));
-        Debug::Log("HE WA");
     }
+}
+
+void LevelController::SetStrongPath()
+{
+    _strongPathEnabled = true;
 }
 

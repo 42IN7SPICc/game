@@ -75,14 +75,19 @@ void UnlimitedPath()
     auto gameObject = GameObject::Find("LevelController");
     if (gameObject)
     {
-        auto levelController = std::dynamic_pointer_cast<game::LevelController>(gameObject);
+        auto levelController = gameObject->GetComponent<game::LevelController>();
         levelController->SetUnlimitedPath();
     }
 }
 
 void StrongPath()
 {
-    Debug::Log("Fired Strong Path Cheat");
+    auto gameObject = GameObject::Find("LevelController");
+    if (gameObject)
+    {
+        auto levelController = gameObject->GetComponent<game::LevelController>();
+        levelController->SetStrongPath();
+    }
 }
 
 void ExpBoost()
