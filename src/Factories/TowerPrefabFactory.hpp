@@ -2,6 +2,7 @@
 #define SPIC_GAME_TOWERPREFABFACTORY_HPP
 
 #include "../Enums/TowerName.hpp"
+#include "../Utils/AnimatorUtil.hpp"
 
 #include "GameObject.hpp"
 
@@ -18,7 +19,7 @@ namespace game
 
             static std::shared_ptr<spic::GameObject> CreateSniper();
 
-            static std::shared_ptr<spic::GameObject> CreateBaseTower();
+            static std::shared_ptr<spic::GameObject> CreateBaseTower(const types::sprite_vector& sprites);
 
         public:
             static std::shared_ptr<spic::GameObject> CreateTower(TowerName name);
