@@ -75,7 +75,6 @@ void EnemyMovementBehaviour::OnUpdate()
     }
 
     if(toLocation.X == playerLocation.X && toLocation.Y == playerLocation.Y) {
-        spic::Debug::Log("Change of ToLocation");
         _path.pop();
     }
 
