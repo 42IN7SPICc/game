@@ -2,7 +2,6 @@
 
 #include "../Enums/Layer.hpp"
 #include "../Enums/SortingLayer.hpp"
-#include "../Scripts/Common/AttackBehaviour.hpp"
 #include "../Utils/GameObjectUtil.hpp"
 
 #include <stdexcept>
@@ -27,15 +26,17 @@ std::shared_ptr<spic::GameObject> TowerPrefabFactory::CreateTower(TowerName name
     throw std::runtime_error("Tower not implemented.");
 }
 
-std::shared_ptr<spic::GameObject> TowerPrefabFactory::CreateBaseTower(const types::sprite_vector& sprites)
+std::shared_ptr<spic::GameObject> TowerPrefabFactory::CreateBaseTower(const types::sprite_vector& shootingSprites, std::shared_ptr<AttackBehaviour> attackBehaviour)
 {
     auto baseTower = std::make_shared<spic::GameObject>("Tower", "tower", Layer::Game);
 
-    auto defaultSprite = std::make_shared<spic::Sprite>(sprites[0]->Texture(), false, false, SortingLayer::Tower, 0);
+    auto defaultSprite = std::make_shared<spic::Sprite>(shootingSprites[0]->Texture(), false, false, SortingLayer::Tower, 0);
     GameObjectUtil::LinkComponent(baseTower, defaultSprite);
 
-    auto idleAnimator = std::make_shared<spic::Animator>(static_cast<int>(sprites.size()), sprites);
-    GameObjectUtil::LinkComponent(baseTower, idleAnimator);
+    auto shootingAnimator = std::make_shared<spic::Animator>(static_cast<int>(shootingSprites.size()), shootingSprites);
+    GameObjectUtil::LinkComponent(baseTower, shootingAnimator);
+
+    GameObjectUtil::LinkComponent(baseTower, attackBehaviour);
 
     return baseTower;
 }
@@ -44,46 +45,42 @@ std::shared_ptr<spic::GameObject> TowerPrefabFactory::CreateBomber()
 {
     types::sprite_vector shootingSprites = AnimatorUtil::CreateSpriteVector(1, "resources/sprites/towers/shooting/tower_shooting_", SortingLayer::Enemy);
 
-    auto tower = CreateBaseTower(shootingSprites);
-
     auto attackBehaviour = std::make_shared<AttackBehaviour>("enemy", BulletType::Bomb, 3, 200, 25, 10, 50);
-    GameObjectUtil::LinkComponent(tower, attackBehaviour);
+
+    auto tower = CreateBaseTower(shootingSprites, attackBehaviour);
 
     return tower;
 }
 
 std::shared_ptr<spic::GameObject> TowerPrefabFactory::CreateShotgun()
 {
-    types::sprite_vector sprites = AnimatorUtil::CreateSpriteVector(1, "resources/sprites/towers/shooting/tower_shooting_", SortingLayer::Enemy);
-
-    auto tower = CreateBaseTower(sprites);
+    types::sprite_vector shootingSprites = AnimatorUtil::CreateSpriteVector(1, "resources/sprites/towers/shooting/tower_shooting_", SortingLayer::Enemy);
 
     auto attackBehaviour = std::make_shared<AttackBehaviour>("enemy", BulletType::Normal, 5, 250, 20, 15, 0);
-    GameObjectUtil::LinkComponent(tower, attackBehaviour);
+
+    auto tower = CreateBaseTower(shootingSprites, attackBehaviour);
 
     return tower;
 }
 
 std::shared_ptr<spic::GameObject> TowerPrefabFactory::CreateFlamethrower()
 {
-    types::sprite_vector sprites = AnimatorUtil::CreateSpriteVector(1, "resources/sprites/towers/shooting/tower_shooting_", SortingLayer::Enemy);
-
-    auto tower = CreateBaseTower(sprites);
+    types::sprite_vector shootingSprites = AnimatorUtil::CreateSpriteVector(1, "resources/sprites/towers/shooting/tower_shooting_", SortingLayer::Enemy);
 
     auto attackBehaviour = std::make_shared<AttackBehaviour>("enemy", BulletType::Penetrating, 3, 150, 2, 20, 0);
-    GameObjectUtil::LinkComponent(tower, attackBehaviour);
+
+    auto tower = CreateBaseTower(shootingSprites, attackBehaviour);
 
     return tower;
 }
 
 std::shared_ptr<spic::GameObject> TowerPrefabFactory::CreateSniper()
 {
-    types::sprite_vector sprites = AnimatorUtil::CreateSpriteVector(1, "resources/sprites/towers/shooting/tower_shooting_", SortingLayer::Enemy);
-
-    auto tower = CreateBaseTower(sprites);
+    types::sprite_vector shootingSprites = AnimatorUtil::CreateSpriteVector(1, "resources/sprites/towers/shooting/tower_shooting_", SortingLayer::Enemy);
 
     auto attackBehaviour = std::make_shared<AttackBehaviour>("enemy", BulletType::Normal, 8, 500, 50, 30, 0);
-    GameObjectUtil::LinkComponent(tower, attackBehaviour);
+
+    auto tower = CreateBaseTower(shootingSprites, attackBehaviour);
 
     return tower;
 }
