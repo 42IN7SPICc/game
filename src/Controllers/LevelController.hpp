@@ -43,6 +43,8 @@ namespace game
             void SetUnlimitedMoney();
 
         private:
+            spic::Point _startPosition;
+            double _timePassed;
             const game::LevelWithTiles _level;
             game::LevelData _levelData;
             std::shared_ptr<spic::Button> _selectedButton;

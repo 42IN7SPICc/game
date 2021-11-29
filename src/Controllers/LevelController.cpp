@@ -31,10 +31,33 @@ void LevelController::OnStart()
 
     auto gameLostBehaviour = std::make_shared<game::GameLostBehaviour>(_levelData);
     GameObjectUtil::LinkComponent(parent, gameLostBehaviour);
+
+    _startPosition = GameObject::FindWithTag("start_tile")->AbsoluteTransform().position;
 }
 
 void LevelController::OnUpdate()
 {
+    if (_levelMode == LevelMode::TowerMode)
+    {
+        _timePassed += Time::DeltaTime() * Time::TimeScale();
+
+        if (!_levelData.Waves.empty())
+        {
+            auto& wave = _levelData.Waves.front();
+            if (wave.RemainingEnemies() > 0)
+            {
+                auto&[timeTillNextEnemy, nextEnemy] = wave.EnemyQueue.front();
+                if (_timePassed >= timeTillNextEnemy)
+                {
+                    wave.EnemyQueue.pop();
+                    wave.CurrentEnemies.push_back(nextEnemy);
+                    nextEnemy->Transform().position = _startPosition;
+                    Engine::Instance().PeekScene()->Contents().push_back(nextEnemy);
+                }
+            }
+        }
+    }
+
     for (const auto& child: _rightHud->Children())
     {
         if (child->Name() == "hero-health-text")
@@ -80,7 +103,8 @@ void LevelController::OnTriggerStay2D(const spic::Collider& collider)
     //
 }
 
-LevelController::LevelController(game::LevelWithTiles level, std::shared_ptr<game::HealthBehaviour> heroHealth, std::shared_ptr<game::HealthBehaviour> militaryBaseHealth, std::queue<game::WaveData> waves) : _level(std::move(level)),
+LevelController::LevelController(game::LevelWithTiles level, std::shared_ptr<game::HealthBehaviour> heroHealth, std::shared_ptr<game::HealthBehaviour> militaryBaseHealth, std::queue<game::WaveData> waves) : _timePassed(0),
+                                                                                                                                                                                                               _level(std::move(level)),
                                                                                                                                                                                                                _levelData(game::LevelData{
                                                                                                                                                                                                                        std::move(heroHealth),
                                                                                                                                                                                                                        std::move(militaryBaseHealth),
