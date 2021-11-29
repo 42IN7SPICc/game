@@ -3,7 +3,9 @@
 
 #include "BehaviourScript.hpp"
 #include "CoolDownBehaviour.hpp"
+#include "../../Enums/BulletType.hpp"
 
+#include "Animator.hpp"
 #include "Point.hpp"
 
 #include <string>
@@ -16,13 +18,16 @@ namespace game
             std::shared_ptr<game::CoolDownBehaviour> _coolDownBehaviour;
 
             std::string _targetTag;
-            double _range;
+            game::BulletType _bulletType;
+            int _range;
             int _damage;
-            bool _multiTargeting;
             double _bulletSpeed;
+            double _damageRadius;
+            bool _followTarget;
+            std::shared_ptr<spic::Animator> _animator;
 
         public:
-            AttackBehaviour(const std::string& targetTag, double fireRate, double range, int damage, bool multiTargeting, double bulletSpeed);
+            AttackBehaviour(const std::string& targetTag, game::BulletType bulletType, double fireRate, int range, int damage, double bulletSpeed, double damageRadius = 0, bool followTarget = false, std::shared_ptr<spic::Animator> animator = {});
 
             void OnStart() override;
 
@@ -40,21 +45,37 @@ namespace game
 
             void FireRate(double fireRate);
 
-            [[nodiscard]] double Range() const;
+            [[nodiscard]] int Range() const;
 
-            void Range(double range);
+            void Range(int range);
 
-            [[nodiscard]] double Damage() const;
+            [[nodiscard]] int Damage() const;
 
-            void Damage(double damage);
-
-            [[nodiscard]] bool MultiTargeting() const;
-
-            void MultiTargeting(bool multiTargeting);
+            void Damage(int damage);
 
             [[nodiscard]] double BulletSpeed() const;
 
             void BulletSpeed(double bulletSpeed);
+
+            [[nodiscard]] const std::string& TargetTag() const;
+
+            void TargetTag(const std::string& targetTag);
+
+            [[nodiscard]] game::BulletType BulletType() const;
+
+            void BulletType(game::BulletType bulletType);
+
+            [[nodiscard]] double DamageRadius() const;
+
+            void DamageRadius(double damageRadius);
+
+            [[nodiscard]] bool FollowTarget() const;
+
+            void FollowTarget(bool followTarget);
+
+            [[nodiscard]] std::shared_ptr<spic::Animator> Animator() const;
+
+            void Animator(std::shared_ptr<spic::Animator> animator);
     };
 }
 
