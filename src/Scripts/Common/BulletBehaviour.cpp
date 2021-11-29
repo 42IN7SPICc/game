@@ -11,6 +11,7 @@ using namespace game;
 
 BulletBehaviour::BulletBehaviour(BulletType bulletType, const spic::Point& direction, double maxDuration, int maxPenetrating) : _bulletType(bulletType),
                                                                                                                                 _direction(std::make_unique<spic::Point>(direction)),
+                                                                                                                                _duration(0),
                                                                                                                                 _maxDuration(maxDuration),
                                                                                                                                 _maxPenetrating(maxPenetrating)
 {
