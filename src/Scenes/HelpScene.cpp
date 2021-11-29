@@ -23,13 +23,13 @@ HelpScene::HelpScene() : MenuScene("Help", true)
     controlsText->Transform().position = {866.25, 400};
     controlsText->Size(24);
     controlsText->TextColor(Color::white());
-    controlsText->Content("Action\n\nPause/Resume\n\nHero Movement\nHero Ability\nHero Shooting\nHero Shoot Direction\n\nTile Selection\nTile Interaction");
+    controlsText->Content("Actie\n\nPauze/Hervatten\n\nHeld Beweging\nHeld Vaardigheid\nHeld Schieten\nHeld Schietrichting\n\nTegel Selectie\nTegel Interactie");
 
     auto controlsKeys = std::make_shared<Text>("Controls Text", "text_controls", Layer::HUD, 266.5, 400);
     controlsKeys->Transform().position = {1132.75, 400};
     controlsKeys->Size(24);
     controlsKeys->TextColor(Color::white());
-    controlsKeys->Content("Control\n\nESC\n\nWASD\nE\nSPACE\nMouse Position\n\nMouse Position\nLeft Mouse Button");
+    controlsKeys->Content("Toets\n\nESC\n\nWASD\nE\nSpatiebalk\nMuis positie\n\nMuis positie\nLinkermuisknop");
 
     Contents().push_back(creditsText);
     Contents().push_back(controlsText);
