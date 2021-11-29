@@ -17,12 +17,12 @@ namespace game
 
             std::string _targetTag;
             double _range;
-            double _damage;
+            int _damage;
             bool _multiTargeting;
             double _bulletSpeed;
 
         public:
-            AttackBehaviour(const std::string& targetTag, double fireRate, double range, double damage, bool multiTargeting, double bulletSpeed);
+            AttackBehaviour(const std::string& targetTag, double fireRate, double range, int damage, bool multiTargeting, double bulletSpeed);
 
             void OnStart() override;
 
@@ -34,7 +34,7 @@ namespace game
 
             void OnTriggerStay2D(const spic::Collider& collider) override;
 
-            void Shoot(const spic::Point& direction);
+            void Shoot(const spic::Point& direction, const spic::Point& position);
 
             [[nodiscard]] double FireRate() const;
 
