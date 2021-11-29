@@ -6,6 +6,7 @@
 #include "../Utils/TileUtil.hpp"
 #include "../Scripts/Common/GameLostBehaviour.hpp"
 #include "../Factories/ButtonPrefabFactory.hpp"
+#include "../Factories/TowerPrefabFactory.hpp"
 #include <numeric>
 #include <cmath>
 #include <vector>
@@ -31,6 +32,8 @@ void LevelController::OnStart()
 
     auto gameLostBehaviour = std::make_shared<game::GameLostBehaviour>(_levelData);
     GameObjectUtil::LinkComponent(parent, gameLostBehaviour);
+
+    _levelData.HeroHealth->GameObject().lock()->Transform().position = GameObject::FindWithTag("end_tile")->AbsoluteTransform().position;
 }
 
 void LevelController::OnUpdate()
@@ -194,6 +197,8 @@ std::shared_ptr<spic::GameObject> LevelController::CreateHUD()
             });
             nextWaveButton->Transform().position.y = 350;
 
+            _levelData.HeroHealth->GameObject().lock()->Active(true);
+
             GameObjectUtil::LinkChild(rightHud, enemiesLeftTextHeader);
             GameObjectUtil::LinkChild(rightHud, enemiesText);
             GameObjectUtil::LinkChild(rightHud, waveTextHeader);
@@ -264,6 +269,7 @@ std::shared_ptr<spic::GameObject> LevelController::BuildLevel(const std::shared_
         node.OriginalTileType = levelTile.TileType();
         node.TileType = levelTile.TileType();
         node.TileObject = tile;
+        node.TowerObject = {};
         node.Visited = false;
         _levelData.Graph[std::to_string(levelTile.X) + "-" + std::to_string(levelTile.Y)] = node;
 
@@ -344,18 +350,18 @@ std::shared_ptr<spic::GameObject> LevelController::CreateMapButton()
 
         if (_levelMode == LevelMode::TileMode)
         {
-            HandleTileClick(_levelData.Graph[std::to_string(x) + "-" + std::to_string(y)]);
+            HandleClickTile(_levelData.Graph[std::to_string(x) + "-" + std::to_string(y)]);
         }
         else if (_levelMode == LevelMode::TowerMode)
         {
-            //TODO HandleTowerClick
+            HandleClickTower(_levelData.Graph[std::to_string(x) + "-" + std::to_string(y)]);
         }
     });
 
     return mapTileButton;
 }
 
-void LevelController::HandleTileClick(const game::MapNode& clickedTile)
+void LevelController::HandleClickTile(const game::MapNode& clickedTile)
 {
     if (_selectedButton != nullptr)
     {
@@ -400,6 +406,24 @@ void LevelController::HandleTileClick(const game::MapNode& clickedTile)
             int totalTiles = std::accumulate(_buttonTileAmounts.begin(), _buttonTileAmounts.end(), 0, [](const int previous, const std::pair<std::shared_ptr<spic::Button>, int>& p) { return previous + p.second; });
             auto totalTilesText = std::dynamic_pointer_cast<Text>(GameObject::Find("tile-title-text"));
             totalTilesText->Content("Tegels (" + std::to_string(totalTiles) + ")");
+        }
+    }
+}
+
+void LevelController::HandleClickTower(game::MapNode& clickedTile)
+{
+    auto currentTileType = clickedTile.TileType;
+    if (currentTileType == TileType::Bushes)
+    {
+        if (!clickedTile.TowerObject && _levelData.Balance >= 100)
+        {
+            auto tower = TowerPrefabFactory::CreateTower(TowerName::Shotgun);
+            tower->Transform().position = clickedTile.TileObject->AbsoluteTransform().position;
+            tower->Transform().scale = 0.05;
+
+            Engine::Instance().PeekScene()->Contents().push_back(tower);
+            clickedTile.TowerObject = tower;
+            _levelData.Balance -= 100;
         }
     }
 }
