@@ -15,7 +15,7 @@
 
 #include <stdexcept>
 
-const int HeroScale = 1; //default scale on 1
+const double HeroScale = 0.1; //default scale on 1
 const int HeroWidth = 200; //width of hero image
 const int HeroHeight = 320; //height of hero image
 const int HeroMass = 50; //random chosen mass
@@ -112,7 +112,7 @@ std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateBaseHero(int at
     auto attackBehaviour = std::make_shared<game::UserAttackBehaviour>(attack, HeroBulletSpeed);
     GameObjectUtil::LinkComponent(baseHero, attackBehaviour);
 
-    auto heroCollider = std::make_shared<spic::CircleCollider>((HeroWidth / 2.0) * HeroScale);
+    auto heroCollider = std::make_shared<spic::CircleCollider>(HeroWidth * 0.5 * HeroScale);
     GameObjectUtil::LinkComponent(baseHero, heroCollider);
 
     auto heroRigidBody = std::make_shared<spic::RigidBody>(HeroMass, 0, spic::BodyType::dynamicBody);
