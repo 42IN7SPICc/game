@@ -49,10 +49,10 @@ void LevelController::OnUpdate()
                 auto&[timeTillNextEnemy, nextEnemy] = wave.EnemyQueue.front();
                 if (_timePassed >= timeTillNextEnemy)
                 {
-                    wave.EnemyQueue.pop();
                     wave.CurrentEnemies.push_back(nextEnemy);
                     nextEnemy->Transform().position = _startPosition;
                     Engine::Instance().PeekScene()->Contents().push_back(nextEnemy);
+                    wave.EnemyQueue.pop();
                 }
             }
         }
