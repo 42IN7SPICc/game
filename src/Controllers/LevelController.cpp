@@ -121,7 +121,7 @@ std::shared_ptr<spic::GameObject> LevelController::CreateHUD()
     completePathButton->Transform().scale = 0.8;
 
     completePathButton->OnClick([this]() {
-        auto rightHud = _rightHud;
+        auto& rightHud = _rightHud;
         bool pathCompleted = CheckIfPathIsComplete(_levelData.Graph);
         if (pathCompleted)
         {
