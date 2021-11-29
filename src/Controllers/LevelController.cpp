@@ -100,7 +100,8 @@ std::shared_ptr<spic::GameObject> LevelController::CreateHUD()
             Debug::Log("Completed Correctly!!");
             _levelMode = LevelMode::TowerMode;
             auto childrenCopy = rightHud->Children();
-            for(const auto& child : childrenCopy) {
+            for (const auto& child: childrenCopy)
+            {
                 rightHud->RemoveChild(child);
             }
 
@@ -109,7 +110,8 @@ std::shared_ptr<spic::GameObject> LevelController::CreateHUD()
         else
         {
             auto validationText = std::dynamic_pointer_cast<Text>(GameObject::Find("path-validation-text"));
-            if(validationText == nullptr) { //Check if validation text allready exists
+            if (validationText == nullptr)
+            { //Check if validation text allready exists
                 validationText = std::make_shared<Text>("path-validation-text", "text", Layer::HUD, 200, 100);
                 validationText->Transform().position.y = (TileSize + 2) * TileButtonScale;
                 validationText->TextAlignment(Alignment::center);
@@ -304,7 +306,7 @@ void LevelController::HandleTileClick(const game::MapNode& clickedTile)
     }
 }
 
-bool LevelController::CheckIfPathIsComplete()
+bool LevelController::CheckIfPathIsComplete() const
 {
     auto graphCopy = _levelData.Graph;
     MapNode start;
@@ -337,7 +339,7 @@ bool LevelController::CheckIfPathIsComplete()
 
 void LevelController::SetUnlimitedPath()
 {
-    for(auto& [button, tileAmount] : _buttonTileAmounts)
+    for (auto&[button, tileAmount]: _buttonTileAmounts)
     {
         tileAmount = 625;
         auto HUDButtonText = std::dynamic_pointer_cast<spic::Text>(button->Children()[0]);
