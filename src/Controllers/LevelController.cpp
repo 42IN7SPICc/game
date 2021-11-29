@@ -83,37 +83,35 @@ LevelController::LevelController(game::LevelWithTiles level, std::shared_ptr<gam
 
 std::shared_ptr<spic::GameObject> LevelController::CreateHUD()
 {
-    auto rightHud = std::make_shared<spic::GameObject>("RightHud", "hud", Layer::HUD);
+    _rightHud = std::make_shared<spic::GameObject>("RightHud", "hud", Layer::HUD);
     auto rightHudSprite = std::make_shared<spic::Sprite>("resources/sprites/hud/white_block.png", false, false, 3, 1);
-    GameObjectUtil::LinkComponent(rightHud, rightHudSprite);
+    GameObjectUtil::LinkComponent(_rightHud, rightHudSprite);
 
-    rightHud->Transform().position.x = ScreenWidth - (HudWidth / TileButtonScale);
-    rightHud->Transform().position.y = ScreenHeight / TileButtonScale;
+    _rightHud->Transform().position.x = ScreenWidth - (HudWidth / TileButtonScale);
+    _rightHud->Transform().position.y = ScreenHeight / TileButtonScale;
 
     auto buttonText = std::make_shared<spic::Text>("tile-title-text", "tile_title_text", Layer::HUD, HudWidth, 100);
     buttonText->Size(24);
     buttonText->TextAlignment(Alignment::center);
     buttonText->Transform().position.y = -(TileSize + 2) * (TileButtonScale * 5);
-    GameObjectUtil::LinkChild(rightHud, buttonText);
+    GameObjectUtil::LinkChild(_rightHud, buttonText);
 
-    auto streetButton = InitializeTileButton(rightHud, "resources/sprites/tiles/street.png", 18, "Straat");
+    auto streetButton = InitializeTileButton(_rightHud, "resources/sprites/tiles/street.png", 18, "Straat");
     streetButton->Transform().position.y = -(TileSize + 2) * (TileButtonScale * 4);
 
-    auto grassButton = InitializeTileButton(rightHud, "resources/sprites/tiles/grass.png", 6, "Gras");
+    auto grassButton = InitializeTileButton(_rightHud, "resources/sprites/tiles/grass.png", 6, "Gras");
     grassButton->Transform().position.y = -(TileSize + 2) * (TileButtonScale * 3);
 
-    auto sandButton = InitializeTileButton(rightHud, "resources/sprites/tiles/sand.png", 6, "Zand");
+    auto sandButton = InitializeTileButton(_rightHud, "resources/sprites/tiles/sand.png", 6, "Zand");
     sandButton->Transform().position.y = -(TileSize + 2) * (TileButtonScale * 2);
 
     auto completePathButton = ButtonPrefabFactory::CreateOutlineButton("complete-path-button", "complete_path_button", "Finish Path", true);
     completePathButton->Transform().scale = 0.8;
 
-    std::weak_ptr<spic::GameObject> weakHud = rightHud;
-    completePathButton->OnClick([this, weakHud]() {
-        if (weakHud.expired()) return;
-        auto rightHud = weakHud.lock();
+    completePathButton->OnClick([this]() {
+        auto rightHud = _rightHud;
         bool pathCompleted = CheckIfPathIsComplete(_levelData.Graph);
-        if (pathCompleted)
+        if (pathCompleted || true)
         {
             Debug::Log("Completed Correctly!!");
             _levelMode = LevelMode::TowerMode;
@@ -132,32 +130,40 @@ std::shared_ptr<spic::GameObject> LevelController::CreateHUD()
             auto heroHealthTextHeader = std::make_shared<spic::Text>("hero-health-text-header", "default", Layer::HUD, HudWidth, 20);
             heroHealthTextHeader->Size(18);
             heroHealthTextHeader->TextAlignment(Alignment::center);
-            heroHealthTextHeader->Transform().position.y = 250;
+            heroHealthTextHeader->Transform().position.y = 230;
             heroHealthTextHeader->Content("Hero:");
 
             auto heroHealthText = std::make_shared<spic::Text>("hero-health-text", "default", Layer::HUD, HudWidth, 20);
             heroHealthText->Size(18);
             heroHealthText->TextAlignment(Alignment::center);
-            heroHealthText->Transform().position.y = 270;
+            heroHealthText->Transform().position.y = 250;
             heroHealthText->Content("♥ " + std::to_string(_levelData.HeroHealth->Health()));
 
             auto militaryBaseHealthTextHeader = std::make_shared<spic::Text>("military-base-health-text-header", "default", Layer::HUD, HudWidth, 20);
             militaryBaseHealthTextHeader->Size(18);
             militaryBaseHealthTextHeader->TextAlignment(Alignment::center);
-            militaryBaseHealthTextHeader->Transform().position.y = 300;
+            militaryBaseHealthTextHeader->Transform().position.y = 280;
             militaryBaseHealthTextHeader->Content("Militaire Basis:");
 
             auto militaryBaseHealthText = std::make_shared<spic::Text>("military-base-health-text", "default", Layer::HUD, HudWidth, 20);
             militaryBaseHealthText->Size(18);
             militaryBaseHealthText->TextAlignment(Alignment::center);
-            militaryBaseHealthText->Transform().position.y = 320;
+            militaryBaseHealthText->Transform().position.y = 300;
             militaryBaseHealthText->Content("♥ " + std::to_string(_levelData.MilitaryBaseHealth->Health()));
+
+            auto nextWaveButton = ButtonPrefabFactory::CreateOutlineButton("next-wave-button", "default", "Next Wave", true);
+            nextWaveButton->Transform().scale = 0.8;
+            nextWaveButton->OnClick([]() {
+                spic::Debug::LogWarning("Next wave not implemented!");
+            });
+            nextWaveButton->Transform().position.y = 350;
 
             GameObjectUtil::LinkChild(rightHud, moneyText);
             GameObjectUtil::LinkChild(rightHud, heroHealthTextHeader);
             GameObjectUtil::LinkChild(rightHud, heroHealthText);
             GameObjectUtil::LinkChild(rightHud, militaryBaseHealthTextHeader);
             GameObjectUtil::LinkChild(rightHud, militaryBaseHealthText);
+            GameObjectUtil::LinkChild(rightHud, nextWaveButton);
         }
         else
         {
@@ -174,12 +180,12 @@ std::shared_ptr<spic::GameObject> LevelController::CreateHUD()
 
         }
     });
-    GameObjectUtil::LinkChild(rightHud, completePathButton);
+    GameObjectUtil::LinkChild(_rightHud, completePathButton);
 
     int result = std::accumulate(_buttonTileAmounts.begin(), _buttonTileAmounts.end(), 0, [](const int previous, const std::pair<std::shared_ptr<spic::Button>, int>& p) { return previous + p.second; });
     buttonText->Content("Tegels (" + std::to_string(result) + ")");
 
-    return rightHud;
+    return _rightHud;
 }
 
 std::shared_ptr<spic::GameObject> LevelController::BuildLevel(const std::shared_ptr<game::HealthBehaviour>& endTowerHealthBehaviour)
