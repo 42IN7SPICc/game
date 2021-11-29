@@ -60,8 +60,24 @@ void EnemyMovementBehaviour::OnUpdate()
     double scaledTileSize = TileSize * TileMapScale;
     int playerXLocation = ((playerPosition.x - MapX) + (scaledTileSize / 2)) / scaledTileSize;
     int playerYLocation = ((playerPosition.y - MapY) + (scaledTileSize / 2)) / scaledTileSize;
-    std::string playerLocation = std::to_string(playerXLocation) + "-" + std::to_string(playerYLocation);
 
+    auto playerLocation = _graph[std::to_string(playerXLocation) + "-" + std::to_string(playerYLocation)];
+
+    if(_path.empty()) return;
+
+    auto toLocation = _graph[_path.front()];
+
+    if(toLocation.X > playerLocation.X) {
+        parent->Transform().position.x += 1.5;
+    }
+    else if(toLocation.Y > playerLocation.Y) {
+        parent->Transform().position.y += 1.5;
+    }
+
+    if(toLocation.X == playerLocation.X && toLocation.Y == playerLocation.Y) {
+        spic::Debug::Log("Change of ToLocation");
+        _path.pop();
+    }
 
     walkingAnimator->Play(true);
 }
