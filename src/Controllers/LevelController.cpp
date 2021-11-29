@@ -52,6 +52,11 @@ void LevelController::OnUpdate()
             auto text = std::dynamic_pointer_cast<spic::Text>(child);
             text->Content("$ " + std::to_string(_levelData.Balance));
         }
+        else if (child->Name() == "wave-text")
+        {
+            auto text = std::dynamic_pointer_cast<spic::Text>(child);
+            text->Content(std::to_string(_levelData.CurrentWave()));
+        }
     }
 }
 
@@ -123,6 +128,18 @@ std::shared_ptr<spic::GameObject> LevelController::CreateHUD()
                 rightHud->RemoveChild(child);
             }
 
+            auto waveTextHeader = std::make_shared<spic::Text>("wave-text-header", "default", Layer::HUD, HudWidth, 20);
+            waveTextHeader->Size(18);
+            waveTextHeader->TextAlignment(Alignment::center);
+            waveTextHeader->Transform().position.y = 150;
+            waveTextHeader->Content("Ronde:");
+
+            auto waveText = std::make_shared<spic::Text>("wave-text", "default", Layer::HUD, HudWidth, 20);
+            waveText->Size(18);
+            waveText->TextAlignment(Alignment::center);
+            waveText->Transform().position.y = 170;
+            waveText->Content(std::to_string(_levelData.CurrentWave()));
+
             auto moneyText = std::make_shared<spic::Text>("money-text", "default", Layer::HUD, HudWidth, 20);
             moneyText->Size(18);
             moneyText->TextAlignment(Alignment::center);
@@ -160,6 +177,8 @@ std::shared_ptr<spic::GameObject> LevelController::CreateHUD()
             });
             nextWaveButton->Transform().position.y = 350;
 
+            GameObjectUtil::LinkChild(rightHud, waveTextHeader);
+            GameObjectUtil::LinkChild(rightHud, waveText);
             GameObjectUtil::LinkChild(rightHud, moneyText);
             GameObjectUtil::LinkChild(rightHud, heroHealthTextHeader);
             GameObjectUtil::LinkChild(rightHud, heroHealthText);
