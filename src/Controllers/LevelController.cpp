@@ -131,21 +131,12 @@ std::shared_ptr<spic::GameObject> LevelController::CreateHUD()
         {
             Debug::Log("Completed Correctly!!");
             _levelMode = LevelMode::TowerMode;
+            _levelData.Path = path;
             auto childrenCopy = rightHud->Children();
             for (const auto& child: childrenCopy)
             {
                 rightHud->RemoveChild(child);
             }
-
-            //TODO instantiate new HUD for Tower
-            auto scene = Engine::Instance().PeekScene();
-            auto startTile = GameObject::Find("start-tile");
-            auto enemy =  EnemyPrefabFactory::CreateEnemy(EnemyName::Panzer);
-            scene->Contents().push_back(enemy);
-            enemy->Transform().position.x = startTile->AbsoluteTransform().position.x;
-            enemy->Transform().position.y = startTile->AbsoluteTransform().position.y;
-            enemy->Transform().scale = 0.1;
-            _levelData.Path = path;
 
             auto enemiesLeftTextHeader = std::make_shared<spic::Text>("enemies-text-header", "default", Layer::HUD, HudWidth, 20);
             enemiesLeftTextHeader->Size(18);
