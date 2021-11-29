@@ -16,6 +16,7 @@ namespace game
         game::TileType OriginalTileType;
         game::TileType TileType;
         std::shared_ptr<spic::GameObject> TileObject;
+        std::shared_ptr<spic::GameObject> TowerObject;
         bool Visited;
     };
 }

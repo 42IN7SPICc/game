@@ -1,5 +1,7 @@
 #include "PointUtil.hpp"
 
+#define _USE_MATH_DEFINES
+
 #include <cmath>
 
 spic::Point game::PointUtil::CalculateDirectionalPoint(const spic::Point& from, const spic::Point& to, double multiplier)
@@ -23,4 +25,9 @@ double game::PointUtil::Distance(const spic::Point& pointDiff)
 spic::Point game::PointUtil::PointDiff(const spic::Point& point1, const spic::Point& point2)
 {
     return {point2.x - point1.x, point2.y - point1.y};
+}
+
+double game::PointUtil::Degrees(const spic::Point& point1, const spic::Point& point2)
+{
+    return atan2(point1.y - point2.y, point1.x - point2.x) * 180 / M_PI - 90;
 }
