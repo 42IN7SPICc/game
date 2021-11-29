@@ -6,6 +6,7 @@
 #include "../Utils/TileUtil.hpp"
 #include "../Scripts/Common/GameLostBehaviour.hpp"
 #include "../Factories/ButtonPrefabFactory.hpp"
+#include "../Factories/TowerPrefabFactory.hpp"
 #include <numeric>
 #include <cmath>
 #include <vector>
@@ -264,6 +265,7 @@ std::shared_ptr<spic::GameObject> LevelController::BuildLevel(const std::shared_
         node.OriginalTileType = levelTile.TileType();
         node.TileType = levelTile.TileType();
         node.TileObject = tile;
+        node.TowerObject = {};
         node.Visited = false;
         _levelData.Graph[std::to_string(levelTile.X) + "-" + std::to_string(levelTile.Y)] = node;
 
@@ -404,8 +406,22 @@ void LevelController::HandleClickTile(const game::MapNode& clickedTile)
     }
 }
 
-void LevelController::HandleClickTower(const game::MapNode& clickedTile)
+void LevelController::HandleClickTower(game::MapNode& clickedTile)
 {
+    auto currentTileType = clickedTile.TileType;
+    if (currentTileType == TileType::Bushes)
+    {
+        if (!clickedTile.TowerObject && _levelData.Balance >= 100)
+        {
+            auto tower = TowerPrefabFactory::CreateTower(TowerName::Shotgun);
+            tower->Transform().position = clickedTile.TileObject->AbsoluteTransform().position;
+            tower->Transform().scale = 0.05;
+
+            Engine::Instance().PeekScene()->Contents().push_back(tower);
+            clickedTile.TowerObject = tower;
+            _levelData.Balance -= 100;
+        }
+    }
 }
 
 bool LevelController::CheckIfPathIsComplete(std::map<std::string, MapNode> graphCopy)
