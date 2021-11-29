@@ -13,7 +13,12 @@ using namespace game;
 void UnlimitedMoney()
 {
     Debug::Log("Fired `Unlimited` Money Cheat");
-    PlayerData::Instance().Balance += 100000;
+    auto gameObject = GameObject::Find("LevelController");
+    if (gameObject)
+    {
+        auto levelController = gameObject->GetComponent<game::LevelController>();
+        levelController->SetUnlimitedMoney();
+    }
 }
 
 void Invincibility()
