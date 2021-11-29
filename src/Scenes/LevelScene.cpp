@@ -26,6 +26,8 @@ LevelScene::LevelScene(LevelWithTiles& levelWithTiles)
     auto background = BackgroundPrefabFactory::CreateBackground(BackgroundName::Menu);
 
     auto hero = game::HeroPrefabFactory::CreateHero(DesmondDoss);
+    hero->Transform().scale = 0.1;
+    hero->Active(false);
     auto heroHealth = hero->GetComponent<HealthBehaviour>();
     auto endTowerHealth = std::make_shared<game::HealthBehaviour>(nullptr, 10);
 
