@@ -3,6 +3,7 @@
 
 #include "BehaviourScript.hpp"
 #include "CoolDownBehaviour.hpp"
+#include "../../Enums/BulletType.hpp"
 
 #include "Point.hpp"
 
@@ -16,13 +17,14 @@ namespace game
             std::shared_ptr<game::CoolDownBehaviour> _coolDownBehaviour;
 
             std::string _targetTag;
-            double _range;
+            BulletType _bulletType;
+            int _range;
             int _damage;
             bool _multiTargeting;
             double _bulletSpeed;
 
         public:
-            AttackBehaviour(const std::string& targetTag, double fireRate, double range, int damage, bool multiTargeting, double bulletSpeed);
+            AttackBehaviour(const std::string& targetTag, BulletType bulletType, double fireRate, int range, int damage, bool multiTargeting, double bulletSpeed);
 
             void OnStart() override;
 

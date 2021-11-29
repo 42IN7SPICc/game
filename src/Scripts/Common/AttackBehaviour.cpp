@@ -1,30 +1,25 @@
 #include "AttackBehaviour.hpp"
 
-#include "BulletBehaviour.hpp"
-#include "DamageBehaviour.hpp"
 #include "HealthBehaviour.hpp"
-#include "../../Enums/Layer.hpp"
-#include "../../Enums/SortingLayer.hpp"
 #include "../../Factories/BulletFactory.hpp"
 #include "../../Utils/GameObjectUtil.hpp"
 #include "../../Utils/PointUtil.hpp"
 
-#include "Debug.hpp"
 #include "Engine.hpp"
 #include "Sprite.hpp"
 
 #include <algorithm>
 #include <map>
-#include <CircleCollider.hpp>
 
 using namespace game;
 
-AttackBehaviour::AttackBehaviour(const std::string& targetTag, double fireRate, double range, int damage, bool multiTargeting, double bulletSpeed) : _coolDownBehaviour(std::make_shared<CoolDownBehaviour>(fireRate)),
-                                                                                                                                                        _targetTag(targetTag),
-                                                                                                                                                        _range(range),
-                                                                                                                                                        _damage(damage),
-                                                                                                                                                        _multiTargeting(multiTargeting),
-                                                                                                                                                        _bulletSpeed(bulletSpeed)
+AttackBehaviour::AttackBehaviour(const std::string& targetTag, BulletType bulletType, double fireRate, int range, int damage, bool multiTargeting, double bulletSpeed) : _coolDownBehaviour(std::make_shared<CoolDownBehaviour>(fireRate)),
+                                                                                                                                                                         _targetTag(targetTag),
+                                                                                                                                                                         _bulletType(bulletType),
+                                                                                                                                                                         _range(range),
+                                                                                                                                                                         _damage(damage),
+                                                                                                                                                                         _multiTargeting(multiTargeting),
+                                                                                                                                                                         _bulletSpeed(bulletSpeed)
 {
 }
 
@@ -64,7 +59,7 @@ void AttackBehaviour::OnUpdate()
 
 void AttackBehaviour::Shoot(const spic::Point& direction, const spic::Point& position)
 {
-    auto bullet = BulletFactory::CreateBullet(BulletType::Normal, position, "hero", direction, 500, _damage);
+    auto bullet = BulletFactory::CreateBullet(_bulletType, position, _targetTag, direction, _range, _damage);
 
     spic::Engine::Instance().PeekScene()->Contents().push_back(bullet);
 }
