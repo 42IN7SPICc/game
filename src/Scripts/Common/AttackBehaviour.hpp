@@ -5,6 +5,7 @@
 #include "CoolDownBehaviour.hpp"
 #include "../../Enums/BulletType.hpp"
 
+#include "Animator.hpp"
 #include "Point.hpp"
 
 #include <string>
@@ -22,9 +23,11 @@ namespace game
             int _damage;
             double _bulletSpeed;
             double _damageRadius;
+            bool _followTarget;
+            std::shared_ptr<spic::Animator> _animator;
 
         public:
-            AttackBehaviour(const std::string& targetTag, game::BulletType bulletType, double fireRate, int range, int damage, double bulletSpeed, double damageRadius = 0);
+            AttackBehaviour(const std::string& targetTag, game::BulletType bulletType, double fireRate, int range, int damage, double bulletSpeed, double damageRadius = 0, bool followTarget = false, std::shared_ptr<spic::Animator> animator = {});
 
             void OnStart() override;
 
@@ -65,6 +68,14 @@ namespace game
             [[nodiscard]] double DamageRadius() const;
 
             void DamageRadius(double damageRadius);
+
+            [[nodiscard]] bool FollowTarget() const;
+
+            void FollowTarget(bool followTarget);
+
+            [[nodiscard]] std::shared_ptr<spic::Animator> Animator() const;
+
+            void Animator(std::shared_ptr<spic::Animator> animator);
     };
 }
 

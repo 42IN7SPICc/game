@@ -13,13 +13,15 @@
 
 using namespace game;
 
-AttackBehaviour::AttackBehaviour(const std::string& targetTag, game::BulletType bulletType, double fireRate, int range, int damage, double bulletSpeed, double damageRadius) : _coolDownBehaviour(std::make_shared<CoolDownBehaviour>(fireRate)),
-                                                                                                                                                                                              _targetTag(targetTag),
-                                                                                                                                                                                              _bulletType(bulletType),
-                                                                                                                                                                                              _range(range),
-                                                                                                                                                                                              _damage(damage),
-                                                                                                                                                                                              _bulletSpeed(bulletSpeed),
-                                                                                                                                                                                              _damageRadius(damageRadius)
+AttackBehaviour::AttackBehaviour(const std::string& targetTag, game::BulletType bulletType, double fireRate, int range, int damage, double bulletSpeed, double damageRadius, bool followTarget, std::shared_ptr<spic::Animator> animator) : _coolDownBehaviour(std::make_shared<CoolDownBehaviour>(fireRate)),
+                                                                                                                                                                                                                                            _targetTag(targetTag),
+                                                                                                                                                                                                                                            _bulletType(bulletType),
+                                                                                                                                                                                                                                            _range(range),
+                                                                                                                                                                                                                                            _damage(damage),
+                                                                                                                                                                                                                                            _bulletSpeed(bulletSpeed),
+                                                                                                                                                                                                                                            _damageRadius(damageRadius),
+                                                                                                                                                                                                                                            _followTarget(followTarget),
+                                                                                                                                                                                                                                            _animator(animator)
 {
 }
 
@@ -31,28 +33,37 @@ void AttackBehaviour::OnStart()
 
 void AttackBehaviour::OnUpdate()
 {
-    if (!_coolDownBehaviour->CooledDown()) return;
+    if (!_coolDownBehaviour->CooledDown() && !_followTarget) return;
 
-    auto absTransform = GameObject().lock()->AbsoluteTransform();
+    auto absPosition = GameObject().lock()->AbsoluteTransform().position;
 
-    std::map<double, std::shared_ptr<spic::GameObject>> targets{};
+    std::map<double, spic::Point> targets{};
     for (const auto& target: spic::GameObject::FindGameObjectsWithTag(_targetTag))
     {
         auto healthBehaviour = target->GetComponent<HealthBehaviour>();
         if (!healthBehaviour || healthBehaviour->Health() <= 0) continue;
 
-        auto distance = PointUtil::Distance(absTransform.position, target->AbsoluteTransform().position);
+        auto targetPosition = target->AbsoluteTransform().position;
+        auto distance = PointUtil::Distance(absPosition, targetPosition);
         if (distance > _range) continue;
 
-        targets.emplace(distance, target);
+        targets.emplace(distance, targetPosition);
     }
 
     if (targets.empty()) return;
 
     auto target = *targets.begin();
-    auto direction = PointUtil::CalculateDirectionalPoint(absTransform.position, target.second->AbsoluteTransform().position, _bulletSpeed);
 
-    Shoot(direction, absTransform.position);
+    if (_followTarget)
+    {
+        GameObject().lock()->Transform().rotation = PointUtil::Degrees(absPosition, target.second);
+    }
+
+    if (!_coolDownBehaviour->CooledDown()) return;
+
+    auto direction = PointUtil::CalculateDirectionalPoint(absPosition, target.second, _bulletSpeed);
+
+    Shoot(direction, absPosition);
 
     _coolDownBehaviour->CooledDown(false);
 }
@@ -60,6 +71,11 @@ void AttackBehaviour::OnUpdate()
 void AttackBehaviour::Shoot(const spic::Point& direction, const spic::Point& position)
 {
     auto bullet = BulletFactory::CreateBullet(_bulletType, position, _targetTag, direction, _range, _damage, _damageRadius);
+
+    if (_animator)
+    {
+        _animator->Play(false);
+    }
 
     spic::Engine::Instance().PeekScene()->Contents().push_back(bullet);
 }
@@ -147,4 +163,24 @@ double AttackBehaviour::DamageRadius() const
 void AttackBehaviour::DamageRadius(double damageRadius)
 {
     _damageRadius = damageRadius;
+}
+
+bool AttackBehaviour::FollowTarget() const
+{
+    return _followTarget;
+}
+
+void AttackBehaviour::FollowTarget(bool followTarget)
+{
+    _followTarget = followTarget;
+}
+
+std::shared_ptr<spic::Animator> AttackBehaviour::Animator() const
+{
+    return _animator;
+}
+
+void AttackBehaviour::Animator(std::shared_ptr<spic::Animator> animator)
+{
+    _animator = animator;
 }
