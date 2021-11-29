@@ -18,13 +18,13 @@ namespace game
             std::shared_ptr<spic::RigidBody> _rigidBody;
             std::shared_ptr<DamageBehaviour> _damageBehaviour;
             std::unique_ptr<spic::Point> _direction;
-            double _duration;
-            double _maxDuration;
+            spic::Point _startPos;
+            double _maxRange;
             int _maxPenetrating;
             BulletType _bulletType;
 
         public:
-            explicit BulletBehaviour(BulletType bulletType, const spic::Point& direction, double maxDuration, int maxPenetrating = 1);
+            explicit BulletBehaviour(BulletType bulletType, const spic::Point& direction, double maxRange, int maxPenetrating = 1);
 
             void OnStart() override;
 
