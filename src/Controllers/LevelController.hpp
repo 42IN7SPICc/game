@@ -42,6 +42,8 @@ namespace game
 
             void SetUnlimitedMoney();
 
+            void ButcherEnemies();
+
         private:
             spic::Point _startPosition;
             double _timePassed;

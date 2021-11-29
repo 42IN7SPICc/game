@@ -91,7 +91,7 @@ void LevelController::OnUpdate()
         else if (child->Name() == "enemies-text")
         {
             auto text = std::dynamic_pointer_cast<spic::Text>(child);
-            text->Content(std::to_string(_levelData.Waves.front().RemainingEnemies()));
+            text->Content(_levelData.Waves.empty() ? "0" : std::to_string(_levelData.Waves.front().RemainingEnemies()));
         }
     }
 }
