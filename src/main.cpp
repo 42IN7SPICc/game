@@ -1,3 +1,4 @@
+#include <stdexcept>
 #include "Api.hpp"
 
 #include "Scenes/MainScene.hpp"
