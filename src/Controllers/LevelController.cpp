@@ -35,20 +35,22 @@ void LevelController::OnStart()
 
 void LevelController::OnUpdate()
 {
-    auto parent = GameObject().lock();
-    for (const auto& child: parent->Children())
+    for (const auto& child: _rightHud->Children())
     {
         if (child->Name() == "hero-health-text")
         {
-            child->GetComponent<Text>()->Content("♥ " + std::to_string(_levelData.HeroHealth->Health()));
+            auto text = std::dynamic_pointer_cast<spic::Text>(child);
+            text->Content("♥ " + std::to_string(_levelData.HeroHealth->Health()));
         }
         else if (child->Name() == "military-base-health-text")
         {
-            child->GetComponent<Text>()->Content("♥ " + std::to_string(_levelData.MilitaryBaseHealth->Health()));
+            auto text = std::dynamic_pointer_cast<spic::Text>(child);
+            text->Content("♥ " + std::to_string(_levelData.MilitaryBaseHealth->Health()));
         }
         else if (child->Name() == "money-text")
         {
-            child->GetComponent<Text>()->Content("$ " + std::to_string(_levelData.Balance));
+            auto text = std::dynamic_pointer_cast<spic::Text>(child);
+            text->Content("$ " + std::to_string(_levelData.Balance));
         }
     }
 }
@@ -111,7 +113,7 @@ std::shared_ptr<spic::GameObject> LevelController::CreateHUD()
     completePathButton->OnClick([this]() {
         auto rightHud = _rightHud;
         bool pathCompleted = CheckIfPathIsComplete(_levelData.Graph);
-        if (pathCompleted || true)
+        if (pathCompleted)
         {
             Debug::Log("Completed Correctly!!");
             _levelMode = LevelMode::TowerMode;
