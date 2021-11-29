@@ -55,6 +55,8 @@ namespace game
 
             void HandleClickTile(const game::MapNode& clickedTile);
 
+            void HandleClickTower(const game::MapNode& clickedTile);
+
             static bool CheckIfPathIsComplete(std::map<std::string, MapNode> graphCopy);
     };
 }

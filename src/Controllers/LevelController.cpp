@@ -348,7 +348,7 @@ std::shared_ptr<spic::GameObject> LevelController::CreateMapButton()
         }
         else if (_levelMode == LevelMode::TowerMode)
         {
-            //TODO HandleTowerClick
+            HandleClickTower(_levelData.Graph[std::to_string(x) + "-" + std::to_string(y)]);
         }
     });
 
@@ -402,6 +402,10 @@ void LevelController::HandleClickTile(const game::MapNode& clickedTile)
             totalTilesText->Content("Tegels (" + std::to_string(totalTiles) + ")");
         }
     }
+}
+
+void LevelController::HandleClickTower(const game::MapNode& clickedTile)
+{
 }
 
 bool LevelController::CheckIfPathIsComplete(std::map<std::string, MapNode> graphCopy)
