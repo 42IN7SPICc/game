@@ -1,11 +1,7 @@
 #ifndef SPIC_GAME_POINTUTIL_HPP
 #define SPIC_GAME_POINTUTIL_HPP
 
-#define _USE_MATH_DEFINES
-
 #include <Point.hpp>
-
-#include <cmath>
 
 namespace game
 {

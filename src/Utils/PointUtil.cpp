@@ -1,5 +1,9 @@
 #include "PointUtil.hpp"
 
+#define _USE_MATH_DEFINES
+
+#include <cmath>
+
 spic::Point game::PointUtil::CalculateDirectionalPoint(const spic::Point& from, const spic::Point& to, double multiplier)
 {
     auto pointDiff = PointDiff(from, to);
