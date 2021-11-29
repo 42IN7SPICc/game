@@ -2,6 +2,7 @@
 #include "GameObject.hpp"
 #include "Animator.hpp"
 #include "../../Controllers/LevelController.hpp"
+#include "../../Utils/StringUtil.hpp"
 #include "Debug.hpp"
 
 using namespace game;
@@ -48,7 +49,6 @@ void EnemyMovementBehaviour::OnStart()
 void EnemyMovementBehaviour::OnUpdate()
 {
     auto parent = GameObject().lock();
-    parent->Transform().position.x += 0.5;
 
     auto animator = parent->GetComponents<spic::Animator>()[1]; //walking animator
     animator->Play(true);
@@ -56,12 +56,9 @@ void EnemyMovementBehaviour::OnUpdate()
     auto gameObject = spic::GameObject::Find("LevelController");
     if (gameObject)
     {
-        auto levelController = gameObject->GetComponent<game::LevelController>();
-        auto playerPosition = parent->Transform().position;
-        double scaledTileSize = TileSize * TileMapScale;
-        int x = ((playerPosition.x - MapX) + (scaledTileSize / 2)) / scaledTileSize;
-        int y = ((playerPosition.y - MapY) + (scaledTileSize / 2)) / scaledTileSize;
-        spic::Debug::Log("MapX:" + std::to_string(x), ", MapY:" + std::to_string(y));
+
+
+        
     }
 }
 

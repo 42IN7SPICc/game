@@ -137,11 +137,11 @@ std::shared_ptr<spic::GameObject> LevelController::CreateHUD()
             //TODO instantiate new HUD for Tower
             auto scene = Engine::Instance().PeekScene();
             auto startTile = GameObject::Find("start-tile");
-            auto enemy =  EnemyPrefabFactory::CreateEnemy(EnemyName::Schutze);
+            auto enemy =  EnemyPrefabFactory::CreateEnemy(EnemyName::Panzer);
             scene->Contents().push_back(enemy);
             enemy->Transform().position.x = startTile->AbsoluteTransform().position.x;
             enemy->Transform().position.y = startTile->AbsoluteTransform().position.y;
-            enemy->Transform().scale = 0.25;
+            enemy->Transform().scale = 0.1;
             auto enemiesLeftTextHeader = std::make_shared<spic::Text>("enemies-text-header", "default", Layer::HUD, HudWidth, 20);
             enemiesLeftTextHeader->Size(18);
             enemiesLeftTextHeader->TextAlignment(Alignment::center);
