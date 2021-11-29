@@ -344,7 +344,7 @@ std::shared_ptr<spic::GameObject> LevelController::CreateMapButton()
 
         if (_levelMode == LevelMode::TileMode)
         {
-            HandleTileClick(_levelData.Graph[std::to_string(x) + "-" + std::to_string(y)]);
+            HandleClickTile(_levelData.Graph[std::to_string(x) + "-" + std::to_string(y)]);
         }
         else if (_levelMode == LevelMode::TowerMode)
         {
@@ -355,7 +355,7 @@ std::shared_ptr<spic::GameObject> LevelController::CreateMapButton()
     return mapTileButton;
 }
 
-void LevelController::HandleTileClick(const game::MapNode& clickedTile)
+void LevelController::HandleClickTile(const game::MapNode& clickedTile)
 {
     if (_selectedButton != nullptr)
     {
