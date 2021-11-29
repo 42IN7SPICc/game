@@ -8,7 +8,6 @@ using namespace spic;
 
 int main(int argc, char* args[])
 {
-    throw std::runtime_error("Test");
     Engine& engine = Engine::Instance();
 
     EngineConfig config{{"Avans Wars", 1366, 786, true}};
