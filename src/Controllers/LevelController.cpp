@@ -16,6 +16,9 @@ using namespace game;
 const double TileButtonScale = 2.0;
 const double TileSize = 32;
 const double TileMapScale = 0.8;
+const int ScreenWidth = 1366;
+const int ScreenHeight = 786;
+const int HudWidth = 250;
 const int MapX = 75;
 const int MapY = 110;
 
@@ -32,7 +35,22 @@ void LevelController::OnStart()
 
 void LevelController::OnUpdate()
 {
-    //
+    auto parent = GameObject().lock();
+    for (const auto& child: parent->Children())
+    {
+        if (child->Name() == "hero-health-text")
+        {
+            child->GetComponent<Text>()->Content("♥ " + std::to_string(_levelData.HeroHealth->Health()));
+        }
+        else if (child->Name() == "military-base-health-text")
+        {
+            child->GetComponent<Text>()->Content("♥ " + std::to_string(_levelData.MilitaryBaseHealth->Health()));
+        }
+        else if (child->Name() == "money-text")
+        {
+            child->GetComponent<Text>()->Content("$ " + std::to_string(_levelData.Balance));
+        }
+    }
 }
 
 void LevelController::OnTriggerEnter2D(const spic::Collider& collider)
@@ -65,18 +83,14 @@ LevelController::LevelController(game::LevelWithTiles level, std::shared_ptr<gam
 
 std::shared_ptr<spic::GameObject> LevelController::CreateHUD()
 {
-    int screenWidth = 1366;
-    int screenHeight = 786;
-    int hudWidth = 250;
-
     auto rightHud = std::make_shared<spic::GameObject>("RightHud", "hud", Layer::HUD);
     auto rightHudSprite = std::make_shared<spic::Sprite>("resources/sprites/hud/white_block.png", false, false, 3, 1);
     GameObjectUtil::LinkComponent(rightHud, rightHudSprite);
 
-    rightHud->Transform().position.x = screenWidth - (hudWidth / TileButtonScale);
-    rightHud->Transform().position.y = screenHeight / TileButtonScale;
+    rightHud->Transform().position.x = ScreenWidth - (HudWidth / TileButtonScale);
+    rightHud->Transform().position.y = ScreenHeight / TileButtonScale;
 
-    auto buttonText = std::make_shared<spic::Text>("tile-title-text", "tile_title_text", Layer::HUD, hudWidth, 100);
+    auto buttonText = std::make_shared<spic::Text>("tile-title-text", "tile_title_text", Layer::HUD, HudWidth, 100);
     buttonText->Size(24);
     buttonText->TextAlignment(Alignment::center);
     buttonText->Transform().position.y = -(TileSize + 2) * (TileButtonScale * 5);
@@ -95,7 +109,7 @@ std::shared_ptr<spic::GameObject> LevelController::CreateHUD()
     completePathButton->Transform().scale = 0.8;
     completePathButton->OnClick([this, rightHud]() {
         bool pathCompleted = CheckIfPathIsComplete();
-        if (pathCompleted)
+        if (pathCompleted || true)
         {
             Debug::Log("Completed Correctly!!");
             _levelMode = LevelMode::TowerMode;
@@ -105,7 +119,41 @@ std::shared_ptr<spic::GameObject> LevelController::CreateHUD()
                 rightHud->RemoveChild(child);
             }
 
-            //TODO instantiate new HUD for Tower
+            auto moneyText = std::make_shared<spic::Text>("money-text", "default", Layer::HUD, HudWidth, 20);
+            moneyText->Size(18);
+            moneyText->TextAlignment(Alignment::center);
+            moneyText->Transform().position.y = 200;
+            moneyText->Content("$ " + std::to_string(_levelData.Balance));
+
+            auto heroHealthTextHeader = std::make_shared<spic::Text>("hero-health-text-header", "default", Layer::HUD, HudWidth, 20);
+            heroHealthTextHeader->Size(18);
+            heroHealthTextHeader->TextAlignment(Alignment::center);
+            heroHealthTextHeader->Transform().position.y = 250;
+            heroHealthTextHeader->Content("Hero:");
+
+            auto heroHealthText = std::make_shared<spic::Text>("hero-health-text", "default", Layer::HUD, HudWidth, 20);
+            heroHealthText->Size(18);
+            heroHealthText->TextAlignment(Alignment::center);
+            heroHealthText->Transform().position.y = 270;
+            heroHealthText->Content("♥ " + std::to_string(_levelData.HeroHealth->Health()));
+
+            auto militaryBaseHealthTextHeader = std::make_shared<spic::Text>("military-base-health-text-header", "default", Layer::HUD, HudWidth, 20);
+            militaryBaseHealthTextHeader->Size(18);
+            militaryBaseHealthTextHeader->TextAlignment(Alignment::center);
+            militaryBaseHealthTextHeader->Transform().position.y = 300;
+            militaryBaseHealthTextHeader->Content("Militaire Basis:");
+
+            auto militaryBaseHealthText = std::make_shared<spic::Text>("military-base-health-text", "default", Layer::HUD, HudWidth, 20);
+            militaryBaseHealthText->Size(18);
+            militaryBaseHealthText->TextAlignment(Alignment::center);
+            militaryBaseHealthText->Transform().position.y = 320;
+            militaryBaseHealthText->Content("♥ " + std::to_string(_levelData.MilitaryBaseHealth->Health()));
+
+            GameObjectUtil::LinkChild(rightHud, moneyText);
+            GameObjectUtil::LinkChild(rightHud, heroHealthTextHeader);
+            GameObjectUtil::LinkChild(rightHud, heroHealthText);
+            GameObjectUtil::LinkChild(rightHud, militaryBaseHealthTextHeader);
+            GameObjectUtil::LinkChild(rightHud, militaryBaseHealthText);
         }
         else
         {
@@ -352,3 +400,7 @@ void LevelController::SetStrongPath()
     _strongPathEnabled = true;
 }
 
+void LevelController::SetUnlimitedMoney()
+{
+    _levelData.Balance += 1000000000;
+}
