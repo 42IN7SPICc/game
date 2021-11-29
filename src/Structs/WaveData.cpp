@@ -10,9 +10,7 @@ size_t WaveData::RemainingEnemies() const
 
 void WaveData::ClearDeadEnemies()
 {
-    std::erase_if(CurrentEnemies, [](std::shared_ptr<spic::GameObject> enemy) {
-        if (enemy->GetComponent<HealthBehaviour>()->Health() > 0) return false;
-        spic::GameObject::Destroy(enemy);
-        return true;
+    std::erase_if(CurrentEnemies, [](const std::shared_ptr<spic::GameObject>& enemy) {
+        return enemy->GetComponent<HealthBehaviour>()->Health() <= 0;
     });
 }
