@@ -46,6 +46,9 @@ std::shared_ptr<spic::GameObject> TowerPrefabFactory::CreateBomber()
 
     auto tower = CreateBaseTower(sprites);
 
+    auto attackBehaviour = std::make_shared<AttackBehaviour>("enemy", BulletType::Bomb, 3, 200, 25, 10, 50);
+    GameObjectUtil::LinkComponent(tower, attackBehaviour);
+
     return tower;
 }
 
@@ -54,6 +57,9 @@ std::shared_ptr<spic::GameObject> TowerPrefabFactory::CreateShotgun()
     types::sprite_vector sprites = AnimatorUtil::CreateSpriteVector(10, "resources/sprites/towers/Idle/tower_idle_", SortingLayer::Enemy);
 
     auto tower = CreateBaseTower(sprites);
+
+    auto attackBehaviour = std::make_shared<AttackBehaviour>("enemy", BulletType::Normal, 5, 250, 20, 15, 0);
+    GameObjectUtil::LinkComponent(tower, attackBehaviour);
 
     return tower;
 }
@@ -64,6 +70,9 @@ std::shared_ptr<spic::GameObject> TowerPrefabFactory::CreateFlamethrower()
 
     auto tower = CreateBaseTower(sprites);
 
+    auto attackBehaviour = std::make_shared<AttackBehaviour>("enemy", BulletType::Penetrating, 3, 150, 2, 20, 0);
+    GameObjectUtil::LinkComponent(tower, attackBehaviour);
+
     return tower;
 }
 
@@ -72,6 +81,9 @@ std::shared_ptr<spic::GameObject> TowerPrefabFactory::CreateSniper()
     types::sprite_vector sprites = AnimatorUtil::CreateSpriteVector(10, "resources/sprites/towers/Idle/tower_idle_", SortingLayer::Enemy);
 
     auto tower = CreateBaseTower(sprites);
+
+    auto attackBehaviour = std::make_shared<AttackBehaviour>("enemy", BulletType::Normal, 8, 500, 50, 30, 0);
+    GameObjectUtil::LinkComponent(tower, attackBehaviour);
 
     return tower;
 }
