@@ -17,7 +17,7 @@ namespace game
             std::shared_ptr<game::CoolDownBehaviour> _coolDownBehaviour;
 
             std::string _targetTag;
-            BulletType _bulletType;
+            game::BulletType _bulletType;
             int _range;
             int _damage;
             double _bulletSpeed;
