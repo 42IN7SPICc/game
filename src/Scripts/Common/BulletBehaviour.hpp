@@ -20,10 +20,11 @@ namespace game
             std::unique_ptr<spic::Point> _direction;
             double _duration;
             double _maxDuration;
+            int _maxPenetrating;
             BulletType _bulletType;
 
         public:
-            explicit BulletBehaviour(BulletType bulletType, const spic::Point& direction, double maxDuration);
+            explicit BulletBehaviour(BulletType bulletType, const spic::Point& direction, double maxDuration, int maxPenetrating = 1);
 
             void OnStart() override;
 

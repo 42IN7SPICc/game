@@ -9,9 +9,10 @@
 
 using namespace game;
 
-BulletBehaviour::BulletBehaviour(BulletType bulletType, const spic::Point& direction, double maxDuration) : _bulletType(bulletType),
-                                                                                                            _direction(std::make_unique<spic::Point>(direction)),
-                                                                                                            _maxDuration(maxDuration)
+BulletBehaviour::BulletBehaviour(BulletType bulletType, const spic::Point& direction, double maxDuration, int maxPenetrating) : _bulletType(bulletType),
+                                                                                                                                _direction(std::make_unique<spic::Point>(direction)),
+                                                                                                                                _maxDuration(maxDuration),
+                                                                                                                                _maxPenetrating(maxPenetrating)
 {
 }
 
@@ -37,7 +38,7 @@ void BulletBehaviour::OnUpdate()
 {
     auto parent = GameObject().lock();
 
-    if (_damageBehaviour->ObjectsDamaged() >= (_bulletType == BulletType::Penetrating ? 3 : 1))
+    if (_damageBehaviour->ObjectsDamaged() >= (_bulletType == BulletType::Penetrating ? _maxPenetrating : 1))
     {
         spic::GameObject::Destroy(parent);
         return;
