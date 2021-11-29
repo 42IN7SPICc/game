@@ -36,6 +36,7 @@ namespace game
 
             std::shared_ptr<spic::GameObject> CreateMapButton();
 
+            void SetUnlimitedPath();
         private:
             const game::LevelWithTiles _level;
             game::LevelData _levelData;

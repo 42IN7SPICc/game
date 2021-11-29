@@ -334,3 +334,14 @@ bool LevelController::CheckIfPathIsComplete()
     return false;
 }
 
+void LevelController::SetUnlimitedPath()
+{
+    for(auto& [button, tileAmount] : _buttonTileAmounts)
+    {
+        tileAmount = 100000;
+        auto HUDButtonText = std::dynamic_pointer_cast<spic::Text>(button->Children()[0]);
+        HUDButtonText->Content(std::to_string(tileAmount));
+        Debug::Log("HE WA");
+    }
+}
+

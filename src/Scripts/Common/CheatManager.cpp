@@ -5,6 +5,7 @@
 #include "GameWonBehaviour.hpp"
 #include "../../Structs/PlayerData.hpp"
 #include "GameLostBehaviour.hpp"
+#include "../../Controllers/LevelController.hpp"
 
 using namespace spic;
 using namespace game;
@@ -71,7 +72,12 @@ void UnlockLevels()
 
 void UnlimitedPath()
 {
-    Debug::Log("Fired Unlimited Path Cheat");
+    auto gameObject = GameObject::Find("LevelController");
+    if (gameObject)
+    {
+        auto levelController = std::dynamic_pointer_cast<game::LevelController>(gameObject);
+        levelController->SetUnlimitedPath();
+    }
 }
 
 void StrongPath()
