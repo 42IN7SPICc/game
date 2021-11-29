@@ -3,16 +3,36 @@
 
 #include "BehaviourScript.hpp"
 
+#include <string>
+
 namespace game
 {
-
     class DamageBehaviour : public spic::BehaviourScript
     {
         private:
+            std::string _targetTag;
             int _damage;
+            int _radius;
+            int _objectsDamaged;
 
         public:
-            explicit DamageBehaviour(int damage);
+            explicit DamageBehaviour(int damage, const std::string& targetTag = "", int radius = 0);
+
+            void Damage(const std::shared_ptr<spic::GameObject>& gameObject);
+
+            [[nodiscard]] int Damage() const;
+
+            void Damage(int damage);
+
+            [[nodiscard]] const std::string& TargetTag() const;
+
+            void TargetTag(const std::string& targetTag);
+
+            [[nodiscard]] int Radius() const;
+
+            void Radius(int radius);
+
+            [[nodiscard]] int ObjectsDamaged() const;
 
             void OnStart() override;
 
@@ -24,6 +44,6 @@ namespace game
 
             void OnTriggerStay2D(const spic::Collider& collider) override;
     };
-
 }
+
 #endif //SPIC_GAME_DAMAGEBEHAVIOUR_HPP

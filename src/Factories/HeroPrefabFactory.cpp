@@ -80,7 +80,7 @@ std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateJosephStalin()
 
 std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateBaseHero(int attack, int defense)
 {
-    auto baseHero = std::make_shared<spic::GameObject>("Hero", "Player", Layer::Game);
+    auto baseHero = std::make_shared<spic::GameObject>("Hero", "hero", Layer::Game);
     baseHero->Transform().scale = HeroScale;
 
     std::vector<std::shared_ptr<spic::Sprite>> idleSprites = AnimatorUtil::CreateSpriteVector(10, "resources/sprites/heroes/Idle/hero_idle_", SortingLayer::Hero);
@@ -109,8 +109,7 @@ std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateBaseHero(int at
     auto userMovementBehaviour = std::make_shared<game::UserMovementBehaviour>(static_cast<float>(HeroVelocity), idleAnimator, walkingAnimator, healthBehaviour);
     GameObjectUtil::LinkComponent(baseHero, userMovementBehaviour);
 
-    spic::Point originPoint{(HeroWidth / 2.0) * HeroScale, (HeroHeight / 2.0) * HeroScale};
-    auto attackBehaviour = std::make_shared<game::UserAttackBehaviour>(attack, HeroBulletSpeed, originPoint);
+    auto attackBehaviour = std::make_shared<game::UserAttackBehaviour>(attack, HeroBulletSpeed);
     GameObjectUtil::LinkComponent(baseHero, attackBehaviour);
 
     auto heroCollider = std::make_shared<spic::CircleCollider>((HeroWidth / 2.0) * HeroScale);

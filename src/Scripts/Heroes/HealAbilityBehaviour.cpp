@@ -19,7 +19,7 @@ void game::HealAbilityBehaviour::OnStart()
 
 void game::HealAbilityBehaviour::OnUpdate()
 {
-    if (spic::Input::GetKey(spic::Input::KeyCode::SPACE))
+    if (spic::Input::GetKey(spic::Input::KeyCode::E))
     {
         if (_coolDownBehaviour->CooledDown())
         {
