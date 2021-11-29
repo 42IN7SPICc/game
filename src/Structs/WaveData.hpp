@@ -14,6 +14,8 @@ namespace game
         std::queue<std::tuple<double, std::shared_ptr<spic::GameObject>>> EnemyQueue;
         std::vector<std::shared_ptr<spic::GameObject>> CurrentEnemies;
 
+        void ClearDeadEnemies();
+
         [[nodiscard]] size_t RemainingEnemies() const;
     };
 }
