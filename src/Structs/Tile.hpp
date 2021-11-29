@@ -17,7 +17,7 @@ namespace game
         int X;
         int Y;
 
-        [[nodiscard]] TileType TileType() const;
+        [[nodiscard]] game::TileType TileType() const;
     };
 }
 

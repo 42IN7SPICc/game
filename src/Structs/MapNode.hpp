@@ -14,7 +14,7 @@ namespace game
         int X;
         int Y;
         TileType OriginalTileType;
-        TileType TileType;
+        game::TileType TileType;
         std::shared_ptr<spic::GameObject> TileObject;
         bool Visited;
     };
