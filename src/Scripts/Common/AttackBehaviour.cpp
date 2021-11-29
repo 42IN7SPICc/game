@@ -64,7 +64,7 @@ void AttackBehaviour::OnUpdate()
 
 void AttackBehaviour::Shoot(const spic::Point& direction, const spic::Point& position)
 {
-    auto bullet = BulletFactory::CreateBullet(BulletType::Normal, position, "hero", direction, 500, _damage);
+    auto bullet = BulletFactory::CreateBullet(BulletType::Normal, position, "hero", direction, 3, _damage);
 
     spic::Engine::Instance().PeekScene()->Contents().push_back(bullet);
 }

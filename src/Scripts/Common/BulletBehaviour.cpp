@@ -9,10 +9,9 @@
 
 using namespace game;
 
-BulletBehaviour::BulletBehaviour(BulletType bulletType, const spic::Point& direction, double maxRange) : _bulletType(bulletType),
-                                                                                                         _direction(std::make_unique<spic::Point>(direction)),
-                                                                                                         _maxRange(maxRange),
-                                                                                                         _startPos{0, 0}
+BulletBehaviour::BulletBehaviour(BulletType bulletType, const spic::Point& direction, double maxDuration) : _bulletType(bulletType),
+                                                                                                            _direction(std::make_unique<spic::Point>(direction)),
+                                                                                                            _maxDuration(maxDuration)
 {
 }
 
@@ -32,8 +31,6 @@ void BulletBehaviour::OnStart()
     {
         throw std::runtime_error("To instantiate a bullet behaviour the game object is required to have a damage behaviour.");
     }
-
-    _startPos = parent->AbsoluteTransform().position;
 }
 
 void BulletBehaviour::OnUpdate()
@@ -51,8 +48,8 @@ void BulletBehaviour::OnUpdate()
     auto yWithTimeScale = _direction->y * deltaTimeScale;
     _rigidBody->AddForce(spic::Point{xWithTimeScale, yWithTimeScale});
 
-    auto distance = PointUtil::Distance(_startPos, parent->AbsoluteTransform().position);
-    if (distance >= _maxRange)
+    _duration += deltaTimeScale;
+    if (_duration >= _maxDuration)
     {
         spic::GameObject::Destroy(parent);
     }

@@ -13,7 +13,7 @@ namespace game
     class BulletFactory
     {
         public:
-            static std::shared_ptr<spic::GameObject> CreateBullet(BulletType bulletType, const spic::Point& position, const std::string& targetTag, const spic::Point& direction, int range, int damage, double bombRadius = 0);
+            static std::shared_ptr<spic::GameObject> CreateBullet(BulletType bulletType, const spic::Point& position, const std::string& targetTag, const spic::Point& direction, double duration, int damage, double bombRadius = 0);
 
         private:
             static std::string GetBulletSprite(BulletType bulletType);

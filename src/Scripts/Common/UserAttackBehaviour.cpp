@@ -29,7 +29,7 @@ void UserAttackBehaviour::OnUpdate()
         auto force = PointUtil::CalculateDirectionalPoint(parentPosition, mousePosition, _velocityMultiplier);
 
         // Bullet game object
-        auto bullet = BulletFactory::CreateBullet(BulletType::Normal, parentPosition, "enemy", force, 500, _damage);
+        auto bullet = BulletFactory::CreateBullet(BulletType::Normal, parentPosition, "enemy", force, 3, _damage);
         spic::Engine::Instance().PeekScene()->Contents().push_back(bullet);
     }
 }
