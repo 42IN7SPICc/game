@@ -6,6 +6,7 @@
 #include "../Utils/TileUtil.hpp"
 #include "../Scripts/Common/GameLostBehaviour.hpp"
 #include "../Factories/ButtonPrefabFactory.hpp"
+#include "../Factories/EnemyPrefabFactory.hpp"
 #include <numeric>
 #include <cmath>
 #include <vector>
@@ -32,7 +33,13 @@ void LevelController::OnStart()
 
 void LevelController::OnUpdate()
 {
-    //
+    if(_levelMode == LevelMode::TowerMode)
+    {
+        auto startTile = GameObject::Find("start-tile");
+        auto defaultEnemy = EnemyPrefabFactory::CreateEnemy(EnemyName::Schutze);
+        defaultEnemy->Transform().position.x = startTile->Transform().position.x;
+        defaultEnemy->Transform().position.y = startTile->Transform().position.y;
+    }
 }
 
 void LevelController::OnTriggerEnter2D(const spic::Collider& collider)
