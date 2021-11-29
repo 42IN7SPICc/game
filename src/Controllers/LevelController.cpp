@@ -16,9 +16,9 @@ using namespace game;
 
 const double TileButtonScale = 2.0;
 const double TileSize = 32;
-const double TileMapScale = 0.8;
-const int MapX = 75;
-const int MapY = 110;
+const double TileMapScale = 0.985;
+const int MapX = TileSize / 2 + 155;
+const int MapY = TileSize / 2;
 
 void LevelController::OnStart()
 {
@@ -33,13 +33,7 @@ void LevelController::OnStart()
 
 void LevelController::OnUpdate()
 {
-    if(_levelMode == LevelMode::TowerMode)
-    {
-        auto startTile = GameObject::Find("start-tile");
-        auto defaultEnemy = EnemyPrefabFactory::CreateEnemy(EnemyName::Schutze);
-        defaultEnemy->Transform().position.x = startTile->Transform().position.x;
-        defaultEnemy->Transform().position.y = startTile->Transform().position.y;
-    }
+    //
 }
 
 void LevelController::OnTriggerEnter2D(const spic::Collider& collider)
@@ -117,6 +111,13 @@ std::shared_ptr<spic::GameObject> LevelController::CreateHUD()
             }
 
             //TODO instantiate new HUD for Tower
+            auto scene = Engine::Instance().PeekScene();
+            auto startTile = GameObject::Find("start-tile");
+            auto enemy =  EnemyPrefabFactory::CreateEnemy(EnemyName::Schutze);
+            scene->Contents().push_back(enemy);
+            enemy->Transform().position.x = startTile->AbsoluteTransform().position.x;
+            enemy->Transform().position.y = startTile->AbsoluteTransform().position.y;
+            enemy->Transform().scale = 0.25;
         }
         else
         {

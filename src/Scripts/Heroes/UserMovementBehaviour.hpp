@@ -5,7 +5,7 @@
 #include <BehaviourScript.hpp>
 #include <RigidBody.hpp>
 #include <Animator.hpp>
-#include "HealthBehaviour.hpp"
+#include "../Common/HealthBehaviour.hpp"
 
 namespace game
 {

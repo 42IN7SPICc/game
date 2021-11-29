@@ -1,5 +1,4 @@
 #include "UserMovementBehaviour.hpp"
-#include <Debug.hpp>
 #include <RigidBody.hpp>
 #include <Input.hpp>
 #include <utility>
