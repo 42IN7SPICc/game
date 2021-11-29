@@ -42,9 +42,9 @@ namespace game
 
             void FireRate(double fireRate);
 
-            [[nodiscard]] double Range() const;
+            [[nodiscard]] int Range() const;
 
-            void Range(double range);
+            void Range(int range);
 
             [[nodiscard]] int Damage() const;
 

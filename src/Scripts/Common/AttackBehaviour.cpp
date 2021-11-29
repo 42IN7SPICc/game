@@ -89,12 +89,12 @@ void AttackBehaviour::FireRate(double fireRate)
     _coolDownBehaviour->MinCoolDown(fireRate);
 }
 
-double AttackBehaviour::Range() const
+int AttackBehaviour::Range() const
 {
     return _range;
 }
 
-void AttackBehaviour::Range(double range)
+void AttackBehaviour::Range(int range)
 {
     _range = range;
 }
@@ -129,7 +129,7 @@ void AttackBehaviour::TargetTag(const std::string& targetTag)
     _targetTag = targetTag;
 }
 
-BulletType AttackBehaviour::BulletType() const
+game::BulletType AttackBehaviour::BulletType() const
 {
     return _bulletType;
 }
