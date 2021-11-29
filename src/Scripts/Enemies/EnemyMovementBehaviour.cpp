@@ -3,7 +3,6 @@
 #include "Animator.hpp"
 #include "../../Controllers/LevelController.hpp"
 #include "../../Utils/StringUtil.hpp"
-#include "Debug.hpp"
 
 using namespace game;
 
@@ -25,24 +24,6 @@ void EnemyMovementBehaviour::OnStart()
         auto levelController = gameObject->GetComponent<game::LevelController>();
         _graph = levelController->GetGraph();
         _path = levelController->GetPath();
-        for (const auto&[location, node]: _graph)
-        {
-            if (node.TileType == TileType::Start)
-            {
-                _currentNode = location;
-                _fromNode = location;
-
-                for (const auto& neighbour: node.NeighbourStrings)
-                {
-                    if (CanWalk(_graph[neighbour].TileType))
-                    {
-                        _toNode = neighbour;
-                        break;
-                    }
-                }
-                break;
-            }
-        }
     }
 }
 

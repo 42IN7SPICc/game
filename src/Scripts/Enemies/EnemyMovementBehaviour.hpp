@@ -13,9 +13,6 @@ namespace game
     class EnemyMovementBehaviour : public spic::BehaviourScript
     {
         private:
-            std::string _fromNode;
-            std::string _currentNode;
-            std::string _toNode;
             std::map<std::string, game::MapNode> _graph;
             std::queue<std::string> _path;
 
