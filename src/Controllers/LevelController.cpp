@@ -58,6 +58,10 @@ void LevelController::OnUpdate()
                     wave.EnemyQueue.pop();
                 }
             }
+            else if (wave.RemainingEnemies() == 0)
+            {
+                _levelData.Waves.pop();
+            }
         }
     }
 
@@ -500,4 +504,16 @@ void LevelController::SetStrongPath()
 void LevelController::SetUnlimitedMoney()
 {
     _levelData.Balance += 1000000000;
+}
+
+void LevelController::ButcherEnemies()
+{
+    if (!_levelData.Waves.empty())
+    {
+        for (auto& currentEnemies: _levelData.Waves.front().CurrentEnemies)
+        {
+            auto healthBehaviour = currentEnemies->GetComponent<HealthBehaviour>();
+            healthBehaviour->Damage(healthBehaviour->Health());
+        }
+    }
 }
