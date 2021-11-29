@@ -157,8 +157,8 @@ std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreateBaseEnemy(int attack
     enemyTriggerCollider->IsTrigger(true);
     GameObjectUtil::LinkComponent(baseEnemy, enemyTriggerCollider);
 
-    auto enemyCollider = std::make_shared<spic::CircleCollider>(colliderRadius);
-    GameObjectUtil::LinkComponent(baseEnemy, enemyCollider);
+//    auto enemyCollider = std::make_shared<spic::CircleCollider>(colliderRadius);
+//    GameObjectUtil::LinkComponent(baseEnemy, enemyCollider);
 
     auto enemyRigidBody = std::make_shared<spic::RigidBody>(EnemyMass, 0, spic::BodyType::dynamicBody);
     GameObjectUtil::LinkComponent(baseEnemy, enemyRigidBody);
