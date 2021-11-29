@@ -32,6 +32,8 @@ void LevelController::OnStart()
 
     auto gameLostBehaviour = std::make_shared<game::GameLostBehaviour>(_levelData);
     GameObjectUtil::LinkComponent(parent, gameLostBehaviour);
+
+    _levelData.HeroHealth->GameObject().lock()->Transform().position = GameObject::FindWithTag("end_tile")->AbsoluteTransform().position;
 }
 
 void LevelController::OnUpdate()
@@ -194,6 +196,8 @@ std::shared_ptr<spic::GameObject> LevelController::CreateHUD()
                 spic::Debug::LogWarning("Next wave not implemented!");
             });
             nextWaveButton->Transform().position.y = 350;
+
+            _levelData.HeroHealth->GameObject().lock()->Active(true);
 
             GameObjectUtil::LinkChild(rightHud, enemiesLeftTextHeader);
             GameObjectUtil::LinkChild(rightHud, enemiesText);

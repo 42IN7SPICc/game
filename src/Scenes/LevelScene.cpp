@@ -31,6 +31,8 @@ LevelScene::LevelScene(LevelWithTiles& levelWithTiles)
     titleText->Transform().position = {1366 / 2, 50};
 
     auto hero = game::HeroPrefabFactory::CreateHero(DesmondDoss);
+    hero->Transform().scale = 0.1;
+    hero->Active(false);
     auto heroHealth = hero->GetComponent<HealthBehaviour>();
     auto endTowerHealth = std::make_shared<game::HealthBehaviour>(nullptr, 10);
 
