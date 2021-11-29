@@ -13,7 +13,7 @@ namespace game
     class AttackBehaviour : public spic::BehaviourScript
     {
         private:
-            std::shared_ptr<game::CoolDownBehaviour> _coolDownBehaviour;
+            std::shared_ptr<CoolDownBehaviour> _coolDownBehaviour;
 
             std::string _targetTag;
             double _range;

@@ -10,12 +10,12 @@ namespace game
 {
     struct LevelData
     {
-        std::shared_ptr<game::HealthBehaviour> HeroHealth;
-        std::shared_ptr<game::HealthBehaviour> MilitaryBaseHealth;
+        std::shared_ptr<HealthBehaviour> HeroHealth;
+        std::shared_ptr<HealthBehaviour> MilitaryBaseHealth;
         const size_t TotalWaves;
         size_t Balance;
         std::queue<WaveData> Waves;
-        std::map<std::string, game::MapNode> Graph {};
+        std::map<std::string, MapNode> Graph {};
 
         [[nodiscard]] size_t CurrentWave() const;
     };

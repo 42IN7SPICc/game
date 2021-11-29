@@ -1,12 +1,13 @@
-#ifndef SPIC_GAME_HEROPREFABFACTORY_HPP
-#define SPIC_GAME_HEROPREFABFACTORY_HPP
+#ifndef SPIC_GAME_TOWERPREFABFACTORY_HPP
+#define SPIC_GAME_TOWERPREFABFACTORY_HPP
+
+#include "../Enums/TowerName.hpp"
 
 #include "GameObject.hpp"
-#include "../Enums/HeroName.hpp"
 
 namespace game
 {
-    class HeroPrefabFactory
+    class TowerPrefabFactory
     {
         private:
             static std::shared_ptr<spic::GameObject> CreateDesmondDoss();
@@ -19,12 +20,11 @@ namespace game
 
             static std::shared_ptr<spic::GameObject> CreateJosephStalin();
 
-            static std::shared_ptr<spic::GameObject> CreateBaseHero(int attack, int defense);
+            static std::shared_ptr<spic::GameObject> CreateBaseTower(int attack, int defense);
 
         public:
-            static std::shared_ptr<spic::GameObject> CreateHero(HeroName name);
+            static std::shared_ptr<spic::GameObject> CreateTower(TowerName name);
     };
 }
 
-
-#endif //SPIC_GAME_HEROPREFABFACTORY_HPP
+#endif //SPIC_GAME_TOWERPREFABFACTORY_HPP

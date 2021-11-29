@@ -11,8 +11,9 @@ namespace game
     class AudioSourcePrefabFactory
     {
         public:
-            static std::shared_ptr <spic::GameObject> CreateAudioObject(game::AudioClipName audioClipName, bool playOnAwake, bool looping, double volume);
-            static std::shared_ptr <spic::AudioSource> CreateAudioSource(game::AudioClipName audioClipName, bool playOnAwake, bool looping, double volume);
+            static std::shared_ptr<spic::GameObject> CreateAudioObject(AudioClipName audioClipName, bool playOnAwake, bool looping, double volume);
+
+            static std::shared_ptr<spic::AudioSource> CreateAudioSource(AudioClipName audioClipName, bool playOnAwake, bool looping, double volume);
     };
 }
 

@@ -10,9 +10,9 @@ namespace game
     {
         private:
             bool _lost;
-            game::LevelData& _levelData;
+            LevelData& _levelData;
         public:
-            explicit GameLostBehaviour(game::LevelData& levelData);
+            explicit GameLostBehaviour(LevelData& levelData);
 
             void OnStart() override;
 

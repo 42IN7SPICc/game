@@ -12,9 +12,9 @@ namespace game
         private:
             bool _won;
             int _balanceAward;
-            game::LevelData& _levelData;
+            LevelData& _levelData;
         public:
-            explicit GameWonBehaviour(game::LevelData& levelData, int balanceAward = 500);
+            explicit GameWonBehaviour(LevelData& levelData, int balanceAward = 500);
 
             void OnStart() override;
 
