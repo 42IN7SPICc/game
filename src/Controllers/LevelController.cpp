@@ -3,7 +3,6 @@
 #include "../Scripts/Common/GameWonBehaviour.hpp"
 #include "../Utils/GameObjectUtil.hpp"
 #include "../Enums/Layer.hpp"
-#include "../Utils/GameObjectUtil.hpp"
 #include "../Utils/TileUtil.hpp"
 #include "../Scripts/Common/GameLostBehaviour.hpp"
 #include "../Factories/ButtonPrefabFactory.hpp"
@@ -109,14 +108,15 @@ std::shared_ptr<spic::GameObject> LevelController::CreateHUD()
         else
         {
             auto validationText = std::dynamic_pointer_cast<Text>(GameObject::Find("path-validation-text"));
-            if(validationText == nullptr) //Check if validation text allready exists
+            if(validationText == nullptr) { //Check if validation text allready exists
                 validationText = std::make_shared<Text>("path-validation-text", "text", Layer::HUD, 200, 100);
-
-            validationText->Transform().position.y = (TileSize + 2) * TileButtonScale;
+                validationText->Transform().position.y = (TileSize + 2) * TileButtonScale;
+                validationText->TextAlignment(Alignment::center);
+                validationText->TextColor(Color::red());
+                GameObjectUtil::LinkChild(rightHud, validationText);
+            }
             validationText->Content("Het huidige pad is niet compleet");
-            validationText->TextAlignment(Alignment::center);
-            validationText->TextColor(Color::red());
-            GameObjectUtil::LinkChild(rightHud, validationText);
+
         }
     });
     GameObjectUtil::LinkChild(rightHud, completePathButton);
