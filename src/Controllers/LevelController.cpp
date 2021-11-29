@@ -126,7 +126,7 @@ std::shared_ptr<spic::GameObject> LevelController::CreateHUD()
 
     completePathButton->OnClick([this]() {
         auto& rightHud = _rightHud;
-        bool pathCompleted = CheckIfPathIsComplete(_levelData.Graph);
+        auto [pathCompleted, path] = CheckIfPathIsComplete(_levelData.Graph);
         if (pathCompleted)
         {
             Debug::Log("Completed Correctly!!");
@@ -145,6 +145,8 @@ std::shared_ptr<spic::GameObject> LevelController::CreateHUD()
             enemy->Transform().position.x = startTile->AbsoluteTransform().position.x;
             enemy->Transform().position.y = startTile->AbsoluteTransform().position.y;
             enemy->Transform().scale = 0.1;
+            _levelData.Path = path;
+
             auto enemiesLeftTextHeader = std::make_shared<spic::Text>("enemies-text-header", "default", Layer::HUD, HudWidth, 20);
             enemiesLeftTextHeader->Size(18);
             enemiesLeftTextHeader->TextAlignment(Alignment::center);
@@ -437,7 +439,7 @@ void LevelController::HandleClickTower(game::MapNode& clickedTile)
     }
 }
 
-bool LevelController::CheckIfPathIsComplete(std::map<std::string, MapNode> graphCopy)
+std::tuple<bool, std::queue<std::string>> LevelController::CheckIfPathIsComplete(std::map<std::string, MapNode> graphCopy)
 {
     MapNode start;
     for (const auto&[key, value]: graphCopy)
@@ -446,9 +448,10 @@ bool LevelController::CheckIfPathIsComplete(std::map<std::string, MapNode> graph
             start = value;
     }
 
-    if (start.NeighbourStrings.empty()) return false;
+    if (start.NeighbourStrings.empty()) return {false, {}};
 
     std::vector<std::string> pathTiles;
+    std::queue<std::string> path;
     pathTiles.push_back(std::to_string(start.X) + "-" + std::to_string(start.Y));
     while (!pathTiles.empty())
     {
@@ -457,14 +460,18 @@ bool LevelController::CheckIfPathIsComplete(std::map<std::string, MapNode> graph
         for (auto& stringNeighbour: tile.NeighbourStrings)
         {
             const auto& neighbour = graphCopy[stringNeighbour];
-            if (neighbour.TileType == TileType::End) return true;
-            if ((neighbour.TileType == TileType::Street || neighbour.TileType == TileType::Sand || neighbour.TileType == TileType::Grass || neighbour.TileType == TileType::Bridge) && !neighbour.Visited)
+            if (neighbour.TileType == TileType::End) {
+                return {true, path};
+            }
+            if ((neighbour.TileType == TileType::Street || neighbour.TileType == TileType::Sand || neighbour.TileType == TileType::Grass || neighbour.TileType == TileType::Bridge) && !neighbour.Visited) {
                 pathTiles.push_back(std::to_string(neighbour.X) + "-" + std::to_string(neighbour.Y));
+                path.push(std::to_string(neighbour.X) + "-" + std::to_string(neighbour.Y));
+            }
         }
         pathTiles.erase(std::find(pathTiles.begin(), pathTiles.end(), pathTiles[0]));
     }
 
-    return false;
+    return {false, {}};
 }
 
 void LevelController::SetUnlimitedPath()
@@ -490,4 +497,9 @@ void LevelController::SetUnlimitedMoney()
 std::map<std::string, MapNode>& LevelController::GetGraph()
 {
     return _levelData.Graph;
+}
+
+std::queue<std::string> LevelController::GetPath()
+{
+    return _levelData.Path;
 }

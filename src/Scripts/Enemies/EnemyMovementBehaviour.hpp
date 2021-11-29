@@ -4,6 +4,7 @@
 #include "BehaviourScript.hpp"
 #include <string>
 #include <map>
+#include <queue>
 #include "../../Structs/MapNode.hpp"
 
 
@@ -16,6 +17,7 @@ namespace game
             std::string _currentNode;
             std::string _toNode;
             std::map<std::string, game::MapNode> _graph;
+            std::queue<std::string> _path;
 
         public:
             void OnStart() override;

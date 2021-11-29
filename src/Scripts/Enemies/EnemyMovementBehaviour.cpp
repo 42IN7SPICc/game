@@ -24,7 +24,7 @@ void EnemyMovementBehaviour::OnStart()
     {
         auto levelController = gameObject->GetComponent<game::LevelController>();
         _graph = levelController->GetGraph();
-
+        _path = levelController->GetPath();
         for (const auto&[location, node]: _graph)
         {
             if (node.TileType == TileType::Start)
@@ -49,17 +49,21 @@ void EnemyMovementBehaviour::OnStart()
 void EnemyMovementBehaviour::OnUpdate()
 {
     auto parent = GameObject().lock();
-
-    auto animator = parent->GetComponents<spic::Animator>()[1]; //walking animator
-    animator->Play(true);
-
-    auto gameObject = spic::GameObject::Find("LevelController");
-    if (gameObject)
+    auto walkingAnimator = parent->GetComponents<spic::Animator>()[1];
+    if (parent->GetComponent<HealthBehaviour>()->Health() == 0)
     {
-
-
-        
+        walkingAnimator->Stop();
+        return;
     }
+
+    auto playerPosition = parent->Transform().position;
+    double scaledTileSize = TileSize * TileMapScale;
+    int playerXLocation = ((playerPosition.x - MapX) + (scaledTileSize / 2)) / scaledTileSize;
+    int playerYLocation = ((playerPosition.y - MapY) + (scaledTileSize / 2)) / scaledTileSize;
+    std::string playerLocation = std::to_string(playerXLocation) + "-" + std::to_string(playerYLocation);
+
+
+    walkingAnimator->Play(true);
 }
 
 void EnemyMovementBehaviour::OnTriggerEnter2D(const spic::Collider& collider)
