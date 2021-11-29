@@ -5,6 +5,7 @@
 #include "GameWonBehaviour.hpp"
 #include "../../Structs/PlayerData.hpp"
 #include "GameLostBehaviour.hpp"
+#include "../../Controllers/LevelController.hpp"
 
 using namespace spic;
 using namespace game;
@@ -12,7 +13,12 @@ using namespace game;
 void UnlimitedMoney()
 {
     Debug::Log("Fired `Unlimited` Money Cheat");
-    PlayerData::Instance().Balance += 100000;
+    auto gameObject = GameObject::Find("LevelController");
+    if (gameObject)
+    {
+        auto levelController = gameObject->GetComponent<game::LevelController>();
+        levelController->SetUnlimitedMoney();
+    }
 }
 
 void Invincibility()
@@ -71,12 +77,22 @@ void UnlockLevels()
 
 void UnlimitedPath()
 {
-    Debug::Log("Fired Unlimited Path Cheat");
+    auto gameObject = GameObject::Find("LevelController");
+    if (gameObject)
+    {
+        auto levelController = gameObject->GetComponent<game::LevelController>();
+        levelController->SetUnlimitedPath();
+    }
 }
 
 void StrongPath()
 {
-    Debug::Log("Fired Strong Path Cheat");
+    auto gameObject = GameObject::Find("LevelController");
+    if (gameObject)
+    {
+        auto levelController = gameObject->GetComponent<game::LevelController>();
+        levelController->SetStrongPath();
+    }
 }
 
 void ExpBoost()

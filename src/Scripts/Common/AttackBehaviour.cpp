@@ -1,29 +1,27 @@
 #include "AttackBehaviour.hpp"
 
-#include "BulletBehaviour.hpp"
-#include "DamageBehaviour.hpp"
 #include "HealthBehaviour.hpp"
-#include "../../Enums/Layer.hpp"
-#include "../../Enums/SortingLayer.hpp"
+#include "../../Factories/BulletFactory.hpp"
 #include "../../Utils/GameObjectUtil.hpp"
 #include "../../Utils/PointUtil.hpp"
 
-#include "Debug.hpp"
 #include "Engine.hpp"
 #include "Sprite.hpp"
 
 #include <algorithm>
 #include <map>
-#include <CircleCollider.hpp>
 
 using namespace game;
 
-AttackBehaviour::AttackBehaviour(const std::string& targetTag, double fireRate, double range, double damage, bool multiTargeting, double bulletSpeed) : _coolDownBehaviour(std::make_shared<CoolDownBehaviour>(fireRate)),
-                                                                                                                                                        _targetTag(targetTag),
-                                                                                                                                                        _range(range),
-                                                                                                                                                        _damage(damage),
-                                                                                                                                                        _multiTargeting(multiTargeting),
-                                                                                                                                                        _bulletSpeed(bulletSpeed)
+AttackBehaviour::AttackBehaviour(const std::string& targetTag, game::BulletType bulletType, double fireRate, int range, int damage, double bulletSpeed, double damageRadius, bool followTarget, std::shared_ptr<spic::Animator> animator) : _coolDownBehaviour(std::make_shared<CoolDownBehaviour>(fireRate)),
+                                                                                                                                                                                                                                            _targetTag(targetTag),
+                                                                                                                                                                                                                                            _bulletType(bulletType),
+                                                                                                                                                                                                                                            _range(range),
+                                                                                                                                                                                                                                            _damage(damage),
+                                                                                                                                                                                                                                            _bulletSpeed(bulletSpeed),
+                                                                                                                                                                                                                                            _damageRadius(damageRadius),
+                                                                                                                                                                                                                                            _followTarget(followTarget),
+                                                                                                                                                                                                                                            _animator(animator)
 {
 }
 
@@ -35,51 +33,50 @@ void AttackBehaviour::OnStart()
 
 void AttackBehaviour::OnUpdate()
 {
-    if (!_coolDownBehaviour->CooledDown()) return;
+    if (!_coolDownBehaviour->CooledDown() && !_followTarget) return;
 
-    auto absTransform = GameObject().lock()->AbsoluteTransform();
+    auto absPosition = GameObject().lock()->AbsoluteTransform().position;
 
-    std::map<double, std::shared_ptr<spic::GameObject>> targets{};
+    std::map<double, spic::Point> targets{};
     for (const auto& target: spic::GameObject::FindGameObjectsWithTag(_targetTag))
     {
         auto healthBehaviour = target->GetComponent<HealthBehaviour>();
         if (!healthBehaviour || healthBehaviour->Health() <= 0) continue;
 
-        auto distance = PointUtil::Distance(absTransform.position, target->AbsoluteTransform().position);
+        auto targetPosition = target->AbsoluteTransform().position;
+        auto distance = PointUtil::Distance(absPosition, targetPosition);
         if (distance > _range) continue;
 
-        targets.emplace(distance, target);
+        targets.emplace(distance, targetPosition);
     }
 
     if (targets.empty()) return;
 
     auto target = *targets.begin();
 
-    auto direction = PointUtil::CalculateDirectionalPoint(absTransform.position, target.second->AbsoluteTransform().position);
-    direction.x *= _bulletSpeed;
-    direction.y *= _bulletSpeed;
+    if (_followTarget)
+    {
+        GameObject().lock()->Transform().rotation = PointUtil::Degrees(absPosition, target.second);
+    }
 
-    Shoot(direction);
+    if (!_coolDownBehaviour->CooledDown()) return;
+
+    auto direction = PointUtil::CalculateDirectionalPoint(absPosition, target.second, _bulletSpeed);
+
+    Shoot(direction, absPosition);
 
     _coolDownBehaviour->CooledDown(false);
 }
 
-void AttackBehaviour::Shoot(const spic::Point& direction)
+void AttackBehaviour::Shoot(const spic::Point& direction, const spic::Point& position)
 {
-    auto bullet = std::make_shared<spic::GameObject>("bullet", "enemies", Layer::Game);
-    bullet->Transform().position = GameObject().lock()->AbsoluteTransform().position;
+    auto bullet = BulletFactory::CreateBullet(_bulletType, position, _targetTag, direction, _range, _damage, _damageRadius);
 
-    // Collider
-    auto collider = std::make_shared<spic::CircleCollider>(8);
-    collider->IsTrigger(true);
-    GameObjectUtil::LinkComponent(bullet, collider);
+    if (_animator)
+    {
+        _animator->Play(false);
+    }
 
-    // Behaviour scripts
-    GameObjectUtil::LinkComponent(bullet, std::make_shared<BulletBehaviour>(direction, _range));
-    GameObjectUtil::LinkComponent(bullet, std::make_shared<DamageBehaviour>(_damage));
-
-    // Sprite
-    GameObjectUtil::LinkComponent(bullet, std::make_shared<spic::Sprite>("resources/sprites/bullet.png", false, false, SortingLayer::Bullet, 0));
     spic::Engine::Instance().PeekScene()->Contents().push_back(bullet);
 }
 
@@ -108,34 +105,24 @@ void AttackBehaviour::FireRate(double fireRate)
     _coolDownBehaviour->MinCoolDown(fireRate);
 }
 
-double AttackBehaviour::Range() const
+int AttackBehaviour::Range() const
 {
     return _range;
 }
 
-void AttackBehaviour::Range(double range)
+void AttackBehaviour::Range(int range)
 {
     _range = range;
 }
 
-double AttackBehaviour::Damage() const
+int AttackBehaviour::Damage() const
 {
     return _damage;
 }
 
-void AttackBehaviour::Damage(double damage)
+void AttackBehaviour::Damage(int damage)
 {
     _damage = damage;
-}
-
-bool AttackBehaviour::MultiTargeting() const
-{
-    return _multiTargeting;
-}
-
-void AttackBehaviour::MultiTargeting(bool multiTargeting)
-{
-    _multiTargeting = multiTargeting;
 }
 
 double AttackBehaviour::BulletSpeed() const
@@ -146,4 +133,54 @@ double AttackBehaviour::BulletSpeed() const
 void AttackBehaviour::BulletSpeed(double bulletSpeed)
 {
     _bulletSpeed = bulletSpeed;
+}
+
+const std::string& AttackBehaviour::TargetTag() const
+{
+    return _targetTag;
+}
+
+void AttackBehaviour::TargetTag(const std::string& targetTag)
+{
+    _targetTag = targetTag;
+}
+
+game::BulletType AttackBehaviour::BulletType() const
+{
+    return _bulletType;
+}
+
+void AttackBehaviour::BulletType(game::BulletType bulletType)
+{
+    _bulletType = bulletType;
+}
+
+double AttackBehaviour::DamageRadius() const
+{
+    return _damageRadius;
+}
+
+void AttackBehaviour::DamageRadius(double damageRadius)
+{
+    _damageRadius = damageRadius;
+}
+
+bool AttackBehaviour::FollowTarget() const
+{
+    return _followTarget;
+}
+
+void AttackBehaviour::FollowTarget(bool followTarget)
+{
+    _followTarget = followTarget;
+}
+
+std::shared_ptr<spic::Animator> AttackBehaviour::Animator() const
+{
+    return _animator;
+}
+
+void AttackBehaviour::Animator(std::shared_ptr<spic::Animator> animator)
+{
+    _animator = animator;
 }

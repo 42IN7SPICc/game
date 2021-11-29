@@ -91,17 +91,14 @@ void game::UserMovementBehaviour::OnUpdate()
 
 void game::UserMovementBehaviour::OnTriggerEnter2D(const spic::Collider& collider)
 {
-    Debug::LogWarning("Not implemented");
 }
 
 void game::UserMovementBehaviour::OnTriggerExit2D(const spic::Collider& collider)
 {
-    Debug::LogWarning("Not implemented");
 }
 
 void game::UserMovementBehaviour::OnTriggerStay2D(const spic::Collider& collider)
 {
-    Debug::LogWarning("Not implemented");
 }
 
 bool game::UserMovementBehaviour::Controllable() const

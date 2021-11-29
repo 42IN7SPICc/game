@@ -16,6 +16,9 @@ using namespace game;
 const double TileButtonScale = 2.0;
 const double TileSize = 32;
 const double TileMapScale = 0.8;
+const int ScreenWidth = 1366;
+const int ScreenHeight = 786;
+const int HudWidth = 250;
 const int MapX = 75;
 const int MapY = 110;
 
@@ -32,7 +35,34 @@ void LevelController::OnStart()
 
 void LevelController::OnUpdate()
 {
-    //
+    for (const auto& child: _rightHud->Children())
+    {
+        if (child->Name() == "hero-health-text")
+        {
+            auto text = std::dynamic_pointer_cast<spic::Text>(child);
+            text->Content("♥ " + std::to_string(_levelData.HeroHealth->Health()));
+        }
+        else if (child->Name() == "military-base-health-text")
+        {
+            auto text = std::dynamic_pointer_cast<spic::Text>(child);
+            text->Content("♥ " + std::to_string(_levelData.MilitaryBaseHealth->Health()));
+        }
+        else if (child->Name() == "money-text")
+        {
+            auto text = std::dynamic_pointer_cast<spic::Text>(child);
+            text->Content("$ " + std::to_string(_levelData.Balance));
+        }
+        else if (child->Name() == "wave-text")
+        {
+            auto text = std::dynamic_pointer_cast<spic::Text>(child);
+            text->Content(std::to_string(_levelData.CurrentWave()));
+        }
+        else if (child->Name() == "enemies-text")
+        {
+            auto text = std::dynamic_pointer_cast<spic::Text>(child);
+            text->Content(std::to_string(_levelData.Waves.front().RemainingEnemies()));
+        }
+    }
 }
 
 void LevelController::OnTriggerEnter2D(const spic::Collider& collider)
@@ -58,57 +88,128 @@ LevelController::LevelController(game::LevelWithTiles level, std::shared_ptr<gam
                                                                                                                                                                                                                        500,
                                                                                                                                                                                                                        std::move(waves)
                                                                                                                                                                                                                }),
-                                                                                                                                                                                                               _levelMode(LevelMode::TileMode)
+                                                                                                                                                                                                               _levelMode(LevelMode::TileMode),
+                                                                                                                                                                                                               _strongPathEnabled(false)
 {
 }
 
 std::shared_ptr<spic::GameObject> LevelController::CreateHUD()
 {
-    int screenWidth = 1366;
-    int screenHeight = 786;
-    int hudWidth = 250;
-
-    auto rightHud = std::make_shared<spic::GameObject>("RightHud", "hud", Layer::HUD);
+    _rightHud = std::make_shared<spic::GameObject>("RightHud", "hud", Layer::HUD);
     auto rightHudSprite = std::make_shared<spic::Sprite>("resources/sprites/hud/white_block.png", false, false, 3, 1);
-    GameObjectUtil::LinkComponent(rightHud, rightHudSprite);
+    GameObjectUtil::LinkComponent(_rightHud, rightHudSprite);
 
-    rightHud->Transform().position.x = screenWidth - (hudWidth / TileButtonScale);
-    rightHud->Transform().position.y = screenHeight / TileButtonScale;
+    _rightHud->Transform().position.x = ScreenWidth - (HudWidth / TileButtonScale);
+    _rightHud->Transform().position.y = ScreenHeight / TileButtonScale;
 
-    auto buttonText = std::make_shared<spic::Text>("tile-title-text", "tile_title_text", Layer::HUD, hudWidth, 100);
+    auto buttonText = std::make_shared<spic::Text>("tile-title-text", "tile_title_text", Layer::HUD, HudWidth, 100);
     buttonText->Size(24);
     buttonText->TextAlignment(Alignment::center);
     buttonText->Transform().position.y = -(TileSize + 2) * (TileButtonScale * 5);
-    GameObjectUtil::LinkChild(rightHud, buttonText);
+    GameObjectUtil::LinkChild(_rightHud, buttonText);
 
-    auto streetButton = InitializeTileButton(rightHud, "resources/sprites/tiles/street.png", 18, "Straat");
+    auto streetButton = InitializeTileButton(_rightHud, "resources/sprites/tiles/street.png", 18, "Straat");
     streetButton->Transform().position.y = -(TileSize + 2) * (TileButtonScale * 4);
 
-    auto grassButton = InitializeTileButton(rightHud, "resources/sprites/tiles/grass.png", 6, "Gras");
+    auto grassButton = InitializeTileButton(_rightHud, "resources/sprites/tiles/grass.png", 6, "Gras");
     grassButton->Transform().position.y = -(TileSize + 2) * (TileButtonScale * 3);
 
-    auto sandButton = InitializeTileButton(rightHud, "resources/sprites/tiles/sand.png", 6, "Zand");
+    auto sandButton = InitializeTileButton(_rightHud, "resources/sprites/tiles/sand.png", 6, "Zand");
     sandButton->Transform().position.y = -(TileSize + 2) * (TileButtonScale * 2);
 
     auto completePathButton = ButtonPrefabFactory::CreateOutlineButton("complete-path-button", "complete_path_button", "Finish Path", true);
     completePathButton->Transform().scale = 0.8;
-    completePathButton->OnClick([this, rightHud]() {
-        bool pathCompleted = CheckIfPathIsComplete();
+
+    completePathButton->OnClick([this]() {
+        auto& rightHud = _rightHud;
+        bool pathCompleted = CheckIfPathIsComplete(_levelData.Graph);
         if (pathCompleted)
         {
             Debug::Log("Completed Correctly!!");
             _levelMode = LevelMode::TowerMode;
             auto childrenCopy = rightHud->Children();
-            for(const auto& child : childrenCopy) {
+            for (const auto& child: childrenCopy)
+            {
                 rightHud->RemoveChild(child);
             }
 
-            //TODO instantiate new HUD for Tower
+            auto enemiesLeftTextHeader = std::make_shared<spic::Text>("enemies-text-header", "default", Layer::HUD, HudWidth, 20);
+            enemiesLeftTextHeader->Size(18);
+            enemiesLeftTextHeader->TextAlignment(Alignment::center);
+            enemiesLeftTextHeader->Transform().position.y = 100;
+            enemiesLeftTextHeader->Content("Vijanden resterend:");
+
+            auto enemiesText = std::make_shared<spic::Text>("enemies-text", "default", Layer::HUD, HudWidth, 20);
+            enemiesText->Size(18);
+            enemiesText->TextAlignment(Alignment::center);
+            enemiesText->Transform().position.y = 120;
+            enemiesText->Content(std::to_string(_levelData.Waves.front().RemainingEnemies()));
+
+            auto waveTextHeader = std::make_shared<spic::Text>("wave-text-header", "default", Layer::HUD, HudWidth, 20);
+            waveTextHeader->Size(18);
+            waveTextHeader->TextAlignment(Alignment::center);
+            waveTextHeader->Transform().position.y = 150;
+            waveTextHeader->Content("Ronde:");
+
+            auto waveText = std::make_shared<spic::Text>("wave-text", "default", Layer::HUD, HudWidth, 20);
+            waveText->Size(18);
+            waveText->TextAlignment(Alignment::center);
+            waveText->Transform().position.y = 170;
+            waveText->Content(std::to_string(_levelData.CurrentWave()));
+
+            auto moneyText = std::make_shared<spic::Text>("money-text", "default", Layer::HUD, HudWidth, 20);
+            moneyText->Size(18);
+            moneyText->TextAlignment(Alignment::center);
+            moneyText->Transform().position.y = 200;
+            moneyText->Content("$ " + std::to_string(_levelData.Balance));
+
+            auto heroHealthTextHeader = std::make_shared<spic::Text>("hero-health-text-header", "default", Layer::HUD, HudWidth, 20);
+            heroHealthTextHeader->Size(18);
+            heroHealthTextHeader->TextAlignment(Alignment::center);
+            heroHealthTextHeader->Transform().position.y = 230;
+            heroHealthTextHeader->Content("Hero:");
+
+            auto heroHealthText = std::make_shared<spic::Text>("hero-health-text", "default", Layer::HUD, HudWidth, 20);
+            heroHealthText->Size(18);
+            heroHealthText->TextAlignment(Alignment::center);
+            heroHealthText->Transform().position.y = 250;
+            heroHealthText->Content("♥ " + std::to_string(_levelData.HeroHealth->Health()));
+
+            auto militaryBaseHealthTextHeader = std::make_shared<spic::Text>("military-base-health-text-header", "default", Layer::HUD, HudWidth, 20);
+            militaryBaseHealthTextHeader->Size(18);
+            militaryBaseHealthTextHeader->TextAlignment(Alignment::center);
+            militaryBaseHealthTextHeader->Transform().position.y = 280;
+            militaryBaseHealthTextHeader->Content("Militaire Basis:");
+
+            auto militaryBaseHealthText = std::make_shared<spic::Text>("military-base-health-text", "default", Layer::HUD, HudWidth, 20);
+            militaryBaseHealthText->Size(18);
+            militaryBaseHealthText->TextAlignment(Alignment::center);
+            militaryBaseHealthText->Transform().position.y = 300;
+            militaryBaseHealthText->Content("♥ " + std::to_string(_levelData.MilitaryBaseHealth->Health()));
+
+            auto nextWaveButton = ButtonPrefabFactory::CreateOutlineButton("next-wave-button", "default", "Next Wave", true);
+            nextWaveButton->Transform().scale = 0.8;
+            nextWaveButton->OnClick([]() {
+                spic::Debug::LogWarning("Next wave not implemented!");
+            });
+            nextWaveButton->Transform().position.y = 350;
+
+            GameObjectUtil::LinkChild(rightHud, enemiesLeftTextHeader);
+            GameObjectUtil::LinkChild(rightHud, enemiesText);
+            GameObjectUtil::LinkChild(rightHud, waveTextHeader);
+            GameObjectUtil::LinkChild(rightHud, waveText);
+            GameObjectUtil::LinkChild(rightHud, moneyText);
+            GameObjectUtil::LinkChild(rightHud, heroHealthTextHeader);
+            GameObjectUtil::LinkChild(rightHud, heroHealthText);
+            GameObjectUtil::LinkChild(rightHud, militaryBaseHealthTextHeader);
+            GameObjectUtil::LinkChild(rightHud, militaryBaseHealthText);
+            GameObjectUtil::LinkChild(rightHud, nextWaveButton);
         }
         else
         {
             auto validationText = std::dynamic_pointer_cast<Text>(GameObject::Find("path-validation-text"));
-            if(validationText == nullptr) { //Check if validation text allready exists
+            if (validationText == nullptr)
+            { //Check if validation text allready exists
                 validationText = std::make_shared<Text>("path-validation-text", "text", Layer::HUD, 200, 100);
                 validationText->Transform().position.y = (TileSize + 2) * TileButtonScale;
                 validationText->TextAlignment(Alignment::center);
@@ -119,12 +220,12 @@ std::shared_ptr<spic::GameObject> LevelController::CreateHUD()
 
         }
     });
-    GameObjectUtil::LinkChild(rightHud, completePathButton);
+    GameObjectUtil::LinkChild(_rightHud, completePathButton);
 
     int result = std::accumulate(_buttonTileAmounts.begin(), _buttonTileAmounts.end(), 0, [](const int previous, const std::pair<std::shared_ptr<spic::Button>, int>& p) { return previous + p.second; });
     buttonText->Content("Tegels (" + std::to_string(result) + ")");
 
-    return rightHud;
+    return _rightHud;
 }
 
 std::shared_ptr<spic::GameObject> LevelController::BuildLevel(const std::shared_ptr<game::HealthBehaviour>& endTowerHealthBehaviour)
@@ -259,7 +360,7 @@ void LevelController::HandleTileClick(const game::MapNode& clickedTile)
     if (_selectedButton != nullptr)
     {
         auto currentTileType = clickedTile.TileType;
-        if (currentTileType == TileType::Bushes || currentTileType == TileType::Street || currentTileType == TileType::Sand || currentTileType == TileType::Grass)
+        if ((_strongPathEnabled && currentTileType != TileType::Start && currentTileType != TileType::End) || currentTileType == TileType::Bushes || currentTileType == TileType::Street || currentTileType == TileType::Sand || currentTileType == TileType::Grass)
         {
             auto selectedButtonSprite = _selectedButton->GetComponent<spic::Sprite>();
             auto clickedTileSprite = clickedTile.TileObject->GetComponent<spic::Sprite>();
@@ -275,7 +376,7 @@ void LevelController::HandleTileClick(const game::MapNode& clickedTile)
             else
             {
                 if (_buttonTileAmounts[_selectedButton] == 0) return;
-                if (clickedTileSpriteTileType != TileType::Bushes)
+                if (clickedTileSpriteTileType != TileType::Bushes && !_strongPathEnabled)
                 {
                     auto writeBackButton = std::dynamic_pointer_cast<Button>(GameObject::Find("tile-button-" + clickedTileSprite->Texture()));
                     auto writeBackText = std::dynamic_pointer_cast<Text>(writeBackButton->Children()[0]);
@@ -303,9 +404,8 @@ void LevelController::HandleTileClick(const game::MapNode& clickedTile)
     }
 }
 
-bool LevelController::CheckIfPathIsComplete()
+bool LevelController::CheckIfPathIsComplete(std::map<std::string, MapNode> graphCopy)
 {
-    auto graphCopy = _levelData.Graph;
     MapNode start;
     for (const auto&[key, value]: graphCopy)
     {
@@ -334,3 +434,22 @@ bool LevelController::CheckIfPathIsComplete()
     return false;
 }
 
+void LevelController::SetUnlimitedPath()
+{
+    for (auto&[button, tileAmount]: _buttonTileAmounts)
+    {
+        tileAmount = 625;
+        auto HUDButtonText = std::dynamic_pointer_cast<spic::Text>(button->Children()[0]);
+        HUDButtonText->Content(std::to_string(tileAmount));
+    }
+}
+
+void LevelController::SetStrongPath()
+{
+    _strongPathEnabled = true;
+}
+
+void LevelController::SetUnlimitedMoney()
+{
+    _levelData.Balance += 1000000000;
+}

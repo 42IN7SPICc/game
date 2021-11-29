@@ -15,6 +15,8 @@ namespace game
             static double Distance(const spic::Point& pointDiff);
 
             static spic::Point PointDiff(const spic::Point& point1, const spic::Point& point2);
+
+            static double Degrees(const spic::Point& point1, const spic::Point& point2);
     };
 }
 

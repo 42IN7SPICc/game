@@ -36,16 +36,26 @@ namespace game
 
             std::shared_ptr<spic::GameObject> CreateMapButton();
 
+            void SetUnlimitedPath();
+
+            void SetStrongPath();
+
+            void SetUnlimitedMoney();
+
         private:
             const game::LevelWithTiles _level;
             game::LevelData _levelData;
             std::shared_ptr<spic::Button> _selectedButton;
+            std::shared_ptr<spic::GameObject> _rightHud;
             std::map<std::shared_ptr<spic::Button>, int> _buttonTileAmounts;
             game::LevelMode _levelMode;
+            bool _strongPathEnabled;
 
             std::shared_ptr<spic::Button> InitializeTileButton(const std::shared_ptr<spic::GameObject>& HUD, const std::string& texture, int tileAmount, const std::string& tileTitle);
+
             void HandleTileClick(const game::MapNode& clickedTile);
-            bool CheckIfPathIsComplete();
+
+            static bool CheckIfPathIsComplete(std::map<std::string, MapNode> graphCopy);
     };
 }
 
