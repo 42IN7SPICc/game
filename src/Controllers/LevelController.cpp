@@ -107,9 +107,13 @@ std::shared_ptr<spic::GameObject> LevelController::CreateHUD()
 
     auto completePathButton = ButtonPrefabFactory::CreateOutlineButton("complete-path-button", "complete_path_button", "Finish Path", true);
     completePathButton->Transform().scale = 0.8;
-    completePathButton->OnClick([this, rightHud]() {
-        bool pathCompleted = CheckIfPathIsComplete();
-        if (pathCompleted || true)
+
+    std::weak_ptr<spic::GameObject> weakHud = rightHud;
+    completePathButton->OnClick([this, weakHud]() {
+        if(weakHud.expired()) return;
+        auto rightHud = weakHud.lock();
+        bool pathCompleted = CheckIfPathIsComplete(_levelData.Graph);
+        if (pathCompleted)
         {
             Debug::Log("Completed Correctly!!");
             _levelMode = LevelMode::TowerMode;
@@ -354,9 +358,10 @@ void LevelController::HandleTileClick(const game::MapNode& clickedTile)
     }
 }
 
-bool LevelController::CheckIfPathIsComplete() const
+bool LevelController::CheckIfPathIsComplete(std::map<std::string, MapNode> graphCopy)
 {
-    auto graphCopy = _levelData.Graph;
+    Debug::Log("Iets met path");
+    //auto graphCopy = _levelData.Graph;
     MapNode start;
     for (const auto&[key, value]: graphCopy)
     {
