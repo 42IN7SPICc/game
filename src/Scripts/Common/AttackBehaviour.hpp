@@ -50,23 +50,19 @@ namespace game
 
             void Damage(int damage);
 
-            [[nodiscard]] bool MultiTargeting() const;
-
-            void MultiTargeting(bool multiTargeting);
-
             [[nodiscard]] double BulletSpeed() const;
 
             void BulletSpeed(double bulletSpeed);
 
-            const std::string& TargetTag() const;
+            [[nodiscard]] const std::string& TargetTag() const;
 
             void TargetTag(const std::string& targetTag);
 
-            BulletType BulletType() const;
+            [[nodiscard]] game::BulletType BulletType() const;
 
-            void BulletType(BulletType bulletType);
+            void BulletType(game::BulletType bulletType);
 
-            double DamageRadius() const;
+            [[nodiscard]] double DamageRadius() const;
 
             void DamageRadius(double damageRadius);
     };
