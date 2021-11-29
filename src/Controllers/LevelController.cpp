@@ -110,7 +110,7 @@ std::shared_ptr<spic::GameObject> LevelController::CreateHUD()
 
     std::weak_ptr<spic::GameObject> weakHud = rightHud;
     completePathButton->OnClick([this, weakHud]() {
-        if(weakHud.expired()) return;
+        if (weakHud.expired()) return;
         auto rightHud = weakHud.lock();
         bool pathCompleted = CheckIfPathIsComplete(_levelData.Graph);
         if (pathCompleted)
@@ -360,8 +360,6 @@ void LevelController::HandleTileClick(const game::MapNode& clickedTile)
 
 bool LevelController::CheckIfPathIsComplete(std::map<std::string, MapNode> graphCopy)
 {
-    Debug::Log("Iets met path");
-    //auto graphCopy = _levelData.Graph;
     MapNode start;
     for (const auto&[key, value]: graphCopy)
     {
