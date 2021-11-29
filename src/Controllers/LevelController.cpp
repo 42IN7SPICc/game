@@ -93,7 +93,11 @@ std::shared_ptr<spic::GameObject> LevelController::CreateHUD()
 
     auto completePathButton = ButtonPrefabFactory::CreateOutlineButton("complete-path-button", "complete_path_button", "Finish Path", true);
     completePathButton->Transform().scale = 0.8;
-    completePathButton->OnClick([this, rightHud]() {
+
+    std::weak_ptr<spic::GameObject> weakHud = rightHud;
+    completePathButton->OnClick([this, weakHud]() {
+        if(weakHud.expired()) return;
+        auto rightHud = weakHud.lock();
         bool pathCompleted = CheckIfPathIsComplete(_levelData.Graph);
         if (pathCompleted)
         {
