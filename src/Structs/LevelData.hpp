@@ -15,7 +15,7 @@ namespace game
         const size_t TotalWaves;
         size_t Balance;
         std::queue<WaveData> Waves;
-        std::map<std::string, game::MapNode> Graph {};
+        std::map<std::string, game::MapNode> Graph;
 
         [[nodiscard]] size_t CurrentWave() const;
     };
