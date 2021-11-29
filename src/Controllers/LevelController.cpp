@@ -173,13 +173,13 @@ std::shared_ptr<spic::GameObject> LevelController::BuildLevel(const std::shared_
     for (auto&[key, node]: _levelData.Graph)
     {
         if (node.X > 0)
-            node.Neighbours.push_back(std::to_string(node.X - 1) + "-" + std::to_string(node.Y));
+            node.NeighbourStrings.push_back(std::to_string(node.X - 1) + "-" + std::to_string(node.Y));
         if (node.X < 24)
-            node.Neighbours.push_back(std::to_string(node.X + 1) + "-" + std::to_string(node.Y));
+            node.NeighbourStrings.push_back(std::to_string(node.X + 1) + "-" + std::to_string(node.Y));
         if (node.Y > 0)
-            node.Neighbours.push_back(std::to_string(node.X) + "-" + std::to_string(node.Y - 1));
+            node.NeighbourStrings.push_back(std::to_string(node.X) + "-" + std::to_string(node.Y - 1));
         if (node.Y < 24)
-            node.Neighbours.push_back(std::to_string(node.X) + "-" + std::to_string(node.Y + 1));
+            node.NeighbourStrings.push_back(std::to_string(node.X) + "-" + std::to_string(node.Y + 1));
     }
 
     return tileMap;
@@ -313,7 +313,7 @@ bool LevelController::CheckIfPathIsComplete()
             start = value;
     }
 
-    if (start.Neighbours.empty()) return false;
+    if (start.NeighbourStrings.empty()) return false;
 
     std::vector<std::string> pathTiles;
     pathTiles.push_back(std::to_string(start.X) + "-" + std::to_string(start.Y));
@@ -321,7 +321,7 @@ bool LevelController::CheckIfPathIsComplete()
     {
         auto& tile = graphCopy[pathTiles[0]];
         tile.Visited = true;
-        for (auto& stringNeighbour: tile.Neighbours)
+        for (auto& stringNeighbour: tile.NeighbourStrings)
         {
             const auto& neighbour = graphCopy[stringNeighbour];
             if (neighbour.TileType == TileType::End) return true;

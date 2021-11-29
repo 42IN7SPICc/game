@@ -10,7 +10,7 @@ namespace game
 {
     struct MapNode
     {
-        std::vector<std::string> Neighbours {};
+        std::vector<std::string> NeighbourStrings {};
         int X;
         int Y;
         game::TileType OriginalTileType;
