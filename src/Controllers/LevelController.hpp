@@ -42,6 +42,7 @@ namespace game
 
             void SetUnlimitedMoney();
 
+            std::map<std::string, MapNode>& GetGraph();
         private:
             const game::LevelWithTiles _level;
             game::LevelData _levelData;

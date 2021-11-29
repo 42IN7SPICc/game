@@ -2,11 +2,21 @@
 #define SPIC_GAME_ENEMYMOVEMENTBEHAVIOUR_HPP
 
 #include "BehaviourScript.hpp"
+#include <string>
+#include <map>
+#include "../../Structs/MapNode.hpp"
+
 
 namespace game
 {
     class EnemyMovementBehaviour : public spic::BehaviourScript
     {
+        private:
+            std::string _fromNode;
+            std::string _currentNode;
+            std::string _toNode;
+            std::map<std::string, game::MapNode> _graph;
+
         public:
             void OnStart() override;
 

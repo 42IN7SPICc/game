@@ -462,3 +462,8 @@ void LevelController::SetUnlimitedMoney()
 {
     _levelData.Balance += 1000000000;
 }
+
+std::map<std::string, MapNode>& LevelController::GetGraph()
+{
+    return _levelData.Graph;
+}
