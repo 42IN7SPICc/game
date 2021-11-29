@@ -44,7 +44,7 @@ void LevelController::OnUpdate()
         if (!_levelData.Waves.empty())
         {
             auto& wave = _levelData.Waves.front();
-            if (wave.RemainingEnemies() > 0)
+            if (!wave.EnemyQueue.empty())
             {
                 auto&[timeTillNextEnemy, nextEnemy] = wave.EnemyQueue.front();
                 if (_timePassed >= timeTillNextEnemy)
