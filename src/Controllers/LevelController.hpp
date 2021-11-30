@@ -17,9 +17,19 @@
 
 namespace game
 {
+    /**
+     * @brief A controller to handle changes in the Level.
+     */
     class LevelController : public spic::BehaviourScript
     {
         public:
+            /**
+             * @brief Constructs a new instance of a LevelController with given settings.
+             * @param level The data of the current level.
+             * @param heroHealth The health of the hero.
+             * @param militaryBaseHealth The health of the end point.
+             * @param waves The waves of the level.
+             */
             LevelController(game::LevelWithTiles level, std::shared_ptr<game::HealthBehaviour> heroHealth, std::shared_ptr<game::HealthBehaviour> militaryBaseHealth, std::queue<game::WaveData> waves);
 
             /**
@@ -50,24 +60,60 @@ namespace game
              */
             void OnTriggerStay2D(const spic::Collider& collider) override;
 
+            /**
+             * @brief Builds a level with a given health for the end tower.
+             * @param endTowerHealthBehaviour The health of the end tower.
+             * @return The game object containing the level.
+             */
             std::shared_ptr<spic::GameObject> BuildLevel(const std::shared_ptr<game::HealthBehaviour>& endTowerHealthBehaviour);
 
+            /**
+             * @brief Creates a HUD for the level.
+             * @return The game object containing the hud.
+             */
             std::shared_ptr<spic::GameObject> CreateHUD();
 
+            /**
+             * @brief Creates a button for the map.
+             * @return The game object containing the button.
+             */
             std::shared_ptr<spic::GameObject> CreateMapButton();
 
+            /**
+             * @brief The cheat for unlimited path tiles.
+             */
             void SetUnlimitedPath();
 
+            /**
+             * @brief The cheat to allow path tiles everywhere.
+             */
             void SetStrongPath();
 
+            /**
+             * @brief The cheat for unlimited money.
+             */
             void SetUnlimitedMoney();
 
+            /**
+             * @brief The cheat for an invincible hero.
+             */
             void SetInvincibility() const;
 
+            /**
+             * @brief Get the graph containing all map nodes based on the location.
+             * @return The map with nodes and their location.
+             */
             std::map<std::string, MapNode>& GetGraph();
 
+            /**
+             * @brief Get the path for enemies to walk on.
+             * @return The path to walk on.
+             */
             std::queue<std::string> GetPath() const;
-            
+
+            /**
+             * @brief Remove all the dead enemies from the current wave.
+             */
             void ButcherEnemies();
 
         private:

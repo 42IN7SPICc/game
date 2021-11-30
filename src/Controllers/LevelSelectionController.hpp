@@ -11,13 +11,29 @@
 
 namespace game
 {
+    /**
+     * @brief A script to handle level loading and selection.
+     */
     class LevelSelectionController : spic::BehaviourScript
     {
         public:
+            /**
+             * @brief Initialize all level to use in the game.
+             */
             void InitializeLevels();
 
+            /**
+             * @brief Load a level with a given file path.
+             * @param file The path to the level file.
+             * @return The object containing level data.
+             */
             [[nodiscard]] LevelWithTiles LoadLevel(const std::string& file) const;
 
+            /**
+             * @brief Get level information by a given level name.
+             * @param levelName The name of the level.
+             * @return The data of the level.
+             */
             [[nodiscard]] Level GetLevelDto(const std::string& levelName) const;
 
         private:
