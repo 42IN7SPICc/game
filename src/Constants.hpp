@@ -35,6 +35,7 @@ const double HeroBulletRange = 500; // random chosen bullet speed (looks alright
 //Desmond Doss (first hero)
 const int DesmondDossDamage = 2; // The damage Desmond Doss does
 const int DesmondDossDefense = 3; // The defense Desmond Doss has
+const int DesmondDossHealAbilityAmount = 5; // The amount Desmond Doss heals when activating his ability
 
 //Enemy Panzer (first enemy)
 const double PanzerEnemyFireRate = 3; // The shooting interval of the panzer enemy

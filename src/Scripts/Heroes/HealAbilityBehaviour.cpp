@@ -22,7 +22,7 @@ void game::HealAbilityBehaviour::OnUpdate()
     {
         if (_coolDownBehaviour->CooledDown())
         {
-            _healthBehaviour->Health(_healthBehaviour->Health() + 1);
+            _healthBehaviour->Health(_healthBehaviour->Health() + DesmondDossHealAbilityAmount);
             _coolDownBehaviour->CooledDown(false);
         }
     }
