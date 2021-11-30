@@ -60,10 +60,6 @@ void LevelController::OnUpdate()
                     wave.EnemyQueue.pop();
                 }
             }
-            else if (wave.RemainingEnemies() == 0)
-            {
-                _levelData.Waves.pop();
-            }
         }
     }
 
@@ -166,7 +162,6 @@ std::shared_ptr<spic::GameObject> LevelController::CreateHUD()
             {
                 rightHud->RemoveChild(child);
             }
-
             auto enemiesLeftTextHeader = std::make_shared<spic::Text>("enemies-text-header", "default", Layer::HUD, HudWidth, 20);
             enemiesLeftTextHeader->Size(18);
             enemiesLeftTextHeader->TextAlignment(Alignment::center);
@@ -223,8 +218,12 @@ std::shared_ptr<spic::GameObject> LevelController::CreateHUD()
 
             auto nextWaveButton = ButtonPrefabFactory::CreateOutlineButton("next-wave-button", "default", "Next Wave", true);
             nextWaveButton->Transform().scale = 0.8;
-            nextWaveButton->OnClick([]() {
-                spic::Debug::LogWarning("Next wave not implemented!");
+            nextWaveButton->OnClick([this]() {
+                auto& wave = _levelData.Waves.front();
+                if (wave.RemainingEnemies() == 0)
+                {
+                    _levelData.Waves.pop();
+                }
             });
             nextWaveButton->Transform().position.y = 350;
 
@@ -481,6 +480,7 @@ std::tuple<bool, std::queue<std::string>> LevelController::CheckIfPathIsComplete
         {
             const auto& neighbour = graphCopy[stringNeighbour];
             if (neighbour.TileType == TileType::End) {
+                path.push(stringNeighbour);
                 return {true, path};
             }
             if ((neighbour.TileType == TileType::Street || neighbour.TileType == TileType::Sand || neighbour.TileType == TileType::Grass || neighbour.TileType == TileType::Bridge) && !neighbour.Visited) {

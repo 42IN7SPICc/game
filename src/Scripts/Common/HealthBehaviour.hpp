@@ -13,6 +13,8 @@ namespace game
             std::shared_ptr<spic::Animator> _diedAnimator;
             int _health;
             int _maxHealth;
+            double _despawnDuration;
+            double _despawnTime;
 
         public:
             [[nodiscard]] int Health() const;
@@ -23,7 +25,7 @@ namespace game
 
             void Damage(int damage);
 
-            HealthBehaviour(std::shared_ptr<spic::Animator> diedAnimator, int maxHealth);
+            HealthBehaviour(std::shared_ptr<spic::Animator> diedAnimator, int maxHealth, double despawnTime = 0);
 
             void OnStart() override;
 
