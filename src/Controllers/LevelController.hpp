@@ -46,7 +46,7 @@ namespace game
 
             std::map<std::string, MapNode>& GetGraph();
 
-            std::queue<std::string> GetPath() const;
+            [[nodiscard]] std::queue<std::string> GetPath() const;
             
             void ButcherEnemies();
 
