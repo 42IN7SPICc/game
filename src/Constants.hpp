@@ -28,6 +28,12 @@ const int HeroMass = 50; //random chosen mass
 const int HeroVelocity = 50; //random chosen velocity (looks good)
 const double HeroBulletSpeed = 17.5; // random chosen bullet speed (looks alright)
 
+//Enemy Panzer (first enemy)
+const double PanzerEnemyFireRate = 3; // The shooting interval of the panzer enemy
+const int PanzerEnemyRange = 500; // The detection range of the hero for the panzer enemy
+const int PanzerEnemyDamage = 15; // The damage of a bullet for the panzer enemy
+const int PanzerEnemyBulletSpeed = 25; // The bullet velocity of the panzer enemy
+
 //Confetti
 const int AmountOfConfetti = 100;
 const int ConfettiYRangeMin = -800;
