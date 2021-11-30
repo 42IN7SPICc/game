@@ -11,6 +11,21 @@ const int ScreenHeight = 786;
 const int HudWidth = 250;
 const int HealAbilityCoolDown = 5;
 
+//Enemey
+const double EnemyScale = 0.1; //default scale on 1
+const int EnemyWidth = 200; //width of enemy image
+const int EnemyHeight = 320; //height of enemy image
+const int EnemyMass = 50; //random chosen mass
+const int EnemyVelocity = 50; //random chosen velocity
+
+//Hero
+const double HeroScale = 0.1; //default scale on 1
+const int HeroWidth = 200; //width of hero image
+const int HeroHeight = 320; //height of hero image
+const int HeroMass = 50; //random chosen mass
+const int HeroVelocity = 50; //random chosen velocity (looks good)
+const double HeroBulletSpeed = 17.5; // random chosen bullet speed (looks alright)
+
 //Confetti
 const int AmountOfConfetti = 100;
 const int ConfettiYRangeMin = -800;

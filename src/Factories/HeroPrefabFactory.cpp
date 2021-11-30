@@ -11,15 +11,9 @@
 #include "../Scripts/Common/UserAttackBehaviour.hpp"
 #include "../Utils/AnimatorUtil.hpp"
 #include "../Utils/GameObjectUtil.hpp"
+#include "../Constants.hpp"
 
 #include <stdexcept>
-
-const double HeroScale = 0.1; //default scale on 1
-const int HeroWidth = 200; //width of hero image
-const int HeroHeight = 320; //height of hero image
-const int HeroMass = 50; //random chosen mass
-const int HeroVelocity = 50; //random chosen velocity (looks good)
-const double HeroBulletSpeed = 17.5; // random chosen bullet speed (looks alright)
 
 std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateHero(game::HeroName name)
 {

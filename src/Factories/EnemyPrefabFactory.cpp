@@ -5,21 +5,14 @@
 #include "../Scripts/Common/AttackBehaviour.hpp"
 #include "../Scripts/Common/HealthBehaviour.hpp"
 #include "../Scripts/Enemies/EnemyMovementBehaviour.hpp"
-#include "../Utils/AnimatorUtil.hpp"
 #include "../Utils/GameObjectUtil.hpp"
+#include "../Constants.hpp"
 
 #include "Animator.hpp"
 #include "CircleCollider.hpp"
 #include "RigidBody.hpp"
-#include "../Scripts/Common/DamageBehaviour.hpp"
 
 #include <stdexcept>
-
-const double EnemyScale = 0.1; //default scale on 1
-const int EnemyWidth = 200; //width of enemy image
-const int EnemyHeight = 320; //height of enemy image
-const int EnemyMass = 50; //random chosen mass
-const int EnemyVelocity = 50; //random chosen velocity
 
 using namespace game;
 
