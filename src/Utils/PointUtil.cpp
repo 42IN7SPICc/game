@@ -11,6 +11,13 @@ spic::Point game::PointUtil::CalculateDirectionalPoint(const spic::Point& from, 
     return {pointDiff.x / distance * multiplier, pointDiff.y / distance * multiplier};
 }
 
+spic::Point game::PointUtil::CalculateDirectionalPoint(const spic::Point& from, const spic::Point& to, double multiplier, double& distance)
+{
+    auto pointDiff = PointDiff(from, to);
+    distance = Distance(pointDiff);
+    return {pointDiff.x / distance * multiplier, pointDiff.y / distance * multiplier};
+}
+
 double game::PointUtil::Distance(const spic::Point& from, const spic::Point& to)
 {
     auto pointDiff = PointDiff(from, to);

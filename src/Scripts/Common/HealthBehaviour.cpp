@@ -2,10 +2,13 @@
 #include <Input.hpp>
 #include <GameObject.hpp>
 #include <Debug.hpp>
+#include <Time.hpp>
 
-game::HealthBehaviour::HealthBehaviour(std::shared_ptr<spic::Animator> diedAnimator, int maxHealth) : _maxHealth(maxHealth),
-                                                                                                      _health(maxHealth),
-                                                                                                      _diedAnimator(std::move(diedAnimator))
+game::HealthBehaviour::HealthBehaviour(std::shared_ptr<spic::Animator> diedAnimator, int maxHealth, double despawnTime) : _maxHealth(maxHealth),
+                                                                                                                          _health(maxHealth),
+                                                                                                                          _diedAnimator(std::move(diedAnimator)),
+                                                                                                                          _despawnDuration(despawnTime),
+                                                                                                                          _despawnTime(despawnTime)
 {
 }
 
@@ -40,7 +43,13 @@ void game::HealthBehaviour::OnStart()
 
 void game::HealthBehaviour::OnUpdate()
 {
-    // Not implemented
+    if(_health <= 0 && _despawnTime != 0) {
+        _despawnDuration -= spic::Time::DeltaTime() * spic::Time::TimeScale();
+
+        if(_despawnDuration <= 0) {
+            GameObject().lock()->Active(false);
+        }
+    }
 }
 
 void game::HealthBehaviour::OnTriggerEnter2D(const spic::Collider& collider)

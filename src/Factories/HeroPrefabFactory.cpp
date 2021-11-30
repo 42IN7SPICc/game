@@ -8,7 +8,7 @@
 #include "../Enums/SortingLayer.hpp"
 #include "../Scripts/Heroes/HealAbilityBehaviour.hpp"
 #include "../Scripts/Common/HealthBehaviour.hpp"
-#include "../Scripts/Common/UserMovementBehaviour.hpp"
+#include "../Scripts/Heroes/UserMovementBehaviour.hpp"
 #include "../Scripts/Common/UserAttackBehaviour.hpp"
 #include "../Utils/AnimatorUtil.hpp"
 #include "../Utils/GameObjectUtil.hpp"

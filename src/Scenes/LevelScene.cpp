@@ -1,8 +1,6 @@
 #include "LevelScene.hpp"
 
 #include "GameObject.hpp"
-#include "Sprite.hpp"
-#include "Text.hpp"
 
 #include "../Controllers/LevelController.hpp"
 #include "../Enums/Layer.hpp"
@@ -19,16 +17,13 @@ using namespace game;
 
 const double TileButtonScale = 2.0;
 const double TileSize = 32;
-const double TileMapScale = 0.8;
-const int MapX = 75;
-const int MapY = 110;
+const double TileMapScale = 0.985;
+const int MapX = TileSize / 2 + 155;
+const int MapY = TileSize / 2;
 
 LevelScene::LevelScene(LevelWithTiles& levelWithTiles)
 {
     auto background = BackgroundPrefabFactory::CreateBackground(BackgroundName::Menu);
-
-    auto titleText = std::make_shared<spic::Text>("Title Text", "text_title", Layer::HUD, 1166, 100, levelWithTiles.Title, "resources/fonts/capture_it.otf", 35, Alignment::left, Color::white());
-    titleText->Transform().position = {1366 / 2, 50};
 
     auto hero = game::HeroPrefabFactory::CreateHero(DesmondDoss);
     hero->Active(false);
@@ -53,7 +48,6 @@ LevelScene::LevelScene(LevelWithTiles& levelWithTiles)
     Contents().push_back(levelAudioSource);
     Contents().push_back(mainGameObject);
     Contents().push_back(background);
-    Contents().push_back(titleText);
     Contents().push_back(tilesMapObject);
 
     Contents().push_back(levelController->CreateHUD());

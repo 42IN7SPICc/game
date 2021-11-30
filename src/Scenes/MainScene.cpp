@@ -7,7 +7,7 @@
 #include "../Factories/HeroPrefabFactory.hpp"
 #include "../Utils/RandomUtil.hpp"
 #include "../Scripts/Common/UserAttackBehaviour.hpp"
-#include "../Scripts/Common/UserMovementBehaviour.hpp"
+#include "../Scripts/Heroes/UserMovementBehaviour.hpp"
 #include "../Controllers/SaveGameController.hpp"
 #include "../Factories/AudioSourcePrefabFactory.hpp"
 

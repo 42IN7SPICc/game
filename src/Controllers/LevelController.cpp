@@ -6,6 +6,7 @@
 #include "../Utils/TileUtil.hpp"
 #include "../Scripts/Common/GameLostBehaviour.hpp"
 #include "../Factories/ButtonPrefabFactory.hpp"
+#include "../Factories/EnemyPrefabFactory.hpp"
 #include "../Factories/TowerPrefabFactory.hpp"
 #include <numeric>
 #include <cmath>
@@ -16,12 +17,12 @@ using namespace game;
 
 const double TileButtonScale = 2.0;
 const double TileSize = 32;
-const double TileMapScale = 0.8;
+const double TileMapScale = 0.985;
+const int MapX = TileSize / 2 + 155;
+const int MapY = TileSize / 2;
 const int ScreenWidth = 1366;
 const int ScreenHeight = 786;
 const int HudWidth = 250;
-const int MapX = 75;
-const int MapY = 110;
 
 void LevelController::OnStart()
 {
@@ -58,10 +59,6 @@ void LevelController::OnUpdate()
                     Engine::Instance().PeekScene()->Contents().push_back(nextEnemy);
                     wave.EnemyQueue.pop();
                 }
-            }
-            else if (wave.RemainingEnemies() == 0)
-            {
-                _levelData.Waves.pop();
             }
         }
     }
@@ -154,17 +151,17 @@ std::shared_ptr<spic::GameObject> LevelController::CreateHUD()
 
     completePathButton->OnClick([this]() {
         auto& rightHud = _rightHud;
-        bool pathCompleted = CheckIfPathIsComplete(_levelData.Graph);
+        auto [pathCompleted, path] = CheckIfPathIsComplete(_levelData.Graph);
         if (pathCompleted)
         {
             Debug::Log("Completed Correctly!!");
             _levelMode = LevelMode::TowerMode;
+            _levelData.Path = path;
             auto childrenCopy = rightHud->Children();
             for (const auto& child: childrenCopy)
             {
                 rightHud->RemoveChild(child);
             }
-
             auto enemiesLeftTextHeader = std::make_shared<spic::Text>("enemies-text-header", "default", Layer::HUD, HudWidth, 20);
             enemiesLeftTextHeader->Size(18);
             enemiesLeftTextHeader->TextAlignment(Alignment::center);
@@ -221,8 +218,12 @@ std::shared_ptr<spic::GameObject> LevelController::CreateHUD()
 
             auto nextWaveButton = ButtonPrefabFactory::CreateOutlineButton("next-wave-button", "default", "Next Wave", true);
             nextWaveButton->Transform().scale = 0.8;
-            nextWaveButton->OnClick([]() {
-                spic::Debug::LogWarning("Next wave not implemented!");
+            nextWaveButton->OnClick([this]() {
+                auto& wave = _levelData.Waves.front();
+                if (wave.RemainingEnemies() == 0)
+                {
+                    _levelData.Waves.pop();
+                }
             });
             nextWaveButton->Transform().position.y = 350;
 
@@ -457,7 +458,7 @@ void LevelController::HandleClickTower(game::MapNode& clickedTile)
     }
 }
 
-bool LevelController::CheckIfPathIsComplete(std::map<std::string, MapNode> graphCopy)
+std::tuple<bool, std::queue<std::string>> LevelController::CheckIfPathIsComplete(std::map<std::string, MapNode> graphCopy)
 {
     MapNode start;
     for (const auto&[key, value]: graphCopy)
@@ -466,9 +467,10 @@ bool LevelController::CheckIfPathIsComplete(std::map<std::string, MapNode> graph
             start = value;
     }
 
-    if (start.NeighbourStrings.empty()) return false;
+    if (start.NeighbourStrings.empty()) return {false, {}};
 
     std::vector<std::string> pathTiles;
+    std::queue<std::string> path;
     pathTiles.push_back(std::to_string(start.X) + "-" + std::to_string(start.Y));
     while (!pathTiles.empty())
     {
@@ -477,14 +479,19 @@ bool LevelController::CheckIfPathIsComplete(std::map<std::string, MapNode> graph
         for (auto& stringNeighbour: tile.NeighbourStrings)
         {
             const auto& neighbour = graphCopy[stringNeighbour];
-            if (neighbour.TileType == TileType::End) return true;
-            if ((neighbour.TileType == TileType::Street || neighbour.TileType == TileType::Sand || neighbour.TileType == TileType::Grass || neighbour.TileType == TileType::Bridge) && !neighbour.Visited)
+            if (neighbour.TileType == TileType::End) {
+                path.push(stringNeighbour);
+                return {true, path};
+            }
+            if ((neighbour.TileType == TileType::Street || neighbour.TileType == TileType::Sand || neighbour.TileType == TileType::Grass || neighbour.TileType == TileType::Bridge) && !neighbour.Visited) {
                 pathTiles.push_back(std::to_string(neighbour.X) + "-" + std::to_string(neighbour.Y));
+                path.push(std::to_string(neighbour.X) + "-" + std::to_string(neighbour.Y));
+            }
         }
         pathTiles.erase(std::find(pathTiles.begin(), pathTiles.end(), pathTiles[0]));
     }
 
-    return false;
+    return {false, {}};
 }
 
 void LevelController::SetUnlimitedPath()
@@ -505,6 +512,16 @@ void LevelController::SetStrongPath()
 void LevelController::SetUnlimitedMoney()
 {
     _levelData.Balance += 1000000000;
+}
+
+std::map<std::string, MapNode>& LevelController::GetGraph()
+{
+    return _levelData.Graph;
+}
+
+std::queue<std::string> LevelController::GetPath() const
+{
+    return _levelData.Path;
 }
 
 void LevelController::ButcherEnemies()

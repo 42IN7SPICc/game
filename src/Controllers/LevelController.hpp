@@ -5,6 +5,8 @@
 #include <vector>
 #include <memory>
 #include <string>
+#include <tuple>
+#include <stack>
 
 #include "BehaviourScript.hpp"
 #include "Button.hpp"
@@ -42,6 +44,10 @@ namespace game
 
             void SetUnlimitedMoney();
 
+            std::map<std::string, MapNode>& GetGraph();
+
+            std::queue<std::string> GetPath() const;
+            
             void ButcherEnemies();
 
         private:
@@ -61,7 +67,7 @@ namespace game
 
             void HandleClickTower(game::MapNode& clickedTile);
 
-            static bool CheckIfPathIsComplete(std::map<std::string, MapNode> graphCopy);
+            static std::tuple<bool, std::queue<std::string>> CheckIfPathIsComplete(std::map<std::string, MapNode> graphCopy);
     };
 }
 
