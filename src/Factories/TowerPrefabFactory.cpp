@@ -3,6 +3,7 @@
 #include "../Enums/Layer.hpp"
 #include "../Enums/SortingLayer.hpp"
 #include "../Utils/GameObjectUtil.hpp"
+#include "../Constants.hpp"
 
 #include <stdexcept>
 #include <Animator.hpp>
@@ -58,7 +59,7 @@ std::shared_ptr<spic::GameObject> TowerPrefabFactory::CreateShotgun()
 {
     types::sprite_vector shootingSprites = AnimatorUtil::CreateSpriteVector(6, "resources/sprites/towers/shooting/tower_shooting_", SortingLayer::Enemy);
 
-    auto attackBehaviour = std::make_shared<AttackBehaviour>("enemy", BulletType::Normal, 5, 250, 20, 15);
+    auto attackBehaviour = std::make_shared<AttackBehaviour>("enemy", BulletType::Normal, ShotgunTowerFireRate, ShotgunTowerRange, ShotgunTowerDamage, ShotgunTowerBulletSpeed);
 
     auto tower = CreateBaseTower(shootingSprites, attackBehaviour);
 

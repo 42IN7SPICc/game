@@ -3,7 +3,7 @@
 
 #include <BehaviourScript.hpp>
 #include "Point.hpp"
-#include "HealthBehaviour.hpp"
+#include "../Common/HealthBehaviour.hpp"
 
 namespace game
 {
