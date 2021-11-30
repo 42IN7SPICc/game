@@ -2,6 +2,8 @@
 
 #include <Engine.hpp>
 #include <Input.hpp>
+#include <utility>
+#include <stdexcept>
 
 #include "BulletBehaviour.hpp"
 #include "../../Factories/BulletFactory.hpp"
@@ -9,17 +11,24 @@
 
 using namespace game;
 
-UserAttackBehaviour::UserAttackBehaviour(int damage, double velocityMultiplier) : _damage(damage),
-                                                                                  _velocityMultiplier(velocityMultiplier)
+UserAttackBehaviour::UserAttackBehaviour(int damage, double velocityMultiplier, std::shared_ptr<game::HealthBehaviour> healthBehaviour) : _damage(damage),
+                                                                                                                                          _velocityMultiplier(velocityMultiplier),
+                                                                                                                                          _healthBehaviour(std::move(healthBehaviour))
 {
 }
 
 void UserAttackBehaviour::OnStart()
 {
+    if (!_healthBehaviour)
+    {
+        throw std::runtime_error("A user attack behaviour requires a valid health behaviour.");
+    }
 }
 
 void UserAttackBehaviour::OnUpdate()
 {
+    if (_healthBehaviour->Health() <= 0) return;
+
     if (spic::Input::GetKeyDown(spic::Input::KeyCode::SPACE))
     {
         auto parent = GameObject().lock();

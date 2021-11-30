@@ -7,7 +7,6 @@
 #include "../Enums/Layer.hpp"
 #include "../Enums/SortingLayer.hpp"
 #include "../Scripts/Heroes/HealAbilityBehaviour.hpp"
-#include "../Scripts/Common/HealthBehaviour.hpp"
 #include "../Scripts/Heroes/UserMovementBehaviour.hpp"
 #include "../Scripts/Common/UserAttackBehaviour.hpp"
 #include "../Utils/AnimatorUtil.hpp"
@@ -109,7 +108,7 @@ std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateBaseHero(int at
     auto userMovementBehaviour = std::make_shared<game::UserMovementBehaviour>(static_cast<float>(HeroVelocity), idleAnimator, walkingAnimator, healthBehaviour);
     GameObjectUtil::LinkComponent(baseHero, userMovementBehaviour);
 
-    auto attackBehaviour = std::make_shared<game::UserAttackBehaviour>(attack, HeroBulletSpeed);
+    auto attackBehaviour = std::make_shared<game::UserAttackBehaviour>(attack, HeroBulletSpeed, healthBehaviour);
     GameObjectUtil::LinkComponent(baseHero, attackBehaviour);
 
     auto heroCollider = std::make_shared<spic::CircleCollider>(HeroWidth * 0.5 * HeroScale);

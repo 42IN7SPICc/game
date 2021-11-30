@@ -34,6 +34,8 @@ void game::HealthBehaviour::Damage(int damage)
     _health -= damage;
     if (_health <= 0 && _diedAnimator)
         _diedAnimator->Play(false);
+    if (_health < 0)
+        _health = 0;
 }
 
 void game::HealthBehaviour::OnStart()
