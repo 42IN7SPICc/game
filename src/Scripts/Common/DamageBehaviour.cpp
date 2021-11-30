@@ -48,13 +48,16 @@ void DamageBehaviour::OnTriggerEnter2D(const spic::Collider& collider)
         {
             if (PointUtil::Distance(currentPos, gameObject->AbsoluteTransform().position) <= _radius)
             {
-                Damage(gameObject);
+                auto healthBehaviour = gameObject->GetComponent<HealthBehaviour>();
+                Damage(healthBehaviour);
             }
         }
     }
     else
     {
-        Damage(colliderGameObject);
+        auto healthBehaviour = colliderGameObject->GetComponent<HealthBehaviour>();
+        if (healthBehaviour->Health() > 0)
+            Damage(healthBehaviour);
     }
 }
 
@@ -66,9 +69,8 @@ void DamageBehaviour::OnTriggerStay2D(const spic::Collider& collider)
 {
 }
 
-void DamageBehaviour::Damage(const std::shared_ptr<spic::GameObject>& gameObject)
+void DamageBehaviour::Damage(const std::shared_ptr<game::HealthBehaviour>& healthBehaviour)
 {
-    auto healthBehaviour = gameObject->GetComponent<HealthBehaviour>();
     if (!healthBehaviour) return;
 
     healthBehaviour->Damage(_damage);

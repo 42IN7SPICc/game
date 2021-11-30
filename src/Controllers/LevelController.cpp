@@ -48,7 +48,7 @@ void LevelController::OnUpdate()
         if (!_levelData.Waves.empty())
         {
             auto& wave = _levelData.Waves.front();
-            wave.ClearDeadEnemies();
+            _levelData.ClearDeadEnemies(wave);
             if (!wave.EnemyQueue.empty())
             {
                 auto&[timeTillNextEnemy, nextEnemy] = wave.EnemyQueue.front();
@@ -58,6 +58,7 @@ void LevelController::OnUpdate()
                     nextEnemy->Transform().position = _startPosition;
                     Engine::Instance().PeekScene()->Contents().push_back(nextEnemy);
                     wave.EnemyQueue.pop();
+                    _timePassed = 0;
                 }
             }
         }
@@ -151,7 +152,7 @@ std::shared_ptr<spic::GameObject> LevelController::CreateHUD()
 
     completePathButton->OnClick([this]() {
         auto& rightHud = _rightHud;
-        auto [pathCompleted, path] = CheckIfPathIsComplete(_levelData.Graph);
+        auto[pathCompleted, path] = CheckIfPathIsComplete(_levelData.Graph);
         if (pathCompleted)
         {
             Debug::Log("Completed Correctly!!");
@@ -223,6 +224,7 @@ std::shared_ptr<spic::GameObject> LevelController::CreateHUD()
                 if (wave.RemainingEnemies() == 0)
                 {
                     _levelData.Waves.pop();
+                    _levelData.HeroHealth->Health(_levelData.HeroHealth->MaxHealth());
                 }
             });
             nextWaveButton->Transform().position.y = 350;
@@ -482,11 +484,13 @@ std::tuple<bool, std::queue<std::string>> LevelController::CheckIfPathIsComplete
         for (auto& stringNeighbour: tile.NeighbourStrings)
         {
             const auto& neighbour = graphCopy[stringNeighbour];
-            if (neighbour.TileType == TileType::End) {
+            if (neighbour.TileType == TileType::End)
+            {
                 path.push(stringNeighbour);
                 return {true, path};
             }
-            if ((neighbour.TileType == TileType::Street || neighbour.TileType == TileType::Sand || neighbour.TileType == TileType::Grass || neighbour.TileType == TileType::Bridge) && !neighbour.Visited) {
+            if ((neighbour.TileType == TileType::Street || neighbour.TileType == TileType::Sand || neighbour.TileType == TileType::Grass || neighbour.TileType == TileType::Bridge) && !neighbour.Visited)
+            {
                 pathTiles.push_back(std::to_string(neighbour.X) + "-" + std::to_string(neighbour.Y));
                 path.push(std::to_string(neighbour.X) + "-" + std::to_string(neighbour.Y));
             }
@@ -515,6 +519,11 @@ void LevelController::SetStrongPath()
 void LevelController::SetUnlimitedMoney()
 {
     _levelData.Balance += 1000000000;
+}
+
+void LevelController::SetInvincibility() const
+{
+    _levelData.HeroHealth->Invincibility(!_levelData.HeroHealth->Invincibility());
 }
 
 std::map<std::string, MapNode>& LevelController::GetGraph()

@@ -44,6 +44,8 @@ namespace game
 
             void SetUnlimitedMoney();
 
+            void SetInvincibility() const;
+
             std::map<std::string, MapNode>& GetGraph();
 
             std::queue<std::string> GetPath() const;

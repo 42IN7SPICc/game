@@ -15,6 +15,7 @@
 #include <stdexcept>
 
 const double HeroScale = 0.1; //default scale on 1
+const int BaseHeroHealth = 20; // Gets multiplied by the hero's defense rating
 const int HeroWidth = 200; //width of hero image
 const int HeroHeight = 320; //height of hero image
 const int HeroMass = 50; //random chosen mass
@@ -102,7 +103,7 @@ std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateBaseHero(int at
     auto CelebratingAnimator = std::make_shared<spic::Animator>(static_cast<int>(celebratingSprites.size()), celebratingSprites);
     GameObjectUtil::LinkComponent(baseHero, CelebratingAnimator);
 
-    auto healthBehaviour = std::make_shared<game::HealthBehaviour>(diedAnimator, defense);
+    auto healthBehaviour = std::make_shared<game::HealthBehaviour>(diedAnimator, defense * BaseHeroHealth);
     GameObjectUtil::LinkComponent(baseHero, healthBehaviour);
 
     auto userMovementBehaviour = std::make_shared<game::UserMovementBehaviour>(static_cast<float>(HeroVelocity), idleAnimator, walkingAnimator, healthBehaviour);

@@ -8,7 +8,8 @@ game::HealthBehaviour::HealthBehaviour(std::shared_ptr<spic::Animator> diedAnima
                                                                                                                           _health(maxHealth),
                                                                                                                           _diedAnimator(std::move(diedAnimator)),
                                                                                                                           _despawnDuration(despawnTime),
-                                                                                                                          _despawnTime(despawnTime)
+                                                                                                                          _despawnTime(despawnTime),
+                                                                                                                          _invincibility(false)
 {
 }
 
@@ -24,18 +25,23 @@ int game::HealthBehaviour::MaxHealth() const
 
 void game::HealthBehaviour::Health(int health)
 {
-    if(health <= _maxHealth)
+    if (health <= _maxHealth)
         _health = health;
 }
 
 void game::HealthBehaviour::Damage(int damage)
 {
-    if (_health <= 0) return;
-    _health -= damage;
-    if (_health <= 0 && _diedAnimator)
-        _diedAnimator->Play(false);
-    if (_health < 0)
-        _health = 0;
+    if (_health > 0 && !_invincibility)
+    {
+        _health -= damage;
+
+        if (_health <= 0)
+        {
+            _health = 0;
+            if (_diedAnimator)
+                _diedAnimator->Play(false);
+        }
+    }
 }
 
 void game::HealthBehaviour::OnStart()
@@ -45,10 +51,12 @@ void game::HealthBehaviour::OnStart()
 
 void game::HealthBehaviour::OnUpdate()
 {
-    if(_health <= 0 && _despawnTime != 0) {
+    if (_health <= 0 && _despawnTime != 0)
+    {
         _despawnDuration -= spic::Time::DeltaTime() * spic::Time::TimeScale();
 
-        if(_despawnDuration <= 0) {
+        if (_despawnDuration <= 0)
+        {
             GameObject().lock()->Active(false);
         }
     }
@@ -72,4 +80,14 @@ void game::HealthBehaviour::OnTriggerExit2D(const spic::Collider& collider)
 
 void game::HealthBehaviour::OnTriggerStay2D(const spic::Collider& collider)
 {
+}
+
+void game::HealthBehaviour::Invincibility(bool invincibility)
+{
+    _invincibility = invincibility;
+}
+
+bool game::HealthBehaviour::Invincibility() const
+{
+    return _invincibility;
 }
