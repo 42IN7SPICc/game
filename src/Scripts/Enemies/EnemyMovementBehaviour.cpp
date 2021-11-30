@@ -1,8 +1,10 @@
+#include <RigidBody.hpp>
 #include "EnemyMovementBehaviour.hpp"
 #include "GameObject.hpp"
 #include "Animator.hpp"
 #include "../../Controllers/LevelController.hpp"
 #include "../../Utils/StringUtil.hpp"
+#include "../../Utils/PointUtil.hpp"
 
 using namespace game;
 
@@ -31,45 +33,42 @@ void EnemyMovementBehaviour::OnUpdate()
 {
     auto parent = GameObject().lock();
     auto walkingAnimator = parent->GetComponents<spic::Animator>()[1];
-    if (parent->GetComponent<HealthBehaviour>()->Health() == 0)
+    if (parent->GetComponent<HealthBehaviour>()->Health() <= 0)
     {
         walkingAnimator->Stop();
         return;
     }
 
-    auto playerPosition = parent->Transform().position;
+    auto enemyPosition = parent->Transform().position;
     double scaledTileSize = TileSize * TileMapScale;
-    int playerXLocation = ((playerPosition.x - MapX) + (scaledTileSize / 2)) / scaledTileSize;
-    int playerYLocation = ((playerPosition.y - MapY) + (scaledTileSize / 2)) / scaledTileSize;
+    int tileXLocation = ((enemyPosition.x - MapX) + (scaledTileSize / 2)) / scaledTileSize;
+    int tileYLocation = ((enemyPosition.y - MapY) + (scaledTileSize / 2)) / scaledTileSize;
 
-    auto playerLocation = _graph[std::to_string(playerXLocation) + "-" + std::to_string(playerYLocation)];
+    auto tileLocation = _graph[std::to_string(tileXLocation) + "-" + std::to_string(tileYLocation)];
 
-    if(_path.empty()) return;
+    if (_path.empty()) return;
 
     double speedMultiplier = 1.0;
-    if(playerLocation.TileType == TileType::Grass) {
+    if (tileLocation.TileType == TileType::Grass)
+    {
         speedMultiplier = 0.66;
     }
-    else if(playerLocation.TileType == TileType::Sand) {
+    else if (tileLocation.TileType == TileType::Sand)
+    {
         speedMultiplier = 0.33;
     }
 
+    speedMultiplier *= 5;
+
     auto toLocation = _graph[_path.front()];
 
-    if(toLocation.X > playerLocation.X) {
-        parent->Transform().position.x += 1.5 * speedMultiplier;
-    }
-    else if(toLocation.Y > playerLocation.Y) {
-        parent->Transform().position.y += 1.5 * speedMultiplier;
-    }
-    else if(toLocation.Y < playerLocation.Y) {
-        parent->Transform().position.y -= 1.5 * speedMultiplier;
-    }
-    else if(toLocation.X < playerLocation.X) {
-        parent->Transform().position.x -= 1.5 * speedMultiplier;
-    }
+    double distance;
+    auto force = PointUtil::CalculateDirectionalPoint(enemyPosition, toLocation.TileObject->AbsoluteTransform().position, speedMultiplier, distance);
 
-    if(toLocation.X == playerLocation.X && toLocation.Y == playerLocation.Y) {
+    GameObject().lock()->GetComponent<spic::RigidBody>()->AddForce(force);
+
+    if (distance <= 2)
+    {
         _path.pop();
     }
 
