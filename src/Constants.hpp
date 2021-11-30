@@ -22,6 +22,7 @@ const int EnemyDeSpawnTime = 4; // The time it takes to de spawn an enemy after 
 
 //Hero
 const double HeroScale = 0.1; //default scale on 1
+const int BaseHeroHealth = 20; // Gets multiplied by the hero's defense rating
 const int HeroWidth = 200; //width of hero image
 const int HeroHeight = 320; //height of hero image
 const int HeroMass = 50; //random chosen mass
