@@ -3,6 +3,7 @@
 
 #include <BehaviourScript.hpp>
 #include "Point.hpp"
+#include "HealthBehaviour.hpp"
 
 namespace game
 {
@@ -11,9 +12,10 @@ namespace game
         private:
             int _damage;
             double _velocityMultiplier;
+            std::shared_ptr<HealthBehaviour> _healthBehaviour;
 
         public:
-            explicit UserAttackBehaviour(int damage, double velocityMultiplier);
+            explicit UserAttackBehaviour(int damage, double velocityMultiplier, std::shared_ptr<game::HealthBehaviour> _healthBehaviour);
 
             void OnStart() override;
 

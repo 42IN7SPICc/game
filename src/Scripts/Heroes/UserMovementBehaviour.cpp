@@ -38,7 +38,6 @@ void game::UserMovementBehaviour::OnStart()
 
 void game::UserMovementBehaviour::OnUpdate()
 {
-    auto parent = GameObject().lock();
     if (_healthBehaviour->Health() <= 0)
     {
         _walkingAnimator->Stop();
@@ -46,6 +45,7 @@ void game::UserMovementBehaviour::OnUpdate()
         return;
     }
 
+    auto parent = GameObject().lock();
     bool moving = false;
     if (_controllable)
     {
