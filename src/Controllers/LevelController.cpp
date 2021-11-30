@@ -139,7 +139,7 @@ std::shared_ptr<spic::GameObject> LevelController::CreateHUD()
     auto sandButton = InitializeTileButton(_rightHud, "resources/sprites/tiles/sand.png", 6, "Zand");
     sandButton->Transform().position.y = -(TileSize + 2) * (TileButtonScale * 2);
 
-    auto completePathButton = ButtonPrefabFactory::CreateOutlineButton("complete-path-button", "complete_path_button", "Finish Path", true);
+    auto completePathButton = ButtonPrefabFactory::CreateOutlineButton("complete-path-button", "complete_path_button", "Voltooi pad", true);
     completePathButton->Transform().scale = 0.8;
 
     completePathButton->OnClick([this]() {
@@ -209,7 +209,9 @@ std::shared_ptr<spic::GameObject> LevelController::CreateHUD()
             militaryBaseHealthText->Transform().position.y = 300;
             militaryBaseHealthText->Content("♥ " + std::to_string(_levelData.MilitaryBaseHealth->Health()));
 
-            auto nextWaveButton = ButtonPrefabFactory::CreateOutlineButton("next-wave-button", "default", "Next Wave", true);
+            auto nextWaveButton = ButtonPrefabFactory::CreateOutlineButton("next-wave-button", "default", "Volgende ronde", true);
+            auto text = std::dynamic_pointer_cast<spic::Text>(nextWaveButton->Children()[0]);
+            text->Size(20);
             nextWaveButton->Transform().scale = 0.8;
             nextWaveButton->OnClick([this]() {
                 auto& wave = _levelData.Waves.front();
@@ -245,7 +247,7 @@ std::shared_ptr<spic::GameObject> LevelController::CreateHUD()
                 validationText->TextColor(Color::red());
                 GameObjectUtil::LinkChild(rightHud, validationText);
             }
-            validationText->Content("Het huidige pad is niet compleet");
+            validationText->Content("Het huidige pad is niet compleet.");
 
         }
     });
