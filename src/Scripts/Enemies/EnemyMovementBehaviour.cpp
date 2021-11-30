@@ -3,17 +3,13 @@
 #include "../../Controllers/LevelController.hpp"
 #include "../../Utils/StringUtil.hpp"
 #include "../../Utils/PointUtil.hpp"
+#include "../../Constants.hpp"
 
 #include "GameObject.hpp"
 
 #include <stdexcept>
 
 using namespace game;
-
-const double TileSize = 32;
-const double TileMapScale = 0.985;
-const int MapX = TileSize / 2 + 155;
-const int MapY = TileSize / 2;
 
 EnemyMovementBehaviour::EnemyMovementBehaviour(std::shared_ptr<spic::Animator> walkingAnimator) : _walkingAnimator(walkingAnimator)
 {
