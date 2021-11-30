@@ -46,7 +46,7 @@ namespace game
 
             std::map<std::string, MapNode>& GetGraph();
 
-            std::queue<std::string> GetPath();
+            std::queue<std::string> GetPath() const;
         private:
             const game::LevelWithTiles _level;
             game::LevelData _levelData;

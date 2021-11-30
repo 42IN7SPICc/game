@@ -490,7 +490,7 @@ std::map<std::string, MapNode>& LevelController::GetGraph()
     return _levelData.Graph;
 }
 
-std::queue<std::string> LevelController::GetPath()
+std::queue<std::string> LevelController::GetPath() const
 {
     return _levelData.Path;
 }

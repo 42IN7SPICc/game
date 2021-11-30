@@ -54,6 +54,12 @@ void EnemyMovementBehaviour::OnUpdate()
     else if(toLocation.Y > playerLocation.Y) {
         parent->Transform().position.y += 1.5;
     }
+    else if(toLocation.Y < playerLocation.Y) {
+        parent->Transform().position.y -= 1.5;
+    }
+    else if(toLocation.X < playerLocation.X) {
+        parent->Transform().position.x -= 1.5;
+    }
 
     if(toLocation.X == playerLocation.X && toLocation.Y == playerLocation.Y) {
         _path.pop();
