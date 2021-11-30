@@ -46,19 +46,27 @@ void EnemyMovementBehaviour::OnUpdate()
 
     if(_path.empty()) return;
 
+    double speedMultiplier = 1.0;
+    if(playerLocation.TileType == TileType::Grass) {
+        speedMultiplier = 0.66;
+    }
+    else if(playerLocation.TileType == TileType::Sand) {
+        speedMultiplier = 0.33;
+    }
+
     auto toLocation = _graph[_path.front()];
 
     if(toLocation.X > playerLocation.X) {
-        parent->Transform().position.x += 1.5;
+        parent->Transform().position.x += 1.5 * speedMultiplier;
     }
     else if(toLocation.Y > playerLocation.Y) {
-        parent->Transform().position.y += 1.5;
+        parent->Transform().position.y += 1.5 * speedMultiplier;
     }
     else if(toLocation.Y < playerLocation.Y) {
-        parent->Transform().position.y -= 1.5;
+        parent->Transform().position.y -= 1.5 * speedMultiplier;
     }
     else if(toLocation.X < playerLocation.X) {
-        parent->Transform().position.x -= 1.5;
+        parent->Transform().position.x -= 1.5 * speedMultiplier;
     }
 
     if(toLocation.X == playerLocation.X && toLocation.Y == playerLocation.Y) {
