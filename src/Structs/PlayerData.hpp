@@ -5,24 +5,37 @@
 
 namespace game
 {
+    /**
+     * @brief A model for storing data about the current player.
+     */
     struct PlayerData
     {
-        template<class Archive>
-        void serialize(Archive& ar)
-        {
-            ar(LevelsCompleted, Balance, KillCount, HeroDeathCount, WavesPlayed);
-        }
+        public:
+            template<class Archive>
+            void serialize(Archive& ar)
+            {
+                ar(LevelsCompleted, Balance, KillCount, HeroDeathCount, WavesPlayed);
+            }
 
-        int LevelsCompleted; // used for unlock threshold
-        int Balance; // amount of reichsmarken the player has
-        int KillCount; // amount of enemies killed using hero or towers, for stats
-        int HeroDeathCount; // amount of times the player let his hero die, for stats
-        int WavesPlayed; // amount of waves played, for stats
+            int LevelsCompleted; // used for unlock threshold
+            int Balance; // amount of reichsmarken the player has
+            int KillCount; // amount of enemies killed using hero or towers, for stats
+            int HeroDeathCount; // amount of times the player let his hero die, for stats
+            int WavesPlayed; // amount of waves played, for stats
 
-        std::string File;
+            std::string File;
 
-        static PlayerData& Instance();
-        static void Instance(const PlayerData& playerData);
+            /**
+             * @brief Access the current instance of the Player Data
+             * @return The instance of the player data.
+             */
+            static PlayerData& Instance();
+
+            /**
+             * @brief Set the instance of the Player Data.
+             * @param playerData The new instance of the player data.
+             */
+            static void Instance(const PlayerData& playerData);
 
         private:
             static PlayerData _instance;

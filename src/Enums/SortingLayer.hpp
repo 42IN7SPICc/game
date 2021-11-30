@@ -3,6 +3,9 @@
 
 namespace game
 {
+    /**
+     * @brief Enum for sprite sorting layers.
+     */
     enum SortingLayer
     {
         Map = 10,

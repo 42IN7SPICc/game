@@ -8,6 +8,9 @@
 
 namespace game
 {
+    /**
+     * @brief A model for storing level data including tiles.
+     */
     struct LevelWithTiles
     {
         template<class Archive>

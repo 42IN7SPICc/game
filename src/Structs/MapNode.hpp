@@ -8,9 +8,12 @@
 
 namespace game
 {
+    /**
+     * @brief A model for storing information about a node on the map.
+     */
     struct MapNode
     {
-        std::vector<std::string> NeighbourStrings {};
+        std::vector<std::string> NeighbourStrings{};
         int X;
         int Y;
         game::TileType OriginalTileType;

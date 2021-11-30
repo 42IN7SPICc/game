@@ -3,6 +3,9 @@
 
 namespace game
 {
+    /**
+     * @brief Enum for tower names.
+     */
     enum class TowerName
     {
         Bomber,

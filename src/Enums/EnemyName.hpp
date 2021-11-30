@@ -3,6 +3,9 @@
 
 namespace game
 {
+    /**
+     * @brief Enum for enemy names.
+     */
     enum class EnemyName
     {
         Panzer,

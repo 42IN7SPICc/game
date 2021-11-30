@@ -3,6 +3,9 @@
 
 namespace game
 {
+    /**
+     * @brief Enum for game object layers.
+     */
     enum Layer
     {
         Background = 1,
