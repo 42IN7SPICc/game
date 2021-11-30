@@ -5,6 +5,9 @@
 
 namespace game
 {
+    /**
+     * @brief A script to handle a cool down for other scripts.
+     */
     class CoolDownBehaviour : public spic::BehaviourScript
     {
         private:
@@ -13,6 +16,10 @@ namespace game
             bool _cooledDown;
 
         public:
+            /**
+             * @brief Creates a new instance of a CoolDownBehaviour with a given cool down time.
+             * @param coolDown The time it takes to cool down in seconds.
+             */
             explicit CoolDownBehaviour(int coolDown);
 
             /**
@@ -43,16 +50,40 @@ namespace game
              */
             void OnTriggerStay2D(const spic::Collider& collider) override;
 
+            /**
+             * @brief Whether the cool down is done.
+             * @return The current value.
+             */
             [[nodiscard]] bool CooledDown() const;
 
+            /**
+             * @brief Whether the cool down is done.
+             * @param cooledDown The desired value.
+             */
             void CooledDown(bool cooledDown);
 
+            /**
+             * @brief The time it takes to cool down.
+             * @return The current value.
+             */
             [[nodiscard]] double CoolDown() const;
 
+            /**
+             * @brief The time it takes to cool down.
+             * @param coolDown The desired value.
+             */
             void CoolDown(double coolDown);
 
+            /**
+             * @brief The time it takes to cool down from start to end.
+             * @return The current value.
+             */
             [[nodiscard]] double MinCoolDown() const;
 
+            /**
+             * @brief The time it takes to cool down from start to end.
+             * @param minCoolDown The desired value.
+             */
             void MinCoolDown(double minCoolDown);
     };
 }

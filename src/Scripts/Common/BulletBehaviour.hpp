@@ -12,6 +12,9 @@
 
 namespace game
 {
+    /**
+     * @brief A script to that handles bullets.
+     */
     class BulletBehaviour : public spic::BehaviourScript
     {
         private:
@@ -24,6 +27,13 @@ namespace game
             BulletType _bulletType;
 
         public:
+            /**
+             * @brief Creates a new instance of a BulletBehaviour with given settings.
+             * @param bulletType The type of bullet.
+             * @param direction The direction the bullet will shoot towards.
+             * @param maxRange The maximum distance the bullet can travel.
+             * @param maxPenetrating How many targets a bullet can penetrate before stopping (only bulletType = penetrating).
+             */
             explicit BulletBehaviour(BulletType bulletType, const spic::Point& direction, double maxRange, int maxPenetrating = 1);
 
             /**

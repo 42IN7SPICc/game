@@ -6,12 +6,19 @@
 
 namespace game
 {
+    /**
+     * @brief The script the handle the game lost screen.
+     */
     class GameLostBehaviour : public spic::BehaviourScript
     {
         private:
             bool _lost;
             game::LevelData& _levelData;
         public:
+            /**
+             * @brief Constructs a new instance of a GameLostBehaviour with a given level.
+             * @param levelData The data of the level.
+             */
             explicit GameLostBehaviour(game::LevelData& levelData);
 
             /**
@@ -42,6 +49,9 @@ namespace game
              */
             void OnTriggerStay2D(const spic::Collider& collider) override;
 
+            /**
+             * @brief Triggers when the user has failed to win the level.
+             */
             void OnLevelFailed();
     };
 }

@@ -7,6 +7,9 @@
 
 namespace game
 {
+    /**
+     * @brief A script that handles the game won screen.
+     */
     class GameWonBehaviour : public spic::BehaviourScript
     {
         private:
@@ -14,6 +17,11 @@ namespace game
             int _balanceAward;
             game::LevelData& _levelData;
         public:
+            /**
+             * @brief Constructs a new instance of a GameWonBehaviour with a given level and balance.
+             * @param levelData The data of the level.
+             * @param balanceAward The award that the user has received.
+             */
             explicit GameWonBehaviour(game::LevelData& levelData, int balanceAward = 500);
 
             /**
@@ -44,6 +52,9 @@ namespace game
              */
             void OnTriggerStay2D(const spic::Collider& collider) override;
 
+            /**
+             * @brief Triggers when the level has been completed.
+             */
             void OnLevelCompleted();
     };
 }

@@ -9,6 +9,9 @@
 
 namespace game
 {
+    /**
+     * @brief A script to handle different cheats.
+     */
     class CheatManager : public spic::BehaviourScript
     {
         private:

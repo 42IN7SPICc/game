@@ -7,6 +7,9 @@
 
 namespace game
 {
+    /**
+     * @brief A script to let the user attack.
+     */
     class UserAttackBehaviour : public spic::BehaviourScript
     {
         private:
@@ -15,7 +18,13 @@ namespace game
             std::shared_ptr<HealthBehaviour> _healthBehaviour;
 
         public:
-            explicit UserAttackBehaviour(int damage, double velocityMultiplier, std::shared_ptr<game::HealthBehaviour> _healthBehaviour);
+            /**
+             * @brief Creates a new instance of a UserAttackBehaviour with given settings.
+             * @param damage The damage the bullets give on impact.
+             * @param velocityMultiplier The speed multiplier of the bullets.
+             * @param healthBehaviour The health of the enemy.
+             */
+            explicit UserAttackBehaviour(int damage, double velocityMultiplier, std::shared_ptr<game::HealthBehaviour> healthBehaviour);
 
             /**
              * @brief Triggers when the scripts starts for the first time.
