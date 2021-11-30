@@ -47,7 +47,12 @@ namespace game
             std::map<std::string, MapNode>& GetGraph();
 
             std::queue<std::string> GetPath() const;
+            
+            void ButcherEnemies();
+
         private:
+            spic::Point _startPosition;
+            double _timePassed;
             const game::LevelWithTiles _level;
             game::LevelData _levelData;
             std::shared_ptr<spic::Button> _selectedButton;

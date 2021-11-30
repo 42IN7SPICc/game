@@ -58,6 +58,7 @@ MainScene::MainScene() : MenuScene("Avans Wars: WW2", false)
 
     auto hero = HeroPrefabFactory::CreateHero(static_cast<HeroName>(RandomUtil::Next(HeroName::DesmondDoss, HeroName::JosephStalin)));
     hero->Transform().position = {1000, 460};
+    hero->Transform().scale = 1;
     hero->GetComponent<UserMovementBehaviour>()->Controllable(false);
     hero->RemoveComponent(hero->GetComponent<UserAttackBehaviour>());
 

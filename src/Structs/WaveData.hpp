@@ -11,8 +11,10 @@ namespace game
     struct WaveData
     {
         // size_t is in milliseconds between spawning the enemy
-        std::queue<std::tuple<size_t, std::shared_ptr<spic::GameObject>>> EnemyQueue;
+        std::queue<std::tuple<double, std::shared_ptr<spic::GameObject>>> EnemyQueue;
         std::vector<std::shared_ptr<spic::GameObject>> CurrentEnemies;
+
+        void ClearDeadEnemies();
 
         [[nodiscard]] size_t RemainingEnemies() const;
     };

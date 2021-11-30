@@ -29,6 +29,12 @@ void Invincibility()
 void Butcher()
 {
     Debug::Log("Fired Butcher Cheat");
+    auto gameObject = GameObject::Find("LevelController");
+    if (gameObject)
+    {
+        auto levelController = gameObject->GetComponent<game::LevelController>();
+        levelController->ButcherEnemies();
+    }
 }
 
 void Victory()
