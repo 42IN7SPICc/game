@@ -9,6 +9,7 @@ const int MapY = TileSize / 2;
 const int ScreenWidth = 1366;
 const int ScreenHeight = 786;
 const int HudWidth = 250;
+const int HealAbilityCoolDown = 5;
 
 //Confetti
 const int AmountOfConfetti = 100;
