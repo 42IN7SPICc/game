@@ -24,17 +24,30 @@ const int DefaultEnemyKillBalance = 50; // The money you get after killing an en
 //Hero
 const double HeroScale = 0.1; //default scale on 1
 const int BaseHeroHealth = 20; // Gets multiplied by the hero's defense rating
+const int BaseHeroDamage = 5; // Gets multiplied by the hero's attack rating
 const int HeroWidth = 200; //width of hero image
 const int HeroHeight = 320; //height of hero image
 const int HeroMass = 50; //random chosen mass
-const int HeroVelocity = 50; //random chosen velocity (looks good)
+const int HeroVelocity = 15; //random chosen velocity (looks good)
 const double HeroBulletSpeed = 17.5; // random chosen bullet speed (looks alright)
+const double HeroBulletRange = 500; // random chosen bullet speed (looks alright)
+
+//Desmond Doss (first hero)
+const int DesmondDossDamage = 2; // The damage Desmond Doss does
+const int DesmondDossDefense = 3; // The defense Desmond Doss has
 
 //Enemy Panzer (first enemy)
 const double PanzerEnemyFireRate = 3; // The shooting interval of the panzer enemy
-const int PanzerEnemyRange = 500; // The detection range of the hero for the panzer enemy
-const int PanzerEnemyDamage = 15; // The damage of a bullet for the panzer enemy
+const int PanzerEnemyRange = 200; // The detection range of the hero for the panzer enemy
+const int PanzerEnemyDamage = 2; // The damage of a bullet for the panzer enemy
 const int PanzerEnemyBulletSpeed = 25; // The bullet velocity of the panzer enemy
+const int PanzerEnemyHealth = 100; // The bullet velocity of the panzer enemy
+
+//Tower Shotgun (first tower)
+const double ShotgunTowerFireRate = 5; // The shooting interval of the shotgun tower
+const int ShotgunTowerRange = 250; // The detection range of the hero for the shotgun tower
+const int ShotgunTowerDamage = 20; // The damage of a bullet for the shotgun tower
+const int ShotgunTowerBulletSpeed = 15; // The bullet velocity of the shotgun tower
 
 //Confetti
 const int AmountOfConfetti = 100;

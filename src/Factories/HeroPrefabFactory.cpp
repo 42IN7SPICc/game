@@ -8,7 +8,7 @@
 #include "../Enums/SortingLayer.hpp"
 #include "../Scripts/Heroes/HealAbilityBehaviour.hpp"
 #include "../Scripts/Heroes/UserMovementBehaviour.hpp"
-#include "../Scripts/Common/UserAttackBehaviour.hpp"
+#include "../Scripts/Heroes/UserAttackBehaviour.hpp"
 #include "../Utils/AnimatorUtil.hpp"
 #include "../Utils/GameObjectUtil.hpp"
 #include "../Constants.hpp"
@@ -36,7 +36,7 @@ std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateHero(game::Hero
 
 std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateDesmondDoss()
 {
-    auto base_hero = CreateBaseHero(2, 3);
+    auto base_hero = CreateBaseHero(DesmondDossDamage, DesmondDossDefense);
     auto ability = std::make_shared<game::HealAbilityBehaviour>();
     GameObjectUtil::LinkComponent(base_hero, ability);
 
@@ -102,7 +102,7 @@ std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateBaseHero(int at
     auto userMovementBehaviour = std::make_shared<game::UserMovementBehaviour>(static_cast<float>(HeroVelocity), idleAnimator, walkingAnimator, healthBehaviour);
     GameObjectUtil::LinkComponent(baseHero, userMovementBehaviour);
 
-    auto attackBehaviour = std::make_shared<game::UserAttackBehaviour>(attack, HeroBulletSpeed, healthBehaviour);
+    auto attackBehaviour = std::make_shared<game::UserAttackBehaviour>(attack * BaseHeroDamage, HeroBulletSpeed, healthBehaviour);
     GameObjectUtil::LinkComponent(baseHero, attackBehaviour);
 
     auto heroCollider = std::make_shared<spic::CircleCollider>(HeroWidth * 0.5 * HeroScale);

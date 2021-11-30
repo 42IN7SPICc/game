@@ -45,7 +45,7 @@ std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreatePanzer()
     types::sprite_vector walkingSprites = AnimatorUtil::CreateSpriteVector(10, "resources/sprites/enemies/Walking/enemy_walking_", SortingLayer::Enemy);
     types::sprite_vector diedSprites = AnimatorUtil::CreateSpriteVector(9, "resources/sprites/enemies/Died/enemy_died_", SortingLayer::Enemy);
 
-    auto enemy = CreateBaseEnemy(15, 200, idleSprites, walkingSprites, diedSprites);
+    auto enemy = CreateBaseEnemy(15, PanzerEnemyHealth, idleSprites, walkingSprites, diedSprites);
 
     auto attackBehaviour = std::make_shared<AttackBehaviour>("hero", BulletType::Normal, PanzerEnemyFireRate, PanzerEnemyRange, PanzerEnemyDamage, PanzerEnemyBulletSpeed);
     GameObjectUtil::LinkComponent(enemy, attackBehaviour);
