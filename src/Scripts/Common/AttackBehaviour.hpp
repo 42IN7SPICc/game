@@ -29,14 +29,32 @@ namespace game
         public:
             AttackBehaviour(const std::string& targetTag, game::BulletType bulletType, double fireRate, int range, int damage, double bulletSpeed, double damageRadius = 0, bool followTarget = false, std::shared_ptr<spic::Animator> animator = {});
 
+            /**
+             * @brief Triggers when the scripts starts for the first time.
+             */
             void OnStart() override;
 
+            /**
+             * @brief Triggers every frame when the script is active.
+             */
             void OnUpdate() override;
 
+            /**
+             * @brief Triggers when the script collides with a collider.
+             * @param collider The collider that collided.
+             */
             void OnTriggerEnter2D(const spic::Collider& collider) override;
 
+            /**
+             * @brief Triggers when the script stopped colliding with a collider.
+             * @param collider The collider that stop colliding.
+             */
             void OnTriggerExit2D(const spic::Collider& collider) override;
 
+            /**
+             * @brief Triggers while an collider is colliding with a collider.
+             * @param collider The collider is colliding.
+             */
             void OnTriggerStay2D(const spic::Collider& collider) override;
 
             void Shoot(const spic::Point& direction, const spic::Point& position);
