@@ -10,4 +10,15 @@ const int ScreenWidth = 1366;
 const int ScreenHeight = 786;
 const int HudWidth = 250;
 
+//Confetti
+const int AmountOfConfetti = 100;
+const int ConfettiYRangeMin = -800;
+const int ConfettiYRangeMax = 0;
+const int ConfettiXRangeMin = 16;
+const int ConfettiXRangeMax = 1350;
+const double ConfettiMinSize = 0.03;
+const double ConfettiMaxSize = 0.05;
+const double ConfettiMinGravity = 0.7;
+const double ConfettiMaxGravity = 1.4;
+
 #endif
