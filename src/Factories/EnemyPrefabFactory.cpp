@@ -136,10 +136,10 @@ std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreateBaseEnemy(int attack
     auto diedAnimator = std::make_shared<spic::Animator>(static_cast<int>(diedSprites.size()), diedSprites);
     GameObjectUtil::LinkComponent(baseEnemy, diedAnimator);
 
-    auto healthBehaviour = std::make_shared<HealthBehaviour>(diedAnimator, health, 4);
+    auto healthBehaviour = std::make_shared<HealthBehaviour>(diedAnimator, health, EnemyDeSpawnTime);
     GameObjectUtil::LinkComponent(baseEnemy, healthBehaviour);
 
-    auto movementBehaviour = std::make_shared<EnemyMovementBehaviour>(walkingAnimator);
+    auto movementBehaviour = std::make_shared<EnemyMovementBehaviour>(walkingAnimator, EnemyVelocity);
     GameObjectUtil::LinkComponent(baseEnemy, movementBehaviour);
 
     auto enemyCollider = std::make_shared<spic::CircleCollider>(0.000001);

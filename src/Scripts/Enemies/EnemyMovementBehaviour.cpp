@@ -11,7 +11,7 @@
 
 using namespace game;
 
-EnemyMovementBehaviour::EnemyMovementBehaviour(std::shared_ptr<spic::Animator> walkingAnimator) : _walkingAnimator(walkingAnimator)
+EnemyMovementBehaviour::EnemyMovementBehaviour(std::shared_ptr<spic::Animator> walkingAnimator, float velocity) : _walkingAnimator(walkingAnimator), _velocity(velocity)
 {
 }
 
@@ -78,7 +78,7 @@ void EnemyMovementBehaviour::OnUpdate()
         speedMultiplier = 0.33;
     }
 
-    speedMultiplier *= 5;
+    speedMultiplier *= _velocity;
 
     auto toLocation = _graph[_path.front()];
 
