@@ -1,22 +1,23 @@
 #ifndef SPIC_GAME_CONSTANTS_HPP
 #define SPIC_GAME_CONSTANTS_HPP
 
-const double TileSize = 32;
-const double TileButtonScale = 2.0;
-const double TileMapScale = 0.985;
-const int MapX = TileSize / 2 + 155;
-const int MapY = TileSize / 2;
-const int ScreenWidth = 1366;
-const int ScreenHeight = 786;
-const int HudWidth = 250;
-const int HealAbilityCoolDown = 5;
+//Game HUD and Level
+const double TileSize = 32; // Size of a single TileSprite
+const double TileButtonScale = 2.0; // Size of tile select button inside of the HUD
+const double TileMapScale = 0.985; // Scale of the entire 25 x 25 map
+const int MapX = TileSize / 2 + 155; // Starting x location of the map
+const int MapY = TileSize / 2; // Starting y location of the map
+const int ScreenWidth = 1366; // Width of the screen
+const int ScreenHeight = 786; // Height of the screen
+const int HudWidth = 250; // Width of the HUD inside a level
+const int HealAbilityCoolDown = 5; // The default cool down of a hero ability
 
-//Enemey
-const double EnemyScale = 0.1; //default scale on 1
-const int EnemyWidth = 200; //width of enemy image
-const int EnemyHeight = 320; //height of enemy image
-const int EnemyMass = 50; //random chosen mass
-const int EnemyVelocity = 50; //random chosen velocity
+//Enemy
+const double EnemyScale = 0.1; // The scale of the enemy game object
+const int EnemyWidth = 200; // The width of the enemy without scale
+const int EnemyHeight = 320; // The height of the enemy without scale
+const int EnemyMass = 50; // Random mass given to the hero
+const int EnemyVelocity = 250; // The velocity of the enemy
 
 //Hero
 const double HeroScale = 0.1; //default scale on 1
