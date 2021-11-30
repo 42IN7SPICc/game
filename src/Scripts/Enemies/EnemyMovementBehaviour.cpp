@@ -1,10 +1,12 @@
-#include <RigidBody.hpp>
 #include "EnemyMovementBehaviour.hpp"
-#include "GameObject.hpp"
-#include "Animator.hpp"
+
 #include "../../Controllers/LevelController.hpp"
 #include "../../Utils/StringUtil.hpp"
 #include "../../Utils/PointUtil.hpp"
+
+#include "GameObject.hpp"
+
+#include <stdexcept>
 
 using namespace game;
 
@@ -12,6 +14,10 @@ const double TileSize = 32;
 const double TileMapScale = 0.985;
 const int MapX = TileSize / 2 + 155;
 const int MapY = TileSize / 2;
+
+EnemyMovementBehaviour::EnemyMovementBehaviour(std::shared_ptr<spic::Animator> walkingAnimator) : _walkingAnimator(walkingAnimator)
+{
+}
 
 bool CanWalk(TileType tileType)
 {
@@ -27,19 +33,37 @@ void EnemyMovementBehaviour::OnStart()
         _graph = levelController->GetGraph();
         _path = levelController->GetPath();
     }
+
+    auto parent = GameObject().lock();
+
+    _healthBehaviour = parent->GetComponent<HealthBehaviour>();
+    if (!_healthBehaviour)
+    {
+        throw std::runtime_error("No HealthBehaviour found on the enemy.");
+    }
+    _rigidBody = parent->GetComponent<spic::RigidBody>();
+    if (!_rigidBody)
+    {
+        throw std::runtime_error("No RigidBody found on the enemy.");
+    }
+    _sprite = parent->GetComponent<spic::Sprite>();
+    if (!_sprite)
+    {
+        throw std::runtime_error("No Sprite found on the enemy.");
+    }
 }
 
 void EnemyMovementBehaviour::OnUpdate()
 {
-    auto parent = GameObject().lock();
-    auto walkingAnimator = parent->GetComponents<spic::Animator>()[1];
-    if (parent->GetComponent<HealthBehaviour>()->Health() <= 0)
+    if (_healthBehaviour->Health() <= 0)
     {
-        walkingAnimator->Stop();
+        _walkingAnimator->Stop();
         return;
     }
 
-    auto enemyPosition = parent->Transform().position;
+    auto parent = GameObject().lock();
+
+    auto enemyPosition = parent->AbsoluteTransform().position;
     double scaledTileSize = TileSize * TileMapScale;
     int tileXLocation = ((enemyPosition.x - MapX) + (scaledTileSize / 2)) / scaledTileSize;
     int tileYLocation = ((enemyPosition.y - MapY) + (scaledTileSize / 2)) / scaledTileSize;
@@ -65,14 +89,15 @@ void EnemyMovementBehaviour::OnUpdate()
     double distance;
     auto force = PointUtil::CalculateDirectionalPoint(enemyPosition, toLocation.TileObject->AbsoluteTransform().position, speedMultiplier, distance);
 
-    GameObject().lock()->GetComponent<spic::RigidBody>()->AddForce(force);
+    _rigidBody->AddForce(force);
 
     if (distance <= 2)
     {
         _path.pop();
     }
 
-    walkingAnimator->Play(true);
+    _walkingAnimator->Play(true);
+    _sprite->FlipX(force.x < 0);
 }
 
 void EnemyMovementBehaviour::OnTriggerEnter2D(const spic::Collider& collider)
