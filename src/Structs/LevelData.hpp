@@ -19,6 +19,8 @@ namespace game
         std::queue<std::string> Path;
 
         [[nodiscard]] size_t CurrentWave() const;
+
+        void ClearDeadEnemies(WaveData& wave);
     };
 }
 
