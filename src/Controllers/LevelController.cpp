@@ -34,10 +34,38 @@ void LevelController::OnStart()
     GameObjectUtil::LinkComponent(parent, gameLostBehaviour);
 
     _levelData.HeroHealth->GameObject().lock()->Transform().position = GameObject::FindWithTag("end_tile")->AbsoluteTransform().position;
+
+    _startPosition = GameObject::FindWithTag("start_tile")->AbsoluteTransform().position;
 }
 
 void LevelController::OnUpdate()
 {
+    if (_levelMode == LevelMode::TowerMode)
+    {
+        _timePassed += Time::DeltaTime() * Time::TimeScale();
+
+        if (!_levelData.Waves.empty())
+        {
+            auto& wave = _levelData.Waves.front();
+            wave.ClearDeadEnemies();
+            if (!wave.EnemyQueue.empty())
+            {
+                auto&[timeTillNextEnemy, nextEnemy] = wave.EnemyQueue.front();
+                if (_timePassed >= timeTillNextEnemy)
+                {
+                    wave.CurrentEnemies.push_back(nextEnemy);
+                    nextEnemy->Transform().position = _startPosition;
+                    Engine::Instance().PeekScene()->Contents().push_back(nextEnemy);
+                    wave.EnemyQueue.pop();
+                }
+            }
+            else if (wave.RemainingEnemies() == 0)
+            {
+                _levelData.Waves.pop();
+            }
+        }
+    }
+
     for (const auto& child: _rightHud->Children())
     {
         if (child->Name() == "hero-health-text")
@@ -63,7 +91,7 @@ void LevelController::OnUpdate()
         else if (child->Name() == "enemies-text")
         {
             auto text = std::dynamic_pointer_cast<spic::Text>(child);
-            text->Content(std::to_string(_levelData.Waves.front().RemainingEnemies()));
+            text->Content(_levelData.Waves.empty() ? "0" : std::to_string(_levelData.Waves.front().RemainingEnemies()));
         }
     }
 }
@@ -83,7 +111,8 @@ void LevelController::OnTriggerStay2D(const spic::Collider& collider)
     //
 }
 
-LevelController::LevelController(game::LevelWithTiles level, std::shared_ptr<game::HealthBehaviour> heroHealth, std::shared_ptr<game::HealthBehaviour> militaryBaseHealth, std::queue<game::WaveData> waves) : _level(std::move(level)),
+LevelController::LevelController(game::LevelWithTiles level, std::shared_ptr<game::HealthBehaviour> heroHealth, std::shared_ptr<game::HealthBehaviour> militaryBaseHealth, std::queue<game::WaveData> waves) : _timePassed(0),
+                                                                                                                                                                                                               _level(std::move(level)),
                                                                                                                                                                                                                _levelData(game::LevelData{
                                                                                                                                                                                                                        std::move(heroHealth),
                                                                                                                                                                                                                        std::move(militaryBaseHealth),
@@ -476,4 +505,16 @@ void LevelController::SetStrongPath()
 void LevelController::SetUnlimitedMoney()
 {
     _levelData.Balance += 1000000000;
+}
+
+void LevelController::ButcherEnemies()
+{
+    if (!_levelData.Waves.empty())
+    {
+        for (auto& currentEnemies: _levelData.Waves.front().CurrentEnemies)
+        {
+            auto healthBehaviour = currentEnemies->GetComponent<HealthBehaviour>();
+            healthBehaviour->Damage(healthBehaviour->Health());
+        }
+    }
 }

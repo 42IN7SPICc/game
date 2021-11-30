@@ -15,7 +15,7 @@
 
 #include <stdexcept>
 
-const int EnemyScale = 1; //default scale on 1
+const double EnemyScale = 0.1; //default scale on 1
 const int EnemyWidth = 200; //width of enemy image
 const int EnemyHeight = 320; //height of enemy image
 const int EnemyMass = 50; //random chosen mass
@@ -152,13 +152,9 @@ std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreateBaseEnemy(int attack
     auto movementBehaviour = std::make_shared<EnemyMovementBehaviour>();
     GameObjectUtil::LinkComponent(baseEnemy, movementBehaviour);
 
-    auto colliderRadius = EnemyWidth * 0.5 * EnemyScale;
-    auto enemyTriggerCollider = std::make_shared<spic::CircleCollider>(colliderRadius);
+    auto enemyTriggerCollider = std::make_shared<spic::CircleCollider>(EnemyWidth * 0.5 * EnemyScale);
     enemyTriggerCollider->IsTrigger(true);
     GameObjectUtil::LinkComponent(baseEnemy, enemyTriggerCollider);
-
-    auto enemyCollider = std::make_shared<spic::CircleCollider>(colliderRadius);
-    GameObjectUtil::LinkComponent(baseEnemy, enemyCollider);
 
     auto enemyRigidBody = std::make_shared<spic::RigidBody>(EnemyMass, 0, spic::BodyType::dynamicBody);
     GameObjectUtil::LinkComponent(baseEnemy, enemyRigidBody);

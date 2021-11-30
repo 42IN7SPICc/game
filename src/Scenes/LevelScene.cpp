@@ -12,7 +12,7 @@
 #include "../Scripts/Common/CheatManager.hpp"
 #include "../Scripts/Menu/PauseSceneBehaviour.hpp"
 #include "../Utils/GameObjectUtil.hpp"
-#include "../Utils/TileUtil.hpp"
+#include "../Factories/WavePrefabFactory.hpp"
 
 using namespace spic;
 using namespace game;
@@ -31,19 +31,13 @@ LevelScene::LevelScene(LevelWithTiles& levelWithTiles)
     titleText->Transform().position = {1366 / 2, 50};
 
     auto hero = game::HeroPrefabFactory::CreateHero(DesmondDoss);
-    hero->Transform().scale = 0.1;
     hero->Active(false);
     auto heroHealth = hero->GetComponent<HealthBehaviour>();
     auto endTowerHealth = std::make_shared<game::HealthBehaviour>(nullptr, 10);
 
-    auto waves = std::queue<WaveData>();
-    auto wave1 = WaveData{{}, {}};
-    wave1.EnemyQueue.push(std::make_tuple<size_t, std::shared_ptr<spic::GameObject >>(1, std::make_shared<spic::GameObject>("test", "test", 0)));
-    waves.push(wave1);
-
     auto levelAudioSource = game::AudioSourcePrefabFactory::CreateAudioObject(AudioClipName::Game, true, true, 0.2);
     auto mainGameObject = std::make_shared<spic::GameObject>("LevelController", "default", Layer::Background);
-    auto levelController = std::make_shared<game::LevelController>(levelWithTiles, heroHealth, endTowerHealth, waves);
+    auto levelController = std::make_shared<game::LevelController>(levelWithTiles, heroHealth, endTowerHealth, game::WavePrefabFactory::GenerateWaves(5));
     auto cheatManager = std::make_shared<game::CheatManager>();
     GameObjectUtil::LinkComponent(mainGameObject, levelController);
     GameObjectUtil::LinkComponent(mainGameObject, cheatManager);

@@ -38,8 +38,10 @@ void AttackBehaviour::OnUpdate()
     auto absPosition = GameObject().lock()->AbsoluteTransform().position;
 
     std::map<double, spic::Point> targets{};
-    for (const auto& target: spic::GameObject::FindGameObjectsWithTag(_targetTag))
+    for (const auto& target: spic::Engine::Instance().PeekScene()->Contents())
     {
+        if (target->Tag() != _targetTag) continue;
+
         auto healthBehaviour = target->GetComponent<HealthBehaviour>();
         if (!healthBehaviour || healthBehaviour->Health() <= 0) continue;
 
