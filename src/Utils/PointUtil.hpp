@@ -10,6 +10,8 @@ namespace game
         public:
             static spic::Point CalculateDirectionalPoint(const spic::Point& from, const spic::Point& to, double multiplier = 1.0);
 
+            static spic::Point CalculateDirectionalPoint(const spic::Point& from, const spic::Point& to, double multiplier, double& distance);
+
             static double Distance(const spic::Point& from, const spic::Point& to);
 
             static double Distance(const spic::Point& pointDiff);
