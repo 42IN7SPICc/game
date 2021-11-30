@@ -3,8 +3,13 @@
 
 #include <string>
 
-namespace game {
-    struct FolderFile {
+namespace game
+{
+    /**
+     * @brief A models for storing file information.
+     */
+    struct FolderFile
+    {
         std::string Name;
         std::string File;
     };

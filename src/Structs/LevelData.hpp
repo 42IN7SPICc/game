@@ -8,6 +8,9 @@
 
 namespace game
 {
+    /**
+     * @brief A model for storing level data.
+     */
     struct LevelData
     {
         std::shared_ptr<game::HealthBehaviour> HeroHealth;
@@ -18,8 +21,16 @@ namespace game
         std::map<std::string, game::MapNode> Graph;
         std::queue<std::string> Path;
 
+        /**
+         * @brief The current wave.
+         * @return The current value.
+         */
         [[nodiscard]] size_t CurrentWave() const;
 
+        /**
+         * @brief Remove dead enemies from the wave.
+         * @param wave The wave to remove enemies from.
+         */
         void ClearDeadEnemies(WaveData& wave);
     };
 }

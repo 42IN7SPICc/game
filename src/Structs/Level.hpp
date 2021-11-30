@@ -7,6 +7,9 @@
 
 namespace game
 {
+    /**
+     * @brief A model for storing level data.
+     */
     struct Level
     {
         template<class Archive>

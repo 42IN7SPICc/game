@@ -5,6 +5,9 @@
 
 namespace game
 {
+    /**
+     * @brief A model for storing data about a tile.
+     */
     struct Tile
     {
         template<class Archive>
@@ -17,6 +20,10 @@ namespace game
         int X;
         int Y;
 
+        /**
+         * @brief The type of the tile.
+         * @return The type of the tile.
+         */
         [[nodiscard]] game::TileType TileType() const;
     };
 }
