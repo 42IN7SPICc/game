@@ -5,9 +5,15 @@
 
 namespace game
 {
+    /**
+     * @brief A scene that contains credits to the developers.
+     */
     class CreditScene : public MenuScene
     {
         public:
+            /**
+             * @brief Constructs a new instance of a CreditScene.
+             */
             CreditScene();
     };
 }

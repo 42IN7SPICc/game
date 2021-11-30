@@ -5,9 +5,15 @@
 
 namespace game
 {
+    /**
+     * @brief A scene that contains functionality for pausing the game.
+     */
     class PauseScene : public MenuScene
     {
         public:
+            /**
+             * @brief Constructs a new instance of a PauseScene.
+             */
             PauseScene();
     };
 }

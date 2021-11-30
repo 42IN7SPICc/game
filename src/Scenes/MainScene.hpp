@@ -5,9 +5,15 @@
 
 namespace game
 {
+    /**
+     * @brief A scene that show the title of the game and some information.
+     */
     class MainScene : public MenuScene
     {
         public:
+            /**
+             * @brief Constructs a new instance of a MainScene.
+             */
             MainScene();
     };
 }
