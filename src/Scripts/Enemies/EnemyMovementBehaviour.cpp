@@ -98,6 +98,7 @@ void EnemyMovementBehaviour::OnUpdate()
 
     _walkingAnimator->Play(true);
     _sprite->FlipX(force.x < 0);
+    parent->Transform().rotation = 0;
 }
 
 void EnemyMovementBehaviour::OnTriggerEnter2D(const spic::Collider& collider)
