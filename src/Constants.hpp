@@ -19,6 +19,7 @@ const int EnemyHeight = 320; // The height of the enemy without scale
 const int EnemyMass = 50; // Random mass given to the hero
 const int EnemyVelocity = 5; // The walking speed of an enemy
 const int EnemyDeSpawnTime = 4; // The time it takes to de spawn an enemy after death
+const int DefaultEnemyKillBalance = 50; // The money you get after killing an enemy
 
 //Hero
 const double HeroScale = 0.1; //default scale on 1
