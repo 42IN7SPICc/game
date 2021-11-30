@@ -64,6 +64,14 @@ void game::HealthBehaviour::OnUpdate()
 
 void game::HealthBehaviour::OnTriggerEnter2D(const spic::Collider& collider)
 {
+    auto gameObject = GameObject().lock();
+    if(gameObject->Tag() == "end_tile") {
+        auto enemy = collider.GameObject().lock();
+        if(enemy->Tag() == "enemy") {
+            _health--;
+            spic::GameObject::Destroy(enemy);
+        }
+    }
 }
 
 void game::HealthBehaviour::OnTriggerExit2D(const spic::Collider& collider)

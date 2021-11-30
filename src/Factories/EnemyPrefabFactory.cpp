@@ -146,15 +146,8 @@ std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreateBaseEnemy(int attack
     auto healthBehaviour = std::make_shared<HealthBehaviour>(diedAnimator, health, 4);
     GameObjectUtil::LinkComponent(baseEnemy, healthBehaviour);
 
-    auto damageBehaviour = std::make_shared<DamageBehaviour>(attack, "end_tile");
-    GameObjectUtil::LinkComponent(baseEnemy, damageBehaviour);
-
     auto movementBehaviour = std::make_shared<EnemyMovementBehaviour>(walkingAnimator);
     GameObjectUtil::LinkComponent(baseEnemy, movementBehaviour);
-
-    auto enemyTriggerCollider = std::make_shared<spic::CircleCollider>(EnemyWidth * 0.5 * EnemyScale);
-    enemyTriggerCollider->IsTrigger(true);
-    GameObjectUtil::LinkComponent(baseEnemy, enemyTriggerCollider);
 
     auto enemyCollider = std::make_shared<spic::CircleCollider>(0.000001);
     GameObjectUtil::LinkComponent(baseEnemy, enemyCollider);

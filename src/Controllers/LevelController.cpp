@@ -280,8 +280,11 @@ std::shared_ptr<spic::GameObject> LevelController::BuildLevel(const std::shared_
             tile = std::make_shared<spic::GameObject>("end-tile", "end_tile", Layer::Game);
             auto endTileCollider = std::make_shared<spic::BoxCollider>(TileSize * TileMapScale, TileSize * TileMapScale);
             endTileCollider->IsTrigger(true);
+            auto tileRigidBody = std::make_shared<spic::RigidBody>(10,0, BodyType::staticBody);
+
             GameObjectUtil::LinkComponent(tile, endTileCollider);
             GameObjectUtil::LinkComponent(tile, endTowerHealthBehaviour);
+            GameObjectUtil::LinkComponent(tile, tileRigidBody);
         }
         else if (levelTile.TileType() == TileType::Start)
         {
