@@ -37,11 +37,6 @@ void DamageBehaviour::OnTriggerEnter2D(const spic::Collider& collider)
 
     auto colliderGameObject = collider.GameObject().lock();
 
-    if (!colliderGameObject->Active())
-    {
-        return;
-    }
-
     if (!_targetTag.empty() && colliderGameObject->Tag() != _targetTag) return;
 
     if (_radius > 0)
