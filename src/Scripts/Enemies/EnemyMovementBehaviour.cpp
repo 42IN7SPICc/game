@@ -26,14 +26,6 @@ bool CanWalk(TileType tileType)
 
 void EnemyMovementBehaviour::OnStart()
 {
-    auto gameObject = spic::GameObject::Find("LevelController");
-    if (gameObject)
-    {
-        auto levelController = gameObject->GetComponent<game::LevelController>();
-        _graph = levelController->GetGraph();
-        _path = levelController->GetPath();
-    }
-
     auto parent = GameObject().lock();
 
     _healthBehaviour = parent->GetComponent<HealthBehaviour>();
@@ -50,6 +42,14 @@ void EnemyMovementBehaviour::OnStart()
     if (!_sprite)
     {
         throw std::runtime_error("No Sprite found on the enemy.");
+    }
+
+    auto gameObject = spic::GameObject::Find("LevelController");
+    if (gameObject)
+    {
+        auto levelController = gameObject->GetComponent<game::LevelController>();
+        _graph = levelController->GetGraph();
+        _path = levelController->GetPath();
     }
 }
 
