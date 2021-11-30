@@ -8,19 +8,12 @@
 #include "../Enums/SortingLayer.hpp"
 #include "../Scripts/Heroes/HealAbilityBehaviour.hpp"
 #include "../Scripts/Heroes/UserMovementBehaviour.hpp"
-#include "../Scripts/Common/UserAttackBehaviour.hpp"
+#include "../Scripts/Heroes/UserAttackBehaviour.hpp"
 #include "../Utils/AnimatorUtil.hpp"
 #include "../Utils/GameObjectUtil.hpp"
+#include "../Constants.hpp"
 
 #include <stdexcept>
-
-const double HeroScale = 0.1; //default scale on 1
-const int BaseHeroHealth = 20; // Gets multiplied by the hero's defense rating
-const int HeroWidth = 200; //width of hero image
-const int HeroHeight = 320; //height of hero image
-const int HeroMass = 50; //random chosen mass
-const int HeroVelocity = 50; //random chosen velocity (looks good)
-const double HeroBulletSpeed = 17.5; // random chosen bullet speed (looks alright)
 
 std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateHero(game::HeroName name)
 {
@@ -43,7 +36,7 @@ std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateHero(game::Hero
 
 std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateDesmondDoss()
 {
-    auto base_hero = CreateBaseHero(2, 3);
+    auto base_hero = CreateBaseHero(DesmondDossDamage, DesmondDossDefense);
     auto ability = std::make_shared<game::HealAbilityBehaviour>();
     GameObjectUtil::LinkComponent(base_hero, ability);
 
@@ -109,7 +102,7 @@ std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateBaseHero(int at
     auto userMovementBehaviour = std::make_shared<game::UserMovementBehaviour>(static_cast<float>(HeroVelocity), idleAnimator, walkingAnimator, healthBehaviour);
     GameObjectUtil::LinkComponent(baseHero, userMovementBehaviour);
 
-    auto attackBehaviour = std::make_shared<game::UserAttackBehaviour>(attack, HeroBulletSpeed, healthBehaviour);
+    auto attackBehaviour = std::make_shared<game::UserAttackBehaviour>(attack * BaseHeroDamage, HeroBulletSpeed, healthBehaviour);
     GameObjectUtil::LinkComponent(baseHero, attackBehaviour);
 
     auto heroCollider = std::make_shared<spic::CircleCollider>(HeroWidth * 0.5 * HeroScale);

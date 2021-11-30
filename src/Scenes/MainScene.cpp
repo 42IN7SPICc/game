@@ -6,7 +6,7 @@
 #include "../Factories/ButtonPrefabFactory.hpp"
 #include "../Factories/HeroPrefabFactory.hpp"
 #include "../Utils/RandomUtil.hpp"
-#include "../Scripts/Common/UserAttackBehaviour.hpp"
+#include "../Scripts/Heroes/UserAttackBehaviour.hpp"
 #include "../Scripts/Heroes/UserMovementBehaviour.hpp"
 #include "../Controllers/SaveGameController.hpp"
 #include "../Factories/AudioSourcePrefabFactory.hpp"

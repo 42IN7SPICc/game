@@ -109,7 +109,7 @@ namespace game
              * @brief Get the path for enemies to walk on.
              * @return The path to walk on.
              */
-            std::queue<std::string> GetPath() const;
+            [[nodiscard]] std::queue<std::string> GetPath() const;
 
             /**
              * @brief Remove all the dead enemies from the current wave.

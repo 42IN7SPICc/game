@@ -21,6 +21,7 @@ namespace game
     class EnemyMovementBehaviour : public spic::BehaviourScript
     {
         private:
+            float _velocity;
             std::map<std::string, game::MapNode> _graph;
             std::queue<std::string> _path;
             std::shared_ptr<spic::Animator> _walkingAnimator;
@@ -32,8 +33,9 @@ namespace game
             /**
              * @brief Constructs a new instance of an EnemyMovementBehaviour with a given walking animator.
              * @param walkingAnimator The animator to when walking.
+             * @param velocity The velocity the enemy moves at.
              */
-            EnemyMovementBehaviour(std::shared_ptr<spic::Animator> walkingAnimator);
+            EnemyMovementBehaviour(std::shared_ptr<spic::Animator> walkingAnimator, float velocity);
 
             /**
              * @brief Triggers when the scripts starts for the first time.

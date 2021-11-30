@@ -2,8 +2,7 @@
 #include "GameObject.hpp"
 #include "Input.hpp"
 #include "../../Utils/GameObjectUtil.hpp"
-
-const int HealAbilityCoolDown = 5;
+#include "../../Constants.hpp"
 
 game::HealAbilityBehaviour::HealAbilityBehaviour() : _coolDownBehaviour(std::make_shared<CoolDownBehaviour>(CoolDownBehaviour(HealAbilityCoolDown)))
 {
@@ -23,7 +22,7 @@ void game::HealAbilityBehaviour::OnUpdate()
     {
         if (_coolDownBehaviour->CooledDown())
         {
-            _healthBehaviour->Health(_healthBehaviour->Health() + 1);
+            _healthBehaviour->Health(_healthBehaviour->Health() + DesmondDossHealAbilityAmount);
             _coolDownBehaviour->CooledDown(false);
         }
     }

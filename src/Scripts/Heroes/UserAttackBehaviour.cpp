@@ -5,9 +5,10 @@
 #include <utility>
 #include <stdexcept>
 
-#include "BulletBehaviour.hpp"
+#include "../Common/BulletBehaviour.hpp"
 #include "../../Factories/BulletFactory.hpp"
 #include "../../Utils/PointUtil.hpp"
+#include "../../Constants.hpp"
 
 using namespace game;
 
@@ -38,7 +39,7 @@ void UserAttackBehaviour::OnUpdate()
         auto force = PointUtil::CalculateDirectionalPoint(parentPosition, mousePosition, _velocityMultiplier);
 
         // Bullet game object
-        auto bullet = BulletFactory::CreateBullet(BulletType::Normal, parentPosition, "enemy", force, 500, _damage);
+        auto bullet = BulletFactory::CreateBullet(BulletType::Normal, parentPosition, "enemy", force, HeroBulletRange, _damage);
         spic::Engine::Instance().PeekScene()->Contents().push_back(bullet);
     }
 }
