@@ -96,7 +96,7 @@ std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateBaseHero(int at
     auto CelebratingAnimator = std::make_shared<spic::Animator>(static_cast<int>(celebratingSprites.size()), celebratingSprites);
     GameObjectUtil::LinkComponent(baseHero, CelebratingAnimator);
 
-    auto healthBehaviour = std::make_shared<game::HealthBehaviour>(diedAnimator, defense);
+    auto healthBehaviour = std::make_shared<game::HealthBehaviour>(diedAnimator, defense * BaseHeroHealth);
     GameObjectUtil::LinkComponent(baseHero, healthBehaviour);
 
     auto userMovementBehaviour = std::make_shared<game::UserMovementBehaviour>(static_cast<float>(HeroVelocity), idleAnimator, walkingAnimator, healthBehaviour);

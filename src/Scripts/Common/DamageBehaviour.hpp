@@ -2,6 +2,7 @@
 #define SPIC_GAME_DAMAGEBEHAVIOUR_HPP
 
 #include "BehaviourScript.hpp"
+#include "HealthBehaviour.hpp"
 
 #include <string>
 
@@ -18,7 +19,7 @@ namespace game
         public:
             explicit DamageBehaviour(int damage, const std::string& targetTag = "", int radius = 0);
 
-            void Damage(const std::shared_ptr<spic::GameObject>& gameObject);
+            void Damage(const std::shared_ptr<game::HealthBehaviour>& gameObject);
 
             [[nodiscard]] int Damage() const;
 

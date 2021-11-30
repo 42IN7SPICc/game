@@ -24,6 +24,12 @@ void UnlimitedMoney()
 void Invincibility()
 {
     Debug::Log("Fired Invincibility Cheat");
+    auto gameObject = GameObject::Find("LevelController");
+    if (gameObject)
+    {
+        auto levelController = gameObject->GetComponent<game::LevelController>();
+        levelController->SetInvincibility();
+    }
 }
 
 void Butcher()

@@ -17,38 +17,41 @@
 
 using namespace spic;
 
-class ConfettiBehaviour : public spic::BehaviourScript
+namespace game
 {
-    public:
-        void OnStart() override
-        {
-            //
-        }
-
-        void OnUpdate() override
-        {
-            //
-        }
-
-        void OnTriggerEnter2D(const Collider& collider) override
-        {
-            if (!collider.GameObject().expired() && collider.GameObject().lock()->Tag() == "confetti_bound")
+    class ConfettiBehaviour : public spic::BehaviourScript
+    {
+        public:
+            void OnStart() override
             {
-                GameObject().lock()->Transform().position.y = -25;
-                GameObject().lock()->Transform().position.x = game::RandomUtil::Next(ConfettiXRangeMin, ConfettiXRangeMax);
+                //
             }
-        }
 
-        void OnTriggerExit2D(const Collider& collider) override
-        {
-            //
-        }
+            void OnUpdate() override
+            {
+                //
+            }
 
-        void OnTriggerStay2D(const Collider& collider) override
-        {
-            //
-        }
-};
+            void OnTriggerEnter2D(const Collider& collider) override
+            {
+                if (!collider.GameObject().expired() && collider.GameObject().lock()->Tag() == "confetti_bound")
+                {
+                    GameObject().lock()->Transform().position.y = -25;
+                    GameObject().lock()->Transform().position.x = game::RandomUtil::Next(ConfettiXRangeMin, ConfettiXRangeMax);
+                }
+            }
+
+            void OnTriggerExit2D(const Collider& collider) override
+            {
+                //
+            }
+
+            void OnTriggerStay2D(const Collider& collider) override
+            {
+                //
+            }
+    };
+}
 
 game::VictoryScene::VictoryScene() : MenuScene("", false, BackgroundName::Victory)
 {
@@ -95,6 +98,6 @@ std::shared_ptr<spic::GameObject> game::VictoryScene::GenerateConfetti()
     circleCollider->IsTrigger(true);
     game::GameObjectUtil::LinkComponent(confettiObject, circleCollider);
     game::GameObjectUtil::LinkComponent(confettiObject, std::make_shared<RigidBody>(10, game::RandomUtil::NextDouble(ConfettiMinGravity, ConfettiMaxGravity), BodyType::dynamicBody));
-    game::GameObjectUtil::LinkComponent(confettiObject, std::make_shared<ConfettiBehaviour>());
+    game::GameObjectUtil::LinkComponent(confettiObject, std::make_shared<game::ConfettiBehaviour>());
     return confettiObject;
 }

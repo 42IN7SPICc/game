@@ -15,6 +15,7 @@ namespace game
             int _maxHealth;
             double _despawnDuration;
             double _despawnTime;
+            bool _invincibility;
 
         public:
             [[nodiscard]] int Health() const;
@@ -36,6 +37,10 @@ namespace game
             void OnTriggerExit2D(const spic::Collider& collider) override;
 
             void OnTriggerStay2D(const spic::Collider& collider) override;
+
+            void Invincibility(bool invincibility);
+
+            bool Invincibility() const;
     };
 }
 
