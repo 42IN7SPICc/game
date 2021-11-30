@@ -5,6 +5,9 @@
 
 namespace game
 {
+    /**
+     * @brief Enum for font names.
+     */
     class Font
     {
         public:

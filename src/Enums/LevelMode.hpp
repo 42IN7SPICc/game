@@ -1,8 +1,13 @@
 #ifndef SPIC_GAME_LEVELMODE_HPP
 #define SPIC_GAME_LEVELMODE_HPP
 
-namespace game {
-    enum LevelMode {
+namespace game
+{
+    /**
+     * @brief Enum for level modes.
+     */
+    enum LevelMode
+    {
         TileMode,
         TowerMode
     };

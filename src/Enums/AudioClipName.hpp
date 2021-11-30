@@ -3,6 +3,9 @@
 
 namespace game
 {
+    /**
+     * @brief Enum for AudioClip names.
+     */
     enum class AudioClipName
     {
         MainMenu,

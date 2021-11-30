@@ -3,6 +3,9 @@
 
 namespace game
 {
+    /**
+     * @brief Enum for bullet types.
+     */
     enum class BulletType
     {
         Normal,

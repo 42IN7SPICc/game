@@ -3,6 +3,9 @@
 
 namespace game
 {
+    /**
+     * @brief Enum for tile types.
+     */
     enum TileType
     {
         Bushes = 0,
