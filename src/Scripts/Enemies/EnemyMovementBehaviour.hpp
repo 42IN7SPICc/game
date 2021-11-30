@@ -15,6 +15,9 @@
 
 namespace game
 {
+    /**
+     * @brief A script to handle movement for the enemy.
+     */
     class EnemyMovementBehaviour : public spic::BehaviourScript
     {
         private:
@@ -26,6 +29,10 @@ namespace game
             std::shared_ptr<spic::Sprite> _sprite;
 
         public:
+            /**
+             * @brief Constructs a new instance of an EnemyMovementBehaviour with a given walking animator.
+             * @param walkingAnimator The animator to when walking.
+             */
             EnemyMovementBehaviour(std::shared_ptr<spic::Animator> walkingAnimator);
 
             /**

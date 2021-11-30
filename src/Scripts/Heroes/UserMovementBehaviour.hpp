@@ -9,6 +9,9 @@
 
 namespace game
 {
+    /**
+     * @brief A script to allow the user to move the hero thru the level.
+     */
     class UserMovementBehaviour : public spic::BehaviourScript
     {
         private:
@@ -19,10 +22,25 @@ namespace game
             std::shared_ptr<spic::Animator> _walkingAnimator;
             std::shared_ptr<game::HealthBehaviour> _healthBehaviour;
         public:
+            /**
+             * @brief Constructs a new instance of a UserMovementBehaviour with given settings.
+             * @param velocity The speed the hero moves at.
+             * @param idleAnimator The animator used when the hero is not moving.
+             * @param walkingAnimator The animator used when the hero is moving.
+             * @param healthBehaviour The health of the hero to disable movement on death.
+             */
             explicit UserMovementBehaviour(float velocity, std::shared_ptr<spic::Animator> idleAnimator, std::shared_ptr<spic::Animator> walkingAnimator, std::shared_ptr<game::HealthBehaviour> healthBehaviour);
 
+            /**
+             * @brief Whether the player should be controllable.
+             * @return The current value.
+             */
             [[nodiscard]] bool Controllable() const;
 
+            /**
+             * @brief Whether the player should be controllable.
+             * @param controllable The desired value.
+             */
             void Controllable(bool controllable);
 
             /**

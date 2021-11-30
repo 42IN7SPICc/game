@@ -5,6 +5,9 @@
 
 namespace game
 {
+    /**
+     * @brief A script to close the scene when pressing the ESC ky.
+     */
     class CloseSceneBehaviour : public spic::BehaviourScript
     {
         public:

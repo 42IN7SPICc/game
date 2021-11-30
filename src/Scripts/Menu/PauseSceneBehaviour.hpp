@@ -5,6 +5,9 @@
 
 namespace game
 {
+    /**
+     * @brief A script to pause the game when pressing the ESC key.
+     */
     class PauseSceneBehaviour : public spic::BehaviourScript
     {
         public:

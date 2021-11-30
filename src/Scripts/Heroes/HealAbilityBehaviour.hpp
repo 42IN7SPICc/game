@@ -7,6 +7,9 @@
 
 namespace game
 {
+    /**
+     * @brief A script to heal a hero when activated.
+     */
     class HealAbilityBehaviour : public spic::BehaviourScript
     {
         private:
@@ -14,6 +17,9 @@ namespace game
             std::shared_ptr<game::HealthBehaviour> _healthBehaviour;
 
         public:
+            /**
+             * @brief Constructs a new instance of a HealAbilityBehaviour.
+             */
             HealAbilityBehaviour();
 
             /**
