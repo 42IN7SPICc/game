@@ -18,6 +18,7 @@ namespace game
     class EnemyMovementBehaviour : public spic::BehaviourScript
     {
         private:
+            float _velocity;
             std::map<std::string, game::MapNode> _graph;
             std::queue<std::string> _path;
             std::shared_ptr<spic::Animator> _walkingAnimator;
@@ -26,7 +27,7 @@ namespace game
             std::shared_ptr<spic::Sprite> _sprite;
 
         public:
-            EnemyMovementBehaviour(std::shared_ptr<spic::Animator> walkingAnimator);
+            EnemyMovementBehaviour(std::shared_ptr<spic::Animator> walkingAnimator, float velocity);
 
             void OnStart() override;
 

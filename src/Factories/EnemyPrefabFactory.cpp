@@ -5,21 +5,14 @@
 #include "../Scripts/Common/AttackBehaviour.hpp"
 #include "../Scripts/Common/HealthBehaviour.hpp"
 #include "../Scripts/Enemies/EnemyMovementBehaviour.hpp"
-#include "../Utils/AnimatorUtil.hpp"
 #include "../Utils/GameObjectUtil.hpp"
+#include "../Constants.hpp"
 
 #include "Animator.hpp"
 #include "CircleCollider.hpp"
 #include "RigidBody.hpp"
-#include "../Scripts/Common/DamageBehaviour.hpp"
 
 #include <stdexcept>
-
-const double EnemyScale = 0.1; //default scale on 1
-const int EnemyWidth = 200; //width of enemy image
-const int EnemyHeight = 320; //height of enemy image
-const int EnemyMass = 50; //random chosen mass
-const int EnemyVelocity = 50; //random chosen velocity
 
 using namespace game;
 
@@ -52,9 +45,9 @@ std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreatePanzer()
     types::sprite_vector walkingSprites = AnimatorUtil::CreateSpriteVector(10, "resources/sprites/enemies/Walking/enemy_walking_", SortingLayer::Enemy);
     types::sprite_vector diedSprites = AnimatorUtil::CreateSpriteVector(9, "resources/sprites/enemies/Died/enemy_died_", SortingLayer::Enemy);
 
-    auto enemy = CreateBaseEnemy(15, 200, idleSprites, walkingSprites, diedSprites);
+    auto enemy = CreateBaseEnemy(15, PanzerEnemyHealth, idleSprites, walkingSprites, diedSprites);
 
-    auto attackBehaviour = std::make_shared<AttackBehaviour>("hero", BulletType::Normal, 3, 500, 15, 25);
+    auto attackBehaviour = std::make_shared<AttackBehaviour>("hero", BulletType::Normal, PanzerEnemyFireRate, PanzerEnemyRange, PanzerEnemyDamage, PanzerEnemyBulletSpeed);
     GameObjectUtil::LinkComponent(enemy, attackBehaviour);
 
     return enemy;
@@ -143,10 +136,10 @@ std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreateBaseEnemy(int attack
     auto diedAnimator = std::make_shared<spic::Animator>(static_cast<int>(diedSprites.size()), diedSprites);
     GameObjectUtil::LinkComponent(baseEnemy, diedAnimator);
 
-    auto healthBehaviour = std::make_shared<HealthBehaviour>(diedAnimator, health, 4);
+    auto healthBehaviour = std::make_shared<HealthBehaviour>(diedAnimator, health, EnemyDeSpawnTime);
     GameObjectUtil::LinkComponent(baseEnemy, healthBehaviour);
 
-    auto movementBehaviour = std::make_shared<EnemyMovementBehaviour>(walkingAnimator);
+    auto movementBehaviour = std::make_shared<EnemyMovementBehaviour>(walkingAnimator, EnemyVelocity);
     GameObjectUtil::LinkComponent(baseEnemy, movementBehaviour);
 
     auto enemyCollider = std::make_shared<spic::CircleCollider>(0.000001);

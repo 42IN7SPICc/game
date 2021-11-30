@@ -1,4 +1,5 @@
 #include "LevelData.hpp"
+#include "../Constants.hpp"
 
 using namespace game;
 
@@ -12,7 +13,7 @@ void LevelData::ClearDeadEnemies(WaveData& wave)
     std::erase_if(wave.CurrentEnemies, [this](const std::shared_ptr<spic::GameObject>& enemy) {
         if (enemy->GetComponent<HealthBehaviour>()->Health() <= 0)
         {
-            Balance += 50; //TODO Different value for different enemies?
+            Balance += DefaultEnemyKillBalance; //TODO Different value for different enemies?
             return true;
         }
         return false;
