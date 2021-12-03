@@ -38,7 +38,7 @@ jobs:
       - name: 'Setup vcpkg'
         uses: lukka/run-vcpkg@v10
         with:
-          appendedCacheKey: -${{ matrix.os }}
+          doNotCache: true
 
       - name: 'Run CMake'
         uses: lukka/run-cmake@v10
