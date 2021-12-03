@@ -38,7 +38,7 @@ jobs:
       - name: 'Setup vcpkg'
         uses: lukka/run-vcpkg@v10
         with:
-          appendedCacheKey: -${{ matrix.os }}-${{ matrix.triplet }}
+          appendedCacheKey: -${{ matrix.os }}
 
       - name: 'Run CMake'
         uses: lukka/run-cmake@v10
@@ -49,5 +49,5 @@ jobs:
       - name: 'Upload build'
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ matrix.name }}
+          name: ${{ matrix.os }}
           path: builds/ninja-multi-vcpkg/Debug/
