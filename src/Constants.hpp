@@ -4,6 +4,7 @@
 //Game HUD and Level
 const double TileSize = 32; // Size of a single TileSprite
 const double TileButtonScale = 2.0; // Size of tile select button inside of the HUD
+const double TowerButtonScale = 0.1; // Size of tile select button inside of the HUD
 const double TileMapScale = 0.985; // Scale of the entire 25 x 25 map
 const int MapX = TileSize / 2 + 155; // Starting x location of the map
 const int MapY = TileSize / 2; // Starting y location of the map

@@ -130,13 +130,13 @@ std::shared_ptr<spic::GameObject> LevelController::CreateHUD()
     buttonText->Transform().position.y = -(TileSize + 2) * (TileButtonScale * 5);
     GameObjectUtil::LinkChild(_rightHud, buttonText);
 
-    auto streetButton = InitializeTileButton(_rightHud, "resources/sprites/tiles/street.png", 18, "Straat");
+    auto streetButton = InitializeHUDButton(_rightHud, "resources/sprites/tiles/street.png", 18, "Straat");
     streetButton->Transform().position.y = -(TileSize + 2) * (TileButtonScale * 4);
 
-    auto grassButton = InitializeTileButton(_rightHud, "resources/sprites/tiles/grass.png", 6, "Gras");
+    auto grassButton = InitializeHUDButton(_rightHud, "resources/sprites/tiles/grass.png", 6, "Gras");
     grassButton->Transform().position.y = -(TileSize + 2) * (TileButtonScale * 3);
 
-    auto sandButton = InitializeTileButton(_rightHud, "resources/sprites/tiles/sand.png", 6, "Zand");
+    auto sandButton = InitializeHUDButton(_rightHud, "resources/sprites/tiles/sand.png", 6, "Zand");
     sandButton->Transform().position.y = -(TileSize + 2) * (TileButtonScale * 2);
 
     auto completePathButton = ButtonPrefabFactory::CreateOutlineButton("complete-path-button", "complete_path_button", "Voltooi pad", true);
@@ -160,6 +160,8 @@ std::shared_ptr<spic::GameObject> LevelController::CreateHUD()
             enemiesLeftTextHeader->TextAlignment(Alignment::center);
             enemiesLeftTextHeader->Transform().position.y = 100;
             enemiesLeftTextHeader->Content("Vijanden resterend:");
+
+            CreateTowerHud();
 
             auto enemiesText = std::make_shared<spic::Text>("enemies-text", "default", Layer::HUD, HudWidth, 20);
             enemiesText->Size(18);
@@ -321,10 +323,15 @@ std::shared_ptr<spic::GameObject> LevelController::BuildLevel(const std::shared_
     return tileMap;
 }
 
-std::shared_ptr<spic::Button> LevelController::InitializeTileButton(const std::shared_ptr<spic::GameObject>& HUD, const std::string& texture, int tileAmount, const std::string& tileTitle)
+std::shared_ptr<spic::Button> LevelController::InitializeHUDButton(const std::shared_ptr<spic::GameObject>& HUD, const std::string& texture, int tileAmount, const std::string& tileTitle)
 {
     auto button = std::make_shared<spic::Button>("tile-button-" + texture, "tile_button", Layer::HUD, TileSize, TileSize);
-    button->Transform().scale = TileButtonScale;
+    if(_levelMode == LevelMode::TileMode) {
+        button->Transform().scale = TileButtonScale;
+    }
+    else if(_levelMode == LevelMode::TowerMode) {
+        button->Transform().scale = TowerButtonScale;
+    }
     button->Transform().position.x = -50;
     auto buttonSprite = std::make_shared<spic::Sprite>(texture, false, false, 100, 1);
     GameObjectUtil::LinkComponent(button, buttonSprite);
@@ -336,6 +343,7 @@ std::shared_ptr<spic::Button> LevelController::InitializeTileButton(const std::s
 
     auto labelText = std::make_shared<spic::Text>("button-label-text-" + texture, "tile_label_text", Layer::HUD, 100, TileSize);
     labelText->Transform().position.x = TileSize * TileButtonScale + 5;
+
     labelText->Size(11);
     labelText->Content(tileTitle);
     GameObjectUtil::LinkChild(button, labelText);
@@ -540,4 +548,20 @@ void LevelController::ButcherEnemies()
             healthBehaviour->Damage(healthBehaviour->Health());
         }
     }
+}
+
+void LevelController::CreateTowerHud()
+{
+    auto bombShooterButton = InitializeHUDButton(_rightHud, "resources/sprites/towers/shooting/tower_shooting_1.png", 18, "Bommenwerper");
+    bombShooterButton->Transform().position.y = -(TileSize + 2) * (TileButtonScale * 4);
+
+    auto shotgunButton = InitializeHUDButton(_rightHud, "resources/sprites/towers/shooting/tower_shooting_1.png", 6, "Shotgun");
+    shotgunButton->Transform().position.y = -(TileSize + 2) * (TileButtonScale * 3);
+
+    auto flamethrowerButton = InitializeHUDButton(_rightHud, "resources/sprites/towers/shooting/tower_shooting_1.png", 6, "Vlammenwerper");
+    flamethrowerButton->Transform().position.y = -(TileSize + 2) * (TileButtonScale * 2);
+
+    auto sniperButton = InitializeHUDButton(_rightHud, "resources/sprites/towers/shooting/tower_shooting_1.png", 6, "Scherpschutter");
+    sniperButton->Transform().position.y = -(TileSize + 2) * (TileButtonScale * 1);
+
 }

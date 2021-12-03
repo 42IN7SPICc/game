@@ -127,13 +127,15 @@ namespace game
             game::LevelMode _levelMode;
             bool _strongPathEnabled;
 
-            std::shared_ptr<spic::Button> InitializeTileButton(const std::shared_ptr<spic::GameObject>& HUD, const std::string& texture, int tileAmount, const std::string& tileTitle);
+            std::shared_ptr<spic::Button> InitializeHUDButton(const std::shared_ptr<spic::GameObject>& HUD, const std::string& texture, int tileAmount, const std::string& tileTitle);
 
             void HandleClickTile(const game::MapNode& clickedTile);
 
             void HandleClickTower(game::MapNode& clickedTile);
 
             static std::tuple<bool, std::queue<std::string>> CheckIfPathIsComplete(std::map<std::string, MapNode> graphCopy);
+
+            void CreateTowerHud();
     };
 }
 
