@@ -18,6 +18,9 @@ jobs:
       VCPKG_DEFAULT_TRIPLET: ${{ matrix.triplet }}
 
     steps:
+      - name: 'Install libsdl2-dev'
+        run: sudo apt-get install -y libsdl2-dev
+    
       - name: 'Checkout'
         uses: actions/checkout@v2
         with:
@@ -37,3 +40,9 @@ jobs:
         with:
           configurePreset: ninja-multi-vcpkg
           buildPreset: ninja-multi-vcpkg
+
+      - name: 'Upload build'
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ matrix.name }}
+          path: builds/ninja-multi-vcpkg/Debug/
