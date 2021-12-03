@@ -20,10 +20,7 @@ jobs:
     steps:
       - name: 'Install libsdl2-dev'
         run: |
-          sudo apt-get clean
-          sudo rm -rf /var/lib/apt/lists/*
           sudo apt-get update
-          sudo apt-get upgrade
           sudo apt-get install -y libsdl2-dev
     
       - name: 'Checkout'
