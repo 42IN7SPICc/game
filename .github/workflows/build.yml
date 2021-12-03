@@ -19,7 +19,7 @@ jobs:
 
     steps:
       - name: 'Install libsdl2-dev'
-        run: sudo apt-get install -y libsdl2-dev
+        run: sudo apt-get install -y libsdl2-dev --fix-missing
     
       - name: 'Checkout'
         uses: actions/checkout@v2
