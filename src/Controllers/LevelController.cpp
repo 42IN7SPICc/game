@@ -296,7 +296,6 @@ std::shared_ptr<spic::Button> LevelController::InitializeTowerButton(const std::
     _selectedButton = button;
     _buttonTowerCosts[button] = towerCost;
     button->OnClick([this, button]() {
-        Debug::Log("Tower was Selected JUST NOW");
         if(_selectedButton != button) {
             _selectedButton->Transform().rotation = -90;
             _selectedButton = button;
