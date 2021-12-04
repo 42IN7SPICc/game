@@ -124,6 +124,7 @@ namespace game
             std::shared_ptr<spic::Button> _selectedButton;
             std::shared_ptr<spic::GameObject> _rightHud;
             std::map<std::shared_ptr<spic::Button>, int> _buttonTileAmounts;
+            std::map<std::shared_ptr<spic::Button>, int> _buttonTowerCosts;
             game::LevelMode _levelMode;
             bool _strongPathEnabled;
 

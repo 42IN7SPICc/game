@@ -292,7 +292,17 @@ std::shared_ptr<spic::Button> LevelController::InitializeTowerButton(const std::
     button->Transform().scale = TowerButtonScale;
     button->Transform().position.x = -75;
     button->Transform().position.y = yLocation;
-    GameObjectUtil::LinkChild(_rightHud, button);
+
+    _selectedButton = button;
+    _buttonTowerCosts[button] = towerCost;
+    button->OnClick([this, button]() {
+        Debug::Log("Tower was Selected JUST NOW");
+        if(_selectedButton != button) {
+            _selectedButton->Transform().rotation = -90;
+            _selectedButton = button;
+            button->Transform().rotation = 90;
+        }
+    });
 
     auto buttonSprite = std::make_shared<spic::Sprite>(texture, false, false, 100, 1);
     GameObjectUtil::LinkComponent(button, buttonSprite);
@@ -311,6 +321,7 @@ std::shared_ptr<spic::Button> LevelController::InitializeTowerButton(const std::
     towerCostText->Content("$" + std::to_string(towerCost));
     GameObjectUtil::LinkChild(_rightHud, towerCostText);
 
+    GameObjectUtil::LinkChild(_rightHud, button);
     return button;
 }
 
@@ -395,15 +406,32 @@ void LevelController::HandleClickTower(game::MapNode& clickedTile)
     auto currentTileType = clickedTile.TileType;
     if (currentTileType == TileType::Bushes)
     {
-        if (!clickedTile.TowerObject && _levelData.Balance >= 100)
+        if (!clickedTile.TowerObject && _levelData.Balance >= _buttonTowerCosts[_selectedButton])
         {
-            auto tower = TowerPrefabFactory::CreateTower(TowerName::Shotgun);
+            TowerName towerType;
+            switch (_buttonTowerCosts[_selectedButton]) //current switch on tower cost - maybe change in future of type check
+            {
+                case 80:
+                    towerType = TowerName::Sniper;
+                    break;
+                case 125:
+                    towerType = TowerName::Bomber;
+                    break;
+                case 150:
+                    towerType = TowerName::Flamethrower;
+                    break;
+                case 100:
+                default:
+                    towerType = TowerName::Shotgun;
+                    break;
+            }
+            auto tower = TowerPrefabFactory::CreateTower(towerType);
             tower->Transform().position = clickedTile.TileObject->AbsoluteTransform().position;
             tower->Transform().scale = 0.05;
 
             Engine::Instance().PeekScene()->Contents().push_back(tower);
             clickedTile.TowerObject = tower;
-            _levelData.Balance -= 100;
+            _levelData.Balance -= _buttonTowerCosts[_selectedButton];
         }
     }
 }
@@ -495,10 +523,10 @@ void LevelController::ButcherEnemies()
 
 void LevelController::CreateTowerHud()
 {
-    auto bombShooterButton = InitializeTowerButton("resources/sprites/towers/shooting/tower_shooting_1.png", 18, "Bommenwerper", -(TileSize + 2) * (TileButtonScale * 4));
-    auto shotgunButton = InitializeTowerButton("resources/sprites/towers/shooting/tower_shooting_1.png", 6, "Shotgun", -(TileSize + 2) * (TileButtonScale * 3));
-    auto flamethrowerButton = InitializeTowerButton("resources/sprites/towers/shooting/tower_shooting_1.png", 6, "Vlammenwerper", -(TileSize + 2) * (TileButtonScale * 2));
-    auto sniperButton = InitializeTowerButton("resources/sprites/towers/shooting/tower_shooting_1.png", 6, "Scherpschutter",-(TileSize + 2) * (TileButtonScale * 1));
+    auto bombShooterButton = InitializeTowerButton("resources/sprites/towers/shooting/tower_shooting_1.png", 125, "Bommenwerper", -(TileSize + 2) * (TileButtonScale * 4));
+    auto shotgunButton = InitializeTowerButton("resources/sprites/towers/shooting/tower_shooting_1.png", 100, "Shotgun", -(TileSize + 2) * (TileButtonScale * 3));
+    auto flamethrowerButton = InitializeTowerButton("resources/sprites/towers/shooting/tower_shooting_1.png", 150, "Vlammenwerper", -(TileSize + 2) * (TileButtonScale * 2));
+    auto sniperButton = InitializeTowerButton("resources/sprites/towers/shooting/tower_shooting_1.png", 80, "Scherpschutter",-(TileSize + 2) * (TileButtonScale * 1));
 
     auto enemiesLeftTextHeader = std::make_shared<spic::Text>("enemies-text-header", "default", Layer::HUD, HudWidth, 20);
     enemiesLeftTextHeader->Size(18);
