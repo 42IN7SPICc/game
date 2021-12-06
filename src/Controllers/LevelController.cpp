@@ -37,7 +37,7 @@ void LevelController::OnUpdate()
     {
         _timePassed += Time::DeltaTime() * Time::TimeScale();
 
-        if (!_levelData.Waves.empty())
+        if (!_levelData.Waves.empty() && _levelData.WavesStarted)
         {
             auto& wave = _levelData.Waves.front();
             _levelData.ClearDeadEnemies(wave);
@@ -407,7 +407,7 @@ void LevelController::HandleClickTile(const game::MapNode& clickedTile)
 void LevelController::HandleClickTower(game::MapNode& clickedTile)
 {
     auto currentTileType = clickedTile.TileType;
-    if (currentTileType == TileType::Bushes && _selectedButton != nullptr)
+    if (currentTileType == TileType::Bushes && _selectedButton != nullptr && (_levelData.Waves.front().RemainingEnemies() == 0 || !_levelData.WavesStarted))
     {
         if (!clickedTile.TowerObject && _levelData.Balance >= _buttonTowerCosts[_selectedButton])
         {
@@ -585,13 +585,18 @@ void LevelController::CreateTowerHud()
     militaryBaseHealthText->Transform().position.y = 300;
     militaryBaseHealthText->Content("♥ " + std::to_string(_levelData.MilitaryBaseHealth->Health()));
 
-    auto nextWaveButton = ButtonPrefabFactory::CreateOutlineButton("next-wave-button", "default", "Volgende ronde", true);
+    auto nextWaveButton = ButtonPrefabFactory::CreateOutlineButton("next-wave-button", "default", "Start gevecht", true);
     auto text = std::dynamic_pointer_cast<spic::Text>(nextWaveButton->Children()[0]);
     text->Size(20);
     nextWaveButton->Transform().scale = 0.8;
-    nextWaveButton->OnClick([this]() {
+    nextWaveButton->OnClick([this, nextWaveButton]() {
         auto& wave = _levelData.Waves.front();
-        if (wave.RemainingEnemies() == 0)
+        if(!_levelData.WavesStarted) {
+            _levelData.WavesStarted = true;
+            auto text = std::dynamic_pointer_cast<spic::Text>(nextWaveButton->Children()[0]);
+            text->Content("Volgende ronde");
+        }
+        else if (wave.RemainingEnemies() == 0)
         {
             _levelData.Waves.pop();
             _levelData.HeroHealth->Health(_levelData.HeroHealth->MaxHealth());
