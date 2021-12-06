@@ -12,9 +12,8 @@ int main(int argc, char* args[])
 
     EngineConfig config{{"Avans Wars", 1366, 786, true}};
 #if !NDEBUG
-//    config.window.fullscreen = false;
+    config.window.fullscreen = false;
 #endif
-
     engine.Init(config);
 
     auto scene = std::make_shared<MainScene>();
