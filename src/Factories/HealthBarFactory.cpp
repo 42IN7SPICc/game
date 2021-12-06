@@ -23,7 +23,6 @@ std::shared_ptr<spic::GameObject> HealthBarFactory::CreateHealthBar(std::shared_
     auto objectName = "HealthBar " + target->Name();
 
     auto healthBar = std::make_shared<spic::GameObject>(objectName, "healthbar", Layer::HUD);
-//    healthBar->Transform().scale = 0.25;
     auto healthBarBackground = std::make_shared<spic::Sprite>("resources/sprites/hud/health/background.png", false, false, SortingLayer::HudBackground, 10);
 
     GameObjectUtil::LinkComponent(healthBar, std::make_shared<HealthBarBehaviour>(healthBehaviour));
