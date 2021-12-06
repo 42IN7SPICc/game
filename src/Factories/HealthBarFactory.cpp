@@ -34,7 +34,7 @@ std::shared_ptr<spic::GameObject> HealthBarFactory::CreateHealthBar(std::shared_
         auto healthBarChunk = std::make_shared<spic::GameObject>(chunkObjectName + std::to_string(i), "healthbarchunk", Layer::HUD);
         healthBarChunk->Transform().position = {i * 8 - 36.0, 0};
 
-        GameObjectUtil::LinkComponent(healthBarChunk, std::make_shared<spic::Sprite>("resources/sprites/hud/health/chunk.png", false, false, SortingLayer::HudText, 1));
+        GameObjectUtil::LinkComponent(healthBarChunk, std::make_shared<spic::Sprite>("resources/sprites/hud/health/chunk.png", spic::Color::green(), false, false, SortingLayer::HudText, 1));
         GameObjectUtil::LinkChild(healthBar, healthBarChunk);
     }
 
