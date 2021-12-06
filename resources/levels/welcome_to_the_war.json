@@ -3,9 +3,9 @@
   "description": "Welcome to the first level of Avans Wars. We hope you enjoy our game!",
   "unlockThreshold": 0,
   "amountsGiven": {
-    "sand": 69,
-    "street": 69,
-    "grass": 69
+    "sand": 5,
+    "street": 18,
+    "grass": 13
   },
   "tiles": [
     {

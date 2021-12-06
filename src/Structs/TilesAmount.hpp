@@ -14,12 +14,12 @@ namespace game
         template<class Archive>
         void serialize(Archive& ar)
         {
-            ar(Grass, Sand, Street);
+            ar(Sand, Street, Grass);
         }
 
-        int Grass;
         int Sand;
         int Street;
+        int Grass;
     };
 }
 

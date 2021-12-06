@@ -4,7 +4,7 @@
   "unlockThreshold": 2,
   "amountsGiven": {
     "sand": 0,
-    "street": 0,
+    "street": 100,
     "grass": 0
   },
   "tiles": [
