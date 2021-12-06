@@ -54,9 +54,10 @@ namespace game
             /**
              * @brief Create a new hero based on the given name.
              * @param name The name of the hero.
+             * @param hasHealthBar Whether the hero has a health bar above themself.
              * @return The hero object.
              */
-            static std::shared_ptr<spic::GameObject> CreateHero(game::HeroName name);
+            static std::shared_ptr<spic::GameObject> CreateHero(game::HeroName name, bool hasHealthBar = false);
     };
 }
 
