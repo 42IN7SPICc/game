@@ -74,7 +74,7 @@ game::WaveData game::WavePrefabFactory::GenerateWave(size_t waveNumber)
             }
             break;
         default:
-            throw std::runtime_error("This wave has not been defined");
+            throw std::runtime_error("This wave has not been defined.");
     }
 
     return waveData;

@@ -46,5 +46,5 @@ std::string BulletFactory::GetBulletSprite(BulletType bulletType)
             return "resources/sprites/bullet.png";
     }
 
-    throw std::runtime_error("The given bullet does not have a linked sprite");
+    throw std::runtime_error("The given bullet does not have a linked sprite.");
 }

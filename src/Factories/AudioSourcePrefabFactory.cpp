@@ -25,7 +25,7 @@ std::shared_ptr<spic::AudioSource> game::AudioSourcePrefabFactory::CreateAudioSo
             audioSrc = "explosion.wav";
             break;
         default:
-            throw std::runtime_error("Audio clip has not been defined");
+            throw std::runtime_error("Audio clip has not been defined.");
     }
 
     auto audioSource = std::make_shared<spic::AudioSource>("resources/audio/" + audioSrc, playOnAwake, looping, volume);
