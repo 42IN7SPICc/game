@@ -1,16 +1,21 @@
 #include <Text.hpp>
 #include "MainScene.hpp"
 
+#include "Debug.hpp"
 #include "CreditScene.hpp"
 #include "HelpScene.hpp"
 #include "LevelScene.hpp"
 #include "../Factories/ButtonPrefabFactory.hpp"
 #include "../Factories/HeroPrefabFactory.hpp"
 #include "../Utils/RandomUtil.hpp"
+#include "../Utils/HeroUtil.hpp"
 #include "../Scripts/Heroes/UserAttackBehaviour.hpp"
 #include "../Scripts/Heroes/UserMovementBehaviour.hpp"
 #include "../Controllers/SaveGameController.hpp"
 #include "../Factories/AudioSourcePrefabFactory.hpp"
+#include "../Enums/SortingLayer.hpp"
+#include "../Enums/Font.hpp"
+#include "../Constants.hpp"
 
 #include "Engine.hpp"
 
@@ -57,17 +62,32 @@ MainScene::MainScene() : MenuScene("Avans Wars: WW2", false)
         Engine::Instance().Shutdown();
     });
 
-
-    auto heroName = std::make_shared<spic::Text>("","",0,0,0);
     auto currentHero = PlayerData::Instance().SelectedHero;
-    auto leftArrowButton = ButtonPrefabFactory::CreateSwitchHeroButton({850, 460}, [&currentHero]() {
+    currentHero = HeroName::DesmondDoss;
+    auto heroNameText = std::make_shared<spic::Text>("hero-name-text","hero-name-text",SortingLayer::HudText, HeroWidth + 300, 100);
+    heroNameText->Content(HeroUtil::NameToString(currentHero));
+    heroNameText->TextAlignment(Alignment::center);
+    heroNameText->Font(Font::CaptureIt);
+    heroNameText->TextColor(Color::white());
+    heroNameText->Size(45);
+    heroNameText->Transform().position.x = 1000;
+    heroNameText->Transform().position.y = 430 - (HeroHeight / 2);
+
+    auto leftArrowButton = ButtonPrefabFactory::CreateSwitchHeroButton({850, 460}, [&currentHero, &heroNameText]() {
         auto currentHeroIndex = static_cast<int>(currentHero);
-        if(currentHeroIndex >= 0) currentHero = HeroName(currentHeroIndex - 1);
+        if(currentHeroIndex >= 0) {
+            currentHero = static_cast<HeroName>(currentHeroIndex - 1);
+            heroNameText->Content(HeroUtil::NameToString(currentHero));
+        }
     });
 
-    auto rightArrowButton = ButtonPrefabFactory::CreateSwitchHeroButton({1150, 460}, [&currentHero]() {
+    auto rightArrowButton = ButtonPrefabFactory::CreateSwitchHeroButton({1150, 460}, [&currentHero, &heroNameText]() {
         auto currentHeroIndex = static_cast<int>(currentHero);
-        if(currentHeroIndex <= 4) currentHero = HeroName(currentHeroIndex + 1);
+        if(currentHeroIndex <= 4) {
+            currentHero = static_cast<HeroName>(currentHeroIndex + 1);
+            spic::Debug::Log(std::to_string(currentHeroIndex));
+            heroNameText->Content(HeroUtil::NameToString(currentHero));
+        }
     });
     rightArrowButton->Transform().rotation = 180;
 
@@ -85,4 +105,5 @@ MainScene::MainScene() : MenuScene("Avans Wars: WW2", false)
     Contents().push_back(leftArrowButton);
     Contents().push_back(hero);
     Contents().push_back(rightArrowButton);
+    Contents().push_back(heroNameText);
 }
