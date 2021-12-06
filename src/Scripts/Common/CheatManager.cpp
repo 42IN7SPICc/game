@@ -1,11 +1,14 @@
 #include "CheatManager.hpp"
-#include "Input.hpp"
+
 #include "Debug.hpp"
 #include "GameObject.hpp"
-#include "GameWonBehaviour.hpp"
-#include "../../Structs/PlayerData.hpp"
+#include "Input.hpp"
+
 #include "GameLostBehaviour.hpp"
+#include "GameWonBehaviour.hpp"
 #include "../../Controllers/LevelController.hpp"
+#include "../../Structs/PlayerData.hpp"
+#include "../../Persistence/SaveGameManager.hpp"
 
 using namespace spic;
 using namespace game;
@@ -85,6 +88,7 @@ void UnlockLevels()
 {
     Debug::Log("Fired Unlock Levels Cheat");
     PlayerData::Instance().LevelsCompleted = 1000;
+    SaveGameManager::Save(PlayerData::Instance());
 }
 
 void UnlimitedPath()
