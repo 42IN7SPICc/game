@@ -21,7 +21,7 @@
           "value": "$env{VCPKG_DEFAULT_TRIPLET}"
         },
         "BINARY_RESOURCES_FOLDER": {
-          "value": "Debug/resources"
+          "value": "Release/resources"
         }
       }
     }
@@ -32,7 +32,8 @@
       "configurePreset": "ninja-multi-vcpkg",
       "displayName": "Build ninja-multi-vcpkg",
       "description": "Build ninja-multi-vcpkg Configurations",
-      "targets": "spic-game"
+      "targets": "spic-game",
+      "configuration": "Release"
     }
   ],
   "testPresets": [
