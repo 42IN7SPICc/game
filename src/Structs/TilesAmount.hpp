@@ -7,7 +7,7 @@
 namespace game
 {
     /**
-     * @brief A model for storing level data.
+     * @brief A model for storing the maximum amount of tiles the player can use in a level.
      */
     struct TilesAmount
     {
