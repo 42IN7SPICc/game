@@ -33,7 +33,7 @@ void game::HealthBarBehaviour::OnUpdate()
     {
         auto parent = GameObject().lock();
 
-        int barsNeeded = std::round(HealthBarChunks / _healthBehaviour->MaxHealth() * health);
+        int barsNeeded = std::ceil(HealthBarChunks / _healthBehaviour->MaxHealth() * health);
         for (int i = 0; i < HealthBarChunks; ++i)
         {
             parent->Children()[i]->Active(barsNeeded > i);
