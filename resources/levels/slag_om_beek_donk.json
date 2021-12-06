@@ -2,6 +2,11 @@
   "title": "De slag om Beek en Donk",
   "description": "In de slag om Beek en Donk vecht je om Beek en Donk terug te veroveren.",
   "unlockThreshold": 1,
+  "amountsGiven": {
+    "sand": 1,
+    "street": 2,
+    "grass": 3
+  },
   "tiles": [
     {
       "type": 0,
