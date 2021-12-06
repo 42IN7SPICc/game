@@ -53,7 +53,7 @@ const int ShotgunTowerDamage = 20; // The damage of a bullet for the shotgun tow
 const int ShotgunTowerBulletSpeed = 15; // The bullet velocity of the shotgun tower
 
 //Tower Flamethrower
-const double FlamethrowerTowerFireRate = 0.5; // The shooting interval of the flamethrower tower
+const double FlamethrowerTowerFireRate = 0.1; // The shooting interval of the flamethrower tower
 const int FlamethrowerTowerRange = 200; // The detection range of the hero for the flamethrower tower
 const int FlamethrowerTowerDamage = 1; // The damage of a bullet for the flamethrower tower
 const int FlamethrowerTowerBulletSpeed = 5; // The bullet velocity of the flamethrower tower
