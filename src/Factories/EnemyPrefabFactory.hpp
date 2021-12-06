@@ -19,9 +19,10 @@ namespace game
             /**
              * @brief Create a new enemy based on the given name.
              * @param name The name of the enemy.
+             * @param hasHealthBar Whether the hero has a health bar above themself.
              * @return The enemy object.
              */
-            static std::shared_ptr<spic::GameObject> CreateEnemy(game::EnemyName name);
+            static std::shared_ptr<spic::GameObject> CreateEnemy(game::EnemyName name, bool hasHealthBar = false);
 
         private:
             /**

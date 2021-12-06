@@ -1,13 +1,13 @@
 #include "EnemyPrefabFactory.hpp"
 
+#include "HealthBarFactory.hpp"
 #include "../Enums/Layer.hpp"
 #include "../Enums/SortingLayer.hpp"
 #include "../Scripts/Common/AttackBehaviour.hpp"
-#include "../Scripts/Common/HealthBehaviour.hpp"
 #include "../Scripts/Enemies/EnemyMovementBehaviour.hpp"
 #include "../Utils/GameObjectUtil.hpp"
-#include "../Constants.hpp"
 
+#include "../Constants.hpp"
 #include "Animator.hpp"
 #include "CircleCollider.hpp"
 #include "RigidBody.hpp"
@@ -16,27 +16,47 @@
 
 using namespace game;
 
-std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreateEnemy(EnemyName name)
+std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreateEnemy(EnemyName name, bool hasHealthBar)
 {
+    std::shared_ptr<spic::GameObject> enemy;
+
     switch (name)
     {
         case EnemyName::Panzer:
-            return CreatePanzer();
+            enemy = CreatePanzer();
+            break;
         case EnemyName::Gruppenfuhrer:
-            return CreateGruppenfuhrer();
+            enemy = CreateGruppenfuhrer();
+            break;
         case EnemyName::Schutze:
-            return CreateSchutze();
+            enemy = CreateSchutze();
+            break;
         case EnemyName::Erkunder:
-            return CreateErkunder();
+            enemy = CreateErkunder();
+            break;
         case EnemyName::GhillieAnzugSchutze:
-            return CreateGhillieAnzugSchutze();
+            enemy = CreateGhillieAnzugSchutze();
+            break;
         case EnemyName::Stabsarzt:
-            return CreateStabsarzt();
+            enemy = CreateStabsarzt();
+            break;
         case EnemyName::Raupenschlepper:
-            return CreateRaupenschlepper();
+            enemy = CreateRaupenschlepper();
+            break;
+        default:
+            throw std::runtime_error("Enemy not implemented.");
     }
 
-    throw std::runtime_error("Enemy not implemented.");
+    if (hasHealthBar)
+    {
+        auto healthBar = HealthBarFactory::CreateHealthBar(enemy);
+        healthBar->Transform().position.y = -200;
+        healthBar->Transform().scale = 1.5;
+
+        GameObjectUtil::LinkChild(enemy, healthBar);
+    }
+
+    return enemy;
 }
 
 std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreatePanzer()
