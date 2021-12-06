@@ -35,6 +35,7 @@ const int HeroMass = 50; //random chosen mass
 const int HeroVelocity = 15; //random chosen velocity (looks good)
 const double HeroBulletSpeed = 17.5; // random chosen bullet speed (looks alright)
 const double HeroBulletRange = 500; // random chosen bullet speed (looks alright)
+const double HeroShootingCoolDown = 0.5; // random chosen bullet speed (looks alright)
 
 //Desmond Doss (first hero)
 const int DesmondDossDamage = 2; // The damage Desmond Doss does
@@ -99,5 +100,8 @@ const double ConfettiMinSize = 0.03;
 const double ConfettiMaxSize = 0.05;
 const double ConfettiMinGravity = 0.7;
 const double ConfettiMaxGravity = 1.4;
+
+//Health Bar
+const double HealthBarChunks = 10;
 
 #endif

@@ -8,13 +8,16 @@
 #include "../Common/BulletBehaviour.hpp"
 #include "../../Factories/BulletFactory.hpp"
 #include "../../Utils/PointUtil.hpp"
+#include "../../Utils/GameObjectUtil.hpp"
 #include "../../Constants.hpp"
+#include "../../Controllers/LevelController.hpp"
 
 using namespace game;
 
 UserAttackBehaviour::UserAttackBehaviour(int damage, double velocityMultiplier, std::shared_ptr<game::HealthBehaviour> healthBehaviour) : _damage(damage),
                                                                                                                                           _velocityMultiplier(velocityMultiplier),
-                                                                                                                                          _healthBehaviour(std::move(healthBehaviour))
+                                                                                                                                          _healthBehaviour(std::move(healthBehaviour)),
+                                                                                                                                          _coolDownBehaviour(std::make_shared<CoolDownBehaviour>(CoolDownBehaviour(HeroShootingCoolDown)))
 {
 }
 
@@ -24,13 +27,22 @@ void UserAttackBehaviour::OnStart()
     {
         throw std::runtime_error("A user attack behaviour requires a valid health behaviour.");
     }
+    GameObjectUtil::LinkComponent(GameObject().lock(), _coolDownBehaviour);
 }
 
 void UserAttackBehaviour::OnUpdate()
 {
-    if (_healthBehaviour->Health() <= 0) return;
+    auto levelControllerGameObject = spic::GameObject::Find("LevelController");
+    if(!levelControllerGameObject)
+    {
+        throw std::runtime_error("A user attack behaviour requires a level controller for level mode.");
+    }
 
-    if (spic::Input::GetKeyDown(spic::Input::KeyCode::SPACE))
+    auto levelController = levelControllerGameObject->GetComponent<game::LevelController>();
+
+    if (_healthBehaviour->Health() <= 0 || !_coolDownBehaviour->CooledDown() || levelController->GetLevelMode() != LevelMode::WaveMode) return;
+
+    if (spic::Input::GetMouseButton(spic::Input::MouseButton::LEFT))
     {
         auto parent = GameObject().lock();
         auto parentPosition = parent->AbsoluteTransform().position;
@@ -41,6 +53,7 @@ void UserAttackBehaviour::OnUpdate()
         // Bullet game object
         auto bullet = BulletFactory::CreateBullet(BulletType::Normal, parentPosition, "enemy", force, HeroBulletRange, _damage);
         spic::Engine::Instance().PeekScene()->Contents().push_back(bullet);
+        _coolDownBehaviour->CooledDown(false);
     }
 }
 

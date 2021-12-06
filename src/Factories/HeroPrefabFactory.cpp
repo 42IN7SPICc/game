@@ -4,6 +4,7 @@
 #include <CircleCollider.hpp>
 #include "Sprite.hpp"
 
+#include "HealthBarFactory.hpp"
 #include "../Enums/Layer.hpp"
 #include "../Enums/SortingLayer.hpp"
 #include "../Scripts/Heroes/HealAbilityBehaviour.hpp"
@@ -15,23 +16,41 @@
 
 #include <stdexcept>
 
-std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateHero(game::HeroName name)
+std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateHero(game::HeroName name, bool hasHealthBar)
 {
+    std::shared_ptr<spic::GameObject> hero;
+
     switch (name)
     {
         case HeroName::DesmondDoss:
-            return CreateDesmondDoss();
+            hero = CreateDesmondDoss();
+            break;
         case HeroName::BernardIJzerdraat:
-            return CreateBernardIJzerdraat();
+            hero = CreateBernardIJzerdraat();
+            break;
         case HeroName::FranklinDRoosevelt:
-            return CreateFranklinDRoosevelt();
+            hero = CreateFranklinDRoosevelt();
+            break;
         case HeroName::WinstonChurchill:
-            return CreateWinstonChurchill();
+            hero = CreateWinstonChurchill();
+            break;
         case HeroName::JosephStalin:
-            return CreateJosephStalin();
+            hero = CreateJosephStalin();
+            break;
+        default:
+            throw std::runtime_error("Hero not implemented.");
     }
 
-    throw std::runtime_error("Hero not implemented.");
+    if (hasHealthBar)
+    {
+        auto healthBar = HealthBarFactory::CreateHealthBar(hero);
+        healthBar->Transform().position.y = -200;
+        healthBar->Transform().scale = 1.5;
+
+        GameObjectUtil::LinkChild(hero, healthBar);
+    }
+
+    return hero;
 }
 
 std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateDesmondDoss()

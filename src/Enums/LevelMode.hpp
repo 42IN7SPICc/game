@@ -9,7 +9,8 @@ namespace game
     enum LevelMode
     {
         TileMode,
-        TowerMode
+        TowerMode,
+        WaveMode
     };
 }
 

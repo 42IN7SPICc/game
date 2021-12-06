@@ -20,7 +20,6 @@ namespace game
         std::queue<WaveData> Waves;
         std::map<std::string, game::MapNode> Graph;
         std::queue<std::string> Path;
-        bool WavesStarted = false;
 
         /**
          * @brief The current wave.
