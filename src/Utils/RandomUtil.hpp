@@ -35,6 +35,12 @@ namespace game
             static double NextDouble(double min, double max);
 
             /**
+             * @brief Get a random bool.
+             * @return The random bool.
+             */
+            static bool NextBool();
+
+            /**
              * @brief Generate a random string with a given length.
              * @param maxLength The lenght of the string.
              * @return The randomly generated string.

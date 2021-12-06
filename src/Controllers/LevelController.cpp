@@ -12,6 +12,7 @@
 #include <cmath>
 #include <vector>
 #include "../Constants.hpp"
+#include "../Utils/RandomUtil.hpp"
 
 using namespace spic;
 using namespace game;
@@ -269,7 +270,7 @@ std::shared_ptr<spic::GameObject> LevelController::BuildLevel(const std::shared_
             tile = std::make_shared<spic::GameObject>("end-tile", "end_tile", Layer::Game);
             auto endTileCollider = std::make_shared<spic::BoxCollider>(TileSize * TileMapScale, TileSize * TileMapScale);
             endTileCollider->IsTrigger(true);
-            auto tileRigidBody = std::make_shared<spic::RigidBody>(10,0, BodyType::staticBody);
+            auto tileRigidBody = std::make_shared<spic::RigidBody>(10, 0, BodyType::staticBody);
 
             GameObjectUtil::LinkComponent(tile, endTileCollider);
             GameObjectUtil::LinkComponent(tile, endTowerHealthBehaviour);
@@ -282,6 +283,12 @@ std::shared_ptr<spic::GameObject> LevelController::BuildLevel(const std::shared_
         else
         {
             tile = std::make_shared<spic::GameObject>(name, "tile", Layer::Game);
+        }
+
+        if (levelTile.TileType() == TileType::Bushes || levelTile.TileType() == TileType::Rocks)
+        {
+            sprite->FlipX(RandomUtil::NextBool());
+            sprite->FlipY(RandomUtil::NextBool());
         }
 
         tile->Transform().position.x = levelTile.X * TileSize;
