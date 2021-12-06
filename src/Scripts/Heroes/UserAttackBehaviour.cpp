@@ -8,6 +8,7 @@
 #include "../Common/BulletBehaviour.hpp"
 #include "../../Factories/BulletFactory.hpp"
 #include "../../Utils/PointUtil.hpp"
+#include "../../Utils/GameObjectUtil.hpp"
 #include "../../Constants.hpp"
 
 using namespace game;
@@ -25,26 +26,25 @@ void UserAttackBehaviour::OnStart()
     {
         throw std::runtime_error("A user attack behaviour requires a valid health behaviour.");
     }
+    GameObjectUtil::LinkComponent(GameObject().lock(), _coolDownBehaviour);
 }
 
 void UserAttackBehaviour::OnUpdate()
 {
-    if (_healthBehaviour->Health() <= 0) return;
+    if (_healthBehaviour->Health() <= 0 || !_coolDownBehaviour->CooledDown()) return;
 
     if (spic::Input::GetMouseButton(spic::Input::MouseButton::LEFT))
     {
-        if (_coolDownBehaviour->CooledDown())
-        {
-            auto parent = GameObject().lock();
-            auto parentPosition = parent->AbsoluteTransform().position;
-            auto mousePosition = spic::Input::MousePosition();
+        auto parent = GameObject().lock();
+        auto parentPosition = parent->AbsoluteTransform().position;
+        auto mousePosition = spic::Input::MousePosition();
 
-            auto force = PointUtil::CalculateDirectionalPoint(parentPosition, mousePosition, _velocityMultiplier);
+        auto force = PointUtil::CalculateDirectionalPoint(parentPosition, mousePosition, _velocityMultiplier);
 
-            // Bullet game object
-            auto bullet = BulletFactory::CreateBullet(BulletType::Normal, parentPosition, "enemy", force, HeroBulletRange, _damage);
-            spic::Engine::Instance().PeekScene()->Contents().push_back(bullet);
-        }
+        // Bullet game object
+        auto bullet = BulletFactory::CreateBullet(BulletType::Normal, parentPosition, "enemy", force, HeroBulletRange, _damage);
+        spic::Engine::Instance().PeekScene()->Contents().push_back(bullet);
+        _coolDownBehaviour->CooledDown(false);
     }
 }
 
