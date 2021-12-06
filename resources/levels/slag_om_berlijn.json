@@ -3,9 +3,9 @@
   "description": "De slag om Berlijn",
   "unlockThreshold": 2,
   "amountsGiven": {
-    "sand": 0,
-    "street": 100,
-    "grass": 0
+    "sand": 25,
+    "street": 63,
+    "grass": 38
   },
   "tiles": [
     {
