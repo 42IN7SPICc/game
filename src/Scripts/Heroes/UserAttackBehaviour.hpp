@@ -4,6 +4,8 @@
 #include <BehaviourScript.hpp>
 #include "Point.hpp"
 #include "../Common/HealthBehaviour.hpp"
+#include "../Common/CoolDownBehaviour.hpp"
+#include "../../Enums/LevelMode.hpp"
 
 namespace game
 {
@@ -16,6 +18,7 @@ namespace game
             int _damage;
             double _velocityMultiplier;
             std::shared_ptr<HealthBehaviour> _healthBehaviour;
+            std::shared_ptr<CoolDownBehaviour> _coolDownBehaviour;
 
         public:
             /**

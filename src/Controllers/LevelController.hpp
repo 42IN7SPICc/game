@@ -116,6 +116,7 @@ namespace game
              */
             void ButcherEnemies();
 
+            [[nodiscard]] game::LevelMode GetLevelMode() const;
         private:
             spic::Point _startPosition;
             double _timePassed;
