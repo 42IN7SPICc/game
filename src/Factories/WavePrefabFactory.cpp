@@ -11,66 +11,66 @@ game::WaveData game::WavePrefabFactory::GenerateWave(size_t waveNumber)
         case 0:
             for (int i = 0; i < 5; ++i)
             {
-                waveData.EnemyQueue.emplace(0.5, game::EnemyPrefabFactory::CreateEnemy(EnemyName::Panzer));
+                waveData.EnemyQueue.emplace(0.5, game::EnemyPrefabFactory::CreateEnemy(EnemyName::Panzer, true));
             }
 
-            waveData.EnemyQueue.emplace(5, game::EnemyPrefabFactory::CreateEnemy(EnemyName::Panzer));
+            waveData.EnemyQueue.emplace(5, game::EnemyPrefabFactory::CreateEnemy(EnemyName::Panzer, true));
 
             for (int i = 0; i < 4; ++i)
             {
-                waveData.EnemyQueue.emplace(0.5, game::EnemyPrefabFactory::CreateEnemy(EnemyName::Panzer));
+                waveData.EnemyQueue.emplace(0.5, game::EnemyPrefabFactory::CreateEnemy(EnemyName::Panzer, true));
             }
             break;
         case 1:
             for (int i = 0; i < 10; ++i)
             {
-                waveData.EnemyQueue.emplace(0.5, game::EnemyPrefabFactory::CreateEnemy(EnemyName::Panzer));
+                waveData.EnemyQueue.emplace(0.5, game::EnemyPrefabFactory::CreateEnemy(EnemyName::Panzer, true));
             }
 
-            waveData.EnemyQueue.emplace(5, game::EnemyPrefabFactory::CreateEnemy(EnemyName::Panzer));
+            waveData.EnemyQueue.emplace(5, game::EnemyPrefabFactory::CreateEnemy(EnemyName::Panzer, true));
 
             for (int i = 0; i < 9; ++i)
             {
-                waveData.EnemyQueue.emplace(0.5, game::EnemyPrefabFactory::CreateEnemy(EnemyName::Panzer));
+                waveData.EnemyQueue.emplace(0.5, game::EnemyPrefabFactory::CreateEnemy(EnemyName::Panzer, true));
             }
             break;
         case 2:
             for (int i = 0; i < 15; ++i)
             {
-                waveData.EnemyQueue.emplace(0.5, game::EnemyPrefabFactory::CreateEnemy(EnemyName::Panzer));
+                waveData.EnemyQueue.emplace(0.5, game::EnemyPrefabFactory::CreateEnemy(EnemyName::Panzer, true));
             }
 
-            waveData.EnemyQueue.emplace(5, game::EnemyPrefabFactory::CreateEnemy(EnemyName::Panzer));
+            waveData.EnemyQueue.emplace(5, game::EnemyPrefabFactory::CreateEnemy(EnemyName::Panzer, true));
 
             for (int i = 0; i < 14; ++i)
             {
-                waveData.EnemyQueue.emplace(0.5, game::EnemyPrefabFactory::CreateEnemy(EnemyName::Panzer));
+                waveData.EnemyQueue.emplace(0.5, game::EnemyPrefabFactory::CreateEnemy(EnemyName::Panzer, true));
             }
             break;
         case 3:
             for (int i = 0; i < 15; ++i)
             {
-                waveData.EnemyQueue.emplace(0.5, game::EnemyPrefabFactory::CreateEnemy(EnemyName::Panzer));
+                waveData.EnemyQueue.emplace(0.5, game::EnemyPrefabFactory::CreateEnemy(EnemyName::Panzer, true));
             }
 
-            waveData.EnemyQueue.emplace(5, game::EnemyPrefabFactory::CreateEnemy(EnemyName::Panzer));
+            waveData.EnemyQueue.emplace(5, game::EnemyPrefabFactory::CreateEnemy(EnemyName::Panzer, true));
 
             for (int i = 0; i < 14; ++i)
             {
-                waveData.EnemyQueue.emplace(0.5, game::EnemyPrefabFactory::CreateEnemy(EnemyName::Panzer));
+                waveData.EnemyQueue.emplace(0.5, game::EnemyPrefabFactory::CreateEnemy(EnemyName::Panzer, true));
             }
             break;
         case 4:
             for (int i = 0; i < 15; ++i)
             {
-                waveData.EnemyQueue.emplace(0.5, game::EnemyPrefabFactory::CreateEnemy(EnemyName::Panzer));
+                waveData.EnemyQueue.emplace(0.5, game::EnemyPrefabFactory::CreateEnemy(EnemyName::Panzer, true));
             }
 
-            waveData.EnemyQueue.emplace(5, game::EnemyPrefabFactory::CreateEnemy(EnemyName::Panzer));
+            waveData.EnemyQueue.emplace(5, game::EnemyPrefabFactory::CreateEnemy(EnemyName::Panzer, true));
 
             for (int i = 0; i < 14; ++i)
             {
-                waveData.EnemyQueue.emplace(0.5, game::EnemyPrefabFactory::CreateEnemy(EnemyName::Panzer));
+                waveData.EnemyQueue.emplace(0.5, game::EnemyPrefabFactory::CreateEnemy(EnemyName::Panzer, true));
             }
             break;
         default:
