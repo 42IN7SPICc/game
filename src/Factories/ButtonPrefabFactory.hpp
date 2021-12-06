@@ -30,6 +30,8 @@ namespace game
              * @return The button object.
              */
             static std::shared_ptr<spic::Button> CreateCloseButton(const spic::Point& position = {49, 49});
+
+            static std::shared_ptr<spic::Button> CreateSwitchHeroButton(const spic::Point& position, std::function<void()> callback);
     };
 }
 

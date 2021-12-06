@@ -1,3 +1,4 @@
+#include <Text.hpp>
 #include "MainScene.hpp"
 
 #include "CreditScene.hpp"
@@ -56,7 +57,21 @@ MainScene::MainScene() : MenuScene("Avans Wars: WW2", false)
         Engine::Instance().Shutdown();
     });
 
-    auto hero = HeroPrefabFactory::CreateHero(static_cast<HeroName>(RandomUtil::Next(HeroName::DesmondDoss, HeroName::JosephStalin)));
+
+    auto heroName = std::make_shared<spic::Text>("","",0,0,0);
+    auto currentHero = PlayerData::Instance().SelectedHero;
+    auto leftArrowButton = ButtonPrefabFactory::CreateSwitchHeroButton({850, 460}, [&currentHero]() {
+        auto currentHeroIndex = static_cast<int>(currentHero);
+        if(currentHeroIndex >= 0) currentHero = HeroName(currentHeroIndex - 1);
+    });
+
+    auto rightArrowButton = ButtonPrefabFactory::CreateSwitchHeroButton({1150, 460}, [&currentHero]() {
+        auto currentHeroIndex = static_cast<int>(currentHero);
+        if(currentHeroIndex <= 4) currentHero = HeroName(currentHeroIndex + 1);
+    });
+    rightArrowButton->Transform().rotation = 180;
+
+    auto hero = HeroPrefabFactory::CreateHero(currentHero);
     hero->Transform().position = {1000, 460};
     hero->Transform().scale = 1;
     hero->GetComponent<UserMovementBehaviour>()->Controllable(false);
@@ -67,5 +82,7 @@ MainScene::MainScene() : MenuScene("Avans Wars: WW2", false)
     Contents().push_back(creditsButton);
     Contents().push_back(helpButton);
     Contents().push_back(exitButton);
+    Contents().push_back(leftArrowButton);
     Contents().push_back(hero);
+    Contents().push_back(rightArrowButton);
 }
