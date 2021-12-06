@@ -22,7 +22,7 @@ namespace game
             static std::shared_ptr<spic::GameObject> CreateBomber();
 
             /**
-             * @brief Create a new Shotung tower.
+             * @brief Create a new Shotgun tower.
              * @return The tower object.
              */
             static std::shared_ptr<spic::GameObject> CreateShotgun();

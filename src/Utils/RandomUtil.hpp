@@ -5,6 +5,9 @@
 
 namespace game
 {
+    /**
+     * @brief
+     */
     class RandomUtil
     {
         private:
@@ -15,10 +18,27 @@ namespace game
             RandomUtil();
 
         public:
+            /**
+             * @brief Get a random int between a minimum and maximum value.
+             * @param min The minimum value.
+             * @param max The maximum value.
+             * @return The random int.
+             */
             static int Next(int min, int max);
 
+            /**
+             * @brief Get a random double between a minimum and maximum value.
+             * @param min The minimum value.
+             * @param max The maximum value.
+             * @return The random double.
+             */
             static double NextDouble(double min, double max);
 
+            /**
+             * @brief Generate a random string with a given length.
+             * @param maxLength The lenght of the string.
+             * @return The randomly generated string.
+             */
             static std::string NextString(int maxLength);
     };
 }
