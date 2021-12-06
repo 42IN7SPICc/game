@@ -33,3 +33,8 @@ std::string RandomUtil::NextString(int maxLength)
     }
     return result;
 }
+
+bool RandomUtil::NextBool()
+{
+    return Next(0,1) == 1;
+}
