@@ -31,9 +31,6 @@ std::shared_ptr<spic::GameObject> TowerPrefabFactory::CreateBaseTower(const type
 {
     auto baseTower = std::make_shared<spic::GameObject>("Tower", "tower", Layer::Game);
 
-    auto defaultSprite = std::make_shared<spic::Sprite>(shootingSprites[0]->Texture(), false, false, SortingLayer::Tower, 0);
-    GameObjectUtil::LinkComponent(baseTower, defaultSprite);
-
     auto shootingAnimator = std::make_shared<spic::Animator>(static_cast<int>(shootingSprites.size()), shootingSprites);
     GameObjectUtil::LinkComponent(baseTower, shootingAnimator);
 
@@ -46,44 +43,55 @@ std::shared_ptr<spic::GameObject> TowerPrefabFactory::CreateBaseTower(const type
 
 std::shared_ptr<spic::GameObject> TowerPrefabFactory::CreateBomber()
 {
-    types::sprite_vector shootingSprites = AnimatorUtil::CreateSpriteVector(6, "resources/sprites/towers/shooting/tower_shooting_", SortingLayer::Enemy);
-
-    auto attackBehaviour = std::make_shared<AttackBehaviour>("enemy", BulletType::Bomb, 3, 200, 25, 10, 50);
+    types::sprite_vector shootingSprites = AnimatorUtil::CreateSpriteVector(6, "resources/sprites/towers/shooting/tower_shooting_", BomberTowerColor<spic::Color>(), SortingLayer::Enemy);
+    auto attackBehaviour = std::make_shared<AttackBehaviour>("enemy", BulletType::Bomb, BomberTowerFireRate, BomberTowerRange, BomberTowerDamage, BomberTowerBulletSpeed, BomberTowerExplosionRange);
 
     auto tower = CreateBaseTower(shootingSprites, attackBehaviour);
+    auto defaultSprite = std::make_shared<spic::Sprite>(shootingSprites[0]->Texture(), BomberTowerColor<spic::Color>(), false, false, SortingLayer::Tower, 0);
+
+    GameObjectUtil::LinkComponent(tower, defaultSprite);
 
     return tower;
 }
 
 std::shared_ptr<spic::GameObject> TowerPrefabFactory::CreateShotgun()
 {
-    types::sprite_vector shootingSprites = AnimatorUtil::CreateSpriteVector(6, "resources/sprites/towers/shooting/tower_shooting_", SortingLayer::Enemy);
+    types::sprite_vector shootingSprites = AnimatorUtil::CreateSpriteVector(6, "resources/sprites/towers/shooting/tower_shooting_", ShotgunTowerColor<spic::Color>(), SortingLayer::Enemy);
 
     auto attackBehaviour = std::make_shared<AttackBehaviour>("enemy", BulletType::Normal, ShotgunTowerFireRate, ShotgunTowerRange, ShotgunTowerDamage, ShotgunTowerBulletSpeed);
 
     auto tower = CreateBaseTower(shootingSprites, attackBehaviour);
+    auto defaultSprite = std::make_shared<spic::Sprite>(shootingSprites[0]->Texture(), ShotgunTowerColor<spic::Color>(), false, false, SortingLayer::Tower, 0);
+
+    GameObjectUtil::LinkComponent(tower, defaultSprite);
 
     return tower;
 }
 
 std::shared_ptr<spic::GameObject> TowerPrefabFactory::CreateFlamethrower()
 {
-    types::sprite_vector shootingSprites = AnimatorUtil::CreateSpriteVector(6, "resources/sprites/towers/shooting/tower_shooting_", SortingLayer::Enemy);
+    types::sprite_vector shootingSprites = AnimatorUtil::CreateSpriteVector(6, "resources/sprites/towers/shooting/tower_shooting_", FlamethrowerTowerColor<spic::Color>(), SortingLayer::Enemy);
 
-    auto attackBehaviour = std::make_shared<AttackBehaviour>("enemy", BulletType::Penetrating, 3, 150, 2, 20);
+    auto attackBehaviour = std::make_shared<AttackBehaviour>("enemy", BulletType::Penetrating, FlamethrowerTowerFireRate, FlamethrowerTowerRange, FlamethrowerTowerDamage, FlamethrowerTowerBulletSpeed);
 
     auto tower = CreateBaseTower(shootingSprites, attackBehaviour);
+    auto defaultSprite = std::make_shared<spic::Sprite>(shootingSprites[0]->Texture(), FlamethrowerTowerColor<spic::Color>(), false, false, SortingLayer::Tower, 0);
+
+    GameObjectUtil::LinkComponent(tower, defaultSprite);
 
     return tower;
 }
 
 std::shared_ptr<spic::GameObject> TowerPrefabFactory::CreateSniper()
 {
-    types::sprite_vector shootingSprites = AnimatorUtil::CreateSpriteVector(6, "resources/sprites/towers/shooting/tower_shooting_", SortingLayer::Enemy);
+    types::sprite_vector shootingSprites = AnimatorUtil::CreateSpriteVector(6, "resources/sprites/towers/shooting/tower_shooting_", SniperTowerColor<spic::Color>(), SortingLayer::Enemy);
 
-    auto attackBehaviour = std::make_shared<AttackBehaviour>("enemy", BulletType::Normal, 8, 500, 50, 30);
+    auto attackBehaviour = std::make_shared<AttackBehaviour>("enemy", BulletType::Normal, SniperTowerFireRate, SniperTowerRange, SniperTowerDamage, SniperTowerBulletSpeed);
 
     auto tower = CreateBaseTower(shootingSprites, attackBehaviour);
+    auto defaultSprite = std::make_shared<spic::Sprite>(shootingSprites[0]->Texture(), SniperTowerColor<spic::Color>(), false, false, SortingLayer::Tower, 0);
+
+    GameObjectUtil::LinkComponent(tower, defaultSprite);
 
     return tower;
 }
