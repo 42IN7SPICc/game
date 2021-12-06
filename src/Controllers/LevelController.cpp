@@ -13,6 +13,7 @@
 #include <vector>
 #include <memory>
 #include "../Constants.hpp"
+#include "../Utils/RandomUtil.hpp"
 
 using namespace spic;
 using namespace game;
@@ -126,8 +127,8 @@ std::shared_ptr<spic::GameObject> LevelController::CreateHUD()
     auto rightHudSprite = std::make_shared<spic::Sprite>("resources/sprites/hud/white_block.png", false, false, 3, 1);
     GameObjectUtil::LinkComponent(_rightHud, rightHudSprite);
 
-    _rightHud->Transform().position.x = ScreenWidth - (HudWidth / TileButtonScale);
-    _rightHud->Transform().position.y = ScreenHeight / TileButtonScale;
+    _rightHud->Transform().position.x = ScreenWidth - (HudWidth / 2);
+    _rightHud->Transform().position.y = ScreenHeight / 2;
 
     auto buttonText = std::make_shared<spic::Text>("tile-title-text", "tile_title_text", Layer::HUD, HudWidth, 100);
     buttonText->Size(24);
@@ -135,14 +136,9 @@ std::shared_ptr<spic::GameObject> LevelController::CreateHUD()
     buttonText->Transform().position.y = -(TileSize + 2) * (TileButtonScale * 5);
     GameObjectUtil::LinkChild(_rightHud, buttonText);
 
-    auto streetButton = InitializeTileButton("resources/sprites/tiles/street.png", 18, "Straat");
-    streetButton->Transform().position.y = -(TileSize + 2) * (TileButtonScale * 4);
-
-    auto grassButton = InitializeTileButton("resources/sprites/tiles/grass.png", 6, "Gras");
-    grassButton->Transform().position.y = -(TileSize + 2) * (TileButtonScale * 3);
-
-    auto sandButton = InitializeTileButton("resources/sprites/tiles/sand.png", 6, "Zand");
-    sandButton->Transform().position.y = -(TileSize + 2) * (TileButtonScale * 2);
+    auto streetButton = InitializeTileButton("resources/sprites/tiles/street.png", 18, "Straat", -(TileSize + 2) * (TileButtonScale * 4));
+    auto grassButton = InitializeTileButton("resources/sprites/tiles/grass.png", 6, "Gras", -(TileSize + 2) * (TileButtonScale * 3));
+    auto sandButton = InitializeTileButton("resources/sprites/tiles/sand.png", 6, "Zand", -(TileSize + 2) * (TileButtonScale * 2));
 
     auto completePathButton = ButtonPrefabFactory::CreateOutlineButton("complete-path-button", "complete_path_button", "Voltooi pad", true);
     completePathButton->Transform().scale = 0.8;
@@ -201,7 +197,7 @@ std::shared_ptr<spic::GameObject> LevelController::BuildLevel(const std::shared_
             tile = std::make_shared<spic::GameObject>("end-tile", "end_tile", Layer::Game);
             auto endTileCollider = std::make_shared<spic::BoxCollider>(TileSize * TileMapScale, TileSize * TileMapScale);
             endTileCollider->IsTrigger(true);
-            auto tileRigidBody = std::make_shared<spic::RigidBody>(10,0, BodyType::staticBody);
+            auto tileRigidBody = std::make_shared<spic::RigidBody>(10, 0, BodyType::staticBody);
 
             GameObjectUtil::LinkComponent(tile, endTileCollider);
             GameObjectUtil::LinkComponent(tile, endTowerHealthBehaviour);
@@ -214,6 +210,12 @@ std::shared_ptr<spic::GameObject> LevelController::BuildLevel(const std::shared_
         else
         {
             tile = std::make_shared<spic::GameObject>(name, "tile", Layer::Game);
+        }
+
+        if (levelTile.TileType() == TileType::Bushes || levelTile.TileType() == TileType::Rocks)
+        {
+            sprite->FlipX(RandomUtil::NextBool());
+            sprite->FlipY(RandomUtil::NextBool());
         }
 
         tile->Transform().position.x = levelTile.X * TileSize;
@@ -248,9 +250,10 @@ std::shared_ptr<spic::GameObject> LevelController::BuildLevel(const std::shared_
     return tileMap;
 }
 
-std::shared_ptr<spic::Button> LevelController::InitializeTileButton(const std::string& texture, int tileAmount, const std::string& tileTitle)
+std::shared_ptr<spic::Button> LevelController::InitializeTileButton(const std::string& texture, int tileAmount, const std::string& tileTitle, double yLocation)
 {
     auto button = std::make_shared<spic::Button>("tile-button-" + texture, "tile_button", Layer::HUD, TileSize, TileSize);
+    button->Transform().position.y = yLocation;
     button->Transform().scale = TileButtonScale;
     button->Transform().position.x = -50;
     auto buttonSprite = std::make_shared<spic::Sprite>(texture, false, false, 100, 1);
@@ -259,14 +262,17 @@ std::shared_ptr<spic::Button> LevelController::InitializeTileButton(const std::s
     auto buttonText = std::make_shared<spic::Text>("tile-button-text-" + texture, "tile_button_text", Layer::HUD, TileSize, TileSize);
     buttonText->TextAlignment(Alignment::center);
     buttonText->Content(std::to_string(tileAmount));
+    buttonText->Size(18 * 4);
     GameObjectUtil::LinkChild(button, buttonText);
 
     auto labelText = std::make_shared<spic::Text>("button-label-text-" + texture, "tile_label_text", Layer::HUD, 100, TileSize);
-    labelText->Transform().position.x = TileSize * TileButtonScale + 5;
 
+    labelText->Transform().position.y = yLocation;
+    labelText->Transform().position.x = TileSize * TileButtonScale + 5;
     labelText->Size(11);
+	
     labelText->Content(tileTitle);
-    GameObjectUtil::LinkChild(button, labelText);
+    GameObjectUtil::LinkChild(_rightHud, labelText);
 
     _buttonTileAmounts[button] = tileAmount;
     button->OnClick([this, button]() {
