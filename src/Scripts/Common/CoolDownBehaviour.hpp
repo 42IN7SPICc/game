@@ -20,7 +20,7 @@ namespace game
              * @brief Creates a new instance of a CoolDownBehaviour with a given cool down time.
              * @param coolDown The time it takes to cool down in seconds.
              */
-            explicit CoolDownBehaviour(int coolDown);
+            explicit CoolDownBehaviour(double coolDown);
 
             /**
              * @brief Triggers when the scripts starts for the first time.

@@ -2,7 +2,7 @@
 #include "Time.hpp"
 #include "Debug.hpp"
 
-game::CoolDownBehaviour::CoolDownBehaviour(int coolDown) : _cooledDown(false),
+game::CoolDownBehaviour::CoolDownBehaviour(double coolDown) : _cooledDown(false),
                                                            _coolDown(coolDown),
                                                            _minCoolDown(coolDown)
 {
