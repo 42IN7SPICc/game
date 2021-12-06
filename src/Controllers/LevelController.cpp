@@ -38,7 +38,7 @@ void LevelController::OnUpdate()
     {
         _timePassed += Time::DeltaTime() * Time::TimeScale();
 
-        if (!_levelData.Waves.empty())
+        if (!_levelData.Waves.empty() && _levelData.WavesStarted)
         {
             auto& wave = _levelData.Waves.front();
             _levelData.ClearDeadEnemies(wave);
@@ -131,9 +131,14 @@ std::shared_ptr<spic::GameObject> LevelController::CreateHUD()
     buttonText->Transform().position.y = -(TileSize + 2) * (TileButtonScale * 5);
     GameObjectUtil::LinkChild(_rightHud, buttonText);
 
-    auto streetButton = InitializeTileButton(_rightHud, "resources/sprites/tiles/street.png", 18, "Straat", -(TileSize + 2) * (TileButtonScale * 4));
-    auto grassButton = InitializeTileButton(_rightHud, "resources/sprites/tiles/grass.png", 6, "Gras", -(TileSize + 2) * (TileButtonScale * 3));
-    auto sandButton = InitializeTileButton(_rightHud, "resources/sprites/tiles/sand.png", 6, "Zand", -(TileSize + 2) * (TileButtonScale * 2));
+    auto streetButton = InitializeTileButton("resources/sprites/tiles/street.png", 18, "Straat");
+    streetButton->Transform().position.y = -(TileSize + 2) * (TileButtonScale * 4);
+
+    auto grassButton = InitializeTileButton("resources/sprites/tiles/grass.png", 6, "Gras");
+    grassButton->Transform().position.y = -(TileSize + 2) * (TileButtonScale * 3);
+
+    auto sandButton = InitializeTileButton("resources/sprites/tiles/sand.png", 6, "Zand");
+    sandButton->Transform().position.y = -(TileSize + 2) * (TileButtonScale * 2);
 
     auto completePathButton = ButtonPrefabFactory::CreateOutlineButton("complete-path-button", "complete_path_button", "Voltooi pad", true);
     completePathButton->Transform().scale = 0.8;
@@ -151,86 +156,8 @@ std::shared_ptr<spic::GameObject> LevelController::CreateHUD()
             {
                 rightHud->RemoveChild(child);
             }
-            auto enemiesLeftTextHeader = std::make_shared<spic::Text>("enemies-text-header", "default", Layer::HUD, HudWidth, 20);
-            enemiesLeftTextHeader->Size(18);
-            enemiesLeftTextHeader->TextAlignment(Alignment::center);
-            enemiesLeftTextHeader->Transform().position.y = 100;
-            enemiesLeftTextHeader->Content("Vijanden resterend:");
 
-            auto enemiesText = std::make_shared<spic::Text>("enemies-text", "default", Layer::HUD, HudWidth, 20);
-            enemiesText->Size(18);
-            enemiesText->TextAlignment(Alignment::center);
-            enemiesText->Transform().position.y = 120;
-            enemiesText->Content(std::to_string(_levelData.Waves.front().RemainingEnemies()));
-
-            auto waveTextHeader = std::make_shared<spic::Text>("wave-text-header", "default", Layer::HUD, HudWidth, 20);
-            waveTextHeader->Size(18);
-            waveTextHeader->TextAlignment(Alignment::center);
-            waveTextHeader->Transform().position.y = 150;
-            waveTextHeader->Content("Ronde:");
-
-            auto waveText = std::make_shared<spic::Text>("wave-text", "default", Layer::HUD, HudWidth, 20);
-            waveText->Size(18);
-            waveText->TextAlignment(Alignment::center);
-            waveText->Transform().position.y = 170;
-            waveText->Content(std::to_string(_levelData.CurrentWave()));
-
-            auto moneyText = std::make_shared<spic::Text>("money-text", "default", Layer::HUD, HudWidth, 20);
-            moneyText->Size(18);
-            moneyText->TextAlignment(Alignment::center);
-            moneyText->Transform().position.y = 200;
-            moneyText->Content("$ " + std::to_string(_levelData.Balance));
-
-            auto heroHealthTextHeader = std::make_shared<spic::Text>("hero-health-text-header", "default", Layer::HUD, HudWidth, 20);
-            heroHealthTextHeader->Size(18);
-            heroHealthTextHeader->TextAlignment(Alignment::center);
-            heroHealthTextHeader->Transform().position.y = 230;
-            heroHealthTextHeader->Content("Hero:");
-
-            auto heroHealthText = std::make_shared<spic::Text>("hero-health-text", "default", Layer::HUD, HudWidth, 20);
-            heroHealthText->Size(18);
-            heroHealthText->TextAlignment(Alignment::center);
-            heroHealthText->Transform().position.y = 250;
-            heroHealthText->Content("♥ " + std::to_string(_levelData.HeroHealth->Health()));
-
-            auto militaryBaseHealthTextHeader = std::make_shared<spic::Text>("military-base-health-text-header", "default", Layer::HUD, HudWidth, 20);
-            militaryBaseHealthTextHeader->Size(18);
-            militaryBaseHealthTextHeader->TextAlignment(Alignment::center);
-            militaryBaseHealthTextHeader->Transform().position.y = 280;
-            militaryBaseHealthTextHeader->Content("Militaire Basis:");
-
-            auto militaryBaseHealthText = std::make_shared<spic::Text>("military-base-health-text", "default", Layer::HUD, HudWidth, 20);
-            militaryBaseHealthText->Size(18);
-            militaryBaseHealthText->TextAlignment(Alignment::center);
-            militaryBaseHealthText->Transform().position.y = 300;
-            militaryBaseHealthText->Content("♥ " + std::to_string(_levelData.MilitaryBaseHealth->Health()));
-
-            auto nextWaveButton = ButtonPrefabFactory::CreateOutlineButton("next-wave-button", "default", "Volgende ronde", true);
-            auto text = std::dynamic_pointer_cast<spic::Text>(nextWaveButton->Children()[0]);
-            text->Size(20);
-            nextWaveButton->Transform().scale = 0.8;
-            nextWaveButton->OnClick([this]() {
-                auto& wave = _levelData.Waves.front();
-                if (wave.RemainingEnemies() == 0)
-                {
-                    _levelData.Waves.pop();
-                    _levelData.HeroHealth->Health(_levelData.HeroHealth->MaxHealth());
-                }
-            });
-            nextWaveButton->Transform().position.y = 350;
-
-            _levelData.HeroHealth->GameObject().lock()->Active(true);
-
-            GameObjectUtil::LinkChild(rightHud, enemiesLeftTextHeader);
-            GameObjectUtil::LinkChild(rightHud, enemiesText);
-            GameObjectUtil::LinkChild(rightHud, waveTextHeader);
-            GameObjectUtil::LinkChild(rightHud, waveText);
-            GameObjectUtil::LinkChild(rightHud, moneyText);
-            GameObjectUtil::LinkChild(rightHud, heroHealthTextHeader);
-            GameObjectUtil::LinkChild(rightHud, heroHealthText);
-            GameObjectUtil::LinkChild(rightHud, militaryBaseHealthTextHeader);
-            GameObjectUtil::LinkChild(rightHud, militaryBaseHealthText);
-            GameObjectUtil::LinkChild(rightHud, nextWaveButton);
+            CreateTowerHud();
         }
         else
         {
@@ -323,7 +250,7 @@ std::shared_ptr<spic::GameObject> LevelController::BuildLevel(const std::shared_
     return tileMap;
 }
 
-std::shared_ptr<spic::Button> LevelController::InitializeTileButton(const std::shared_ptr<spic::GameObject>& HUD, const std::string& texture, int tileAmount, const std::string& tileTitle, double yLocation)
+std::shared_ptr<spic::Button> LevelController::InitializeTileButton(const std::string& texture, int tileAmount, const std::string& tileTitle)
 {
     auto button = std::make_shared<spic::Button>("tile-button-" + texture, "tile_button", Layer::HUD, TileSize, TileSize);
     button->Transform().position.y = yLocation;
@@ -339,9 +266,11 @@ std::shared_ptr<spic::Button> LevelController::InitializeTileButton(const std::s
     GameObjectUtil::LinkChild(button, buttonText);
 
     auto labelText = std::make_shared<spic::Text>("button-label-text-" + texture, "tile_label_text", Layer::HUD, 100, TileSize);
-    labelText->Transform().position.x = 50;
+
     labelText->Transform().position.y = yLocation;
-    labelText->Size(24);
+    labelText->Transform().position.x = TileSize * TileButtonScale + 5;
+    labelText->Size(11);
+	
     labelText->Content(tileTitle);
     GameObjectUtil::LinkChild(_rightHud, labelText);
 
@@ -364,7 +293,49 @@ std::shared_ptr<spic::Button> LevelController::InitializeTileButton(const std::s
         _selectedButton = button;
     });
 
-    GameObjectUtil::LinkChild(HUD, button);
+    GameObjectUtil::LinkChild(_rightHud, button);
+    return button;
+}
+
+std::shared_ptr<spic::Button> LevelController::InitializeTowerButton(const std::string& texture, int towerCost, const std::string& towerName, double yLocation, spic::Color color)
+{
+    auto button = std::make_shared<spic::Button>("tower-button-" + texture, "tower_button", Layer::HUD, TowerSpriteSize, TowerSpriteSize);
+    button->Transform().scale = TowerButtonScale;
+    button->Transform().position.x = -75;
+    button->Transform().position.y = yLocation;
+
+    _buttonTowerCosts[button] = towerCost;
+    button->OnClick([this, button]() {
+        if(_selectedButton == nullptr) _selectedButton = button;
+        else if(_selectedButton == button) {
+            _selectedButton->Transform().rotation = 0;
+            _selectedButton = nullptr;
+            return;
+        }
+
+        _selectedButton->Transform().rotation = 0;
+        button->Transform().rotation = -45;
+        _selectedButton = button;
+    });
+
+    auto buttonSprite = std::make_shared<spic::Sprite>(texture, color, false, false, 100, 1);
+    GameObjectUtil::LinkComponent(button, buttonSprite);
+
+    auto towerNameText = std::make_shared<spic::Text>("button-name-text-" + texture, "tower_name_text", Layer::HUD, 125, TileSize);
+    towerNameText->Transform().position.x = 24;
+    towerNameText->Transform().position.y = yLocation - 10;
+    towerNameText->Size(16);
+    towerNameText->Content(towerName);
+    GameObjectUtil::LinkChild(_rightHud, towerNameText);
+
+    auto towerCostText = std::make_shared<spic::Text>("button-cost-text-" + texture, "tower_cost_text", Layer::HUD, 125, TileSize);
+    towerCostText->Transform().position.x = 24;
+    towerCostText->Transform().position.y = yLocation + 10;
+    towerCostText->Size(16);
+    towerCostText->Content("$" + std::to_string(towerCost));
+    GameObjectUtil::LinkChild(_rightHud, towerCostText);
+
+    GameObjectUtil::LinkChild(_rightHud, button);
     return button;
 }
 
@@ -447,17 +418,34 @@ void LevelController::HandleClickTile(const game::MapNode& clickedTile)
 void LevelController::HandleClickTower(game::MapNode& clickedTile)
 {
     auto currentTileType = clickedTile.TileType;
-    if (currentTileType == TileType::Bushes)
+    if (currentTileType == TileType::Bushes && _selectedButton != nullptr && (_levelData.Waves.front().RemainingEnemies() == 0 || !_levelData.WavesStarted))
     {
-        if (!clickedTile.TowerObject && _levelData.Balance >= 100)
+        if (!clickedTile.TowerObject && _levelData.Balance >= _buttonTowerCosts[_selectedButton])
         {
-            auto tower = TowerPrefabFactory::CreateTower(TowerName::Shotgun);
+            TowerName towerType;
+            switch (_buttonTowerCosts[_selectedButton]) //current switch on tower cost - maybe change in future of type check
+            {
+                case 80:
+                    towerType = TowerName::Sniper;
+                    break;
+                case 125:
+                    towerType = TowerName::Bomber;
+                    break;
+                case 150:
+                    towerType = TowerName::Flamethrower;
+                    break;
+                case 100:
+                default:
+                    towerType = TowerName::Shotgun;
+                    break;
+            }
+            auto tower = TowerPrefabFactory::CreateTower(towerType);
             tower->Transform().position = clickedTile.TileObject->AbsoluteTransform().position;
             tower->Transform().scale = 0.05;
 
             Engine::Instance().PeekScene()->Contents().push_back(tower);
             clickedTile.TowerObject = tower;
-            _levelData.Balance -= 100;
+            _levelData.Balance -= _buttonTowerCosts[_selectedButton];
         }
     }
 }
@@ -545,4 +533,98 @@ void LevelController::ButcherEnemies()
             healthBehaviour->Damage(healthBehaviour->Health());
         }
     }
+}
+
+void LevelController::CreateTowerHud()
+{
+    auto bombShooterButton = InitializeTowerButton("resources/sprites/towers/shooting/tower_shooting_1.png", 125, "Bommenwerper", -(TileSize + 2) * (TileButtonScale * 4), BomberTowerColor<Color>());
+    auto shotgunButton = InitializeTowerButton("resources/sprites/towers/shooting/tower_shooting_1.png", 100, "Shotgun", -(TileSize + 2) * (TileButtonScale * 3), ShotgunTowerColor<Color>());
+    auto flamethrowerButton = InitializeTowerButton("resources/sprites/towers/shooting/tower_shooting_1.png", 150, "Vlammenwerper", -(TileSize + 2) * (TileButtonScale * 2), FlamethrowerTowerColor<Color>());
+    auto sniperButton = InitializeTowerButton("resources/sprites/towers/shooting/tower_shooting_1.png", 80, "Scherpschutter",-(TileSize + 2) * (TileButtonScale * 1), SniperTowerColor<Color>());
+
+    auto enemiesLeftTextHeader = std::make_shared<spic::Text>("enemies-text-header", "default", Layer::HUD, HudWidth, 20);
+    enemiesLeftTextHeader->Size(18);
+    enemiesLeftTextHeader->TextAlignment(Alignment::center);
+    enemiesLeftTextHeader->Transform().position.y = 100;
+    enemiesLeftTextHeader->Content("Vijanden resterend:");
+
+    auto enemiesText = std::make_shared<spic::Text>("enemies-text", "default", Layer::HUD, HudWidth, 20);
+    enemiesText->Size(18);
+    enemiesText->TextAlignment(Alignment::center);
+    enemiesText->Transform().position.y = 120;
+    enemiesText->Content(std::to_string(_levelData.Waves.front().RemainingEnemies()));
+
+    auto waveTextHeader = std::make_shared<spic::Text>("wave-text-header", "default", Layer::HUD, HudWidth, 20);
+    waveTextHeader->Size(18);
+    waveTextHeader->TextAlignment(Alignment::center);
+    waveTextHeader->Transform().position.y = 150;
+    waveTextHeader->Content("Ronde:");
+
+    auto waveText = std::make_shared<spic::Text>("wave-text", "default", Layer::HUD, HudWidth, 20);
+    waveText->Size(18);
+    waveText->TextAlignment(Alignment::center);
+    waveText->Transform().position.y = 170;
+    waveText->Content(std::to_string(_levelData.CurrentWave()));
+
+    auto moneyText = std::make_shared<spic::Text>("money-text", "default", Layer::HUD, HudWidth, 20);
+    moneyText->Size(18);
+    moneyText->TextAlignment(Alignment::center);
+    moneyText->Transform().position.y = 200;
+    moneyText->Content("$ " + std::to_string(_levelData.Balance));
+
+    auto heroHealthTextHeader = std::make_shared<spic::Text>("hero-health-text-header", "default", Layer::HUD, HudWidth, 20);
+    heroHealthTextHeader->Size(18);
+    heroHealthTextHeader->TextAlignment(Alignment::center);
+    heroHealthTextHeader->Transform().position.y = 230;
+    heroHealthTextHeader->Content("Hero:");
+
+    auto heroHealthText = std::make_shared<spic::Text>("hero-health-text", "default", Layer::HUD, HudWidth, 20);
+    heroHealthText->Size(18);
+    heroHealthText->TextAlignment(Alignment::center);
+    heroHealthText->Transform().position.y = 250;
+    heroHealthText->Content("♥ " + std::to_string(_levelData.HeroHealth->Health()));
+
+    auto militaryBaseHealthTextHeader = std::make_shared<spic::Text>("military-base-health-text-header", "default", Layer::HUD, HudWidth, 20);
+    militaryBaseHealthTextHeader->Size(18);
+    militaryBaseHealthTextHeader->TextAlignment(Alignment::center);
+    militaryBaseHealthTextHeader->Transform().position.y = 280;
+    militaryBaseHealthTextHeader->Content("Militaire Basis:");
+
+    auto militaryBaseHealthText = std::make_shared<spic::Text>("military-base-health-text", "default", Layer::HUD, HudWidth, 20);
+    militaryBaseHealthText->Size(18);
+    militaryBaseHealthText->TextAlignment(Alignment::center);
+    militaryBaseHealthText->Transform().position.y = 300;
+    militaryBaseHealthText->Content("♥ " + std::to_string(_levelData.MilitaryBaseHealth->Health()));
+
+    auto nextWaveButton = ButtonPrefabFactory::CreateOutlineButton("next-wave-button", "default", "Start gevecht", true);
+    auto text = std::dynamic_pointer_cast<spic::Text>(nextWaveButton->Children()[0]);
+    text->Size(20);
+    nextWaveButton->Transform().scale = 0.8;
+    nextWaveButton->OnClick([this, nextWaveButton]() {
+        auto& wave = _levelData.Waves.front();
+        if(!_levelData.WavesStarted) {
+            _levelData.WavesStarted = true;
+            auto text = std::dynamic_pointer_cast<spic::Text>(nextWaveButton->Children()[0]);
+            text->Content("Volgende ronde");
+        }
+        else if (wave.RemainingEnemies() == 0)
+        {
+            _levelData.Waves.pop();
+            _levelData.HeroHealth->Health(_levelData.HeroHealth->MaxHealth());
+        }
+    });
+    nextWaveButton->Transform().position.y = 350;
+
+    _levelData.HeroHealth->GameObject().lock()->Active(true);
+
+    GameObjectUtil::LinkChild(_rightHud, enemiesLeftTextHeader);
+    GameObjectUtil::LinkChild(_rightHud, enemiesText);
+    GameObjectUtil::LinkChild(_rightHud, waveTextHeader);
+    GameObjectUtil::LinkChild(_rightHud, waveText);
+    GameObjectUtil::LinkChild(_rightHud, moneyText);
+    GameObjectUtil::LinkChild(_rightHud, heroHealthTextHeader);
+    GameObjectUtil::LinkChild(_rightHud, heroHealthText);
+    GameObjectUtil::LinkChild(_rightHud, militaryBaseHealthTextHeader);
+    GameObjectUtil::LinkChild(_rightHud, militaryBaseHealthText);
+    GameObjectUtil::LinkChild(_rightHud, nextWaveButton);
 }
