@@ -11,6 +11,7 @@
 #include <numeric>
 #include <cmath>
 #include <vector>
+#include <memory>
 #include "../Constants.hpp"
 
 using namespace spic;
@@ -33,11 +34,11 @@ void LevelController::OnStart()
 
 void LevelController::OnUpdate()
 {
-    if (_levelMode == LevelMode::TowerMode)
+    if (_levelMode == LevelMode::TowerMode || _levelMode == LevelMode::WaveMode)
     {
         _timePassed += Time::DeltaTime() * Time::TimeScale();
 
-        if (!_levelData.Waves.empty() && _levelData.WavesStarted)
+        if (!_levelData.Waves.empty() && _levelMode == LevelMode::WaveMode)
         {
             auto& wave = _levelData.Waves.front();
             _levelData.ClearDeadEnemies(wave);
@@ -52,6 +53,10 @@ void LevelController::OnUpdate()
                     wave.EnemyQueue.pop();
                     _timePassed = 0;
                 }
+            }
+
+            if(wave.RemainingEnemies() == 0) {
+                _levelMode = LevelMode::TowerMode;
             }
         }
     }
@@ -346,7 +351,7 @@ std::shared_ptr<spic::GameObject> LevelController::CreateMapButton()
         {
             HandleClickTile(_levelData.Graph[std::to_string(x) + "-" + std::to_string(y)]);
         }
-        else if (_levelMode == LevelMode::TowerMode)
+        else if (_levelMode == LevelMode::TowerMode && _levelMode != LevelMode::WaveMode)
         {
             HandleClickTower(_levelData.Graph[std::to_string(x) + "-" + std::to_string(y)]);
         }
@@ -407,7 +412,7 @@ void LevelController::HandleClickTile(const game::MapNode& clickedTile)
 void LevelController::HandleClickTower(game::MapNode& clickedTile)
 {
     auto currentTileType = clickedTile.TileType;
-    if (currentTileType == TileType::Bushes && _selectedButton != nullptr && (_levelData.Waves.front().RemainingEnemies() == 0 || !_levelData.WavesStarted))
+    if (currentTileType == TileType::Bushes && _selectedButton != nullptr && (_levelData.Waves.front().RemainingEnemies() == 0 || _levelMode != LevelMode::WaveMode))
     {
         if (!clickedTile.TowerObject && _levelData.Balance >= _buttonTowerCosts[_selectedButton])
         {
@@ -591,12 +596,12 @@ void LevelController::CreateTowerHud()
     nextWaveButton->Transform().scale = 0.8;
     nextWaveButton->OnClick([this, nextWaveButton]() {
         auto& wave = _levelData.Waves.front();
-        if(!_levelData.WavesStarted) {
-            _levelData.WavesStarted = true;
+        if(_levelMode == LevelMode::TowerMode) {
+            _levelMode = LevelMode::WaveMode;
             auto text = std::dynamic_pointer_cast<spic::Text>(nextWaveButton->Children()[0]);
             text->Content("Volgende ronde");
         }
-        else if (wave.RemainingEnemies() == 0)
+        if (wave.RemainingEnemies() == 0 && _levelMode == LevelMode::WaveMode)
         {
             _levelData.Waves.pop();
             _levelData.HeroHealth->Health(_levelData.HeroHealth->MaxHealth());
@@ -616,4 +621,9 @@ void LevelController::CreateTowerHud()
     GameObjectUtil::LinkChild(_rightHud, militaryBaseHealthTextHeader);
     GameObjectUtil::LinkChild(_rightHud, militaryBaseHealthText);
     GameObjectUtil::LinkChild(_rightHud, nextWaveButton);
+}
+
+game::LevelMode LevelController::GetLevelMode() const
+{
+    return _levelMode;
 }

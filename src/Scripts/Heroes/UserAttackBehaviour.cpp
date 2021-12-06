@@ -10,6 +10,7 @@
 #include "../../Utils/PointUtil.hpp"
 #include "../../Utils/GameObjectUtil.hpp"
 #include "../../Constants.hpp"
+#include "../../Controllers/LevelController.hpp"
 
 using namespace game;
 
@@ -31,7 +32,15 @@ void UserAttackBehaviour::OnStart()
 
 void UserAttackBehaviour::OnUpdate()
 {
-    if (_healthBehaviour->Health() <= 0 || !_coolDownBehaviour->CooledDown()) return;
+    auto levelControllerGameObject = spic::GameObject::Find("LevelController");
+    if(!levelControllerGameObject)
+    {
+        throw std::runtime_error("A user attack behaviour requires a level controller for level mode.");
+    }
+
+    auto levelController = levelControllerGameObject->GetComponent<game::LevelController>();
+
+    if (_healthBehaviour->Health() <= 0 || !_coolDownBehaviour->CooledDown() || levelController->GetLevelMode() != LevelMode::WaveMode) return;
 
     if (spic::Input::GetMouseButton(spic::Input::MouseButton::LEFT))
     {

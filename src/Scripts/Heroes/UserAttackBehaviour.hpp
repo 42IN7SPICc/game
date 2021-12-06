@@ -5,6 +5,7 @@
 #include "Point.hpp"
 #include "../Common/HealthBehaviour.hpp"
 #include "../Common/CoolDownBehaviour.hpp"
+#include "../../Enums/LevelMode.hpp"
 
 namespace game
 {
