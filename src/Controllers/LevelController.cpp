@@ -288,19 +288,23 @@ std::shared_ptr<spic::Button> LevelController::InitializeTileButton(const std::s
 
 std::shared_ptr<spic::Button> LevelController::InitializeTowerButton(const std::string& texture, int towerCost, const std::string& towerName, double yLocation)
 {
-    auto button = std::make_shared<spic::Button>("tower-button-" + texture, "tower_button", Layer::HUD, TileSize, TileSize);
+    auto button = std::make_shared<spic::Button>("tower-button-" + texture, "tower_button", Layer::HUD, TowerSpriteSize, TowerSpriteSize);
     button->Transform().scale = TowerButtonScale;
     button->Transform().position.x = -75;
     button->Transform().position.y = yLocation;
 
-    _selectedButton = button;
     _buttonTowerCosts[button] = towerCost;
     button->OnClick([this, button]() {
-        if(_selectedButton != button) {
-            _selectedButton->Transform().rotation = -90;
-            _selectedButton = button;
-            button->Transform().rotation = 90;
+        if(_selectedButton == nullptr) _selectedButton = button;
+        else if(_selectedButton == button) {
+            _selectedButton->Transform().rotation = 0;
+            _selectedButton = nullptr;
+            return;
         }
+
+        _selectedButton->Transform().rotation = 0;
+        button->Transform().rotation = -45;
+        _selectedButton = button;
     });
 
     auto buttonSprite = std::make_shared<spic::Sprite>(texture, false, false, 100, 1);
@@ -403,7 +407,7 @@ void LevelController::HandleClickTile(const game::MapNode& clickedTile)
 void LevelController::HandleClickTower(game::MapNode& clickedTile)
 {
     auto currentTileType = clickedTile.TileType;
-    if (currentTileType == TileType::Bushes)
+    if (currentTileType == TileType::Bushes && _selectedButton != nullptr)
     {
         if (!clickedTile.TowerObject && _levelData.Balance >= _buttonTowerCosts[_selectedButton])
         {
