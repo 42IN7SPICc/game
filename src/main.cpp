@@ -2,7 +2,7 @@
 
 #include "Scenes/MainScene.hpp"
 
-#include <stdexcept>
+#include <exception>
 
 
 #ifdef __linux__
@@ -48,7 +48,7 @@ int main(int argc, char* args[])
 
         engine.Start();
     }
-    catch (const std::runtime_error& e)
+    catch (const std::exception& e)
     {
         ShowMessage("Game Crashed", e.what());
     }
