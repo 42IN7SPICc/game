@@ -16,12 +16,13 @@ namespace game
         template<class Archive>
         void serialize(Archive& ar)
         {
-            ar(Title, Description, UnlockThreshold, Tiles);
+            ar(Title, Description, UnlockThreshold, AmountsGiven, Tiles);
         }
 
         std::string Title;
         std::string Description;
         int UnlockThreshold;
+        TilesAmount AmountsGiven;
         std::vector<Tile> Tiles;
         std::string File;
     };

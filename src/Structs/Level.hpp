@@ -4,6 +4,7 @@
 #include <string>
 #include <map>
 #include "../Enums/TileType.hpp"
+#include "TilesAmount.hpp"
 
 namespace game
 {
@@ -15,14 +16,14 @@ namespace game
         template<class Archive>
         void serialize(Archive& ar)
         {
-            ar(Title, Description, UnlockThreshold);
+            ar(Title, Description, UnlockThreshold, AmountsGiven);
         }
 
         std::string Title;
         std::string Description;
         int UnlockThreshold;
         std::string File;
-        std::map<game::TileType, size_t> AmountOfTiles;
+        TilesAmount AmountsGiven;
     };
 }
 
