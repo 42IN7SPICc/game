@@ -286,7 +286,7 @@ std::shared_ptr<spic::Button> LevelController::InitializeTileButton(const std::s
     return button;
 }
 
-std::shared_ptr<spic::Button> LevelController::InitializeTowerButton(const std::string& texture, int towerCost, const std::string& towerName, double yLocation)
+std::shared_ptr<spic::Button> LevelController::InitializeTowerButton(const std::string& texture, int towerCost, const std::string& towerName, double yLocation, spic::Color color)
 {
     auto button = std::make_shared<spic::Button>("tower-button-" + texture, "tower_button", Layer::HUD, TowerSpriteSize, TowerSpriteSize);
     button->Transform().scale = TowerButtonScale;
@@ -307,7 +307,7 @@ std::shared_ptr<spic::Button> LevelController::InitializeTowerButton(const std::
         _selectedButton = button;
     });
 
-    auto buttonSprite = std::make_shared<spic::Sprite>(texture, false, false, 100, 1);
+    auto buttonSprite = std::make_shared<spic::Sprite>(texture, color, false, false, 100, 1);
     GameObjectUtil::LinkComponent(button, buttonSprite);
 
     auto towerNameText = std::make_shared<spic::Text>("button-name-text-" + texture, "tower_name_text", Layer::HUD, 125, TileSize);
@@ -526,10 +526,10 @@ void LevelController::ButcherEnemies()
 
 void LevelController::CreateTowerHud()
 {
-    auto bombShooterButton = InitializeTowerButton("resources/sprites/towers/shooting/tower_shooting_1.png", 125, "Bommenwerper", -(TileSize + 2) * (TileButtonScale * 4));
-    auto shotgunButton = InitializeTowerButton("resources/sprites/towers/shooting/tower_shooting_1.png", 100, "Shotgun", -(TileSize + 2) * (TileButtonScale * 3));
-    auto flamethrowerButton = InitializeTowerButton("resources/sprites/towers/shooting/tower_shooting_1.png", 150, "Vlammenwerper", -(TileSize + 2) * (TileButtonScale * 2));
-    auto sniperButton = InitializeTowerButton("resources/sprites/towers/shooting/tower_shooting_1.png", 80, "Scherpschutter",-(TileSize + 2) * (TileButtonScale * 1));
+    auto bombShooterButton = InitializeTowerButton("resources/sprites/towers/shooting/tower_shooting_1.png", 125, "Bommenwerper", -(TileSize + 2) * (TileButtonScale * 4), BomberTowerColor<Color>());
+    auto shotgunButton = InitializeTowerButton("resources/sprites/towers/shooting/tower_shooting_1.png", 100, "Shotgun", -(TileSize + 2) * (TileButtonScale * 3), ShotgunTowerColor<Color>());
+    auto flamethrowerButton = InitializeTowerButton("resources/sprites/towers/shooting/tower_shooting_1.png", 150, "Vlammenwerper", -(TileSize + 2) * (TileButtonScale * 2), FlamethrowerTowerColor<Color>());
+    auto sniperButton = InitializeTowerButton("resources/sprites/towers/shooting/tower_shooting_1.png", 80, "Scherpschutter",-(TileSize + 2) * (TileButtonScale * 1), SniperTowerColor<Color>());
 
     auto enemiesLeftTextHeader = std::make_shared<spic::Text>("enemies-text-header", "default", Layer::HUD, HudWidth, 20);
     enemiesLeftTextHeader->Size(18);
