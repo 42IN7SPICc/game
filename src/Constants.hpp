@@ -61,4 +61,7 @@ const double ConfettiMaxSize = 0.05;
 const double ConfettiMinGravity = 0.7;
 const double ConfettiMaxGravity = 1.4;
 
+//Health Bar
+const int HealthBarChunks = 10;
+
 #endif
