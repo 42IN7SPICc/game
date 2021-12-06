@@ -48,7 +48,7 @@ std::shared_ptr<spic::GameObject> TowerPrefabFactory::CreateBomber()
 {
     types::sprite_vector shootingSprites = AnimatorUtil::CreateSpriteVector(6, "resources/sprites/towers/shooting/tower_shooting_", SortingLayer::Enemy);
 
-    auto attackBehaviour = std::make_shared<AttackBehaviour>("enemy", BulletType::Bomb, 3, 200, 25, 10, 50);
+    auto attackBehaviour = std::make_shared<AttackBehaviour>("enemy", BulletType::Bomb, BomberTowerFireRate, BomberTowerRange, BomberTowerDamage, BomberTowerBulletSpeed, BomberTowerExplosionRange);
 
     auto tower = CreateBaseTower(shootingSprites, attackBehaviour);
 
@@ -70,7 +70,7 @@ std::shared_ptr<spic::GameObject> TowerPrefabFactory::CreateFlamethrower()
 {
     types::sprite_vector shootingSprites = AnimatorUtil::CreateSpriteVector(6, "resources/sprites/towers/shooting/tower_shooting_", SortingLayer::Enemy);
 
-    auto attackBehaviour = std::make_shared<AttackBehaviour>("enemy", BulletType::Penetrating, 3, 150, 2, 20);
+    auto attackBehaviour = std::make_shared<AttackBehaviour>("enemy", BulletType::Penetrating, FlamethrowerTowerFireRate, FlamethrowerTowerRange, FlamethrowerTowerDamage, FlamethrowerTowerBulletSpeed);
 
     auto tower = CreateBaseTower(shootingSprites, attackBehaviour);
 
@@ -81,7 +81,7 @@ std::shared_ptr<spic::GameObject> TowerPrefabFactory::CreateSniper()
 {
     types::sprite_vector shootingSprites = AnimatorUtil::CreateSpriteVector(6, "resources/sprites/towers/shooting/tower_shooting_", SortingLayer::Enemy);
 
-    auto attackBehaviour = std::make_shared<AttackBehaviour>("enemy", BulletType::Normal, 8, 500, 50, 30);
+    auto attackBehaviour = std::make_shared<AttackBehaviour>("enemy", BulletType::Normal, SniperTowerFireRate, SniperTowerRange, SniperTowerDamage, SniperTowerBulletSpeed);
 
     auto tower = CreateBaseTower(shootingSprites, attackBehaviour);
 
