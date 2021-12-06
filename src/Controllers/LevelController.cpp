@@ -131,9 +131,9 @@ std::shared_ptr<spic::GameObject> LevelController::CreateHUD()
     buttonText->Transform().position.y = -(TileSize + 2) * (TileButtonScale * 5);
     GameObjectUtil::LinkChild(_rightHud, buttonText);
 
-    auto streetButton = InitializeTileButton("resources/sprites/tiles/street.png", 18, "Straat", -(TileSize + 2) * (TileButtonScale * 4));
-    auto grassButton = InitializeTileButton("resources/sprites/tiles/grass.png", 6, "Gras", -(TileSize + 2) * (TileButtonScale * 3));
-    auto sandButton = InitializeTileButton("resources/sprites/tiles/sand.png", 6, "Zand", -(TileSize + 2) * (TileButtonScale * 2));
+    auto streetButton = InitializeTileButton("resources/sprites/tiles/street.png", _level.AmountsGiven.Street, "Straat", -(TileSize + 2) * (TileButtonScale * 4));
+    auto grassButton = InitializeTileButton("resources/sprites/tiles/grass.png", _level.AmountsGiven.Grass, "Gras", -(TileSize + 2) * (TileButtonScale * 3));
+    auto sandButton = InitializeTileButton("resources/sprites/tiles/sand.png", _level.AmountsGiven.Sand, "Zand", -(TileSize + 2) * (TileButtonScale * 2));
 
     auto completePathButton = ButtonPrefabFactory::CreateOutlineButton("complete-path-button", "complete_path_button", "Voltooi pad", true);
     completePathButton->Transform().scale = 0.8;
