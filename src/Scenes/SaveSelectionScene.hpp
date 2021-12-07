@@ -15,6 +15,7 @@ namespace game
         public:
             /**
              * @brief Constructs a new instance of a Save Selection Scene.
+             * @param audio the audio source to use as background music
              */
             explicit SaveSelectionScene(const std::shared_ptr<spic::GameObject>& audio);
 
