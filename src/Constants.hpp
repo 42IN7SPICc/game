@@ -56,7 +56,7 @@ const int GruppenfuhrerEnemyDamage = 2; // The damage of a bullet for the Gruppe
 const int GruppenfuhrerEnemyBulletSpeed = 25; // The bullet velocity of the Gruppenfuhrer enemy
 const int GruppenfuhrerEnemyHealth = 100; // The health of the Gruppenfuhrer enemy
 const int GruppenfuhrerEnemyBoostCoolDown = 10; // The cool down between boost actions of the Gruppenfuhrer enemy
-const double GruppenfuhrerEnemySpeedBoost = 1.25; // The boost to give to enemies of the Gruppenfuhrer enemy
+const double GruppenfuhrerEnemySpeedBoost = 1.5; // The boost to give to enemies of the Gruppenfuhrer enemy
 const int GruppenfuhrerEnemyBoostTime = 5; // The time the boost lasts of the Gruppenfuhrer enemy
 const double GruppenfuhrerEnemyBoostRange = 100; // The range enemies have to be in for the effect of the Gruppenfuhrer enemy
 
