@@ -17,6 +17,7 @@
 #include "../Constants.hpp"
 
 #include "Engine.hpp"
+#include "../Structs/PlayerData.hpp"
 
 using namespace spic;
 using namespace game;
@@ -67,20 +68,28 @@ MainScene::MainScene() : MenuScene("Avans Wars: WW2", true)
     heroNameText->Font(Font::CaptureIt);
     heroNameText->TextColor(Color::white());
     heroNameText->Size(45);
-    heroNameText->Transform().position.x = 1000;
-    heroNameText->Transform().position.y = 430 - (HeroHeight / 2);
+    heroNameText->Transform().position = { 1000.0, 430 - (HeroHeight / 2.0) };
 
-    auto hero = HeroPrefabFactory::CreateHero(currentHero);
-    hero->Transform().position = {1000, 460};
-    hero->Transform().scale = 1;
-    hero->GetComponent<UserMovementBehaviour>()->Controllable(false);
-    hero->RemoveComponent(hero->GetComponent<UserAttackBehaviour>());
+    auto createHero = [this](HeroName currentHero) {
+        auto hero = GameObject::Find("Hero");
+        if(hero) GameObject::Destroy(hero);
 
-    auto heroSwitcher = [currentHero, heroNameText, hero](int amount) mutable {
+        hero = HeroPrefabFactory::CreateHero(currentHero);
+        hero->Transform().position = {1000, 460};
+        hero->Transform().scale = 1;
+        hero->GetComponent<UserMovementBehaviour>()->Controllable(false);
+        hero->RemoveComponent(hero->GetComponent<UserAttackBehaviour>());
+        Contents().push_back(hero);
+    };
+
+    createHero(currentHero);
+    auto heroSwitcher = [currentHero, heroNameText, createHero](int amount) mutable {
         int heroIndex = static_cast<int>(currentHero) + amount;
         if(heroIndex > 4) heroIndex = 0;
         if(heroIndex < 0) heroIndex = 4;
         currentHero = static_cast<HeroName>(heroIndex);
+        heroNameText->Content(HeroUtil::NameToString(currentHero));
+        createHero(currentHero);
     };
     auto leftArrowButton = ButtonPrefabFactory::CreateSwitchHeroButton({850, 460}, [heroSwitcher]() mutable {
         heroSwitcher(-1);
@@ -95,9 +104,8 @@ MainScene::MainScene() : MenuScene("Avans Wars: WW2", true)
     Contents().push_back(playButton);
     Contents().push_back(creditsButton);
     Contents().push_back(helpButton);
-    Contents().push_back(leftArrowButton);
     Contents().push_back(backButton);
-    Contents().push_back(hero);
+    Contents().push_back(leftArrowButton);
     Contents().push_back(rightArrowButton);
     Contents().push_back(heroNameText);
 }

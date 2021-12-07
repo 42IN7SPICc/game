@@ -78,10 +78,6 @@ std::shared_ptr<spic::Button> ButtonPrefabFactory::CreateSwitchHeroButton(const 
     button->OnClick(callback);
 
     auto buttonSprite = std::make_shared<spic::Sprite>("resources/sprites/hud/buttons/back.png", false, false, SortingLayer::HudButton, 0);
-    auto closeSceneBehaviour = std::make_shared<CloseSceneBehaviour>();
-
     GameObjectUtil::LinkComponent(button, buttonSprite);
-    GameObjectUtil::LinkComponent(button, closeSceneBehaviour);
-
     return button;
 }
