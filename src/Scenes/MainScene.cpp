@@ -53,6 +53,7 @@ MainScene::MainScene(const std::shared_ptr<spic::GameObject>& audio) : MenuScene
     if (currentHero < DesmondDoss || currentHero > JosephStalin) //Check if value of SelectedHero is valid
     {
         currentHero = DesmondDoss;
+        PlayerData::Instance().SelectedHero = currentHero;
     }
 
     auto heroNameText = std::make_shared<spic::Text>("hero-name-text", "hero-name-text", SortingLayer::HudText, HeroWidth + 300, 100);
