@@ -6,9 +6,17 @@
 
 namespace game
 {
+    /**
+     * @brief A Utility for Heroes
+     */
     class HeroUtil
     {
         public:
+            /**
+             * @brief Turns hero enum into std::string
+             * @param heroName Name of the hero
+             * @return String of the hero name
+             */
             static std::string NameToString(game::HeroName heroName);
     };
 }
