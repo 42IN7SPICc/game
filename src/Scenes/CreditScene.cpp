@@ -11,7 +11,7 @@
 using namespace game;
 using namespace spic;
 
-CreditScene::CreditScene() : MenuScene("Credits", true)
+CreditScene::CreditScene(const std::shared_ptr<spic::GameObject>& audio) : MenuScene("Credits", true)
 {
     auto creditsText = std::make_shared<Text>("Credits Text", "text_credits", Layer::HUD, 1166, 400);
     creditsText->Transform().position = {683, 450};
@@ -20,4 +20,5 @@ CreditScene::CreditScene() : MenuScene("Credits", true)
     creditsText->Content("Avans Wars: WW2 is gemaakt door:\n\nDaan Hendriks\nMax van de Vossenberg\nSander Jochems\nTommy Hosewol");
 
     Contents().push_back(creditsText);
+    Contents().push_back(audio);
 }

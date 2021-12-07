@@ -36,6 +36,12 @@ namespace game
              */
             [[nodiscard]] Level GetLevelDto(const std::string& levelName) const;
 
+            /**
+             * @brief Get all levels with information (without tiles)
+             * @return Vector of levels.
+             */
+            [[nodiscard]] std::vector<Level> GetLevels() const;
+
         private:
             std::map<std::string, Level> _levels{};
     };

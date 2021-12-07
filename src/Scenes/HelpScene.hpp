@@ -13,8 +13,9 @@ namespace game
         public:
             /**
              * @brief Constructs a new instance of a HelpScene.
+             * @param audio the audio source to use as background music
              */
-            HelpScene();
+            explicit HelpScene(const std::shared_ptr<spic::GameObject>& audio);
     };
 }
 

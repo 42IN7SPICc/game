@@ -13,8 +13,9 @@ namespace game
         public:
             /**
              * @brief Constructs a new instance of a MainScene.
+             * @param audio the audio source to use as background music
              */
-            MainScene();
+            explicit MainScene(const std::shared_ptr<spic::GameObject>& audio);
     };
 }
 
