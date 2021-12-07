@@ -14,6 +14,7 @@
 #include "../Structs/LevelWithTiles.hpp"
 #include "../Structs/LevelData.hpp"
 #include "../Enums/LevelMode.hpp"
+#include "../Scripts/Common/GameLostBehaviour.hpp"
 
 namespace game
 {
@@ -63,9 +64,10 @@ namespace game
             /**
              * @brief Builds a level with a given health for the end tower.
              * @param endTowerHealthBehaviour The health of the end tower.
+             * @param animator The animator for the end tile.
              * @return The game object containing the level.
              */
-            std::shared_ptr<spic::GameObject> BuildLevel(const std::shared_ptr<game::HealthBehaviour>& endTowerHealthBehaviour);
+            std::shared_ptr<spic::GameObject> BuildLevel(const std::shared_ptr<game::HealthBehaviour>& endTowerHealthBehaviour, const std::shared_ptr<spic::Animator>& animator);
 
             /**
              * @brief Creates a HUD for the level.
@@ -128,6 +130,7 @@ namespace game
             std::map<std::shared_ptr<spic::Button>, int> _buttonTowerCosts;
             game::LevelMode _levelMode;
             bool _strongPathEnabled;
+            std::shared_ptr<game::GameLostBehaviour> _gameLostBehavior;
 
 
             std::shared_ptr<spic::Button> InitializeTileButton(const std::string& texture, int tileAmount, const std::string& tileTitle, double yLocation);

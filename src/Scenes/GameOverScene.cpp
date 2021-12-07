@@ -11,10 +11,11 @@ using namespace spic;
 game::GameOverScene::GameOverScene() : MenuScene("", false, BackgroundName::GameOver)
 {
     auto gameOverAudioSource = game::AudioSourcePrefabFactory::CreateAudioObject(AudioClipName::GameOver, true, true, 1.0);
-    auto explosionAudioSource = game::AudioSourcePrefabFactory::CreateAudioObject(AudioClipName::Explosion, true, false, 1.0);
 
-    auto titleText = std::make_shared<Text>("Game Over Text", "text_pause", game::Layer::HUD, 1166, 100, "GAME OVER!", game::Font::Title, 64, Alignment::center, Color::white());
+    auto titleText = std::make_shared<Text>("Game Over Text", "text_pause", game::Layer::HUD, 1166, 100, "GAME OVER", game::Font::Title, 64, Alignment::center, Color::white());
     titleText->Transform().position = {683, 132};
+    auto subTitle = std::make_shared<Text>("Game Over Subtext", "text_2_pause", game::Layer::HUD, 1166, 100, "Je basis is overlopen door de duitsers!", game::Font::Title, 32, Alignment::center, Color::white());
+    subTitle->Transform().position = {683, 232};
 
     auto exitButton = game::ButtonPrefabFactory::CreateOutlineButton("Return to menu", "button_exit", "EXIT");
     exitButton->Transform().position = {683, 475};
@@ -23,7 +24,7 @@ game::GameOverScene::GameOverScene() : MenuScene("", false, BackgroundName::Game
     });
 
     Contents().push_back(gameOverAudioSource);
-    Contents().push_back(explosionAudioSource);
     Contents().push_back(titleText);
+    Contents().push_back(subTitle);
     Contents().push_back(exitButton);
 }
