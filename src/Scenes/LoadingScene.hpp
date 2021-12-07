@@ -5,9 +5,15 @@
 
 namespace game
 {
+    /**
+     * @brief Scene for the loading screen of the game.
+     */
     class LoadingScene : public MenuScene
     {
         public:
+            /**
+             * @brief Constructs a new instance of a LoadingScene.
+             */
             LoadingScene();
     };
 }

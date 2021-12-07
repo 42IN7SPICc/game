@@ -7,9 +7,15 @@
 
 namespace game
 {
+    /**
+     * @brief Scene for selection which save the user wants to play.
+     */
     class SaveSelectionScene : public MenuScene
     {
         public:
+            /**
+             * @brief Constructs a new instance of a Save Selection Scene.
+             */
             SaveSelectionScene();
 
         private:
