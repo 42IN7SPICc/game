@@ -14,7 +14,7 @@ namespace game
             /**
              * @brief Constructs a new instance of a CreditScene.
              */
-            CreditScene();
+            explicit CreditScene(const std::shared_ptr<spic::GameObject>& audio);
     };
 }
 

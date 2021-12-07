@@ -8,19 +8,16 @@
 #include "../Utils/RandomUtil.hpp"
 #include "../Scripts/Heroes/UserAttackBehaviour.hpp"
 #include "../Scripts/Heroes/UserMovementBehaviour.hpp"
-#include "../Factories/AudioSourcePrefabFactory.hpp"
 
 #include "Engine.hpp"
 
 using namespace spic;
 using namespace game;
 
-MainScene::MainScene() : MenuScene("Avans Wars: WW2", true)
+MainScene::MainScene(const std::shared_ptr<spic::GameObject>& audio) : MenuScene("Avans Wars: WW2", true)
 {
     LevelSelectionController levelSelectionController{};
     levelSelectionController.InitializeLevels();
-
-    auto mainMenuAudioSource = game::AudioSourcePrefabFactory::CreateAudioObject(AudioClipName::MainMenu, true, true, 1.0);
 
     auto playButton = ButtonPrefabFactory::CreateOutlineButton("Play Button", "button_play", "PLAY");
     playButton->Transform().position = {225, 300};
@@ -34,14 +31,14 @@ MainScene::MainScene() : MenuScene("Avans Wars: WW2", true)
 
     auto helpButton = ButtonPrefabFactory::CreateOutlineButton("Help Button", "button_help", "HELP");
     helpButton->Transform().position = {225, 425};
-    helpButton->OnClick([]() {
-        Engine::Instance().PushScene(std::make_shared<HelpScene>());
+    helpButton->OnClick([audio]() {
+        Engine::Instance().PushScene(std::make_shared<HelpScene>(audio));
     });
 
     auto creditsButton = ButtonPrefabFactory::CreateOutlineButton("Credits Button", "button_credits", "CREDITS");
     creditsButton->Transform().position = {225, 550};
-    creditsButton->OnClick([]() {
-        Engine::Instance().PushScene(std::make_shared<CreditScene>());
+    creditsButton->OnClick([audio]() {
+        Engine::Instance().PushScene(std::make_shared<CreditScene>(audio));
     });
 
     auto backButton = ButtonPrefabFactory::CreateOutlineButton("Back Button", "button_back", "BACK");
@@ -56,7 +53,7 @@ MainScene::MainScene() : MenuScene("Avans Wars: WW2", true)
     hero->GetComponent<UserMovementBehaviour>()->Controllable(false);
     hero->RemoveComponent(hero->GetComponent<UserAttackBehaviour>());
 
-    Contents().push_back(mainMenuAudioSource);
+    Contents().push_back(audio);
     Contents().push_back(playButton);
     Contents().push_back(creditsButton);
     Contents().push_back(helpButton);

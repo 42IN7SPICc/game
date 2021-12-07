@@ -16,10 +16,16 @@ namespace game
             /**
              * @brief Constructs a new instance of a Save Selection Scene.
              */
-            SaveSelectionScene();
+            explicit SaveSelectionScene(const std::shared_ptr<spic::GameObject>& audio);
 
         private:
-            static void LoadSave(const std::string& saveName);
+            std::shared_ptr<spic::GameObject> _mainMenuAudio;
+
+            /**
+             * @brief Loads a save game file by name and switches to main menu scene
+             * @param saveName name of the save file to load
+             */
+            void LoadSave(const std::string& saveName);
     };
 }
 
