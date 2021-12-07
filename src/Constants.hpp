@@ -37,10 +37,46 @@ const double HeroBulletSpeed = 17.5; // random chosen bullet speed (looks alrigh
 const double HeroBulletRange = 500; // random chosen bullet speed (looks alright)
 const double HeroShootingCoolDown = 0.5; // random chosen bullet speed (looks alright)
 
-//Desmond Doss (first hero)
+//Desmond Doss
 const int DesmondDossDamage = 2; // The damage Desmond Doss does
 const int DesmondDossDefense = 3; // The defense Desmond Doss has
 const int DesmondDossHealAbilityAmount = 5; // The amount Desmond Doss heals when activating his ability
+template <typename T>
+spic::Color DesmondDossColor() {
+    return T::red();
+}
+
+//Bernard IJzerdraat
+const int BernardIJzerdraatDamage = 5; // The damage Bernard IJzerdraat does
+const int BernardIJzerdraatDefense = 3; // The defense Bernard IJzerdraat has
+template <typename T>
+spic::Color BernardIJzerdraatColor() {
+    return T::lime();
+}
+
+//Franklin D Roosevelt
+const int FranklinDRooseveltDamage = 4; // The damage Franklin D Roosevelt does
+const int FranklinDRooseveltDefense = 2; // The defense Franklin D Roosevelt has
+template <typename T>
+spic::Color FranklinDRooseveltColor() {
+    return T::cyan();
+}
+
+//Winston Churchill
+const int WinstonChurchillDamage = 2; // The damage Winston Churchill does
+const int WinstonChurchillDefense = 5; // The defense Winston Churchill has
+template <typename T>
+spic::Color WinstonChurchillColor() {
+    return T::purple();
+}
+
+//Joseph Stalin
+const int JosephStalinDamage = 5; // The damage Joseph Stalin does
+const int JosephStalinDefense = 5; // The defense Joseph Stalin has
+template <typename T>
+spic::Color JosephStalinColor() {
+    return T::orange();
+}
 
 //Enemy Panzer (first enemy)
 const double PanzerEnemyFireRate = 3; // The shooting interval of the panzer enemy
