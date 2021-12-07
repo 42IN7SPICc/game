@@ -37,6 +37,33 @@ std::shared_ptr<spic::Button> ButtonPrefabFactory::CreateOutlineButton(const std
     return button;
 }
 
+std::shared_ptr<spic::Button> ButtonPrefabFactory::CreateWideOutlineButton(const std::string& name, const std::string& tag, const std::string& text, bool invert_color)
+{
+    auto button = std::make_shared<spic::Button>(name, tag, Layer::HUD, 650, 85);
+
+    std::string buttonOutline = invert_color ? "outline_wide_black.png" : "outline_wide.png";
+    auto buttonSprite = std::make_shared<spic::Sprite>("resources/sprites/hud/buttons/" + buttonOutline, false, false, SortingLayer::HudButton, 0);
+
+    auto buttonText = std::make_shared<spic::Text>(name + "_text", tag + "_text", Layer::HUD, 650, 85);
+    buttonText->Content(text);
+    buttonText->Size(38);
+    if (invert_color)
+    {
+        buttonText->TextColor(spic::Color::black());
+    }
+    else
+    {
+        buttonText->TextColor(spic::Color::white());
+    }
+    buttonText->TextAlignment(spic::Alignment::center);
+
+    GameObjectUtil::LinkComponent(button, buttonSprite);
+    GameObjectUtil::LinkChild(button, buttonText);
+
+    return button;
+}
+
+
 std::shared_ptr<spic::Button> ButtonPrefabFactory::CreateSquareOutlineButton(const std::string& name, const std::string& tag, const std::string& text)
 {
     auto button = std::make_shared<spic::Button>(name, tag, Layer::HUD, 350, 350);
