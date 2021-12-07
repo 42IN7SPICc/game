@@ -25,15 +25,13 @@ Level LevelSelectionController::GetLevelDto(const std::string& levelName) const
     throw std::runtime_error(std::string{"Level `" + levelName + "` does not exist."});
 }
 
-std::vector<Level> LevelSelectionController::GetLevels(const bool unlockThreshold) const
+std::vector<Level> LevelSelectionController::GetLevels() const
 {
-    auto playerData = PlayerData::Instance();
     std::vector<Level> levels;
 
     for (const auto&[key, value]: _levels)
     {
-        if (!unlockThreshold || playerData.LevelsCompleted <= value.UnlockThreshold)
-            levels.push_back(value);
+        levels.push_back(value);
     }
 
     return levels;
