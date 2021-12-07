@@ -1,15 +1,16 @@
 #include "EnemyPrefabFactory.hpp"
 
 #include "HealthBarFactory.hpp"
+#include "../Constants.hpp"
 #include "../Enums/Layer.hpp"
 #include "../Enums/SortingLayer.hpp"
 #include "../Scripts/Common/AttackBehaviour.hpp"
 #include "../Scripts/Enemies/EnemyMedicBehaviour.hpp"
 #include "../Scripts/Enemies/EnemyMovementBehaviour.hpp"
+#include "../Scripts/Enemies/EnemySpeedBoostBehaviour.hpp"
 #include "../Scripts/Enemies/EnemyTroopTruckBehaviour.hpp"
 #include "../Utils/GameObjectUtil.hpp"
 
-#include "../Constants.hpp"
 #include "Animator.hpp"
 #include "CircleCollider.hpp"
 #include "RigidBody.hpp"
@@ -85,6 +86,8 @@ std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreateGruppenfuhrer()
 
     auto attackBehaviour = std::make_shared<AttackBehaviour>("hero", BulletType::Normal, GruppenfuhrerEnemyFireRate, GruppenfuhrerEnemyRange, GruppenfuhrerEnemyDamage, GruppenfuhrerEnemyBulletSpeed);
     GameObjectUtil::LinkComponent(enemy, attackBehaviour);
+
+    GameObjectUtil::LinkComponent(enemy, std::make_shared<EnemySpeedBoostBehaviour>(GruppenfuhrerEnemyBoostCoolDown, GruppenfuhrerEnemySpeedBoost, GruppenfuhrerEnemyBoostTime, GruppenfuhrerEnemyBoostRange));
 
     return enemy;
 }
