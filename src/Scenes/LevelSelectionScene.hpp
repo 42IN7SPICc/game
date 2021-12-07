@@ -13,8 +13,9 @@ namespace game
         public:
             /**
              * @brief Constructs a new instance of a LevelSelectionScene.
+             * @param audio the audio source to use as background music
              */
-            LevelSelectionScene();
+            explicit LevelSelectionScene(const std::shared_ptr<spic::GameObject>& audio);
     };
 }
 

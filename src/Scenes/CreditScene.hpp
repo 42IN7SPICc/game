@@ -13,8 +13,9 @@ namespace game
         public:
             /**
              * @brief Constructs a new instance of a CreditScene.
+             * @param audio the audio source to use as background music
              */
-            CreditScene();
+            explicit CreditScene(const std::shared_ptr<spic::GameObject>& audio);
     };
 }
 
