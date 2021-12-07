@@ -5,6 +5,11 @@
 
 using namespace game;
 
+void SaveGameManager::Save()
+{
+    Save(PlayerData::Instance());
+}
+
 void SaveGameManager::Save(const PlayerData& playerData)
 {
     auto contents = spic::JsonFacade::Serialize(playerData);
