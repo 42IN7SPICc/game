@@ -14,7 +14,7 @@ LevelSelectionScene::LevelSelectionScene() : MenuScene("Level selectie", true)
 {
     auto buttonX = spic::Engine::Instance().Config().window.width / 2;
 
-    auto validationTextForButtonValidation = std::make_shared<spic::Text>("Help Text", "text_help", Layer::HUD, 533, 400);
+    auto validationTextForButtonValidation = std::make_shared<spic::Text>("Help Text", "text_help", Layer::HUD, 700, 400);
     auto playerData = PlayerData::Instance();
 
     auto levelSelectionController = std::make_shared<LevelSelectionController>();
@@ -48,8 +48,9 @@ LevelSelectionScene::LevelSelectionScene() : MenuScene("Level selectie", true)
             button->Transform().position = {
                     static_cast<double>(buttonX), static_cast<double>(300 + (100 * i))
             };
-            button->OnClick([validationTextForButtonValidation]() {
+            button->OnClick([validationTextForButtonValidation, levels, i]() {
                 validationTextForButtonValidation->Active(true);
+                validationTextForButtonValidation->Content("Je kunt dit level nog niet spelen! Speel eerst: " + levels[i-1].Title);
             });
 
             Contents().push_back(button);
@@ -59,7 +60,6 @@ LevelSelectionScene::LevelSelectionScene() : MenuScene("Level selectie", true)
     validationTextForButtonValidation->Transform().position = {static_cast<double>(buttonX), static_cast<double>(300 + (100 * (i + 1)))};
     validationTextForButtonValidation->Size(20);
     validationTextForButtonValidation->TextColor(spic::Color::white());
-    validationTextForButtonValidation->Content("Je kunt dit level nog niet spelen! Haal eerst het level boven dit level.");
     validationTextForButtonValidation->Active(false);
     Contents().push_back(validationTextForButtonValidation);
 
