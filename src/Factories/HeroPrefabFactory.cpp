@@ -12,6 +12,7 @@
 #include "../Scripts/Heroes/AirstrikeAbilityBehaviour.hpp"
 #include "../Scripts/Heroes/IncreaseTowerRangeAbilityBehaviour.hpp"
 #include "../Scripts/Heroes/IncreaseTowerFireRateAbilityBehaviour.hpp"
+#include "../Scripts/Heroes/EnemySuicideAbilityBehaviour.hpp"
 #include "../Scripts/Heroes/UserMovementBehaviour.hpp"
 #include "../Scripts/Heroes/UserAttackBehaviour.hpp"
 #include "../Utils/AnimatorUtil.hpp"
@@ -98,7 +99,7 @@ std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateWinstonChurchil
 std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateJosephStalin()
 {
     auto base_hero = CreateBaseHero(JosephStalinDamage, JosephStalinDefense, JosephStalinColor<spic::Color>());
-    auto ability = std::make_shared<game::HealAbilityBehaviour>();
+    auto ability = std::make_shared<game::EnemySuicideAbilityBehaviour>();
     GameObjectUtil::LinkComponent(base_hero, ability);
 
     return base_hero;
