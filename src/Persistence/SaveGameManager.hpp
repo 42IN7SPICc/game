@@ -15,6 +15,11 @@ namespace game
         public:
             /**
              * @brief Save the player data to a file.
+             */
+            static void Save();
+
+            /**
+             * @brief Save the player data to a file.
              * @param playerData The player data to be saved.
              */
             static void Save(const PlayerData& playerData);
