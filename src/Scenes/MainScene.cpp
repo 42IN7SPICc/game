@@ -76,12 +76,17 @@ MainScene::MainScene() : MenuScene("Avans Wars: WW2", false)
     heroNameText->Transform().position.x = 1000;
     heroNameText->Transform().position.y = 430 - (HeroHeight / 2);
 
-    auto heroSwitcher = [currentHero, heroNameText](int amount) mutable {
+    auto hero = HeroPrefabFactory::CreateHero(currentHero);
+    hero->Transform().position = {1000, 460};
+    hero->Transform().scale = 1;
+    hero->GetComponent<UserMovementBehaviour>()->Controllable(false);
+    hero->RemoveComponent(hero->GetComponent<UserAttackBehaviour>());
+
+    auto heroSwitcher = [currentHero, heroNameText, hero](int amount) mutable {
         int heroIndex = static_cast<int>(currentHero) + amount;
         if(heroIndex > 4) heroIndex = 0;
         if(heroIndex < 0) heroIndex = 4;
         currentHero = static_cast<HeroName>(heroIndex);
-        heroNameText->Content(HeroUtil::NameToString(currentHero));
     };
     auto leftArrowButton = ButtonPrefabFactory::CreateSwitchHeroButton({850, 460}, [heroSwitcher]() mutable {
         heroSwitcher(-1);
@@ -91,12 +96,6 @@ MainScene::MainScene() : MenuScene("Avans Wars: WW2", false)
         heroSwitcher(1);
     });
     rightArrowButton->Transform().rotation = 180;
-
-    auto hero = HeroPrefabFactory::CreateHero(currentHero);
-    hero->Transform().position = {1000, 460};
-    hero->Transform().scale = 1;
-    hero->GetComponent<UserMovementBehaviour>()->Controllable(false);
-    hero->RemoveComponent(hero->GetComponent<UserAttackBehaviour>());
 
     Contents().push_back(mainMenuAudioSource);
     Contents().push_back(playButton);
