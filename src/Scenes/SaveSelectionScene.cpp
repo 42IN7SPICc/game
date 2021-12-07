@@ -12,20 +12,20 @@ SaveSelectionScene::SaveSelectionScene() : MenuScene("Select Save", true, Backgr
 {
     auto buttonSave1 = ButtonPrefabFactory::CreateSquareOutlineButton("Button Save 1", "button_save_1", "ALPHA");
     buttonSave1->Transform().position = {283, 469};
-    buttonSave1->OnClick([this]() {
-        this->LoadSave("alpha");
+    buttonSave1->OnClick([]() {
+        SaveSelectionScene::LoadSave("alpha");
     });
 
     auto buttonSave2 = ButtonPrefabFactory::CreateSquareOutlineButton("Button Save 2", "button_save_2", "BETA");
     buttonSave2->Transform().position = {683, 469};
-    buttonSave2->OnClick([this]() {
-        this->LoadSave("beta");
+    buttonSave2->OnClick([]() {
+        SaveSelectionScene::LoadSave("beta");
     });
 
     auto buttonSave3 = ButtonPrefabFactory::CreateSquareOutlineButton("Button Save 3", "button_save_3", "CHARLIE");
     buttonSave3->Transform().position = {1083, 469};
-    buttonSave3->OnClick([this]() {
-        this->LoadSave("charlie");
+    buttonSave3->OnClick([]() {
+        SaveSelectionScene::LoadSave("charlie");
     });
 
     Contents().push_back(buttonSave1);

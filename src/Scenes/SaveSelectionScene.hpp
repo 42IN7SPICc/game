@@ -19,7 +19,7 @@ namespace game
             SaveSelectionScene();
 
         private:
-            void LoadSave(const std::string& saveName);
+            static void LoadSave(const std::string& saveName);
     };
 }
 
