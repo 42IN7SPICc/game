@@ -81,6 +81,9 @@ std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreateGruppenfuhrer()
 
     auto enemy = CreateBaseEnemy(4, 80, 1, idleSprites, walkingSprites, diedSprites);
 
+    auto attackBehaviour = std::make_shared<AttackBehaviour>("hero", BulletType::Normal, GruppenfuhrerEnemyFireRate, GruppenfuhrerEnemyRange, GruppenfuhrerEnemyDamage, GruppenfuhrerEnemyBulletSpeed);
+    GameObjectUtil::LinkComponent(enemy, attackBehaviour);
+
     return enemy;
 }
 
@@ -91,6 +94,9 @@ std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreateSchutze()
     types::sprite_vector diedSprites = AnimatorUtil::CreateSpriteVector(9, "resources/sprites/enemies/Died/enemy_died_", SortingLayer::Enemy);
 
     auto enemy = CreateBaseEnemy(2, 25, 1, idleSprites, walkingSprites, diedSprites);
+
+    auto attackBehaviour = std::make_shared<AttackBehaviour>("hero", BulletType::Normal, SchutzeEnemyFireRate, SchutzeEnemyRange, SchutzeEnemyDamage, SchutzeEnemyBulletSpeed);
+    GameObjectUtil::LinkComponent(enemy, attackBehaviour);
 
     return enemy;
 }
@@ -103,6 +109,9 @@ std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreateErkunder()
 
     auto enemy = CreateBaseEnemy(2, 50, 1.5, idleSprites, walkingSprites, diedSprites);
 
+    auto attackBehaviour = std::make_shared<AttackBehaviour>("hero", BulletType::Normal, ErkunderEnemyFireRate, ErkunderEnemyRange, ErkunderEnemyDamage, ErkunderEnemyBulletSpeed);
+    GameObjectUtil::LinkComponent(enemy, attackBehaviour);
+
     return enemy;
 }
 
@@ -114,6 +123,9 @@ std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreateGhillieAnzugSchutze(
 
     auto enemy = CreateBaseEnemy(3, 60, 1, idleSprites, walkingSprites, diedSprites);
 
+    auto attackBehaviour = std::make_shared<AttackBehaviour>("hero", BulletType::Normal, GhillieAnzugSchutzeEnemyFireRate, GhillieAnzugSchutzeEnemyRange, GhillieAnzugSchutzeEnemyDamage, GhillieAnzugSchutzeEnemyBulletSpeed);
+    GameObjectUtil::LinkComponent(enemy, attackBehaviour);
+
     return enemy;
 }
 
@@ -124,6 +136,9 @@ std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreateStabsarzt()
     types::sprite_vector diedSprites = AnimatorUtil::CreateSpriteVector(9, "resources/sprites/enemies/Died/enemy_died_", SortingLayer::Enemy);
 
     auto enemy = CreateBaseEnemy(1, 75, 0.8, idleSprites, walkingSprites, diedSprites);
+
+    auto attackBehaviour = std::make_shared<AttackBehaviour>("hero", BulletType::Normal, StabsarztEnemyFireRate, StabsarztEnemyRange, StabsarztEnemyDamage, StabsarztEnemyBulletSpeed);
+    GameObjectUtil::LinkComponent(enemy, attackBehaviour);
 
     return enemy;
 }
