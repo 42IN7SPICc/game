@@ -8,7 +8,6 @@
 #include "../Utils/RandomUtil.hpp"
 #include "../Scripts/Heroes/UserAttackBehaviour.hpp"
 #include "../Scripts/Heroes/UserMovementBehaviour.hpp"
-#include "../Controllers/SaveGameController.hpp"
 #include "../Factories/AudioSourcePrefabFactory.hpp"
 
 #include "Engine.hpp"
@@ -18,10 +17,6 @@ using namespace game;
 
 MainScene::MainScene() : MenuScene("Avans Wars: WW2", true)
 {
-    SaveGameController saveGameController{};
-    saveGameController.InitializeSaves();
-    saveGameController.Load("save1");
-
     LevelSelectionController levelSelectionController{};
     levelSelectionController.InitializeLevels();
 
@@ -51,8 +46,7 @@ MainScene::MainScene() : MenuScene("Avans Wars: WW2", true)
 
     auto backButton = ButtonPrefabFactory::CreateOutlineButton("Back Button", "button_back", "BACK");
     backButton->Transform().position = {225, 675};
-    backButton->OnClick([&saveGameController]() {
-        saveGameController.Save();
+    backButton->OnClick([]() {
         Engine::Instance().PopScene();
     });
 
