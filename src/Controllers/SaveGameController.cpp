@@ -46,5 +46,5 @@ void SaveGameController::Load(const std::string& saveGameName)
 
 void SaveGameController::Save()
 {
-    SaveGameManager::Save(PlayerData::Instance());
+    SaveGameManager::Save();
 }
