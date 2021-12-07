@@ -4,6 +4,7 @@
 #include "../Enums/Layer.hpp"
 #include "../Enums/SortingLayer.hpp"
 #include "../Scripts/Common/AttackBehaviour.hpp"
+#include "../Scripts/Enemies/EnemyMedicBehaviour.hpp"
 #include "../Scripts/Enemies/EnemyMovementBehaviour.hpp"
 #include "../Scripts/Enemies/EnemyTroopTruckBehaviour.hpp"
 #include "../Utils/GameObjectUtil.hpp"
@@ -137,6 +138,8 @@ std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreateStabsarzt()
     types::sprite_vector diedSprites = AnimatorUtil::CreateSpriteVector(9, "resources/sprites/enemies/Died/enemy_died_", SortingLayer::Enemy);
 
     auto enemy = CreateBaseEnemy(1, 75, 1, idleSprites, walkingSprites, diedSprites);
+
+    GameObjectUtil::LinkComponent(enemy, std::make_shared<EnemyMedicBehaviour>(StabsarztHealPercentage, StabsarztHealRange, StabsarztHealCooldown));
 
     return enemy;
 }

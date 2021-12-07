@@ -78,6 +78,9 @@ const int GhillieAnzugSchutzeEnemyBulletSpeed = 25; // The bullet velocity of th
 const int GhillieAnzugSchutzeEnemyHealth = 100; // The bullet velocity of the GhillieAnzugSchutze enemy
 
 //Enemy Stabsarzt
+const int StabsarztHealCooldown = 10; // The time between healing actions of the Stabsarzt enemy
+const double StabsarztHealRange = 100; // The maximum distance between the healer and other enemies to heal.
+const int StabsarztHealPercentage = 10; // The percentage to heal other enemies.
 
 //Tower Shotgun
 const double ShotgunTowerFireRate = 5; // The shooting interval of the shotgun tower
