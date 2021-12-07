@@ -8,7 +8,7 @@
 #include "../Enums/Layer.hpp"
 #include "../Enums/SortingLayer.hpp"
 #include "../Scripts/Heroes/HealAbilityBehaviour.hpp"
-#include "../Scripts/Heroes/InvisibiliyAbilityBehaviour.hpp"
+#include "../Scripts/Heroes/InvisibilityAbilityBehaviour.hpp"
 #include "../Scripts/Heroes/AirstrikeAbilityBehaviour.hpp"
 #include "../Scripts/Heroes/IncreaseTowerRangeAbilityBehaviour.hpp"
 #include "../Scripts/Heroes/IncreaseTowerFireRateAbilityBehaviour.hpp"

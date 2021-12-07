@@ -65,6 +65,7 @@ spic::Color FranklinDRooseveltColor() {
 //Winston Churchill
 const int WinstonChurchillDamage = 2; // The damage Winston Churchill does
 const int WinstonChurchillDefense = 5; // The defense Winston Churchill has
+const int WinstonChurchillAirstrikeAbilityCooldown = 5; // The defense Winston Churchill has
 template <typename T>
 spic::Color WinstonChurchillColor() {
     return T::purple();
