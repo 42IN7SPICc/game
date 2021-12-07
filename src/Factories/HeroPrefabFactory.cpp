@@ -55,7 +55,7 @@ std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateHero(game::Hero
 
 std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateDesmondDoss()
 {
-    auto base_hero = CreateBaseHero(DesmondDossDamage, DesmondDossDefense);
+    auto base_hero = CreateBaseHero(DesmondDossDamage, DesmondDossDefense, DesmondDossColor<spic::Color>());
     auto ability = std::make_shared<game::HealAbilityBehaviour>();
     GameObjectUtil::LinkComponent(base_hero, ability);
 
@@ -64,43 +64,43 @@ std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateDesmondDoss()
 
 std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateBernardIJzerdraat()
 {
-    auto base_hero = CreateBaseHero(5, 3);
+    auto base_hero = CreateBaseHero(BernardIJzerdraatDamage, BernardIJzerdraatDefense, BernardIJzerdraatColor<spic::Color>());
 
     return base_hero;
 }
 
 std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateFranklinDRoosevelt()
 {
-    auto base_hero = CreateBaseHero(4, 2);
+    auto base_hero = CreateBaseHero(FranklinDRooseveltDamage, FranklinDRooseveltDefense, FranklinDRooseveltColor<spic::Color>());
 
     return base_hero;
 }
 
 std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateWinstonChurchill()
 {
-    auto base_hero = CreateBaseHero(2, 5);
+    auto base_hero = CreateBaseHero(WinstonChurchillDamage, WinstonChurchillDefense, WinstonChurchillColor<spic::Color>());
 
     return base_hero;
 }
 
 std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateJosephStalin()
 {
-    auto base_hero = CreateBaseHero(5, 5);
+    auto base_hero = CreateBaseHero(JosephStalinDamage, JosephStalinDefense, JosephStalinColor<spic::Color>());
 
     return base_hero;
 }
 
-std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateBaseHero(int attack, int defense)
+std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateBaseHero(int attack, int defense, spic::Color color)
 {
     auto baseHero = std::make_shared<spic::GameObject>("Hero", "hero", Layer::Game);
     baseHero->Transform().scale = HeroScale;
 
-    std::vector<std::shared_ptr<spic::Sprite>> idleSprites = AnimatorUtil::CreateSpriteVector(10, "resources/sprites/heroes/Idle/hero_idle_", SortingLayer::Hero);
-    std::vector<std::shared_ptr<spic::Sprite>> walkingSprites = AnimatorUtil::CreateSpriteVector(10, "resources/sprites/heroes/Walking/hero_walking_", SortingLayer::Hero);
-    std::vector<std::shared_ptr<spic::Sprite>> celebratingSprites = AnimatorUtil::CreateSpriteVector(11, "resources/sprites/heroes/Celebrating/hero_celebrating_", SortingLayer::Hero);
-    std::vector<std::shared_ptr<spic::Sprite>> diedSprites = AnimatorUtil::CreateSpriteVector(9, "resources/sprites/heroes/Died/hero_died_", SortingLayer::Hero);
+    std::vector<std::shared_ptr<spic::Sprite>> idleSprites = AnimatorUtil::CreateSpriteVector(10, "resources/sprites/heroes/Idle/hero_idle_", color, SortingLayer::Hero);
+    std::vector<std::shared_ptr<spic::Sprite>> walkingSprites = AnimatorUtil::CreateSpriteVector(10, "resources/sprites/heroes/Walking/hero_walking_", color, SortingLayer::Hero);
+    std::vector<std::shared_ptr<spic::Sprite>> celebratingSprites = AnimatorUtil::CreateSpriteVector(11, "resources/sprites/heroes/Celebrating/hero_celebrating_", color, SortingLayer::Hero);
+    std::vector<std::shared_ptr<spic::Sprite>> diedSprites = AnimatorUtil::CreateSpriteVector(9, "resources/sprites/heroes/Died/hero_died_", color, SortingLayer::Hero);
 
-    auto defaultSprite = std::make_shared<spic::Sprite>(idleSprites[0]->Texture(), false, false, SortingLayer::Hero, 0);
+    auto defaultSprite = std::make_shared<spic::Sprite>(idleSprites[0]->Texture(), color, false, false, SortingLayer::Hero, 0);
     GameObjectUtil::LinkComponent(baseHero, defaultSprite);
 
     auto idleAnimator = std::make_shared<spic::Animator>(static_cast<int>(idleSprites.size()), idleSprites);

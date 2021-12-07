@@ -8,11 +8,11 @@ namespace game
      */
     enum HeroName
     {
-        DesmondDoss,
-        BernardIJzerdraat,
-        FranklinDRoosevelt,
-        WinstonChurchill,
-        JosephStalin
+        DesmondDoss = 0,
+        BernardIJzerdraat = 1,
+        FranklinDRoosevelt = 2,
+        WinstonChurchill = 3,
+        JosephStalin = 4
     };
 }
 

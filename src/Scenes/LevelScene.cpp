@@ -12,6 +12,7 @@
 #include "../Utils/GameObjectUtil.hpp"
 #include "../Factories/WavePrefabFactory.hpp"
 #include "../Constants.hpp"
+#include "../Structs/PlayerData.hpp"
 
 using namespace spic;
 using namespace game;
@@ -20,7 +21,7 @@ LevelScene::LevelScene(LevelWithTiles& levelWithTiles)
 {
     auto background = BackgroundPrefabFactory::CreateBackground(BackgroundName::Menu);
 
-    auto hero = game::HeroPrefabFactory::CreateHero(DesmondDoss, true);
+    auto hero = game::HeroPrefabFactory::CreateHero(PlayerData::Instance().SelectedHero, true);
     hero->Active(false);
     auto heroHealth = hero->GetComponent<HealthBehaviour>();
     auto endTowerHealth = std::make_shared<game::HealthBehaviour>(nullptr, 10);
