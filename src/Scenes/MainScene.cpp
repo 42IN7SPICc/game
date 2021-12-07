@@ -88,6 +88,7 @@ MainScene::MainScene() : MenuScene("Avans Wars: WW2", true)
         if(heroIndex > 4) heroIndex = 0;
         if(heroIndex < 0) heroIndex = 4;
         currentHero = static_cast<HeroName>(heroIndex);
+        PlayerData::Instance().SelectedHero = currentHero;
         heroNameText->Content(HeroUtil::NameToString(currentHero));
         createHero(currentHero);
     };
