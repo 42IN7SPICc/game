@@ -73,7 +73,7 @@ std::shared_ptr<spic::Button> ButtonPrefabFactory::CreateCloseButton(const spic:
 
 std::shared_ptr<spic::Button> ButtonPrefabFactory::CreateSwitchHeroButton(const spic::Point& position, std::function<void()> callback)
 {
-    auto button = std::make_shared<spic::Button>("Close Button", "button_close", Layer::HUD, 48, 48);
+    auto button = std::make_shared<spic::Button>("Switch Button", "button_switch", Layer::HUD, 48, 48);
     button->Transform().position = position;
     button->OnClick(callback);
 
