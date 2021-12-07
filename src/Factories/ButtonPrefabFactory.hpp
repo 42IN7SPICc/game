@@ -40,6 +40,12 @@ namespace game
              */
             static std::shared_ptr<spic::Button> CreateCloseButton(const spic::Point& position = {49, 49});
 
+            /**
+             * @brief Create a button for the hero switching
+             * @param position The screen position for the button
+             * @param callback The onlick action for the button
+             * @return The button object
+             */
             static std::shared_ptr<spic::Button> CreateSwitchHeroButton(const spic::Point& position, std::function<void()> callback);
     };
 }
