@@ -2,7 +2,7 @@
 
 #include "CreditScene.hpp"
 #include "HelpScene.hpp"
-#include "LevelScene.hpp"
+#include "LevelSelectionScene.hpp"
 #include "../Factories/ButtonPrefabFactory.hpp"
 #include "../Factories/HeroPrefabFactory.hpp"
 #include "../Utils/RandomUtil.hpp"
@@ -16,16 +16,10 @@ using namespace game;
 
 MainScene::MainScene(const std::shared_ptr<spic::GameObject>& audio) : MenuScene("Avans Wars: WW2", true)
 {
-    LevelSelectionController levelSelectionController{};
-    levelSelectionController.InitializeLevels();
-
-    auto playButton = ButtonPrefabFactory::CreateOutlineButton("Play Button", "button_play", "PLAY");
+    auto playButton = ButtonPrefabFactory::CreateOutlineButton("Play Button", "button_play", "SPELEN");
     playButton->Transform().position = {225, 300};
-    playButton->OnClick([levelSelectionController]() {
-        auto level = levelSelectionController.GetLevelDto("welcome_to_the_war");
-        auto levelWithTiles = levelSelectionController.LoadLevel(level.File);
-
-        auto scene = std::make_shared<LevelScene>(levelWithTiles);
+    playButton->OnClick([]() {
+        auto scene = std::make_shared<LevelSelectionScene>();
         Engine::Instance().PushScene(scene);
     });
 
@@ -41,7 +35,7 @@ MainScene::MainScene(const std::shared_ptr<spic::GameObject>& audio) : MenuScene
         Engine::Instance().PushScene(std::make_shared<CreditScene>(audio));
     });
 
-    auto backButton = ButtonPrefabFactory::CreateOutlineButton("Back Button", "button_back", "BACK");
+    auto backButton = ButtonPrefabFactory::CreateOutlineButton("Back Button", "button_back", "TERUG");
     backButton->Transform().position = {225, 675};
     backButton->OnClick([]() {
         Engine::Instance().PopScene();

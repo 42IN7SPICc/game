@@ -20,13 +20,13 @@ game::LoadingScene::LoadingScene() : MenuScene("", false)
     auto subtitleText = std::make_shared<spic::Text>("Game Title Text", "text_title_game", game::Layer::HUD, 1166, 100, "WW2", game::Font::Title, 116, spic::Alignment::center, spic::Color::white());
     subtitleText->Transform().position = {683, 274};
 
-    auto playButton = game::ButtonPrefabFactory::CreateOutlineButton("Play Button", "button_play", "PLAY");
+    auto playButton = game::ButtonPrefabFactory::CreateOutlineButton("Play Button", "button_play", "SPELEN");
     playButton->Transform().position = {683, 425};
     playButton->OnClick([mainMenuAudioSource]() {
         spic::Engine::Instance().PushScene(std::make_shared<SaveSelectionScene>(mainMenuAudioSource));
     });
 
-    auto exitButton = ButtonPrefabFactory::CreateOutlineButton("Exit Button", "button_exit", "EXIT");
+    auto exitButton = ButtonPrefabFactory::CreateOutlineButton("Exit Button", "button_exit", "SLUITEN");
     exitButton->Transform().position = {683, 550};
     exitButton->OnClick([]() {
         spic::Engine::Instance().Shutdown();

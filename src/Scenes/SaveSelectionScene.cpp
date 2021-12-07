@@ -8,7 +8,7 @@
 
 using namespace game;
 
-SaveSelectionScene::SaveSelectionScene(const std::shared_ptr<spic::GameObject>& audio) : _mainMenuAudio(audio), MenuScene("Select Save", true, BackgroundName::Menu)
+SaveSelectionScene::SaveSelectionScene(const std::shared_ptr<spic::GameObject>& audio) : _mainMenuAudio(audio), MenuScene("Selecteer spelbestand", true, BackgroundName::Menu)
 {
     auto buttonSave1 = ButtonPrefabFactory::CreateSquareOutlineButton("Button Save 1", "button_save_1", "ALPHA");
     buttonSave1->Transform().position = {283, 469};
@@ -16,7 +16,7 @@ SaveSelectionScene::SaveSelectionScene(const std::shared_ptr<spic::GameObject>& 
         this->LoadSave("alpha");
     });
 
-    auto buttonSave2 = ButtonPrefabFactory::CreateSquareOutlineButton("Button Save 2", "button_save_2", "BETA");
+    auto buttonSave2 = ButtonPrefabFactory::CreateSquareOutlineButton("Button Save 2", "button_save_2", "BRAVO");
     buttonSave2->Transform().position = {683, 469};
     buttonSave2->OnClick([this]() {
         this->LoadSave("beta");
