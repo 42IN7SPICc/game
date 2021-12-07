@@ -8,6 +8,7 @@
 #include "../Enums/Layer.hpp"
 #include "../Enums/SortingLayer.hpp"
 #include "../Scripts/Heroes/HealAbilityBehaviour.hpp"
+#include "../Scripts/Heroes/InvisibiliyAbilityBehaviour.hpp"
 #include "../Scripts/Heroes/UserMovementBehaviour.hpp"
 #include "../Scripts/Heroes/UserAttackBehaviour.hpp"
 #include "../Utils/AnimatorUtil.hpp"
@@ -65,6 +66,8 @@ std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateDesmondDoss()
 std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateBernardIJzerdraat()
 {
     auto base_hero = CreateBaseHero(5, 3);
+    auto ability = std::make_shared<game::InvisibilityAbilityBehaviour>();
+    GameObjectUtil::LinkComponent(base_hero, ability);
 
     return base_hero;
 }
@@ -72,6 +75,8 @@ std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateBernardIJzerdra
 std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateFranklinDRoosevelt()
 {
     auto base_hero = CreateBaseHero(4, 2);
+    auto ability = std::make_shared<game::HealAbilityBehaviour>();
+    GameObjectUtil::LinkComponent(base_hero, ability);
 
     return base_hero;
 }
@@ -79,6 +84,8 @@ std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateFranklinDRoosev
 std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateWinstonChurchill()
 {
     auto base_hero = CreateBaseHero(2, 5);
+    auto ability = std::make_shared<game::HealAbilityBehaviour>();
+    GameObjectUtil::LinkComponent(base_hero, ability);
 
     return base_hero;
 }
@@ -86,6 +93,8 @@ std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateWinstonChurchil
 std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateJosephStalin()
 {
     auto base_hero = CreateBaseHero(5, 5);
+    auto ability = std::make_shared<game::HealAbilityBehaviour>();
+    GameObjectUtil::LinkComponent(base_hero, ability);
 
     return base_hero;
 }
