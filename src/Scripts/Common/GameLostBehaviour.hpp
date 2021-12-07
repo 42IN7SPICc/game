@@ -13,6 +13,8 @@ namespace game
     {
         private:
             bool _lost;
+            bool _toBeLost = false;
+            double _lostForTime = 0.0;
             game::LevelData& _levelData;
         public:
             /**
@@ -53,6 +55,8 @@ namespace game
              * @brief Triggers when the user has failed to win the level.
              */
             void OnLevelFailed();
+
+            bool IsLevelFailed();
     };
 }
 
