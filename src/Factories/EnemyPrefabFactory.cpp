@@ -5,6 +5,7 @@
 #include "../Enums/SortingLayer.hpp"
 #include "../Scripts/Common/AttackBehaviour.hpp"
 #include "../Scripts/Enemies/EnemyMovementBehaviour.hpp"
+#include "../Scripts/Enemies/EnemyTroopTruckBehaviour.hpp"
 #include "../Utils/GameObjectUtil.hpp"
 
 #include "../Constants.hpp"
@@ -147,6 +148,8 @@ std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreateRaupenschlepper()
     types::sprite_vector diedSprites = AnimatorUtil::CreateSpriteVector(8, "resources/sprites/truck/truck_moving_", SortingLayer::Enemy);
 
     auto enemy = CreateBaseEnemy(12, 150, 0.8, idleSprites, walkingSprites, diedSprites);
+
+    GameObjectUtil::LinkComponent(enemy, std::make_shared<EnemyTroopTruckBehaviour>(EnemyName::Schutze, 6));
 
     return enemy;
 }
