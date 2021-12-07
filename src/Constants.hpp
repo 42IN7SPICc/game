@@ -84,8 +84,9 @@ const double ShotgunTowerFireRate = 5; // The shooting interval of the shotgun t
 const int ShotgunTowerRange = 250; // The detection range of the hero for the shotgun tower
 const int ShotgunTowerDamage = 20; // The damage of a bullet for the shotgun tower
 const int ShotgunTowerBulletSpeed = 15; // The bullet velocity of the shotgun tower
-template <typename T>
-spic::Color ShotgunTowerColor() {
+template<typename T>
+spic::Color ShotgunTowerColor()
+{
     return T::red();
 }
 
@@ -94,8 +95,9 @@ const double FlamethrowerTowerFireRate = 0.1; // The shooting interval of the fl
 const int FlamethrowerTowerRange = 200; // The detection range of the hero for the flamethrower tower
 const int FlamethrowerTowerDamage = 1; // The damage of a bullet for the flamethrower tower
 const int FlamethrowerTowerBulletSpeed = 5; // The bullet velocity of the flamethrower tower
-template <typename T>
-spic::Color FlamethrowerTowerColor() {
+template<typename T>
+spic::Color FlamethrowerTowerColor()
+{
     return T::green();
 }
 
@@ -105,8 +107,9 @@ const int BomberTowerRange = 250; // The detection range of the hero for the bom
 const int BomberTowerDamage = 20; // The damage of a bullet for the bomber tower
 const int BomberTowerBulletSpeed = 10; // The bullet velocity of the bomber tower
 const int BomberTowerExplosionRange = TileSize * 2; // The range of an explosion
-template <typename T>
-spic::Color BomberTowerColor() {
+template<typename T>
+spic::Color BomberTowerColor()
+{
     return T::blue();
 }
 
@@ -115,8 +118,9 @@ const double SniperTowerFireRate = 8; // The shooting interval of the sniper tow
 const int SniperTowerRange = 500; // The detection range of the hero for the sniper tower
 const int SniperTowerDamage = 50; // The damage of a bullet for the sniper tower
 const int SniperTowerBulletSpeed = 35; // The bullet velocity of the sniper tower
-template <typename T>
-spic::Color SniperTowerColor() {
+template<typename T>
+spic::Color SniperTowerColor()
+{
     return T::yellow();
 }
 
