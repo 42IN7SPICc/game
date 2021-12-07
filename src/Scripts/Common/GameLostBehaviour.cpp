@@ -18,8 +18,8 @@ void game::GameLostBehaviour::OnUpdate()
 
     if (_levelData.MilitaryBaseHealth->Health() <= 0)
     {
-        if (!_toBeLost) {
-            _toBeLost = true;
+        if (!_dieing) {
+            _dieing = true;
 
             auto explosionAudioSource = game::AudioSourcePrefabFactory::CreateAudioSource(AudioClipName::Explosion, true, false, 1.0);
             GameObjectUtil::LinkComponent(GameObject().lock(), explosionAudioSource);
@@ -48,7 +48,7 @@ void game::GameLostBehaviour::OnTriggerStay2D(const spic::Collider& collider)
     spic::Debug::LogWarning("Not implemented");
 }
 
-game::GameLostBehaviour::GameLostBehaviour(game::LevelData& levelData) : _levelData(levelData), _lost(false)
+game::GameLostBehaviour::GameLostBehaviour(game::LevelData& levelData) : _levelData(levelData), _lost(false), _dieing(false), _lostForTime(0.0)
 {
 
 }
@@ -65,7 +65,7 @@ void game::GameLostBehaviour::OnLevelFailed()
     spic::Engine::Instance().PushScene(std::make_shared<game::GameOverScene>());
 }
 
-bool game::GameLostBehaviour::IsLevelFailed()
+bool game::GameLostBehaviour::IsLevelFailed() const
 {
-    return _toBeLost;
+    return _dieing;
 }

@@ -13,8 +13,8 @@ namespace game
     {
         private:
             bool _lost;
-            bool _toBeLost = false;
-            double _lostForTime = 0.0;
+            bool _dieing;
+            double _lostForTime;
             game::LevelData& _levelData;
         public:
             /**
@@ -56,7 +56,11 @@ namespace game
              */
             void OnLevelFailed();
 
-            bool IsLevelFailed();
+            /**
+             * @brief Get weither the level is failed or not
+             * @returns Weither the level is failed or not
+             */
+            bool IsLevelFailed() const;
     };
 }
 
