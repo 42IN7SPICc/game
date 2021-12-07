@@ -122,7 +122,7 @@ namespace game
              * @brief Add an enemy to the current wave.
              * @param enemy The enemy to add to the wave.
              */
-            void AddEnemyToWave(std::shared_ptr<spic::GameObject> enemy);
+            void AddEnemyToWave(const std::shared_ptr<spic::GameObject>& enemy);
         private:
             spic::Point _startPosition;
             double _timePassed;

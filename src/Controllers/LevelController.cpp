@@ -418,7 +418,7 @@ void LevelController::HandleClickTile(const game::MapNode& clickedTile)
     }
 }
 
-void LevelController::AddEnemyToWave(std::shared_ptr<spic::GameObject> enemy)
+void LevelController::AddEnemyToWave(const std::shared_ptr<spic::GameObject>& enemy)
 {
     _levelData.Waves.front().CurrentEnemies.push_back(enemy);
 }
