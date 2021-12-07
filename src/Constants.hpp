@@ -57,6 +57,8 @@ spic::Color BernardIJzerdraatColor() {
 //Franklin D Roosevelt
 const int FranklinDRooseveltDamage = 4; // The damage Franklin D Roosevelt does
 const int FranklinDRooseveltDefense = 2; // The defense Franklin D Roosevelt has
+const int FranklinDRooseveltAirstrikeAbilityCooldown = 20; // The defense Winston Churchill has
+const int FranklinDRooseveltAirstrikeAbilityDamage = 40; // The defense Winston Churchill has
 template <typename T>
 spic::Color FranklinDRooseveltColor() {
     return T::cyan();
@@ -65,7 +67,6 @@ spic::Color FranklinDRooseveltColor() {
 //Winston Churchill
 const int WinstonChurchillDamage = 2; // The damage Winston Churchill does
 const int WinstonChurchillDefense = 5; // The defense Winston Churchill has
-const int WinstonChurchillAirstrikeAbilityCooldown = 5; // The defense Winston Churchill has
 template <typename T>
 spic::Color WinstonChurchillColor() {
     return T::purple();
