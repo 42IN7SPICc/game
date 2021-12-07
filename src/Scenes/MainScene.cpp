@@ -63,7 +63,10 @@ MainScene::MainScene() : MenuScene("Avans Wars: WW2", false)
     });
 
     auto currentHero = PlayerData::Instance().SelectedHero;
-    currentHero = HeroName::DesmondDoss;
+    if(currentHero < DesmondDoss || currentHero > JosephStalin) { //Check if value of SelectedHero is valid
+        currentHero = DesmondDoss;
+    }
+
     auto heroNameText = std::make_shared<spic::Text>("hero-name-text","hero-name-text",SortingLayer::HudText, HeroWidth + 300, 100);
     heroNameText->Content(HeroUtil::NameToString(currentHero));
     heroNameText->TextAlignment(Alignment::center);
@@ -73,21 +76,19 @@ MainScene::MainScene() : MenuScene("Avans Wars: WW2", false)
     heroNameText->Transform().position.x = 1000;
     heroNameText->Transform().position.y = 430 - (HeroHeight / 2);
 
-    auto leftArrowButton = ButtonPrefabFactory::CreateSwitchHeroButton({850, 460}, [&currentHero, &heroNameText]() {
-        auto currentHeroIndex = static_cast<int>(currentHero);
-        if(currentHeroIndex >= 0) {
-            currentHero = static_cast<HeroName>(currentHeroIndex - 1);
-            heroNameText->Content(HeroUtil::NameToString(currentHero));
-        }
+    auto heroSwitcher = [currentHero, heroNameText](int amount) mutable {
+        int heroIndex = static_cast<int>(currentHero) + amount;
+        if(heroIndex > 4) heroIndex = 0;
+        if(heroIndex < 0) heroIndex = 4;
+        currentHero = static_cast<HeroName>(heroIndex);
+        heroNameText->Content(HeroUtil::NameToString(currentHero));
+    };
+    auto leftArrowButton = ButtonPrefabFactory::CreateSwitchHeroButton({850, 460}, [heroSwitcher]() mutable {
+        heroSwitcher(-1);
     });
 
-    auto rightArrowButton = ButtonPrefabFactory::CreateSwitchHeroButton({1150, 460}, [&currentHero, &heroNameText]() {
-        auto currentHeroIndex = static_cast<int>(currentHero);
-        if(currentHeroIndex <= 4) {
-            currentHero = static_cast<HeroName>(currentHeroIndex + 1);
-            spic::Debug::Log(std::to_string(currentHeroIndex));
-            heroNameText->Content(HeroUtil::NameToString(currentHero));
-        }
+    auto rightArrowButton = ButtonPrefabFactory::CreateSwitchHeroButton({1150, 460}, [heroSwitcher]() mutable {
+        heroSwitcher(1);
     });
     rightArrowButton->Transform().rotation = 180;
 
