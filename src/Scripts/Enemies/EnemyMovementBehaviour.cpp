@@ -1,9 +1,10 @@
 #include "EnemyMovementBehaviour.hpp"
 
+#include "../../Constants.hpp"
 #include "../../Controllers/LevelController.hpp"
 #include "../../Utils/StringUtil.hpp"
 #include "../../Utils/PointUtil.hpp"
-#include "../../Constants.hpp"
+#include "../../Utils/GameObjectUtil.hpp"
 
 #include "GameObject.hpp"
 
@@ -11,7 +12,9 @@
 
 using namespace game;
 
-EnemyMovementBehaviour::EnemyMovementBehaviour(std::shared_ptr<spic::Animator> walkingAnimator, float velocity) : _walkingAnimator(walkingAnimator), _velocity(velocity)
+EnemyMovementBehaviour::EnemyMovementBehaviour(std::shared_ptr<spic::Animator> walkingAnimator, float velocity) : _walkingAnimator(walkingAnimator),
+                                                                                                                  _velocity(velocity),
+                                                                                                                  _boostSpeedMultiplier(1)
 {
 }
 
@@ -47,6 +50,17 @@ void EnemyMovementBehaviour::OnStart()
         _graph = levelController->GetGraph();
         _path = levelController->GetPath();
     }
+
+    _boostCoolDownBehaviour = std::make_shared<CoolDownBehaviour>(0);
+    GameObjectUtil::LinkComponent(parent, _boostCoolDownBehaviour);
+}
+
+void EnemyMovementBehaviour::Boost(int time, double multiplier)
+{
+    _boostCoolDownBehaviour->MinCoolDown(time);
+    _boostCoolDownBehaviour->CooledDown(false);
+
+    _boostSpeedMultiplier = multiplier;
 }
 
 void EnemyMovementBehaviour::OnUpdate()
@@ -79,6 +93,11 @@ void EnemyMovementBehaviour::OnUpdate()
     }
 
     speedMultiplier *= _velocity;
+
+    if (!_boostCoolDownBehaviour->CooledDown())
+    {
+        speedMultiplier *= _boostSpeedMultiplier;
+    }
 
     auto toLocation = _graph[_path.front()];
 

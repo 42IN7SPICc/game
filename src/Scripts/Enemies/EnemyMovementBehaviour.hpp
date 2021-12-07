@@ -3,6 +3,7 @@
 
 #include "../../Structs/MapNode.hpp"
 #include "../Common/HealthBehaviour.hpp"
+#include "../Common/CoolDownBehaviour.hpp"
 
 #include "Animator.hpp"
 #include "BehaviourScript.hpp"
@@ -22,12 +23,14 @@ namespace game
     {
         private:
             float _velocity;
+            double _boostSpeedMultiplier;
             std::map<std::string, game::MapNode> _graph;
             std::queue<std::string> _path;
             std::shared_ptr<spic::Animator> _walkingAnimator;
             std::shared_ptr<HealthBehaviour> _healthBehaviour;
             std::shared_ptr<spic::RigidBody> _rigidBody;
             std::shared_ptr<spic::Sprite> _sprite;
+            std::shared_ptr<CoolDownBehaviour> _boostCoolDownBehaviour;
 
         public:
             /**
@@ -36,6 +39,13 @@ namespace game
              * @param velocity The velocity the enemy moves at.
              */
             EnemyMovementBehaviour(std::shared_ptr<spic::Animator> walkingAnimator, float velocity);
+
+            /**
+             * @brief Boost the movement speed for a given time.
+             * @param time The time to boost (in seconds).
+             * @param multiplier The speed multiplier.
+             */
+            void Boost(int time, double multiplier);
 
             /**
              * @brief Triggers when the scripts starts for the first time.
