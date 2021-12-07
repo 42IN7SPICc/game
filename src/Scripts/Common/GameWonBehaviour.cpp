@@ -56,7 +56,7 @@ void GameWonBehaviour::OnLevelCompleted()
 
     spic::Debug::Log("Level completed!");
     PlayerData::Instance().Balance += _balanceAward;
-    SaveGameManager::Save(PlayerData::Instance());
+    SaveGameManager::Save();
 
     spic::Engine::Instance().PopScene();
     spic::Engine::Instance().PushScene(std::make_shared<game::VictoryScene>());

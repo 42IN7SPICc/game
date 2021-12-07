@@ -8,7 +8,6 @@
 #include "../Utils/RandomUtil.hpp"
 #include "../Scripts/Heroes/UserAttackBehaviour.hpp"
 #include "../Scripts/Heroes/UserMovementBehaviour.hpp"
-#include "../Controllers/SaveGameController.hpp"
 #include "../Factories/AudioSourcePrefabFactory.hpp"
 
 #include "Engine.hpp"
@@ -16,12 +15,8 @@
 using namespace spic;
 using namespace game;
 
-MainScene::MainScene() : MenuScene("Avans Wars: WW2", false)
+MainScene::MainScene() : MenuScene("Avans Wars: WW2", true)
 {
-    SaveGameController saveGameController{};
-    saveGameController.InitializeSaves();
-    saveGameController.Load("save1");
-
     LevelSelectionController levelSelectionController{};
     levelSelectionController.InitializeLevels();
 
@@ -49,11 +44,10 @@ MainScene::MainScene() : MenuScene("Avans Wars: WW2", false)
         Engine::Instance().PushScene(std::make_shared<CreditScene>());
     });
 
-    auto exitButton = ButtonPrefabFactory::CreateOutlineButton("Exit Button", "button_exit", "EXIT");
-    exitButton->Transform().position = {225, 675};
-    exitButton->OnClick([&saveGameController]() {
-        saveGameController.Save();
-        Engine::Instance().Shutdown();
+    auto backButton = ButtonPrefabFactory::CreateOutlineButton("Back Button", "button_back", "BACK");
+    backButton->Transform().position = {225, 675};
+    backButton->OnClick([]() {
+        Engine::Instance().PopScene();
     });
 
     auto hero = HeroPrefabFactory::CreateHero(static_cast<HeroName>(RandomUtil::Next(HeroName::DesmondDoss, HeroName::JosephStalin)));
@@ -66,6 +60,6 @@ MainScene::MainScene() : MenuScene("Avans Wars: WW2", false)
     Contents().push_back(playButton);
     Contents().push_back(creditsButton);
     Contents().push_back(helpButton);
-    Contents().push_back(exitButton);
+    Contents().push_back(backButton);
     Contents().push_back(hero);
 }
