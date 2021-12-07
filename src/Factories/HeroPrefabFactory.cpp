@@ -11,6 +11,7 @@
 #include "../Scripts/Heroes/InvisibiliyAbilityBehaviour.hpp"
 #include "../Scripts/Heroes/AirstrikeAbilityBehaviour.hpp"
 #include "../Scripts/Heroes/IncreaseTowerRangeAbilityBehaviour.hpp"
+#include "../Scripts/Heroes/IncreaseTowerFireRateAbilityBehaviour.hpp"
 #include "../Scripts/Heroes/UserMovementBehaviour.hpp"
 #include "../Scripts/Heroes/UserAttackBehaviour.hpp"
 #include "../Utils/AnimatorUtil.hpp"
@@ -88,7 +89,7 @@ std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateFranklinDRoosev
 std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateWinstonChurchill()
 {
     auto base_hero = CreateBaseHero(WinstonChurchillDamage, WinstonChurchillDefense, WinstonChurchillColor<spic::Color>());
-    auto ability = std::make_shared<game::HealAbilityBehaviour>();
+    auto ability = std::make_shared<game::IncreaseTowerFireRateAbilityBehaviour>();
     GameObjectUtil::LinkComponent(base_hero, ability);
 
     return base_hero;
