@@ -4,7 +4,6 @@
 #include "Engine.hpp"
 #include "Animator.hpp"
 #include "GameObject.hpp"
-#include "Debug.hpp"
 #include "Time.hpp"
 #include "../../Enums/SortingLayer.hpp"
 #include "../../Enums/Layer.hpp"
