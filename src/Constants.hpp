@@ -116,6 +116,8 @@ const int GhillieAnzugSchutzeEnemyRange = 200; // The detection range of the her
 const int GhillieAnzugSchutzeEnemyDamage = 2; // The damage of a bullet for the GhillieAnzugSchutze enemy
 const int GhillieAnzugSchutzeEnemyBulletSpeed = 25; // The bullet velocity of the GhillieAnzugSchutze enemy
 const int GhillieAnzugSchutzeEnemyHealth = 100; // The health of the GhillieAnzugSchutze enemy
+const int GhillieAnzugSchutzeEnemyInvisibleEffectTime = 3; // The time of the invisible effect of the GhillieAnzugSchutze enemy
+const int GhillieAnzugSchutzeEnemyInvisibleCoolDownTime = 5; // The cool down time of the invisible effect of the GhillieAnzugSchutze enemy
 
 //Enemy Stabsarzt
 const int StabsarztEnemyHealth = 100; // The health of the Stabsarzt enemy

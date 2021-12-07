@@ -5,6 +5,7 @@
 #include "../Enums/Layer.hpp"
 #include "../Enums/SortingLayer.hpp"
 #include "../Scripts/Common/AttackBehaviour.hpp"
+#include "../Scripts/Enemies/EnemyInvisibleBehaviour.hpp"
 #include "../Scripts/Enemies/EnemyMedicBehaviour.hpp"
 #include "../Scripts/Enemies/EnemyMovementBehaviour.hpp"
 #include "../Scripts/Enemies/EnemySpeedBoostBehaviour.hpp"
@@ -130,6 +131,8 @@ std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreateGhillieAnzugSchutze(
 
     auto attackBehaviour = std::make_shared<AttackBehaviour>("hero", BulletType::Normal, GhillieAnzugSchutzeEnemyFireRate, GhillieAnzugSchutzeEnemyRange, GhillieAnzugSchutzeEnemyDamage, GhillieAnzugSchutzeEnemyBulletSpeed);
     GameObjectUtil::LinkComponent(enemy, attackBehaviour);
+
+    GameObjectUtil::LinkComponent(enemy, std::make_shared<EnemyInvisibleBehaviour>(GhillieAnzugSchutzeEnemyInvisibleEffectTime, GhillieAnzugSchutzeEnemyInvisibleCoolDownTime));
 
     return enemy;
 }
