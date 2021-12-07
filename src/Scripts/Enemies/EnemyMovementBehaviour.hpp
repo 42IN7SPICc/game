@@ -74,6 +74,18 @@ namespace game
              * @param collider The collider is colliding.
              */
             void OnTriggerStay2D(const spic::Collider& collider) override;
+
+            /**
+             * @brief The path for the enemy to walk.
+             * @return The current value.
+             */
+            [[nodiscard]] const std::queue<std::string>& Path() const;
+
+            /**
+             * @brief The path for the enemy to walk.
+             * @param path The desired value.
+             */
+            void Path(const std::queue<std::string>& path);
     };
 }
 

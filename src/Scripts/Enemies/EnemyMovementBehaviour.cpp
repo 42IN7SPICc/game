@@ -47,8 +47,8 @@ void EnemyMovementBehaviour::OnStart()
     if (gameObject)
     {
         auto levelController = gameObject->GetComponent<game::LevelController>();
-        _graph = levelController->GetGraph();
-        _path = levelController->GetPath();
+        if (_graph.empty()) _graph = levelController->GetGraph();
+        if (_path.empty()) _path = levelController->GetPath();
     }
 
     _boostCoolDownBehaviour = std::make_shared<CoolDownBehaviour>(0);
@@ -126,4 +126,14 @@ void EnemyMovementBehaviour::OnTriggerStay2D(const spic::Collider& collider)
 
 void EnemyMovementBehaviour::OnTriggerExit2D(const spic::Collider& collider)
 {
+}
+
+const std::queue<std::string>& EnemyMovementBehaviour::Path() const
+{
+    return _path;
+}
+
+void EnemyMovementBehaviour::Path(const std::queue<std::string>& path)
+{
+    _path = path;
 }
