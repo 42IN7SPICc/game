@@ -123,6 +123,9 @@ const int StabsarztHealCooldown = 10; // The time between healing actions of the
 const double StabsarztHealRange = 100; // The maximum distance between the healer and other enemies to heal.
 const int StabsarztHealPercentage = 10; // The percentage to heal other enemies.
 
+//Enemy Raupenschlepper
+const int RaupenschlepperEnemyHealth = 100; // The health of the Raupenschlepper enemy
+
 //Tower Shotgun
 const double ShotgunTowerFireRate = 5; // The shooting interval of the shotgun tower
 const int ShotgunTowerRange = 250; // The detection range of the hero for the shotgun tower
