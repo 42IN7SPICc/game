@@ -183,7 +183,7 @@ std::shared_ptr<spic::GameObject> LevelController::CreateHUD()
     return _rightHud;
 }
 
-std::shared_ptr<spic::GameObject> LevelController::BuildLevel(const std::shared_ptr<game::HealthBehaviour>& endTowerHealthBehaviour)
+std::shared_ptr<spic::GameObject> LevelController::BuildLevel(const std::shared_ptr<game::HealthBehaviour>& endTowerHealthBehaviour, const std::shared_ptr<spic::Animator>& animator)
 {
     auto tileMap = std::make_shared<spic::GameObject>("TileGrid", "tilemap", Layer::Game);
     for (auto levelTile: _level.Tiles)
@@ -202,6 +202,7 @@ std::shared_ptr<spic::GameObject> LevelController::BuildLevel(const std::shared_
 
             GameObjectUtil::LinkComponent(tile, endTileCollider);
             GameObjectUtil::LinkComponent(tile, endTowerHealthBehaviour);
+            GameObjectUtil::LinkComponent(tile, animator);
             GameObjectUtil::LinkComponent(tile, tileRigidBody);
         }
         else if (levelTile.TileType() == TileType::Start)

@@ -68,7 +68,7 @@ void game::HealthBehaviour::OnTriggerEnter2D(const spic::Collider& collider)
     if(gameObject->Tag() == "end_tile") {
         auto enemy = collider.GameObject().lock();
         if(enemy->Tag() == "enemy") {
-            _health--;
+            Damage(1);
             spic::GameObject::Destroy(enemy);
         }
     }

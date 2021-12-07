@@ -10,8 +10,10 @@
 #include "../Scripts/Common/CheatManager.hpp"
 #include "../Scripts/Menu/PauseSceneBehaviour.hpp"
 #include "../Utils/GameObjectUtil.hpp"
+#include "../Utils/AnimatorUtil.hpp"
 #include "../Factories/WavePrefabFactory.hpp"
 #include "../Constants.hpp"
+
 
 using namespace spic;
 using namespace game;
@@ -23,7 +25,9 @@ LevelScene::LevelScene(LevelWithTiles& levelWithTiles)
     auto hero = game::HeroPrefabFactory::CreateHero(DesmondDoss, true);
     hero->Active(false);
     auto heroHealth = hero->GetComponent<HealthBehaviour>();
-    auto endTowerHealth = std::make_shared<game::HealthBehaviour>(nullptr, 10);
+
+    auto animation = std::make_shared<spic::Animator>(8, AnimatorUtil::CreateSpriteVector(10, "resources/sprites/tiles/end_exploding/end_exploding_"));
+    auto endTowerHealth = std::make_shared<game::HealthBehaviour>(animation, 10);
 
     auto levelAudioSource = game::AudioSourcePrefabFactory::CreateAudioObject(AudioClipName::Game, true, true, 0.2);
     auto mainGameObject = std::make_shared<spic::GameObject>("LevelController", "default", Layer::Background);
@@ -33,7 +37,7 @@ LevelScene::LevelScene(LevelWithTiles& levelWithTiles)
     GameObjectUtil::LinkComponent(mainGameObject, cheatManager);
     GameObjectUtil::LinkComponent(mainGameObject, std::make_shared<PauseSceneBehaviour>());
 
-    auto tilesMapObject = levelController->BuildLevel(endTowerHealth);
+    auto tilesMapObject = levelController->BuildLevel(endTowerHealth, animation);
     tilesMapObject->Transform().position.x = MapX;
     tilesMapObject->Transform().position.y = MapY;
     tilesMapObject->Transform().scale = TileMapScale;
