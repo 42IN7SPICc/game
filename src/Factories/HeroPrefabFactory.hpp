@@ -1,6 +1,7 @@
 #ifndef SPIC_GAME_HEROPREFABFACTORY_HPP
 #define SPIC_GAME_HEROPREFABFACTORY_HPP
 
+#include <Color.hpp>
 #include "GameObject.hpp"
 #include "../Enums/HeroName.hpp"
 
@@ -46,9 +47,10 @@ namespace game
              * @brief Create a new template hero with given settings.
              * @param attack The amount of damage the hero does on impact.
              * @param defense The amount of health the hero has.
+             * @param color The color change for the hero sprite.
              * @return The hero object.
              */
-            static std::shared_ptr<spic::GameObject> CreateBaseHero(int attack, int defense);
+            static std::shared_ptr<spic::GameObject> CreateBaseHero(int attack, int defense, spic::Color color);
 
         public:
             /**

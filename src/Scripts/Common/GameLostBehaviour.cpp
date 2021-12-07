@@ -45,5 +45,6 @@ void game::GameLostBehaviour::OnLevelFailed()
     spic::Debug::Log("Level completed!");
 
     spic::Engine::Instance().PopScene();
+    spic::Engine::Instance().PopScene();
     spic::Engine::Instance().PushScene(std::make_shared<game::GameOverScene>());
 }
