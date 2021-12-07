@@ -1,6 +1,6 @@
 #include "Api.hpp"
 
-#include "Scenes/MainScene.hpp"
+#include "Scenes/LoadingScene.hpp"
 
 #include <exception>
 
@@ -43,7 +43,7 @@ int main(int argc, char* args[])
 #endif
         engine.Init(config);
 
-        auto scene = std::make_shared<MainScene>();
+        auto scene = std::make_shared<LoadingScene>();
         engine.PushScene(scene);
 
         engine.Start();
