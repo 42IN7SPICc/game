@@ -50,7 +50,7 @@ void game::EnemySpeedBoostBehaviour::OnUpdate()
 
         for (const auto& movementBehaviour: movementBehaviours)
         {
-            movementBehaviour->Boost(_speedBoost, _boostTime);
+            movementBehaviour->Boost(_boostTime, _speedBoost);
         }
 
         _coolDownBehaviour->CooledDown(false);
