@@ -18,8 +18,8 @@ MainScene::MainScene(const std::shared_ptr<spic::GameObject>& audio) : MenuScene
 {
     auto playButton = ButtonPrefabFactory::CreateOutlineButton("Play Button", "button_play", "SPELEN");
     playButton->Transform().position = {225, 300};
-    playButton->OnClick([]() {
-        auto scene = std::make_shared<LevelSelectionScene>();
+    playButton->OnClick([audio]() {
+        auto scene = std::make_shared<LevelSelectionScene>(audio);
         Engine::Instance().PushScene(scene);
     });
 
