@@ -25,6 +25,15 @@ namespace game
             static std::shared_ptr<spic::Button> CreateOutlineButton(const std::string& name, const std::string& tag, const std::string& text, bool invert_color = false);
 
             /**
+             * @brief Create a button with an outline that the user can click on.
+             * @param name The name of the button
+             * @param tag The tag of the button
+             * @param text The text inside the button
+             * @return The button object.
+             */
+            static std::shared_ptr<spic::Button> CreateSquareOutlineButton(const std::string& name, const std::string& tag, const std::string& text);
+
+            /**
              * @brief Create a button with a script that closes the current scene.
              * @param position The position of the button.
              * @return The button object.

@@ -51,7 +51,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: ${{ matrix.name }}
-          path: builds/ninja-multi-vcpkg/Debug/
+          path: builds/ninja-multi-vcpkg/Release/
 
   publish:
     name: 'Publish'
