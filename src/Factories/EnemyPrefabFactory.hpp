@@ -71,13 +71,13 @@ namespace game
              * @brief Create a enemy template with given settings.
              * @param attack The amount of damage the enemy does in impact.
              * @param health The health of the enemy.
-             * @param speed The default movement speed of the enemy.
+             * @param speedMultiplier The speed multiplier for the enemy.
              * @param idleSprites A list of sprites when the enemy is idle.
              * @param walkingSprites A list of sprites when the enemy is walking.
              * @param diedSprites A list of sprites when the enemy is dying.
              * @return The enemy object.
              */
-            static std::shared_ptr<spic::GameObject> CreateBaseEnemy(int attack, int health, double speed, const types::sprite_vector& idleSprites, const types::sprite_vector& walkingSprites, const types::sprite_vector& diedSprites);
+            static std::shared_ptr<spic::GameObject> CreateBaseEnemy(int attack, int health, double speedMultiplier, const types::sprite_vector& idleSprites, const types::sprite_vector& walkingSprites, const types::sprite_vector& diedSprites);
     };
 }
 

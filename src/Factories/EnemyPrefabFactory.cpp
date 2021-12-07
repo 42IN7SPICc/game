@@ -135,7 +135,7 @@ std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreateStabsarzt()
     types::sprite_vector walkingSprites = AnimatorUtil::CreateSpriteVector(10, "resources/sprites/enemies/Walking/enemy_walking_", SortingLayer::Enemy);
     types::sprite_vector diedSprites = AnimatorUtil::CreateSpriteVector(9, "resources/sprites/enemies/Died/enemy_died_", SortingLayer::Enemy);
 
-    auto enemy = CreateBaseEnemy(1, 75, 0.8, idleSprites, walkingSprites, diedSprites);
+    auto enemy = CreateBaseEnemy(1, 75, 1, idleSprites, walkingSprites, diedSprites);
 
     return enemy;
 }
@@ -146,12 +146,12 @@ std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreateRaupenschlepper()
     types::sprite_vector walkingSprites = AnimatorUtil::CreateSpriteVector(8, "resources/sprites/truck/truck_moving_", SortingLayer::Enemy);
     types::sprite_vector diedSprites = AnimatorUtil::CreateSpriteVector(8, "resources/sprites/truck/truck_moving_", SortingLayer::Enemy);
 
-    auto enemy = CreateBaseEnemy(12, 150, idleSprites, walkingSprites, diedSprites);
+    auto enemy = CreateBaseEnemy(12, 150, 0.8, idleSprites, walkingSprites, diedSprites);
 
     return enemy;
 }
 
-std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreateBaseEnemy(int attack, int health, double speed, const types::sprite_vector& idleSprites, const types::sprite_vector& walkingSprites, const types::sprite_vector& diedSprites)
+std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreateBaseEnemy(int attack, int health, double speedMultiplier, const types::sprite_vector& idleSprites, const types::sprite_vector& walkingSprites, const types::sprite_vector& diedSprites)
 {
     auto baseEnemy = std::make_shared<spic::GameObject>("Enemy", "enemy", Layer::Game);
     baseEnemy->Transform().scale = EnemyScale;
@@ -171,7 +171,7 @@ std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreateBaseEnemy(int attack
     auto healthBehaviour = std::make_shared<HealthBehaviour>(diedAnimator, health, EnemyDeSpawnTime);
     GameObjectUtil::LinkComponent(baseEnemy, healthBehaviour);
 
-    auto movementBehaviour = std::make_shared<EnemyMovementBehaviour>(walkingAnimator, EnemyVelocity);
+    auto movementBehaviour = std::make_shared<EnemyMovementBehaviour>(walkingAnimator, EnemyVelocity * speedMultiplier);
     GameObjectUtil::LinkComponent(baseEnemy, movementBehaviour);
 
     auto enemyCollider = std::make_shared<spic::CircleCollider>(0.000001);
