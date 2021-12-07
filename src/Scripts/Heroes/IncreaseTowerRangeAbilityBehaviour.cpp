@@ -15,7 +15,8 @@ game::IncreaseTowerRangeAbilityBehaviour::IncreaseTowerRangeAbilityBehaviour() :
 
 void game::IncreaseTowerRangeAbilityBehaviour::OnStart()
 {
-    //
+    auto parent = GameObject().lock();
+    game::GameObjectUtil::LinkComponent(parent, _coolDownBehaviour);
 }
 
 void game::IncreaseTowerRangeAbilityBehaviour::OnUpdate()
@@ -35,20 +36,25 @@ void game::IncreaseTowerRangeAbilityBehaviour::OnUpdate()
         return;
     }
 
-    if (spic::Input::GetKeyDown(spic::Input::KeyCode::Q))
+    if (spic::Input::GetKey(spic::Input::KeyCode::Q))
     {
-        _abilityActivated = true;
-        auto scene = spic::Engine::Instance().PeekScene();
-        auto towerRangeObject = std::make_shared<spic::GameObject>("towerRangeObject", "towerRangeObject", Layer::Game);
-        auto towerRangeCooldown = std::make_shared<CoolDownBehaviour>(10);
-        GameObjectUtil::LinkComponent(towerRangeObject, towerRangeCooldown);
+        if (_coolDownBehaviour->CooledDown())
+        {
+            _abilityActivated = true;
+            auto scene = spic::Engine::Instance().PeekScene();
+            auto towerRangeObject = std::make_shared<spic::GameObject>("towerRangeObject", "towerRangeObject", Layer::Game);
+            auto towerRangeCooldown = std::make_shared<CoolDownBehaviour>(10);
+            GameObjectUtil::LinkComponent(towerRangeObject, towerRangeCooldown);
 
-        auto towers = spic::GameObject::FindGameObjectsWithTag("tower");
-        for(auto& tower : towers) {
-            auto attackBehaviour = tower->GetComponent<AttackBehaviour>();
-            attackBehaviour->Range(attackBehaviour->Range() * 1.2);
+            auto towers = spic::GameObject::FindGameObjectsWithTag("tower");
+            for (auto& tower: towers)
+            {
+                auto attackBehaviour = tower->GetComponent<AttackBehaviour>();
+                attackBehaviour->Range(attackBehaviour->Range() * 1.2);
+            }
+            scene->Contents().push_back(towerRangeObject);
+            _coolDownBehaviour->CooledDown(false);
         }
-        scene->Contents().push_back(towerRangeObject);
     }
 }
 

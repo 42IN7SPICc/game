@@ -14,12 +14,12 @@
 game::AirstrikeAbilityBehaviour::AirstrikeAbilityBehaviour() : _coolDownBehaviour(std::make_shared<CoolDownBehaviour>(CoolDownBehaviour(FranklinDRooseveltAirstrikeAbilityCooldown))),
                                                                _bombIsDropped(false)
 {
-
 }
 
 void game::AirstrikeAbilityBehaviour::OnStart()
 {
-    //
+    auto parent = GameObject().lock();
+    game::GameObjectUtil::LinkComponent(parent, _coolDownBehaviour);
 }
 
 void game::AirstrikeAbilityBehaviour::OnUpdate()
@@ -40,27 +40,31 @@ void game::AirstrikeAbilityBehaviour::OnUpdate()
         return;
     }
 
-    if (spic::Input::GetKeyDown(spic::Input::KeyCode::E))
+    if (spic::Input::GetKey(spic::Input::KeyCode::E))
     {
-        _bombIsDropped = true;
-        auto scene = spic::Engine::Instance().PeekScene();
-        auto bombObject = std::make_shared<spic::GameObject>("airstrikeBomb", "airstrikeBomb", Layer::Game);
-        bombObject->Transform().position = {ScreenWidth / 2 - 90, ScreenHeight / 2};
-        bombObject->Transform().scale = 1;
+        if (_coolDownBehaviour->CooledDown())
+        {
+            _bombIsDropped = true;
+            auto scene = spic::Engine::Instance().PeekScene();
+            auto bombObject = std::make_shared<spic::GameObject>("airstrikeBomb", "airstrikeBomb", Layer::Game);
+            bombObject->Transform().position = {ScreenWidth / 2 - 90, ScreenHeight / 2};
+            bombObject->Transform().scale = 1;
 
-        std::vector<std::shared_ptr<spic::Sprite>> airstrikeSprites = AnimatorUtil::CreateSpriteVector(8, "resources/sprites/abilities/airstrike/airstrike_", SortingLayer::Hero);
-        auto airstrikeAnimator = std::make_shared<spic::Animator>(static_cast<int>(airstrikeSprites.size()), airstrikeSprites);
-        GameObjectUtil::LinkComponent(bombObject, airstrikeAnimator);
+            std::vector<std::shared_ptr<spic::Sprite>> airstrikeSprites = AnimatorUtil::CreateSpriteVector(8, "resources/sprites/abilities/airstrike/airstrike_", SortingLayer::Hero);
+            auto airstrikeAnimator = std::make_shared<spic::Animator>(static_cast<int>(airstrikeSprites.size()), airstrikeSprites);
+            GameObjectUtil::LinkComponent(bombObject, airstrikeAnimator);
 
-        airstrikeAnimator->Play(true);
+            airstrikeAnimator->Play(true);
 
-        auto defaultSprite = std::make_shared<spic::Sprite>(airstrikeSprites[0]->Texture(), false, false, SortingLayer::Hero, 0);
-        GameObjectUtil::LinkComponent(bombObject, defaultSprite);
+            auto defaultSprite = std::make_shared<spic::Sprite>(airstrikeSprites[0]->Texture(), false, false, SortingLayer::Hero, 0);
+            GameObjectUtil::LinkComponent(bombObject, defaultSprite);
 
-        auto bombFallTimer = std::make_shared<CoolDownBehaviour>(CoolDownBehaviour(1.5));
-        GameObjectUtil::LinkComponent(bombObject, bombFallTimer);
+            auto bombFallTimer = std::make_shared<CoolDownBehaviour>(CoolDownBehaviour(1.5));
+            GameObjectUtil::LinkComponent(bombObject, bombFallTimer);
 
-        scene->Contents().push_back(bombObject);
+            scene->Contents().push_back(bombObject);
+            _coolDownBehaviour->CooledDown(false);
+        }
     }
 }
 
