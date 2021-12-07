@@ -13,7 +13,7 @@ namespace game
     {
         private:
             bool _lost;
-            bool _dieing;
+            bool _dying;
             double _lostForTime;
             game::LevelData& _levelData;
         public:

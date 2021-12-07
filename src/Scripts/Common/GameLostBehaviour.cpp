@@ -18,8 +18,8 @@ void game::GameLostBehaviour::OnUpdate()
 
     if (_levelData.MilitaryBaseHealth->Health() <= 0)
     {
-        if (!_dieing) {
-            _dieing = true;
+        if (!_dying) {
+            _dying = true;
 
             auto explosionAudioSource = game::AudioSourcePrefabFactory::CreateAudioSource(AudioClipName::Explosion, true, false, 1.0);
             GameObjectUtil::LinkComponent(GameObject().lock(), explosionAudioSource);
@@ -48,7 +48,7 @@ void game::GameLostBehaviour::OnTriggerStay2D(const spic::Collider& collider)
     spic::Debug::LogWarning("Not implemented");
 }
 
-game::GameLostBehaviour::GameLostBehaviour(game::LevelData& levelData) : _levelData(levelData), _lost(false), _dieing(false), _lostForTime(0.0)
+game::GameLostBehaviour::GameLostBehaviour(game::LevelData& levelData) : _levelData(levelData), _lost(false), _dying(false), _lostForTime(0.0)
 {
 
 }
@@ -67,5 +67,5 @@ void game::GameLostBehaviour::OnLevelFailed()
 
 bool game::GameLostBehaviour::IsLevelFailed() const
 {
-    return _dieing;
+    return _dying;
 }
