@@ -1,5 +1,6 @@
 #include "LoadingScene.hpp"
 
+#include "SaveSelectionScene.hpp"
 #include "../Enums/Font.hpp"
 #include "../Enums/Layer.hpp"
 #include "../Factories/ButtonPrefabFactory.hpp"
@@ -19,6 +20,7 @@ game::LoadingScene::LoadingScene() : MenuScene("", false)
     auto playButton = game::ButtonPrefabFactory::CreateOutlineButton("Play Button", "button_play", "PLAY");
     playButton->Transform().position = {683, 425};
     playButton->OnClick([]() {
+        spic::Engine::Instance().PushScene(std::make_shared<SaveSelectionScene>());
     });
 
     auto exitButton = ButtonPrefabFactory::CreateOutlineButton("Exit Button", "button_exit", "EXIT");
