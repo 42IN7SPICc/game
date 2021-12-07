@@ -1,7 +1,10 @@
 #include "SaveSelectionScene.hpp"
 
+#include "MainScene.hpp"
 #include "../Factories/ButtonPrefabFactory.hpp"
 #include "../Persistence/SaveGameManager.hpp"
+
+#include "Engine.hpp"
 
 using namespace game;
 
@@ -44,4 +47,6 @@ void SaveSelectionScene::LoadSave(const std::string& saveName)
     }
 
     PlayerData::Instance(saves[saveName]);
+
+    spic::Engine::Instance().PushScene(std::make_shared<MainScene>());
 }
