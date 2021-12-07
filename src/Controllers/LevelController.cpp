@@ -4,7 +4,6 @@
 #include "../Utils/GameObjectUtil.hpp"
 #include "../Enums/Layer.hpp"
 #include "../Utils/TileUtil.hpp"
-#include "../Scripts/Common/GameLostBehaviour.hpp"
 #include "../Factories/ButtonPrefabFactory.hpp"
 #include "../Factories/EnemyPrefabFactory.hpp"
 #include "../Factories/TowerPrefabFactory.hpp"
@@ -25,8 +24,8 @@ void LevelController::OnStart()
     auto gameWonBehaviour = std::make_shared<game::GameWonBehaviour>(_levelData);
     GameObjectUtil::LinkComponent(parent, gameWonBehaviour);
 
-    auto gameLostBehaviour = std::make_shared<game::GameLostBehaviour>(_levelData);
-    GameObjectUtil::LinkComponent(parent, gameLostBehaviour);
+    _gameLostBehavior = std::make_shared<game::GameLostBehaviour>(_levelData);
+    GameObjectUtil::LinkComponent(parent, _gameLostBehavior);
 
     _levelData.HeroHealth->GameObject().lock()->Transform().position = GameObject::FindWithTag("end_tile")->AbsoluteTransform().position;
 
@@ -604,6 +603,10 @@ void LevelController::CreateTowerHud()
     text->Size(20);
     nextWaveButton->Transform().scale = 0.8;
     nextWaveButton->OnClick([this, nextWaveButton]() {
+        if (_gameLostBehavior->IsLevelFailed()){
+            return;
+        }
+
         auto& wave = _levelData.Waves.front();
         if (_levelMode == LevelMode::TowerMode)
         {

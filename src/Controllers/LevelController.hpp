@@ -14,6 +14,7 @@
 #include "../Structs/LevelWithTiles.hpp"
 #include "../Structs/LevelData.hpp"
 #include "../Enums/LevelMode.hpp"
+#include "../Scripts/Common/GameLostBehaviour.hpp"
 
 namespace game
 {
@@ -128,6 +129,7 @@ namespace game
             std::map<std::shared_ptr<spic::Button>, int> _buttonTowerCosts;
             game::LevelMode _levelMode;
             bool _strongPathEnabled;
+            std::shared_ptr<game::GameLostBehaviour> _gameLostBehavior;
 
 
             std::shared_ptr<spic::Button> InitializeTileButton(const std::string& texture, int tileAmount, const std::string& tileTitle, double yLocation);
