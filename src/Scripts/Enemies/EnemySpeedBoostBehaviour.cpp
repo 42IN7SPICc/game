@@ -35,11 +35,14 @@ void game::EnemySpeedBoostBehaviour::OnUpdate()
 {
     if (_coolDownBehaviour->CooledDown())
     {
-        auto absPosition = GameObject().lock()->AbsoluteTransform().position;
+        auto parent = GameObject().lock();
+        auto absPosition = parent->AbsoluteTransform().position;
 
         std::vector<std::shared_ptr<EnemyMovementBehaviour>> movementBehaviours{};
         for (const auto& target: spic::Engine::Instance().PeekScene()->Contents())
         {
+            if (target == parent) continue;
+
             if (target->Tag() != "enemy") continue;
 
             auto distance = PointUtil::Distance(absPosition, target->AbsoluteTransform().position);
