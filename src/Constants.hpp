@@ -57,8 +57,9 @@ spic::Color BernardIJzerdraatColor() {
 //Franklin D Roosevelt
 const int FranklinDRooseveltDamage = 4; // The damage Franklin D Roosevelt does
 const int FranklinDRooseveltDefense = 2; // The defense Franklin D Roosevelt has
-const int FranklinDRooseveltAirstrikeAbilityCooldown = 20; // The defense Winston Churchill has
-const int FranklinDRooseveltAirstrikeAbilityDamage = 40; // The defense Winston Churchill has
+const int FranklinDRooseveltAirstrikeAbilityCooldown = 20; // The cooldown timer for the airstrike ability
+const int FranklinDRooseveltAirstrikeAbilityDamage = 40; // The damage the airstrike ability does to every enemy on screen
+const int FranklinDRooseveltTowerRangeAbilityCooldown = 20; // The cooldown timer for the tower range ability
 template <typename T>
 spic::Color FranklinDRooseveltColor() {
     return T::cyan();
