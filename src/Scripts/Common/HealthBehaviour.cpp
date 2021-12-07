@@ -38,8 +38,11 @@ void game::HealthBehaviour::Damage(int damage)
         if (_health <= 0)
         {
             _health = 0;
-            if (_diedAnimator)
-                _diedAnimator->Play(false);
+            if (_diedAnimator) _diedAnimator->Play(false);
+        }
+        else if (_health > _maxHealth)
+        {
+            _health = _maxHealth;
         }
     }
 }
@@ -65,9 +68,11 @@ void game::HealthBehaviour::OnUpdate()
 void game::HealthBehaviour::OnTriggerEnter2D(const spic::Collider& collider)
 {
     auto gameObject = GameObject().lock();
-    if(gameObject->Tag() == "end_tile") {
+    if (gameObject->Tag() == "end_tile")
+    {
         auto enemy = collider.GameObject().lock();
-        if(enemy->Tag() == "enemy") {
+        if (enemy->Tag() == "enemy")
+        {
             Damage(1);
             spic::GameObject::Destroy(enemy);
         }

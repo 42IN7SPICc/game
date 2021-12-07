@@ -119,6 +119,12 @@ namespace game
             void ButcherEnemies();
 
             [[nodiscard]] game::LevelMode GetLevelMode() const;
+
+            /**
+             * @brief Add an enemy to the current wave.
+             * @param enemy The enemy to add to the wave.
+             */
+            void AddEnemyToWave(const std::shared_ptr<spic::GameObject>& enemy);
         private:
             spic::Point _startPosition;
             double _timePassed;
