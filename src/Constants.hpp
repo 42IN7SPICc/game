@@ -78,11 +78,6 @@ const int GhillieAnzugSchutzeEnemyBulletSpeed = 25; // The bullet velocity of th
 const int GhillieAnzugSchutzeEnemyHealth = 100; // The bullet velocity of the GhillieAnzugSchutze enemy
 
 //Enemy Stabsarzt
-const double StabsarztEnemyFireRate = 3; // The shooting interval of the Stabsarzt enemy
-const int StabsarztEnemyRange = 200; // The detection range of the hero for the Stabsarzt enemy
-const int StabsarztEnemyDamage = 2; // The damage of a bullet for the Stabsarzt enemy
-const int StabsarztEnemyBulletSpeed = 25; // The bullet velocity of the Stabsarzt enemy
-const int StabsarztEnemyHealth = 100; // The bullet velocity of the Stabsarzt enemy
 
 //Tower Shotgun
 const double ShotgunTowerFireRate = 5; // The shooting interval of the shotgun tower

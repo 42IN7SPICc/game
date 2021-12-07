@@ -137,9 +137,6 @@ std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreateStabsarzt()
 
     auto enemy = CreateBaseEnemy(1, 75, 0.8, idleSprites, walkingSprites, diedSprites);
 
-    auto attackBehaviour = std::make_shared<AttackBehaviour>("hero", BulletType::Normal, StabsarztEnemyFireRate, StabsarztEnemyRange, StabsarztEnemyDamage, StabsarztEnemyBulletSpeed);
-    GameObjectUtil::LinkComponent(enemy, attackBehaviour);
-
     return enemy;
 }
 
