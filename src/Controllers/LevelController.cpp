@@ -56,7 +56,8 @@ void LevelController::OnUpdate()
                 }
             }
 
-            if(wave.RemainingEnemies() == 0) {
+            if (wave.RemainingEnemies() == 0)
+            {
                 _levelMode = LevelMode::TowerMode;
             }
         }
@@ -110,6 +111,7 @@ void LevelController::OnTriggerStay2D(const spic::Collider& collider)
 LevelController::LevelController(game::LevelWithTiles level, std::shared_ptr<game::HealthBehaviour> heroHealth, std::shared_ptr<game::HealthBehaviour> militaryBaseHealth, std::queue<game::WaveData> waves) : _timePassed(0),
                                                                                                                                                                                                                _level(std::move(level)),
                                                                                                                                                                                                                _levelData(game::LevelData{
+                                                                                                                                                                                                                       level.UnlockThreshold,
                                                                                                                                                                                                                        std::move(heroHealth),
                                                                                                                                                                                                                        std::move(militaryBaseHealth),
                                                                                                                                                                                                                        waves.size(), // Total waves
@@ -270,7 +272,7 @@ std::shared_ptr<spic::Button> LevelController::InitializeTileButton(const std::s
     labelText->Transform().position.y = yLocation;
     labelText->Transform().position.x = TileSize * TileButtonScale + 5;
     labelText->Size(11);
-	
+
     labelText->Content(tileTitle);
     GameObjectUtil::LinkChild(_rightHud, labelText);
 
@@ -306,8 +308,9 @@ std::shared_ptr<spic::Button> LevelController::InitializeTowerButton(const std::
 
     _buttonTowerCosts[button] = towerCost;
     button->OnClick([this, button]() {
-        if(_selectedButton == nullptr) _selectedButton = button;
-        else if(_selectedButton == button) {
+        if (_selectedButton == nullptr) _selectedButton = button;
+        else if (_selectedButton == button)
+        {
             _selectedButton->Transform().rotation = 0;
             _selectedButton = nullptr;
             return;
@@ -540,7 +543,7 @@ void LevelController::CreateTowerHud()
     auto bombShooterButton = InitializeTowerButton("resources/sprites/towers/shooting/tower_shooting_1.png", 125, "Bommenwerper", -(TileSize + 2) * (TileButtonScale * 4), BomberTowerColor<Color>());
     auto shotgunButton = InitializeTowerButton("resources/sprites/towers/shooting/tower_shooting_1.png", 100, "Shotgun", -(TileSize + 2) * (TileButtonScale * 3), ShotgunTowerColor<Color>());
     auto flamethrowerButton = InitializeTowerButton("resources/sprites/towers/shooting/tower_shooting_1.png", 150, "Vlammenwerper", -(TileSize + 2) * (TileButtonScale * 2), FlamethrowerTowerColor<Color>());
-    auto sniperButton = InitializeTowerButton("resources/sprites/towers/shooting/tower_shooting_1.png", 80, "Scherpschutter",-(TileSize + 2) * (TileButtonScale * 1), SniperTowerColor<Color>());
+    auto sniperButton = InitializeTowerButton("resources/sprites/towers/shooting/tower_shooting_1.png", 80, "Scherpschutter", -(TileSize + 2) * (TileButtonScale * 1), SniperTowerColor<Color>());
 
     auto enemiesLeftTextHeader = std::make_shared<spic::Text>("enemies-text-header", "default", Layer::HUD, HudWidth, 20);
     enemiesLeftTextHeader->Size(18);
@@ -602,7 +605,8 @@ void LevelController::CreateTowerHud()
     nextWaveButton->Transform().scale = 0.8;
     nextWaveButton->OnClick([this, nextWaveButton]() {
         auto& wave = _levelData.Waves.front();
-        if(_levelMode == LevelMode::TowerMode) {
+        if (_levelMode == LevelMode::TowerMode)
+        {
             _levelMode = LevelMode::WaveMode;
             auto text = std::dynamic_pointer_cast<spic::Text>(nextWaveButton->Children()[0]);
             text->Content("Volgende ronde");
