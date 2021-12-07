@@ -2,11 +2,18 @@
 #define SPIC_GAME_INCREASETOWERFIRERATEABILITYBEHAVIOUR_HPP
 
 #include "BehaviourScript.hpp"
+#include "../Common/CoolDownBehaviour.hpp"
 
 namespace game {
     class IncreaseTowerFireRateAbilityBehaviour : public spic::BehaviourScript
     {
+        private:
+            std::shared_ptr<game::CoolDownBehaviour> _coolDownBehaviour;
+            bool _abilityActivated;
+
         public:
+            IncreaseTowerFireRateAbilityBehaviour();
+
             void OnStart() override;
 
             void OnUpdate() override;
