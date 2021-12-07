@@ -59,7 +59,7 @@ LevelSelectionScene::LevelSelectionScene() : MenuScene("Level selectie", true)
     validationTextForButtonValidation->Transform().position = {static_cast<double>(buttonX), static_cast<double>(300 + (100 * (i + 1)))};
     validationTextForButtonValidation->Size(20);
     validationTextForButtonValidation->TextColor(spic::Color::white());
-    validationTextForButtonValidation->Content("Je kunt dit level nog niet spelen! Haal eerst een ander level.");
+    validationTextForButtonValidation->Content("Je kunt dit level nog niet spelen! Haal eerst het level boven dit level.");
     validationTextForButtonValidation->Active(false);
     Contents().push_back(validationTextForButtonValidation);
 
