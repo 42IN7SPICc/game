@@ -10,7 +10,7 @@
 
 using namespace game;
 
-LevelSelectionScene::LevelSelectionScene() : MenuScene("Level selectie", true)
+LevelSelectionScene::LevelSelectionScene(const std::shared_ptr<spic::GameObject>& audio) : MenuScene("Level selectie", true)
 {
     auto buttonX = spic::Engine::Instance().Config().window.width / 2;
 
@@ -62,5 +62,5 @@ LevelSelectionScene::LevelSelectionScene() : MenuScene("Level selectie", true)
     validationTextForButtonValidation->TextColor(spic::Color::white());
     validationTextForButtonValidation->Active(false);
     Contents().push_back(validationTextForButtonValidation);
-
+    Contents().push_back(audio);
 }
