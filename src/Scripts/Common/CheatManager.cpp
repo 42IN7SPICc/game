@@ -88,7 +88,7 @@ void UnlockLevels()
 {
     Debug::Log("Fired Unlock Levels Cheat");
     PlayerData::Instance().LevelsCompleted = 1000;
-    SaveGameManager::Save(PlayerData::Instance());
+    SaveGameManager::Save();
 }
 
 void UnlimitedPath()

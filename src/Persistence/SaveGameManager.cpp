@@ -1,9 +1,16 @@
 #include "SaveGameManager.hpp"
-#include "FileManager.hpp"
 
-#include <JsonFacade.hpp>
+#include "FileManager.hpp"
+#include "JsonFacade.hpp"
+
+#include "Debug.hpp"
 
 using namespace game;
+
+void SaveGameManager::Save()
+{
+    Save(PlayerData::Instance());
+}
 
 void SaveGameManager::Save(const PlayerData& playerData)
 {
@@ -35,18 +42,17 @@ std::map<std::string, PlayerData> SaveGameManager::GetAll()
 
     for (const auto& file: FileManager::GetFolderFiles(path, extension))
     {
-        auto playerData = Load(file.File);
-        playerData.File = file.File;
+        try
+        {
+            auto playerData = Load(file.File);
+            playerData.File = file.File;
 
-        result.insert(std::make_pair(file.Name, playerData));
-    }
-
-    if (result.empty())
-    {
-        PlayerData playerData{};
-        playerData.File = path + "/save1" + extension;
-
-        result.insert(std::make_pair("save1", playerData));
+            result.insert(std::make_pair(file.Name, playerData));
+        }
+        catch (...)
+        {
+            spic::Debug::LogWarning("Error loading save game `" + file.File + "`");
+        }
     }
 
     return result;
