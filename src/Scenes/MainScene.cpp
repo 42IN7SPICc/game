@@ -2,7 +2,7 @@
 
 #include "CreditScene.hpp"
 #include "HelpScene.hpp"
-#include "LevelScene.hpp"
+#include "LevelSelectionScene.hpp"
 #include "../Factories/ButtonPrefabFactory.hpp"
 #include "../Factories/HeroPrefabFactory.hpp"
 #include "../Utils/RandomUtil.hpp"
@@ -22,18 +22,12 @@ MainScene::MainScene() : MenuScene("Avans Wars: WW2", false)
     saveGameController.InitializeSaves();
     saveGameController.Load("save1");
 
-    LevelSelectionController levelSelectionController{};
-    levelSelectionController.InitializeLevels();
-
     auto mainMenuAudioSource = game::AudioSourcePrefabFactory::CreateAudioObject(AudioClipName::MainMenu, true, true, 1.0);
 
-    auto playButton = ButtonPrefabFactory::CreateOutlineButton("Play Button", "button_play", "PLAY");
+    auto playButton = ButtonPrefabFactory::CreateOutlineButton("Play Button", "button_play", "SPELEN");
     playButton->Transform().position = {225, 300};
-    playButton->OnClick([levelSelectionController]() {
-        auto level = levelSelectionController.GetLevelDto("welcome_to_the_war");
-        auto levelWithTiles = levelSelectionController.LoadLevel(level.File);
-
-        auto scene = std::make_shared<LevelScene>(levelWithTiles);
+    playButton->OnClick([]() {
+        auto scene = std::make_shared<LevelSelectionScene>();
         Engine::Instance().PushScene(scene);
     });
 
@@ -49,7 +43,7 @@ MainScene::MainScene() : MenuScene("Avans Wars: WW2", false)
         Engine::Instance().PushScene(std::make_shared<CreditScene>());
     });
 
-    auto exitButton = ButtonPrefabFactory::CreateOutlineButton("Exit Button", "button_exit", "EXIT");
+    auto exitButton = ButtonPrefabFactory::CreateOutlineButton("Exit Button", "button_exit", "SLUITEN");
     exitButton->Transform().position = {225, 675};
     exitButton->OnClick([&saveGameController]() {
         saveGameController.Save();

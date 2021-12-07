@@ -36,6 +36,13 @@ namespace game
              */
             [[nodiscard]] Level GetLevelDto(const std::string& levelName) const;
 
+            /**
+             * @brief Get all levels with information (without tiles)
+             * @param unlockThreshold Weither to use the player's data (false returning all levels, true only the ones he may play)
+             * @return Vector of levels.
+             */
+            [[nodiscard]] std::vector<Level> GetLevels(const bool unlockThreshold = false) const;
+
         private:
             std::map<std::string, Level> _levels{};
     };
