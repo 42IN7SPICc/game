@@ -125,6 +125,13 @@ namespace game
              * @param enemy The enemy to add to the wave.
              */
             void AddEnemyToWave(const std::shared_ptr<spic::GameObject>& enemy);
+
+            /**
+             * @brief Whether the a given tile is walkable.
+             * @return Whether the tile is walkable.
+             */
+            static bool Walkable(const TileType& tileType);
+
         private:
             spic::Point _startPosition;
             double _timePassed;

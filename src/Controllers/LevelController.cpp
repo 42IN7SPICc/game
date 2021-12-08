@@ -252,6 +252,22 @@ std::shared_ptr<spic::GameObject> LevelController::BuildLevel(const std::shared_
     return tileMap;
 }
 
+bool LevelController::Walkable(const TileType& tileType)
+{
+    switch (tileType)
+    {
+        case Bushes:
+        case Sand:
+        case Bridge:
+        case Street:
+        case Grass:
+        case Start:
+        case End:
+            return true;
+    }
+    return false;
+}
+
 std::shared_ptr<spic::Button> LevelController::InitializeTileButton(const std::string& texture, int tileAmount, const std::string& tileTitle, double yLocation)
 {
     auto button = std::make_shared<spic::Button>("tile-button-" + texture, "tile_button", Layer::HUD, TileSize, TileSize);
