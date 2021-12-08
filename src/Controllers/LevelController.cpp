@@ -249,6 +249,25 @@ std::shared_ptr<spic::GameObject> LevelController::BuildLevel(const std::shared_
             node.NeighbourStrings.push_back(std::to_string(node.X) + "-" + std::to_string(node.Y + 1));
     }
 
+    for (const auto&[key, node]: _levelData.Graph)
+    {
+        if (!Walkable(node.TileType))
+        {
+            for (const auto& neighbourString: node.NeighbourStrings)
+            {
+                if (Walkable(_levelData.Graph[neighbourString].TileType))
+                {
+                    if (!node.TileObject->GetComponent<RigidBody>())
+                        GameObjectUtil::LinkComponent(node.TileObject, std::make_shared<RigidBody>(10, 0, BodyType::staticBody));
+                    if (!node.TileObject->GetComponent<Collider>())
+                        GameObjectUtil::LinkComponent(node.TileObject, std::make_shared<BoxCollider>(TileSize * TileMapScale, TileSize * TileMapScale));
+
+                    break;
+                }
+            }
+        }
+    }
+
     return tileMap;
 }
 
