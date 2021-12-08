@@ -6,7 +6,7 @@
 namespace game
 {
     /**
-     * @brief
+     * @brief An util for generating Random content.
      */
     class RandomUtil
     {
