@@ -132,6 +132,16 @@ namespace game
              */
             static bool Walkable(const TileType& tileType);
 
+            /**
+             * @brief Generate a border for the level with given settings.
+             * @param x The X position of the border.
+             * @param y The Y position of the border.
+             * @param width The width of the border.
+             * @param height The height of the border.
+             * @return A game object containing a border.
+             */
+            static std::shared_ptr<spic::GameObject> CreateLevelBorder(double x, double y, double width, double height);
+
         private:
             spic::Point _startPosition;
             double _timePassed;

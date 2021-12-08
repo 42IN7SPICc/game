@@ -268,6 +268,11 @@ std::shared_ptr<spic::GameObject> LevelController::BuildLevel(const std::shared_
         }
     }
 
+    GameObjectUtil::LinkChild(tileMap, CreateLevelBorder(12 * TileSize, -TileSize, TileSize * TileMapScale * 27, TileSize * TileMapScale)); // Top
+    GameObjectUtil::LinkChild(tileMap, CreateLevelBorder(25 * TileSize, 12 * TileSize, TileSize * TileMapScale, TileSize * TileMapScale * 27)); // Right
+    GameObjectUtil::LinkChild(tileMap, CreateLevelBorder(12 * TileSize, 25 * TileSize, TileSize * TileMapScale * 27, TileSize * TileMapScale)); // Bottom
+    GameObjectUtil::LinkChild(tileMap, CreateLevelBorder(-TileSize, 12 * TileSize, TileSize * TileMapScale, TileSize * TileMapScale * 27)); // Left
+
     return tileMap;
 }
 
@@ -285,6 +290,16 @@ bool LevelController::Walkable(const TileType& tileType)
             return true;
     }
     return false;
+}
+
+std::shared_ptr<spic::GameObject> LevelController::CreateLevelBorder(double x, double y, double width, double height)
+{
+    auto border = std::make_shared<spic::GameObject>("Border", "border", Layer::Game);
+    border->Transform().position = {x, y};
+    GameObjectUtil::LinkComponent(border, std::make_shared<spic::RigidBody>(10, 0, BodyType::staticBody));
+    GameObjectUtil::LinkComponent(border, std::make_shared<BoxCollider>(width, height));
+
+    return border;
 }
 
 std::shared_ptr<spic::Button> LevelController::InitializeTileButton(const std::string& texture, int tileAmount, const std::string& tileTitle, double yLocation)
@@ -644,7 +659,8 @@ void LevelController::CreateTowerHud()
     text->Size(20);
     nextWaveButton->Transform().scale = 0.8;
     nextWaveButton->OnClick([this, nextWaveButton]() {
-        if (_gameLostBehavior->IsLevelFailed()){
+        if (_gameLostBehavior->IsLevelFailed())
+        {
             return;
         }
 
