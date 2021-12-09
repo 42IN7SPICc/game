@@ -168,7 +168,7 @@ std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreateBaseEnemy(int attack
     auto baseEnemy = std::make_shared<spic::GameObject>("Enemy", "enemy", Layer::Game);
     baseEnemy->Transform().scale = EnemyScale;
 
-    auto defaultSprite = std::make_shared<spic::Sprite>(idleSprites[0]->Texture(), idleSprites[0]->Color(), false, false, SortingLayer::Hero, 0);
+    auto defaultSprite = std::make_shared<spic::Sprite>(idleSprites[0]->Texture(), idleSprites[0]->Color(), false, false, SortingLayer::Enemy, 0);
     GameObjectUtil::LinkComponent(baseEnemy, defaultSprite);
 
     auto idleAnimator = std::make_shared<spic::Animator>(static_cast<int>(idleSprites.size()), idleSprites);
