@@ -14,6 +14,7 @@ const int MapY = 32 / 2; // Starting y location of the map
 const int ScreenWidth = 1366; // Width of the screen
 const int ScreenHeight = 786; // Height of the screen
 const int HudWidth = 250; // Width of the HUD inside a level
+const int EndTowerHealth = 200000;
 
 //Enemy
 const int DefaultEnemyKillBalance = 50; // The money you get after killing an enemy
