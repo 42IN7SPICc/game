@@ -5,25 +5,27 @@
 #include "../Persistence/SaveGameManager.hpp"
 
 #include "Engine.hpp"
+#include "../Constants.hpp"
 
 using namespace game;
 
-SaveSelectionScene::SaveSelectionScene(const std::shared_ptr<spic::GameObject>& audio) : _mainMenuAudio(audio), MenuScene("Selecteer spelbestand", true, BackgroundName::Menu)
+SaveSelectionScene::SaveSelectionScene(const std::shared_ptr<spic::GameObject>& audio) : _mainMenuAudio(audio),
+                                                                                         MenuScene("Selecteer spelbestand", true, BackgroundName::Menu)
 {
     auto buttonSave1 = ButtonPrefabFactory::CreateSquareOutlineButton("Button Save 1", "button_save_1", "ALPHA");
-    buttonSave1->Transform().position = {283, 469};
+    buttonSave1->Transform().position = {ScreenWidth / 2.0 - 400, 469};
     buttonSave1->OnClick([this]() {
         this->LoadSave("alpha");
     });
 
     auto buttonSave2 = ButtonPrefabFactory::CreateSquareOutlineButton("Button Save 2", "button_save_2", "BRAVO");
-    buttonSave2->Transform().position = {683, 469};
+    buttonSave2->Transform().position = {ScreenWidth / 2.0, 469};
     buttonSave2->OnClick([this]() {
         this->LoadSave("beta");
     });
 
     auto buttonSave3 = ButtonPrefabFactory::CreateSquareOutlineButton("Button Save 3", "button_save_3", "CHARLIE");
-    buttonSave3->Transform().position = {1083, 469};
+    buttonSave3->Transform().position = {ScreenWidth / 2.0 + 400, 469};
     buttonSave3->OnClick([this]() {
         this->LoadSave("charlie");
     });

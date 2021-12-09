@@ -58,10 +58,10 @@ game::VictoryScene::VictoryScene() : MenuScene("", false, BackgroundName::Victor
     auto victoryAudioSource = game::AudioSourcePrefabFactory::CreateAudioObject(AudioClipName::Victory, true, true, 1.0);
 
     auto titleText = std::make_shared<Text>("Pause Text", "text_pause", game::Layer::HUD, 1166, 100, "VICTORY!", game::Font::Title, 64, Alignment::center, Color::white());
-    titleText->Transform().position = {683, 132};
+    titleText->Transform().position = {ScreenWidth / 2.0, 132};
 
     auto exitButton = game::ButtonPrefabFactory::CreateOutlineButton("Return to menu", "button_exit", "EXIT");
-    exitButton->Transform().position = {683, 475};
+    exitButton->Transform().position = {ScreenWidth / 2.0, 475};
     exitButton->OnClick([]() {
         Engine::Instance().PopScene();
     });
@@ -72,9 +72,9 @@ game::VictoryScene::VictoryScene() : MenuScene("", false, BackgroundName::Victor
     }
 
     auto bottomBound = std::make_shared<GameObject>("bottom_confetti_bound", "confetti_bound", Layer::Game);
-    bottomBound->Transform().position.x = 1366 / 2;
+    bottomBound->Transform().position.x = ScreenWidth / 2;
     bottomBound->Transform().position.y = -ConfettiYRangeMin;
-    auto bottomBoundCollider = std::make_shared<BoxCollider>(1500, 50);
+    auto bottomBoundCollider = std::make_shared<BoxCollider>(ScreenWidth + 1000, 50);
     GameObjectUtil::LinkComponent(bottomBound, bottomBoundCollider);
     GameObjectUtil::LinkComponent(bottomBound, std::make_shared<RigidBody>(1, 0, BodyType::staticBody));
 
