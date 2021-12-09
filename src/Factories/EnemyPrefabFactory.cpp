@@ -64,9 +64,9 @@ std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreateEnemy(EnemyName name
 
 std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreatePanzer()
 {
-    types::sprite_vector idleSprites = AnimatorUtil::CreateSpriteVector(8, "resources/sprites/enemies/tank/moving/tank_moving_", SortingLayer::Enemy);
+    types::sprite_vector idleSprites = AnimatorUtil::CreateSpriteVector(1, "resources/sprites/enemies/tank/ide/tank_idle_", SortingLayer::Enemy);
     types::sprite_vector walkingSprites = AnimatorUtil::CreateSpriteVector(8, "resources/sprites/enemies/tank/moving/tank_moving_", SortingLayer::Enemy);
-    types::sprite_vector diedSprites = AnimatorUtil::CreateSpriteVector(8, "resources/sprites/enemies/tank/moving/tank_moving_", SortingLayer::Enemy);
+    types::sprite_vector diedSprites = AnimatorUtil::CreateSpriteVector(17, "resources/sprites/enemies/tank/died/tank_exploding_", SortingLayer::Enemy);
 
     auto enemy = CreateBaseEnemy(15, PanzerEnemyHealth, 0.5, idleSprites, walkingSprites, diedSprites);
 
