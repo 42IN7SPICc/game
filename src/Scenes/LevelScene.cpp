@@ -14,7 +14,6 @@
 #include "../Factories/WavePrefabFactory.hpp"
 #include "../Constants.hpp"
 #include "../Structs/PlayerData.hpp"
-#include "../Structs/HudData.hpp"
 
 
 using namespace spic;
@@ -35,19 +34,21 @@ LevelScene::LevelScene(LevelWithTiles& levelWithTiles)
     auto mainGameObject = std::make_shared<spic::GameObject>("LevelController", "default", Layer::Background);
 
     auto waves = game::WavePrefabFactory::GenerateWaves(5);
-    auto levelData = game::LevelData{
+    auto levelData = std::shared_ptr<game::LevelData>(new game::LevelData {
             levelWithTiles.UnlockThreshold,
             std::move(heroHealth),
             std::move(endTowerHealth),
             waves.size(), // Total waves
             500,
-            std::move(waves)
-    };
+            std::move(waves),
+            LevelMode::TileMode
+    });
 
-    game::HudData hudData {};
+    auto sharedLevel = std::make_shared<LevelWithTiles>(levelWithTiles);
+    auto hudData = std::make_shared<game::HudData>();
 
-    auto levelController = std::make_shared<game::LevelController>(levelWithTiles, heroHealth, endTowerHealth, waves, levelData, hudData);
-    auto hudController = std::make_shared<game::HUDController>(levelWithTiles, levelData, hudData);
+    auto levelController = std::make_shared<game::LevelController>(sharedLevel, heroHealth, endTowerHealth, waves, levelData, hudData);
+    auto hudController = std::make_shared<game::HUDController>(sharedLevel, levelData, hudData);
 
     auto cheatManager = std::make_shared<game::CheatManager>();
     GameObjectUtil::LinkComponent(mainGameObject, levelController);
@@ -55,7 +56,7 @@ LevelScene::LevelScene(LevelWithTiles& levelWithTiles)
     GameObjectUtil::LinkComponent(mainGameObject, cheatManager);
     GameObjectUtil::LinkComponent(mainGameObject, std::make_shared<PauseSceneBehaviour>());
 
-    auto tilesMapObject = levelController->BuildLevel(levelData.MilitaryBaseHealth, animation);
+    auto tilesMapObject = levelController->BuildLevel(levelData->MilitaryBaseHealth, animation);
     tilesMapObject->Transform().position.x = MapX;
     tilesMapObject->Transform().position.y = MapY;
     tilesMapObject->Transform().scale = TileMapScale;

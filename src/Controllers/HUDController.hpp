@@ -14,13 +14,9 @@ namespace game
     class HUDController : public spic::BehaviourScript
     {
         private:
-            game::LevelWithTiles _level;
-            game::LevelData _levelData;
-            game::LevelMode _levelMode;
-
-            std::map<std::shared_ptr<spic::Button>, int>& _buttonTileAmounts; //shared
-            std::map<std::shared_ptr<spic::Button>, int>& _buttonTowerCosts; //shared
-            std::shared_ptr<spic::Button> _selectedButton; //shared
+            std::shared_ptr<game::LevelWithTiles> _level;
+            std::shared_ptr<game::LevelData> _levelData;
+            std::shared_ptr<game::HudData> _hudData;
 
             std::shared_ptr<spic::GameObject> _rightHud;
             std::shared_ptr<game::GameLostBehaviour> _gameLostBehavior;
@@ -28,7 +24,7 @@ namespace game
             std::shared_ptr<spic::Button> InitializeTileButton(const std::string& texture, int tileAmount, const std::string& tileTitle, double yLocation);
             std::shared_ptr<spic::Button> InitializeTowerButton(const std::string& texture, int towerCost, const std::string& towerName, double yLocation, spic::Color color);
         public:
-            HUDController(game::LevelWithTiles level, game::LevelData& levelData, game::HudData& hudData);
+            HUDController(std::shared_ptr<game::LevelWithTiles> level, std::shared_ptr<LevelData> levelData, std::shared_ptr<game::HudData> hudData);
 
             void OnStart() override;
 

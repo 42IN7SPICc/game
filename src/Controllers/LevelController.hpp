@@ -27,15 +27,12 @@ namespace game
     {
         private:
             spic::Point _startPosition;
+
+            std::shared_ptr<game::LevelWithTiles> _level;
+            std::shared_ptr<game::LevelData> _levelData;
+            std::shared_ptr<game::HudData> _hudData;
+
             double _timePassed;
-            const game::LevelWithTiles _level;
-            game::LevelData _levelData;
-
-            std::shared_ptr<spic::Button> _selectedButton;
-            std::map<std::shared_ptr<spic::Button>, int>& _buttonTileAmounts;
-            std::map<std::shared_ptr<spic::Button>, int>& _buttonTowerCosts;
-
-            game::LevelMode _levelMode;
             bool _strongPathEnabled;
             std::shared_ptr<game::GameLostBehaviour> _gameLostBehavior;
 
@@ -51,7 +48,7 @@ namespace game
              * @param militaryBaseHealth The health of the end point.
              * @param waves The waves of the level.
              */
-            LevelController(game::LevelWithTiles level, std::shared_ptr<game::HealthBehaviour> heroHealth, std::shared_ptr<game::HealthBehaviour> militaryBaseHealth, std::queue<game::WaveData> waves, game::LevelData& levelData, game::HudData& hudData);
+            LevelController(std::shared_ptr<game::LevelWithTiles> level, std::shared_ptr<game::HealthBehaviour> heroHealth, std::shared_ptr<game::HealthBehaviour> militaryBaseHealth, std::queue<game::WaveData> waves, std::shared_ptr<game::LevelData> levelData, std::shared_ptr<game::HudData> hudData);
 
             /**
              * @brief Triggers when the scripts starts for the first time.
