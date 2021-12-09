@@ -74,7 +74,7 @@ game::VictoryScene::VictoryScene() : MenuScene("", false, BackgroundName::Victor
     auto bottomBound = std::make_shared<GameObject>("bottom_confetti_bound", "confetti_bound", Layer::Game);
     bottomBound->Transform().position.x = ScreenWidth / 2;
     bottomBound->Transform().position.y = -ConfettiYRangeMin;
-    auto bottomBoundCollider = std::make_shared<BoxCollider>(3000, 50);
+    auto bottomBoundCollider = std::make_shared<BoxCollider>(ScreenWidth + 1000, 50);
     GameObjectUtil::LinkComponent(bottomBound, bottomBoundCollider);
     GameObjectUtil::LinkComponent(bottomBound, std::make_shared<RigidBody>(1, 0, BodyType::staticBody));
 
