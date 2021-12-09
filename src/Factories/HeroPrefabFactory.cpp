@@ -12,7 +12,7 @@
 #include "../Scripts/Heroes/UserAttackBehaviour.hpp"
 #include "../Utils/AnimatorUtil.hpp"
 #include "../Utils/GameObjectUtil.hpp"
-#include "../Constants.hpp"
+#include "../HeroConstants.hpp"
 
 #include <stdexcept>
 

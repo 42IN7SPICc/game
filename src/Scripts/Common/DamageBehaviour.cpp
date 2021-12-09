@@ -6,13 +6,15 @@
 #include "../../Utils/PointUtil.hpp"
 
 #include <stdexcept>
+#include <Debug.hpp>
 
 using namespace game;
 
-DamageBehaviour::DamageBehaviour(int damage, const std::string& targetTag, int radius) : _damage(damage),
-                                                                                         _targetTag(targetTag),
-                                                                                         _radius(radius),
-                                                                                         _objectsDamaged(0)
+DamageBehaviour::DamageBehaviour(int damage, const std::string& targetTag, int radius, int maxPenetrating) : _damage(damage),
+                                                                                                             _targetTag(targetTag),
+                                                                                                             _radius(radius),
+                                                                                                             _objectsDamaged(0),
+                                                                                                             _maxPenetrating(maxPenetrating)
 {
 }
 
@@ -33,6 +35,7 @@ void DamageBehaviour::OnUpdate()
 
 void DamageBehaviour::OnTriggerEnter2D(const spic::Collider& collider)
 {
+    if (_objectsDamaged >= _maxPenetrating) return;
     if (collider.GameObject().expired()) return;
 
     auto colliderGameObject = collider.GameObject().lock();

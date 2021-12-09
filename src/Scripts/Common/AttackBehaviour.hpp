@@ -27,6 +27,7 @@ namespace game
             int _range;
             int _damage;
             double _bulletSpeed;
+            int _maxPenetrating;
             double _damageRadius;
             bool _followTarget;
             std::shared_ptr<spic::Animator> _animator;
@@ -40,11 +41,12 @@ namespace game
              * @param range The maximum distance a bullet can travel.
              * @param damage The damage the bullet does on impact.
              * @param bulletSpeed The speed to bullet travels at.
+             * @param maxPenetrating How many enemies a single bullet can passthrough before disappearing
              * @param damageRadius The radius a bullet does damage in (only bulletType = bomb).
              * @param followTarget Whether to rotate the game object to face the nearest target.
              * @param animator The animator used when shooting.
              */
-            AttackBehaviour(const std::string& targetTag, game::BulletType bulletType, double fireRate, int range, int damage, double bulletSpeed, double damageRadius = 0, bool followTarget = false, std::shared_ptr<spic::Animator> animator = {});
+            AttackBehaviour(const std::string& targetTag, game::BulletType bulletType, double fireRate, int range, int damage, double bulletSpeed, int maxPenetrating = 1, double damageRadius = 0, bool followTarget = false, std::shared_ptr<spic::Animator> animator = {});
 
             /**
              * @brief Triggers when the scripts starts for the first time.

@@ -11,10 +11,10 @@
 #include "../Utils/HeroUtil.hpp"
 #include "../Scripts/Heroes/UserAttackBehaviour.hpp"
 #include "../Scripts/Heroes/UserMovementBehaviour.hpp"
-#include "../Factories/AudioSourcePrefabFactory.hpp"
 #include "../Enums/SortingLayer.hpp"
 #include "../Enums/Font.hpp"
-#include "../Constants.hpp"
+#include "../HeroConstants.hpp"
+
 
 #include "Engine.hpp"
 #include "../Structs/PlayerData.hpp"
