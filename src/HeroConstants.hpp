@@ -27,6 +27,8 @@ spic::Color DesmondDossColor()
 //Bernard IJzerdraat
 const int BernardIJzerdraatDamage = 5; // The damage Bernard IJzerdraat does
 const int BernardIJzerdraatDefense = 3; // The defense Bernard IJzerdraat has
+const int BernardIJzerdraatAbilityCooldown = 5; // Ability Cooldown for Bernard IJzerdraat
+const int BernardIJzerdraatAbilityDuration = 5; // Ability Duration for Bernard IJzerdraat
 template<typename T>
 spic::Color BernardIJzerdraatColor()
 {
@@ -36,6 +38,9 @@ spic::Color BernardIJzerdraatColor()
 //Franklin D Roosevelt
 const int FranklinDRooseveltDamage = 4; // The damage Franklin D Roosevelt does
 const int FranklinDRooseveltDefense = 2; // The defense Franklin D Roosevelt has
+const int FranklinDRooseveltAirstrikeAbilityCooldown = 20; // The cooldown timer for the airstrike ability
+const int FranklinDRooseveltAirstrikeAbilityDamage = 40; // The damage the airstrike ability does to every enemy on screen
+const int FranklinDRooseveltTowerRangeAbilityCooldown = 20; // The cooldown timer for the tower range ability
 template<typename T>
 spic::Color FranklinDRooseveltColor()
 {
@@ -45,6 +50,7 @@ spic::Color FranklinDRooseveltColor()
 //Winston Churchill
 const int WinstonChurchillDamage = 2; // The damage Winston Churchill does
 const int WinstonChurchillDefense = 5; // The defense Winston Churchill has
+const int WinstonChurchillTowerFireRateAbilityCooldown = 20; // The cooldown timer for the tower fire rate ability
 template<typename T>
 spic::Color WinstonChurchillColor()
 {
@@ -54,6 +60,8 @@ spic::Color WinstonChurchillColor()
 //Joseph Stalin
 const int JosephStalinDamage = 5; // The damage Joseph Stalin does
 const int JosephStalinDefense = 5; // The defense Joseph Stalin has
+const int JosephStalinAbilityCooldown = 15; // The defense Joseph Stalin has
+const int JosephStalinAbilityDuration = 5; // The defense Joseph Stalin has
 template<typename T>
 spic::Color JosephStalinColor()
 {

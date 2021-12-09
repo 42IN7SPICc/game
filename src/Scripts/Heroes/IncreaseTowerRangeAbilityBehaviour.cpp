@@ -1,5 +1,5 @@
 #include "IncreaseTowerRangeAbilityBehaviour.hpp"
-#include "../../Constants.hpp"
+#include "../../HeroConstants.hpp"
 #include "../../Factories/AudioSourcePrefabFactory.hpp"
 #include "GameObject.hpp"
 #include "Input.hpp"

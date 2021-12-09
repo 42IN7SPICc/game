@@ -2,10 +2,10 @@
 #include "GameObject.hpp"
 #include "Input.hpp"
 #include "../../Utils/GameObjectUtil.hpp"
-#include "../../Constants.hpp"
+#include "../../HeroConstants.hpp"
 #include "../../Factories/AudioSourcePrefabFactory.hpp"
 
-game::HealAbilityBehaviour::HealAbilityBehaviour() : _coolDownBehaviour(std::make_shared<CoolDownBehaviour>(CoolDownBehaviour(HealAbilityCoolDown)))
+game::HealAbilityBehaviour::HealAbilityBehaviour() : _coolDownBehaviour(std::make_shared<CoolDownBehaviour>(CoolDownBehaviour(DesmondDossHealAbilityCoolDown)))
 {
 
 }
