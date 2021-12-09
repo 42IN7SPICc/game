@@ -1,27 +1,34 @@
-#ifndef SPIC_GAME_GAMELOSTBEHAVIOUR_HPP
-#define SPIC_GAME_GAMELOSTBEHAVIOUR_HPP
+#ifndef SPIC_GAME_ENEMYMEDICBEHAVIOUR_HPP
+#define SPIC_GAME_ENEMYMEDICBEHAVIOUR_HPP
 
-#include <BehaviourScript.hpp>
-#include "../../Structs/LevelData.hpp"
+#include "../Common/CoolDownBehaviour.hpp"
+
+#include "BehaviourScript.hpp"
+#include "GameObject.hpp"
+
+#include <memory>
 
 namespace game
 {
     /**
-     * @brief The script the handle the game lost screen.
+     * @brief A behaviour that heals other enemies in a certain range.
      */
-    class GameLostBehaviour : public spic::BehaviourScript
+    class EnemyMedicBehaviour : public spic::BehaviourScript
     {
         private:
-            bool _lost;
-            bool _dying;
-            double _lostForTime;
-            game::LevelData& _levelData;
+            std::shared_ptr<CoolDownBehaviour> _healCoolDownBehaviour;
+            int _healPercentage;
+            double _healRange;
+            int _healCoolDown;
+
         public:
             /**
-             * @brief Constructs a new instance of a GameLostBehaviour with a given level.
-             * @param levelData The data of the level.
+             * @brief Constructs a new instance of a EnemyMedicBehaviour with given settings.
+             * @param healPercentage The percentage the targets will be healed (between 1 and 100).
+             * @param healRange The range the targets have to be in to be healed.
+             * @param healCoolDown The times it takes to heal again (in seconds).
              */
-            explicit GameLostBehaviour(game::LevelData& levelData);
+            EnemyMedicBehaviour(int healPercentage, double healRange, int healCoolDown);
 
             /**
              * @brief Triggers when the scripts starts for the first time.
@@ -50,18 +57,7 @@ namespace game
              * @param collider The collider is colliding.
              */
             void OnTriggerStay2D(const spic::Collider& collider) override;
-
-            /**
-             * @brief Triggers when the user has failed to win the level.
-             */
-            void OnLevelFailed();
-
-            /**
-             * @brief Get weither the level is failed or not
-             * @returns Weither the level is failed or not
-             */
-            bool IsLevelFailed() const;
     };
 }
 
-#endif //SPIC_GAME_GAMELOSTBEHAVIOUR_HPP
+#endif //SPIC_GAME_ENEMYMEDICBEHAVIOUR_HPP

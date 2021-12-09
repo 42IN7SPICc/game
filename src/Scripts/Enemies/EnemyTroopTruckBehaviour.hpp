@@ -1,27 +1,31 @@
-#ifndef SPIC_GAME_GAMELOSTBEHAVIOUR_HPP
-#define SPIC_GAME_GAMELOSTBEHAVIOUR_HPP
+#ifndef SPIC_GAME_ENEMYTROOPTRUCKBEHAVIOUR_HPP
+#define SPIC_GAME_ENEMYTROOPTRUCKBEHAVIOUR_HPP
 
-#include <BehaviourScript.hpp>
-#include "../../Structs/LevelData.hpp"
+#include "../Common/HealthBehaviour.hpp"
+#include "../../Enums/EnemyName.hpp"
+
+#include "BehaviourScript.hpp"
+#include "GameObject.hpp"
 
 namespace game
 {
     /**
-     * @brief The script the handle the game lost screen.
+     * @brief A behaviour script that spawns a given amount of enemies when the current entity dies.
      */
-    class GameLostBehaviour : public spic::BehaviourScript
+    class EnemyTroopTruckBehaviour : public spic::BehaviourScript
     {
         private:
-            bool _lost;
-            bool _dying;
-            double _lostForTime;
-            game::LevelData& _levelData;
+            std::shared_ptr<HealthBehaviour> _healthBehaviour;
+            EnemyName _enemyName;
+            int _count;
+
         public:
             /**
-             * @brief Constructs a new instance of a GameLostBehaviour with a given level.
-             * @param levelData The data of the level.
+             * @brief Constructs a new instance of an EnemyTroopTruckBehaviour with given settings.
+             * @param enemyName The name of the enemy to spawn.
+             * @param count The amount of enemies to spawn.
              */
-            explicit GameLostBehaviour(game::LevelData& levelData);
+            EnemyTroopTruckBehaviour(EnemyName enemyName, int count);
 
             /**
              * @brief Triggers when the scripts starts for the first time.
@@ -50,18 +54,7 @@ namespace game
              * @param collider The collider is colliding.
              */
             void OnTriggerStay2D(const spic::Collider& collider) override;
-
-            /**
-             * @brief Triggers when the user has failed to win the level.
-             */
-            void OnLevelFailed();
-
-            /**
-             * @brief Get weither the level is failed or not
-             * @returns Weither the level is failed or not
-             */
-            bool IsLevelFailed() const;
     };
 }
 
-#endif //SPIC_GAME_GAMELOSTBEHAVIOUR_HPP
+#endif //SPIC_GAME_ENEMYTROOPTRUCKBEHAVIOUR_HPP

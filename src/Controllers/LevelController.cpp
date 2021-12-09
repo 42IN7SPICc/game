@@ -4,7 +4,6 @@
 #include "../Utils/GameObjectUtil.hpp"
 #include "../Enums/Layer.hpp"
 #include "../Utils/TileUtil.hpp"
-#include "../Scripts/Common/GameLostBehaviour.hpp"
 #include "../Factories/ButtonPrefabFactory.hpp"
 #include "../Factories/EnemyPrefabFactory.hpp"
 #include "../Factories/TowerPrefabFactory.hpp"
@@ -26,8 +25,8 @@ void LevelController::OnStart()
     auto gameWonBehaviour = std::make_shared<game::GameWonBehaviour>(_levelData);
     GameObjectUtil::LinkComponent(parent, gameWonBehaviour);
 
-    auto gameLostBehaviour = std::make_shared<game::GameLostBehaviour>(_levelData);
-    GameObjectUtil::LinkComponent(parent, gameLostBehaviour);
+    _gameLostBehavior = std::make_shared<game::GameLostBehaviour>(_levelData);
+    GameObjectUtil::LinkComponent(parent, _gameLostBehavior);
 
     _levelData.HeroHealth->GameObject().lock()->Transform().position = GameObject::FindWithTag("end_tile")->AbsoluteTransform().position;
 
@@ -185,7 +184,7 @@ std::shared_ptr<spic::GameObject> LevelController::CreateHUD()
     return _rightHud;
 }
 
-std::shared_ptr<spic::GameObject> LevelController::BuildLevel(const std::shared_ptr<game::HealthBehaviour>& endTowerHealthBehaviour)
+std::shared_ptr<spic::GameObject> LevelController::BuildLevel(const std::shared_ptr<game::HealthBehaviour>& endTowerHealthBehaviour, const std::shared_ptr<spic::Animator>& animator)
 {
     auto tileMap = std::make_shared<spic::GameObject>("TileGrid", "tilemap", Layer::Game);
     for (auto levelTile: _level.Tiles)
@@ -204,6 +203,7 @@ std::shared_ptr<spic::GameObject> LevelController::BuildLevel(const std::shared_
 
             GameObjectUtil::LinkComponent(tile, endTileCollider);
             GameObjectUtil::LinkComponent(tile, endTowerHealthBehaviour);
+            GameObjectUtil::LinkComponent(tile, animator);
             GameObjectUtil::LinkComponent(tile, tileRigidBody);
         }
         else if (levelTile.TileType() == TileType::Start)
@@ -419,6 +419,11 @@ void LevelController::HandleClickTile(const game::MapNode& clickedTile)
     }
 }
 
+void LevelController::AddEnemyToWave(const std::shared_ptr<spic::GameObject>& enemy)
+{
+    _levelData.Waves.front().CurrentEnemies.push_back(enemy);
+}
+
 void LevelController::HandleClickTower(game::MapNode& clickedTile)
 {
     auto currentTileType = clickedTile.TileType;
@@ -619,6 +624,10 @@ void LevelController::CreateTowerHud()
     text->Size(20);
     nextWaveButton->Transform().scale = 0.8;
     nextWaveButton->OnClick([this, nextWaveButton]() {
+        if (_gameLostBehavior->IsLevelFailed()){
+            return;
+        }
+
         auto& wave = _levelData.Waves.front();
         if (_levelMode == LevelMode::TowerMode)
         {

@@ -1,27 +1,29 @@
-#ifndef SPIC_GAME_GAMELOSTBEHAVIOUR_HPP
-#define SPIC_GAME_GAMELOSTBEHAVIOUR_HPP
+#ifndef SPIC_GAME_ENEMYINVISIBLEBEHAVIOUR_HPP
+#define SPIC_GAME_ENEMYINVISIBLEBEHAVIOUR_HPP
 
-#include <BehaviourScript.hpp>
-#include "../../Structs/LevelData.hpp"
+#include "BehaviourScript.hpp"
+#include "Sprite.hpp"
+
+#include "../Common/CoolDownBehaviour.hpp"
+#include "../Common/HealthBehaviour.hpp"
+
+#include <memory>
 
 namespace game
 {
-    /**
-     * @brief The script the handle the game lost screen.
-     */
-    class GameLostBehaviour : public spic::BehaviourScript
+    class EnemyInvisibleBehaviour : public spic::BehaviourScript
     {
         private:
-            bool _lost;
-            bool _dying;
-            double _lostForTime;
-            game::LevelData& _levelData;
+            int _effectTime;
+            int _coolDownTime;
+
+            std::shared_ptr<CoolDownBehaviour> _effectTimer;
+            std::shared_ptr<CoolDownBehaviour> _effectCoolDown;
+            std::shared_ptr<HealthBehaviour> _healthBehaviour;
+            std::shared_ptr<spic::Sprite> _sprite;
+
         public:
-            /**
-             * @brief Constructs a new instance of a GameLostBehaviour with a given level.
-             * @param levelData The data of the level.
-             */
-            explicit GameLostBehaviour(game::LevelData& levelData);
+            EnemyInvisibleBehaviour(int effectTime, int coolDownTime);
 
             /**
              * @brief Triggers when the scripts starts for the first time.
@@ -50,18 +52,7 @@ namespace game
              * @param collider The collider is colliding.
              */
             void OnTriggerStay2D(const spic::Collider& collider) override;
-
-            /**
-             * @brief Triggers when the user has failed to win the level.
-             */
-            void OnLevelFailed();
-
-            /**
-             * @brief Get weither the level is failed or not
-             * @returns Weither the level is failed or not
-             */
-            bool IsLevelFailed() const;
     };
 }
 
-#endif //SPIC_GAME_GAMELOSTBEHAVIOUR_HPP
+#endif //SPIC_GAME_ENEMYINVISIBLEBEHAVIOUR_HPP

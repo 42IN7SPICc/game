@@ -1,9 +1,10 @@
 #include "EnemyMovementBehaviour.hpp"
 
+#include "../../Constants.hpp"
 #include "../../Controllers/LevelController.hpp"
 #include "../../Utils/StringUtil.hpp"
 #include "../../Utils/PointUtil.hpp"
-#include "../../Constants.hpp"
+#include "../../Utils/GameObjectUtil.hpp"
 
 #include "GameObject.hpp"
 
@@ -11,7 +12,9 @@
 
 using namespace game;
 
-EnemyMovementBehaviour::EnemyMovementBehaviour(std::shared_ptr<spic::Animator> walkingAnimator, float velocity) : _walkingAnimator(walkingAnimator), _velocity(velocity)
+EnemyMovementBehaviour::EnemyMovementBehaviour(std::shared_ptr<spic::Animator> walkingAnimator, float velocity) : _walkingAnimator(walkingAnimator),
+                                                                                                                  _velocity(velocity),
+                                                                                                                  _boostSpeedMultiplier(1)
 {
 }
 
@@ -44,9 +47,20 @@ void EnemyMovementBehaviour::OnStart()
     if (gameObject)
     {
         auto levelController = gameObject->GetComponent<game::LevelController>();
-        _graph = levelController->GetGraph();
-        _path = levelController->GetPath();
+        if (_graph.empty()) _graph = levelController->GetGraph();
+        if (_path.empty()) _path = levelController->GetPath();
     }
+
+    _boostCoolDownBehaviour = std::make_shared<CoolDownBehaviour>(0);
+    GameObjectUtil::LinkComponent(parent, _boostCoolDownBehaviour);
+}
+
+void EnemyMovementBehaviour::Boost(int time, double multiplier)
+{
+    _boostCoolDownBehaviour->MinCoolDown(time);
+    _boostCoolDownBehaviour->CooledDown(false);
+
+    _boostSpeedMultiplier = multiplier;
 }
 
 void EnemyMovementBehaviour::OnUpdate()
@@ -80,6 +94,11 @@ void EnemyMovementBehaviour::OnUpdate()
 
     speedMultiplier *= _velocity;
 
+    if (!_boostCoolDownBehaviour->CooledDown())
+    {
+        speedMultiplier *= _boostSpeedMultiplier;
+    }
+
     auto toLocation = _graph[_path.front()];
 
     double distance;
@@ -107,4 +126,14 @@ void EnemyMovementBehaviour::OnTriggerStay2D(const spic::Collider& collider)
 
 void EnemyMovementBehaviour::OnTriggerExit2D(const spic::Collider& collider)
 {
+}
+
+const std::queue<std::string>& EnemyMovementBehaviour::Path() const
+{
+    return _path;
+}
+
+void EnemyMovementBehaviour::Path(const std::queue<std::string>& path)
+{
+    _path = path;
 }
