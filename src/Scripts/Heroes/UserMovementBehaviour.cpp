@@ -1,9 +1,14 @@
 #include "UserMovementBehaviour.hpp"
-#include <RigidBody.hpp>
+
 #include <Input.hpp>
-#include <utility>
 #include <GameObject.hpp>
+#include <RigidBody.hpp>
+
+#include "../../Constants.hpp"
+#include "../../Controllers/LevelController.hpp"
+
 #include <stdexcept>
+#include <utility>
 
 using namespace spic;
 
@@ -34,6 +39,13 @@ void game::UserMovementBehaviour::OnStart()
     {
         throw std::runtime_error("The user movement behaviour script requires the parent to have a rigidbody.");
     }
+
+    auto gameObject = spic::GameObject::Find("LevelController");
+    if (gameObject)
+    {
+        auto levelController = gameObject->GetComponent<game::LevelController>();
+        _graph = levelController->GetGraph();
+    }
 }
 
 void game::UserMovementBehaviour::OnUpdate()
@@ -47,23 +59,25 @@ void game::UserMovementBehaviour::OnUpdate()
 
     auto parent = GameObject().lock();
     bool moving = false;
+    Point movementForce{};
+    double movementMultiplier = 1;
     if (_controllable)
     {
         if (Input::GetKey(Input::KeyCode::W))
         {
-            _rigidBody->AddForce(spic::Point{0, -_velocity});
+            movementForce.y -= _velocity;
             moving = true;
         }
 
         if (Input::GetKey(Input::KeyCode::S))
         {
-            _rigidBody->AddForce(spic::Point{0, _velocity});
+            movementForce.y += _velocity;
             moving = true;
         }
 
         if (Input::GetKey(Input::KeyCode::A))
         {
-            _rigidBody->AddForce(spic::Point{-_velocity, 0});
+            movementForce.x -= _velocity;
             moving = true;
             auto sprite = parent->GetComponent<spic::Sprite>();
             sprite->FlipX(true);
@@ -71,13 +85,36 @@ void game::UserMovementBehaviour::OnUpdate()
 
         if (Input::GetKey(Input::KeyCode::D))
         {
-            _rigidBody->AddForce(spic::Point{_velocity, 0});
+            movementForce.x += _velocity;
             moving = true;
+        }
+
+        if (!_graph.empty())
+        {
+            auto enemyPosition = parent->AbsoluteTransform().position;
+            double scaledTileSize = TileSize * TileMapScale;
+            int tileXLocation = ((enemyPosition.x - MapX) + (scaledTileSize / 2)) / scaledTileSize;
+            int tileYLocation = ((enemyPosition.y - MapY) + (scaledTileSize / 2)) / scaledTileSize;
+
+            auto tileLocation = _graph[std::to_string(tileXLocation) + "-" + std::to_string(tileYLocation)];
+
+            if (tileLocation.TileType == Grass)
+            {
+                movementMultiplier = 0.66;
+            }
+            else if (tileLocation.TileType == Sand)
+            {
+                movementMultiplier = 0.33;
+            }
         }
     }
 
     if (moving)
     {
+        movementForce.x *= movementMultiplier;
+        movementForce.y *= movementMultiplier;
+
+        _rigidBody->AddForce(movementForce);
         _idleAnimator->Stop();
         _walkingAnimator->Play(true);
     }
