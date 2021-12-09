@@ -13,6 +13,7 @@
 #include "GameObject.hpp"
 #include "../Structs/LevelWithTiles.hpp"
 #include "../Structs/LevelData.hpp"
+#include "../Structs/HudData.hpp"
 #include "../Enums/LevelMode.hpp"
 #include "../Scripts/Common/GameLostBehaviour.hpp"
 #include "HUDController.hpp"
@@ -24,6 +25,24 @@ namespace game
      */
     class LevelController : public spic::BehaviourScript
     {
+        private:
+            spic::Point _startPosition;
+            double _timePassed;
+            const game::LevelWithTiles _level;
+            game::LevelData _levelData;
+
+            std::shared_ptr<spic::Button> _selectedButton;
+            std::map<std::shared_ptr<spic::Button>, int>& _buttonTileAmounts;
+            std::map<std::shared_ptr<spic::Button>, int>& _buttonTowerCosts;
+
+            game::LevelMode _levelMode;
+            bool _strongPathEnabled;
+            std::shared_ptr<game::GameLostBehaviour> _gameLostBehavior;
+
+            void HandleClickTile(const game::MapNode& clickedTile);
+
+            void HandleClickTower(game::MapNode& clickedTile);
+
         public:
             /**
              * @brief Constructs a new instance of a LevelController with given settings.
@@ -32,7 +51,7 @@ namespace game
              * @param militaryBaseHealth The health of the end point.
              * @param waves The waves of the level.
              */
-            LevelController(game::LevelWithTiles level, std::shared_ptr<game::HealthBehaviour> heroHealth, std::shared_ptr<game::HealthBehaviour> militaryBaseHealth, std::queue<game::WaveData> waves);
+            LevelController(game::LevelWithTiles level, std::shared_ptr<game::HealthBehaviour> heroHealth, std::shared_ptr<game::HealthBehaviour> militaryBaseHealth, std::queue<game::WaveData> waves, game::LevelData& levelData, game::HudData& hudData);
 
             /**
              * @brief Triggers when the scripts starts for the first time.
@@ -143,21 +162,6 @@ namespace game
              * @return a bool if the path is complete and a queue with the path follow instructions
              */
             static std::tuple<bool, std::queue<std::string>> CheckIfPathIsComplete(std::map<std::string, MapNode> graphCopy);
-        private:
-            spic::Point _startPosition;
-            double _timePassed;
-            const game::LevelWithTiles _level;
-            game::LevelData _levelData;
-            std::shared_ptr<spic::Button> _selectedButton;
-            std::map<std::shared_ptr<spic::Button>, int> _buttonTileAmounts;
-            std::map<std::shared_ptr<spic::Button>, int> _buttonTowerCosts;
-            game::LevelMode _levelMode;
-            bool _strongPathEnabled;
-            std::shared_ptr<game::GameLostBehaviour> _gameLostBehavior;
-
-            void HandleClickTile(const game::MapNode& clickedTile);
-
-            void HandleClickTower(game::MapNode& clickedTile);
     };
 }
 

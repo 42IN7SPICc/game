@@ -14,6 +14,7 @@
 #include "../Factories/WavePrefabFactory.hpp"
 #include "../Constants.hpp"
 #include "../Structs/PlayerData.hpp"
+#include "../Structs/HudData.hpp"
 
 
 using namespace spic;
@@ -33,15 +34,28 @@ LevelScene::LevelScene(LevelWithTiles& levelWithTiles)
     auto levelAudioSource = game::AudioSourcePrefabFactory::CreateAudioObject(AudioClipName::Game, true, true, 0.2);
     auto mainGameObject = std::make_shared<spic::GameObject>("LevelController", "default", Layer::Background);
 
-    auto levelController = std::make_shared<game::LevelController>(levelWithTiles, heroHealth, endTowerHealth, game::WavePrefabFactory::GenerateWaves(5));
-    auto hudController = std::make_shared<game::HUDController>();
+    auto waves = game::WavePrefabFactory::GenerateWaves(5);
+    auto levelData = game::LevelData{
+            levelWithTiles.UnlockThreshold,
+            std::move(heroHealth),
+            std::move(endTowerHealth),
+            waves.size(), // Total waves
+            500,
+            std::move(waves)
+    };
+
+    game::HudData hudData {};
+
+    auto levelController = std::make_shared<game::LevelController>(levelWithTiles, heroHealth, endTowerHealth, waves, levelData, hudData);
+    auto hudController = std::make_shared<game::HUDController>(levelWithTiles, levelData, hudData);
 
     auto cheatManager = std::make_shared<game::CheatManager>();
     GameObjectUtil::LinkComponent(mainGameObject, levelController);
+    GameObjectUtil::LinkComponent(mainGameObject, hudController);
     GameObjectUtil::LinkComponent(mainGameObject, cheatManager);
     GameObjectUtil::LinkComponent(mainGameObject, std::make_shared<PauseSceneBehaviour>());
 
-    auto tilesMapObject = levelController->BuildLevel(endTowerHealth, animation);
+    auto tilesMapObject = levelController->BuildLevel(levelData.MilitaryBaseHealth, animation);
     tilesMapObject->Transform().position.x = MapX;
     tilesMapObject->Transform().position.y = MapY;
     tilesMapObject->Transform().scale = TileMapScale;

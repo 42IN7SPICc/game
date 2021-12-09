@@ -17,18 +17,14 @@
 using namespace spic;
 using namespace game;
 
-LevelController::LevelController(game::LevelWithTiles level, std::shared_ptr<game::HealthBehaviour> heroHealth, std::shared_ptr<game::HealthBehaviour> militaryBaseHealth, std::queue<game::WaveData> waves) : _timePassed(0),
-                                                                                                                                                                                                               _level(std::move(level)),
-                                                                                                                                                                                                               _levelData(game::LevelData{
-                                                                                                                                                                                                                       level.UnlockThreshold,
-                                                                                                                                                                                                                       std::move(heroHealth),
-                                                                                                                                                                                                                       std::move(militaryBaseHealth),
-                                                                                                                                                                                                                       waves.size(), // Total waves
-                                                                                                                                                                                                                       500,
-                                                                                                                                                                                                                       std::move(waves)
-                                                                                                                                                                                                               }),
-                                                                                                                                                                                                               _levelMode(LevelMode::TileMode),
-                                                                                                                                                                                                               _strongPathEnabled(false)
+LevelController::LevelController(game::LevelWithTiles level, std::shared_ptr<game::HealthBehaviour> heroHealth, std::shared_ptr<game::HealthBehaviour> militaryBaseHealth, std::queue<game::WaveData> waves, LevelData& levelData, game::HudData& hudData) : _timePassed(0),
+                                                                                                                                                                                                                                                             _level(std::move(level)),
+                                                                                                                                                                                                                                                             _levelData(levelData),
+                                                                                                                                                                                                                                                             _levelMode(LevelMode::TileMode),
+                                                                                                                                                                                                                                                             _strongPathEnabled(false),
+                                                                                                                                                                                                                                                             _selectedButton(hudData.SelectedButton),
+                                                                                                                                                                                                                                                             _buttonTileAmounts(hudData.ButtonTileAmounts),
+                                                                                                                                                                                                                                                             _buttonTowerCosts(hudData.ButtonTowerCosts)
 {
 }
 
