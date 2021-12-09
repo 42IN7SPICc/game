@@ -12,7 +12,8 @@ namespace game
         Game,
         Victory,
         GameOver,
-        Explosion
+        Explosion,
+        NukeAbility,
     };
 }
 

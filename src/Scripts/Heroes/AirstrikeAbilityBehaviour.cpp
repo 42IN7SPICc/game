@@ -7,9 +7,11 @@
 #include "Time.hpp"
 #include "../../Enums/SortingLayer.hpp"
 #include "../../Enums/Layer.hpp"
+#include "../../Enums/AudioClipName.hpp"
 #include "../../Utils/GameObjectUtil.hpp"
 #include "../../Utils/AnimatorUtil.hpp"
 #include "../Common/HealthBehaviour.hpp"
+#include "../../Factories/AudioSourcePrefabFactory.hpp"
 
 game::AirstrikeAbilityBehaviour::AirstrikeAbilityBehaviour() : _coolDownBehaviour(std::make_shared<CoolDownBehaviour>(CoolDownBehaviour(FranklinDRooseveltAirstrikeAbilityCooldown))),
                                                                _bombIsDropped(false)
@@ -29,6 +31,8 @@ void game::AirstrikeAbilityBehaviour::OnUpdate()
         bombObject->Transform().scale *= 0.96 * ( 1 - spic::Time::DeltaTime());
         if (bombObject && bombObject->GetComponent<CoolDownBehaviour>()->CooledDown())
         {
+            auto soundEffect = AudioSourcePrefabFactory::CreateAudioObject(game::AudioClipName::NukeAbility, true, false, 1.0);
+            game::GameObjectUtil::LinkChild(GameObject().lock(), soundEffect);
             bombObject->Destroy(bombObject);
             _bombIsDropped = false;
             auto enemies = spic::GameObject::FindGameObjectsWithTag("enemy");
