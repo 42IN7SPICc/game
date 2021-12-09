@@ -9,7 +9,7 @@ namespace game
     /**
      * @brief A model for storing data about the current player.
      */
-    struct PlayerData
+    class PlayerData
     {
         public:
             template<class Archive>

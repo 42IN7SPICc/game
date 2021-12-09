@@ -1,6 +1,5 @@
 #include "AttackBehaviour.hpp"
 
-#include "HealthBehaviour.hpp"
 #include "../../Factories/BulletFactory.hpp"
 #include "../../Utils/GameObjectUtil.hpp"
 #include "../../Utils/PointUtil.hpp"
@@ -14,15 +13,15 @@
 using namespace game;
 
 AttackBehaviour::AttackBehaviour(const std::string& targetTag, game::BulletType bulletType, double fireRate, int range, int damage, double bulletSpeed, int maxPenetrating, double damageRadius, bool followTarget, std::shared_ptr<spic::Animator> animator) : _coolDownBehaviour(std::make_shared<CoolDownBehaviour>(fireRate)),
-                                                                                                                                                                                                                                            _targetTag(targetTag),
-                                                                                                                                                                                                                                            _bulletType(bulletType),
-                                                                                                                                                                                                                                            _range(range),
-                                                                                                                                                                                                                                            _damage(damage),
-                                                                                                                                                                                                                                            _bulletSpeed(bulletSpeed),
-                                                                                                                                                                                                                                            _maxPenetrating(maxPenetrating),
-                                                                                                                                                                                                                                            _damageRadius(damageRadius),
-                                                                                                                                                                                                                                            _followTarget(followTarget),
-                                                                                                                                                                                                                                            _animator(animator)
+                                                                                                                                                                                                                                                                _targetTag(targetTag),
+                                                                                                                                                                                                                                                                _bulletType(bulletType),
+                                                                                                                                                                                                                                                                _range(range),
+                                                                                                                                                                                                                                                                _damage(damage),
+                                                                                                                                                                                                                                                                _bulletSpeed(bulletSpeed),
+                                                                                                                                                                                                                                                                _maxPenetrating(maxPenetrating),
+                                                                                                                                                                                                                                                                _damageRadius(damageRadius),
+                                                                                                                                                                                                                                                                _followTarget(followTarget),
+                                                                                                                                                                                                                                                                _animator(animator)
 {
 }
 
@@ -30,10 +29,14 @@ void AttackBehaviour::OnStart()
 {
     auto parent = GameObject().lock();
     GameObjectUtil::LinkComponent(parent, _coolDownBehaviour);
+
+    _healthBehaviour = parent->GetComponent<HealthBehaviour>();
 }
 
 void AttackBehaviour::OnUpdate()
 {
+    if (_healthBehaviour && _healthBehaviour->Health() <= 0) return;
+
     if (!_coolDownBehaviour->CooledDown() && !_followTarget) return;
 
     auto absPosition = GameObject().lock()->AbsoluteTransform().position;

@@ -3,6 +3,7 @@
 
 #include "BehaviourScript.hpp"
 #include "CoolDownBehaviour.hpp"
+#include "HealthBehaviour.hpp"
 #include "../../Enums/BulletType.hpp"
 
 #include "Animator.hpp"
@@ -19,6 +20,7 @@ namespace game
     {
         private:
             std::shared_ptr<game::CoolDownBehaviour> _coolDownBehaviour;
+            std::shared_ptr<game::HealthBehaviour> _healthBehaviour;
 
             std::string _targetTag;
             game::BulletType _bulletType;

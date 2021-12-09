@@ -28,7 +28,7 @@ namespace game
              * @param radius The radius to deal damage in.
              * @param maxPenetrating How many enemies a single bullet can passthrough before disappearing
              */
-            explicit DamageBehaviour(int damage, const std::string& targetTag = "", int radius = 0, int maxPenetrating = 1);
+            explicit DamageBehaviour(int damage, const std::string& targetTag, int radius, int maxPenetrating);
 
             /**
              * @brief Give damage to a given health script.

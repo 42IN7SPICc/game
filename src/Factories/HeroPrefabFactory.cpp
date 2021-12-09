@@ -8,6 +8,11 @@
 #include "../Enums/Layer.hpp"
 #include "../Enums/SortingLayer.hpp"
 #include "../Scripts/Heroes/HealAbilityBehaviour.hpp"
+#include "../Scripts/Heroes/InvisibilityAbilityBehaviour.hpp"
+#include "../Scripts/Heroes/AirstrikeAbilityBehaviour.hpp"
+#include "../Scripts/Heroes/IncreaseTowerRangeAbilityBehaviour.hpp"
+#include "../Scripts/Heroes/IncreaseTowerFireRateAbilityBehaviour.hpp"
+#include "../Scripts/Heroes/EnemySuicideAbilityBehaviour.hpp"
 #include "../Scripts/Heroes/UserMovementBehaviour.hpp"
 #include "../Scripts/Heroes/UserAttackBehaviour.hpp"
 #include "../Utils/AnimatorUtil.hpp"
@@ -65,6 +70,8 @@ std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateDesmondDoss()
 std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateBernardIJzerdraat()
 {
     auto base_hero = CreateBaseHero(BernardIJzerdraatDamage, BernardIJzerdraatDefense, BernardIJzerdraatColor<spic::Color>());
+    auto ability = std::make_shared<game::InvisibilityAbilityBehaviour>();
+    GameObjectUtil::LinkComponent(base_hero, ability);
 
     return base_hero;
 }
@@ -72,6 +79,10 @@ std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateBernardIJzerdra
 std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateFranklinDRoosevelt()
 {
     auto base_hero = CreateBaseHero(FranklinDRooseveltDamage, FranklinDRooseveltDefense, FranklinDRooseveltColor<spic::Color>());
+    auto airStrikeAbility = std::make_shared<game::AirstrikeAbilityBehaviour>();
+    auto towerRangeAbility = std::make_shared<game::IncreaseTowerRangeAbilityBehaviour>();
+    GameObjectUtil::LinkComponent(base_hero, airStrikeAbility);
+    GameObjectUtil::LinkComponent(base_hero, towerRangeAbility);
 
     return base_hero;
 }
@@ -79,6 +90,8 @@ std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateFranklinDRoosev
 std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateWinstonChurchill()
 {
     auto base_hero = CreateBaseHero(WinstonChurchillDamage, WinstonChurchillDefense, WinstonChurchillColor<spic::Color>());
+    auto ability = std::make_shared<game::IncreaseTowerFireRateAbilityBehaviour>();
+    GameObjectUtil::LinkComponent(base_hero, ability);
 
     return base_hero;
 }
@@ -86,6 +99,8 @@ std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateWinstonChurchil
 std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateJosephStalin()
 {
     auto base_hero = CreateBaseHero(JosephStalinDamage, JosephStalinDefense, JosephStalinColor<spic::Color>());
+    auto ability = std::make_shared<game::EnemySuicideAbilityBehaviour>();
+    GameObjectUtil::LinkComponent(base_hero, ability);
 
     return base_hero;
 }
