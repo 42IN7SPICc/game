@@ -3,6 +3,7 @@
 
 #include "BehaviourScript.hpp"
 #include "../Common/CoolDownBehaviour.hpp"
+#include "../Common/HealthBehaviour.hpp"
 
 namespace game
 {
@@ -13,6 +14,7 @@ namespace game
     {
         private:
             std::shared_ptr<game::CoolDownBehaviour> _coolDownBehaviour;
+            std::shared_ptr<game::HealthBehaviour> _healthBehaviour;
             bool _abilityActivated;
 
         public:

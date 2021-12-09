@@ -21,11 +21,14 @@ game::AirstrikeAbilityBehaviour::AirstrikeAbilityBehaviour() : _coolDownBehaviou
 void game::AirstrikeAbilityBehaviour::OnStart()
 {
     auto parent = GameObject().lock();
+    _healthBehaviour = parent->GetComponent<game::HealthBehaviour>();
     game::GameObjectUtil::LinkComponent(parent, _coolDownBehaviour);
 }
 
 void game::AirstrikeAbilityBehaviour::OnUpdate()
 {
+    if(_healthBehaviour->Health() <= 0) return;
+
     if(_bombIsDropped) {
         auto bombObject = spic::GameObject::Find("airstrikeBomb");
         bombObject->Transform().scale *= 0.96 * ( 1 - spic::Time::DeltaTime());

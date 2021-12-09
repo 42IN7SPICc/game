@@ -19,6 +19,8 @@ void game::HealAbilityBehaviour::OnStart()
 
 void game::HealAbilityBehaviour::OnUpdate()
 {
+    if(_healthBehaviour->Health() <= 0) return;
+
     if (spic::Input::GetKey(spic::Input::KeyCode::E))
     {
         if (_coolDownBehaviour->CooledDown())

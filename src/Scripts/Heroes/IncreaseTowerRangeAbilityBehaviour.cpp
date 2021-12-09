@@ -17,11 +17,14 @@ game::IncreaseTowerRangeAbilityBehaviour::IncreaseTowerRangeAbilityBehaviour() :
 void game::IncreaseTowerRangeAbilityBehaviour::OnStart()
 {
     auto parent = GameObject().lock();
+    _healthBehaviour = parent->GetComponent<game::HealthBehaviour>();
     game::GameObjectUtil::LinkComponent(parent, _coolDownBehaviour);
 }
 
 void game::IncreaseTowerRangeAbilityBehaviour::OnUpdate()
 {
+    if(_healthBehaviour->Health() <= 0) return;
+
     if(_abilityActivated) {
         auto towerRangeObject = spic::GameObject::Find("towerRangeObject");
         if (towerRangeObject && towerRangeObject->GetComponent<CoolDownBehaviour>()->CooledDown())

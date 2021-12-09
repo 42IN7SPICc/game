@@ -17,11 +17,14 @@ game::EnemySuicideAbilityBehaviour::EnemySuicideAbilityBehaviour() : _coolDownBe
 void game::EnemySuicideAbilityBehaviour::OnStart()
 {
     auto parent = GameObject().lock();
+    _healthBehaviour = parent->GetComponent<game::HealthBehaviour>();
     game::GameObjectUtil::LinkComponent(parent, _coolDownBehaviour);
 }
 
 void game::EnemySuicideAbilityBehaviour::OnUpdate()
 {
+    if(_healthBehaviour->Health() <= 0) return;
+
     if (_abilityActive)
     {
         auto enemySuicideObject = spic::GameObject::Find("enemySuicideObject");
