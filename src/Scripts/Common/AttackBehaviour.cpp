@@ -43,7 +43,7 @@ void AttackBehaviour::OnUpdate()
         if (target->Tag() != _targetTag) continue;
 
         auto healthBehaviour = target->GetComponent<HealthBehaviour>();
-        if (!healthBehaviour || healthBehaviour->Health() <= 0) continue;
+        if (!healthBehaviour || healthBehaviour->Health() <= 0 || healthBehaviour->Invincibility()) continue;
 
         auto targetPosition = target->AbsoluteTransform().position;
         auto distance = PointUtil::Distance(absPosition, targetPosition);
