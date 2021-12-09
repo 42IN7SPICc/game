@@ -1,5 +1,7 @@
 #include "LevelScene.hpp"
 
+#include <memory>
+
 #include "GameObject.hpp"
 
 #include "../Controllers/LevelController.hpp"
@@ -34,7 +36,7 @@ LevelScene::LevelScene(LevelWithTiles& levelWithTiles)
     auto mainGameObject = std::make_shared<spic::GameObject>("LevelController", "default", Layer::Background);
 
     auto waves = game::WavePrefabFactory::GenerateWaves(5);
-    auto levelData = std::shared_ptr<game::LevelData>(new game::LevelData {
+    auto levelData = std::make_shared<game::LevelData>(game::LevelData {
             levelWithTiles.UnlockThreshold,
             std::move(heroHealth),
             std::move(endTowerHealth),
