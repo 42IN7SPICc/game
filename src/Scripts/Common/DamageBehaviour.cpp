@@ -77,7 +77,6 @@ void DamageBehaviour::Damage(const std::shared_ptr<game::HealthBehaviour>& healt
 {
     if (!healthBehaviour) return;
 
-    spic::Debug::Log("Damaging!");
     healthBehaviour->Damage(_damage);
     _objectsDamaged++;
 }
