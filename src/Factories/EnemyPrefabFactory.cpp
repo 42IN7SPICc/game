@@ -1,7 +1,7 @@
 #include "EnemyPrefabFactory.hpp"
 
 #include "HealthBarFactory.hpp"
-#include "../Constants.hpp"
+#include "../EnemyConstants.hpp"
 #include "../Enums/Layer.hpp"
 #include "../Enums/SortingLayer.hpp"
 #include "../Scripts/Common/AttackBehaviour.hpp"
