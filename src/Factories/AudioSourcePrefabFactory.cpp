@@ -27,6 +27,12 @@ std::shared_ptr<spic::AudioSource> game::AudioSourcePrefabFactory::CreateAudioSo
         case AudioClipName::NukeAbility:
             audioSrc = "abilities/nuke.wav";
             break;
+        case AudioClipName::ActivateAbility:
+            audioSrc = "abilities/activate.wav";
+            break;
+        case AudioClipName::HealAbility:
+            audioSrc = "abilities/heal.wav";
+            break;
         default:
             throw std::runtime_error("Audio clip has not been defined.");
     }

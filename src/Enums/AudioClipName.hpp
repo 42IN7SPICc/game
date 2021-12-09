@@ -14,6 +14,8 @@ namespace game
         GameOver,
         Explosion,
         NukeAbility,
+        HealAbility,
+        ActivateAbility,
     };
 }
 
