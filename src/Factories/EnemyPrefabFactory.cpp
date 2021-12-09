@@ -66,9 +66,9 @@ std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreateEnemy(EnemyName name
 
 std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreatePanzer()
 {
-    types::sprite_vector idleSprites = AnimatorUtil::CreateSpriteVector(10, "resources/sprites/enemies/Idle/enemy_idle_", SortingLayer::Enemy);
-    types::sprite_vector walkingSprites = AnimatorUtil::CreateSpriteVector(10, "resources/sprites/enemies/Walking/enemy_walking_", SortingLayer::Enemy);
-    types::sprite_vector diedSprites = AnimatorUtil::CreateSpriteVector(9, "resources/sprites/enemies/Died/enemy_died_", SortingLayer::Enemy);
+    types::sprite_vector idleSprites = AnimatorUtil::CreateSpriteVector(1, "resources/sprites/enemies/tank/idle/tank_idle_", SortingLayer::Enemy);
+    types::sprite_vector walkingSprites = AnimatorUtil::CreateSpriteVector(8, "resources/sprites/enemies/tank/moving/tank_moving_", SortingLayer::Enemy);
+    types::sprite_vector diedSprites = AnimatorUtil::CreateSpriteVector(17, "resources/sprites/enemies/tank/died/tank_exploding_", SortingLayer::Enemy);
 
     auto enemy = CreateBaseEnemy(15, PanzerEnemyHealth, PanzerEnemyVelocity, idleSprites, walkingSprites, diedSprites, PanzerEnemyValue);
 
@@ -80,9 +80,9 @@ std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreatePanzer()
 
 std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreateGruppenfuhrer()
 {
-    types::sprite_vector idleSprites = AnimatorUtil::CreateSpriteVector(10, "resources/sprites/enemies/Idle/enemy_idle_", SortingLayer::Enemy);
-    types::sprite_vector walkingSprites = AnimatorUtil::CreateSpriteVector(10, "resources/sprites/enemies/Walking/enemy_walking_", SortingLayer::Enemy);
-    types::sprite_vector diedSprites = AnimatorUtil::CreateSpriteVector(9, "resources/sprites/enemies/Died/enemy_died_", SortingLayer::Enemy);
+    types::sprite_vector idleSprites = AnimatorUtil::CreateSpriteVector(10, "resources/sprites/enemies/soldier/idle/enemy_idle_", GruppenfuhrerColor<spic::Color>(), SortingLayer::Enemy);
+    types::sprite_vector walkingSprites = AnimatorUtil::CreateSpriteVector(10, "resources/sprites/enemies/soldier/walking/enemy_walking_", GruppenfuhrerColor<spic::Color>(), SortingLayer::Enemy);
+    types::sprite_vector diedSprites = AnimatorUtil::CreateSpriteVector(9, "resources/sprites/enemies/soldier/died/enemy_died_", GruppenfuhrerColor<spic::Color>(), SortingLayer::Enemy);
 
     auto enemy = CreateBaseEnemy(4, GruppenfuhrerEnemyHealth, GruppenfuhrerEnemyVelocity, idleSprites, walkingSprites, diedSprites, GruppenfuhrerEnemyValue);
 
@@ -96,9 +96,9 @@ std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreateGruppenfuhrer()
 
 std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreateSchutze()
 {
-    types::sprite_vector idleSprites = AnimatorUtil::CreateSpriteVector(10, "resources/sprites/enemies/Idle/enemy_idle_", SortingLayer::Enemy);
-    types::sprite_vector walkingSprites = AnimatorUtil::CreateSpriteVector(10, "resources/sprites/enemies/Walking/enemy_walking_", SortingLayer::Enemy);
-    types::sprite_vector diedSprites = AnimatorUtil::CreateSpriteVector(9, "resources/sprites/enemies/Died/enemy_died_", SortingLayer::Enemy);
+    types::sprite_vector idleSprites = AnimatorUtil::CreateSpriteVector(10, "resources/sprites/enemies/soldier/idle/enemy_idle_", SortingLayer::Enemy);
+    types::sprite_vector walkingSprites = AnimatorUtil::CreateSpriteVector(10, "resources/sprites/enemies/soldier/walking/enemy_walking_", SortingLayer::Enemy);
+    types::sprite_vector diedSprites = AnimatorUtil::CreateSpriteVector(9, "resources/sprites/enemies/soldier/died/enemy_died_", SortingLayer::Enemy);
 
     auto enemy = CreateBaseEnemy(2, SchutzeEnemyHealth, SchutzeEnemyVelocity, idleSprites, walkingSprites, diedSprites, SchutzeEnemyValue);
 
@@ -110,9 +110,9 @@ std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreateSchutze()
 
 std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreateErkunder()
 {
-    types::sprite_vector idleSprites = AnimatorUtil::CreateSpriteVector(10, "resources/sprites/enemies/Idle/enemy_idle_", SortingLayer::Enemy);
-    types::sprite_vector walkingSprites = AnimatorUtil::CreateSpriteVector(10, "resources/sprites/enemies/Walking/enemy_walking_", SortingLayer::Enemy);
-    types::sprite_vector diedSprites = AnimatorUtil::CreateSpriteVector(9, "resources/sprites/enemies/Died/enemy_died_", SortingLayer::Enemy);
+    types::sprite_vector idleSprites = AnimatorUtil::CreateSpriteVector(10, "resources/sprites/enemies/soldier/idle/enemy_idle_", ErkunderColor<spic::Color>(), SortingLayer::Enemy);
+    types::sprite_vector walkingSprites = AnimatorUtil::CreateSpriteVector(10, "resources/sprites/enemies/soldier/walking/enemy_walking_", ErkunderColor<spic::Color>(), SortingLayer::Enemy);
+    types::sprite_vector diedSprites = AnimatorUtil::CreateSpriteVector(9, "resources/sprites/enemies/soldier/died/enemy_died_", ErkunderColor<spic::Color>(), SortingLayer::Enemy);
 
     auto enemy = CreateBaseEnemy(2, ErkunderEnemyHealth, ErkunderEnemyVelocity, idleSprites, walkingSprites, diedSprites, ErkunderEnemyValue);
 
@@ -124,9 +124,9 @@ std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreateErkunder()
 
 std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreateGhillieAnzugSchutze()
 {
-    types::sprite_vector idleSprites = AnimatorUtil::CreateSpriteVector(10, "resources/sprites/enemies/Idle/enemy_idle_", SortingLayer::Enemy);
-    types::sprite_vector walkingSprites = AnimatorUtil::CreateSpriteVector(10, "resources/sprites/enemies/Walking/enemy_walking_", SortingLayer::Enemy);
-    types::sprite_vector diedSprites = AnimatorUtil::CreateSpriteVector(9, "resources/sprites/enemies/Died/enemy_died_", SortingLayer::Enemy);
+    types::sprite_vector idleSprites = AnimatorUtil::CreateSpriteVector(10, "resources/sprites/enemies/soldier/idle/enemy_idle_", GhillieAnzugSchutzeColor<spic::Color>(), SortingLayer::Enemy);
+    types::sprite_vector walkingSprites = AnimatorUtil::CreateSpriteVector(10, "resources/sprites/enemies/soldier/walking/enemy_walking_", GhillieAnzugSchutzeColor<spic::Color>(), SortingLayer::Enemy);
+    types::sprite_vector diedSprites = AnimatorUtil::CreateSpriteVector(9, "resources/sprites/enemies/soldier/died/enemy_died_", GhillieAnzugSchutzeColor<spic::Color>(), SortingLayer::Enemy);
 
     auto enemy = CreateBaseEnemy(3, GhillieAnzugSchutzeEnemyHealth, GhillieAnzugEnemyVelocity, idleSprites, walkingSprites, diedSprites, GhillieAnzugSchutzeEnemyValue);
 
@@ -140,9 +140,9 @@ std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreateGhillieAnzugSchutze(
 
 std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreateStabsarzt()
 {
-    types::sprite_vector idleSprites = AnimatorUtil::CreateSpriteVector(10, "resources/sprites/enemies/Idle/enemy_idle_", SortingLayer::Enemy);
-    types::sprite_vector walkingSprites = AnimatorUtil::CreateSpriteVector(10, "resources/sprites/enemies/Walking/enemy_walking_", SortingLayer::Enemy);
-    types::sprite_vector diedSprites = AnimatorUtil::CreateSpriteVector(9, "resources/sprites/enemies/Died/enemy_died_", SortingLayer::Enemy);
+    types::sprite_vector idleSprites = AnimatorUtil::CreateSpriteVector(10, "resources/sprites/enemies/soldier/idle/enemy_idle_", StabsarztColor<spic::Color>(), SortingLayer::Enemy);
+    types::sprite_vector walkingSprites = AnimatorUtil::CreateSpriteVector(10, "resources/sprites/enemies/soldier/walking/enemy_walking_", StabsarztColor<spic::Color>(), SortingLayer::Enemy);
+    types::sprite_vector diedSprites = AnimatorUtil::CreateSpriteVector(9, "resources/sprites/enemies/soldier/died/enemy_died_", StabsarztColor<spic::Color>(), SortingLayer::Enemy);
 
     auto enemy = CreateBaseEnemy(1, StabsarztEnemyHealth, StabsarztEnemyVelocity, idleSprites, walkingSprites, diedSprites, StabsarztEnemyValue);
 
@@ -153,9 +153,9 @@ std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreateStabsarzt()
 
 std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreateRaupenschlepper()
 {
-    types::sprite_vector idleSprites = AnimatorUtil::CreateSpriteVector(8, "resources/sprites/truck/truck_moving_", SortingLayer::Enemy);
-    types::sprite_vector walkingSprites = AnimatorUtil::CreateSpriteVector(8, "resources/sprites/truck/truck_moving_", SortingLayer::Enemy);
-    types::sprite_vector diedSprites = AnimatorUtil::CreateSpriteVector(8, "resources/sprites/truck/truck_moving_", SortingLayer::Enemy);
+    types::sprite_vector idleSprites = AnimatorUtil::CreateSpriteVector(1, "resources/sprites/enemies/truck/idle/truck_idle_", SortingLayer::Enemy);
+    types::sprite_vector walkingSprites = AnimatorUtil::CreateSpriteVector(4, "resources/sprites/enemies/truck/walking/truck_moving_", SortingLayer::Enemy);
+    types::sprite_vector diedSprites = AnimatorUtil::CreateSpriteVector(1, "resources/sprites/enemies/truck/died/truck_died_", SortingLayer::Enemy);
 
     auto enemy = CreateBaseEnemy(12, RaupenschlepperEnemyHealth, RaupenschlepperEnemyVelocity, idleSprites, walkingSprites, diedSprites, RaupenschlepperEnemyValue);
 
@@ -169,7 +169,7 @@ std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreateBaseEnemy(int attack
     auto baseEnemy = std::make_shared<spic::GameObject>("Enemy", "enemy", Layer::Game);
     baseEnemy->Transform().scale = EnemyScale;
 
-    auto defaultSprite = std::make_shared<spic::Sprite>(idleSprites[0]->Texture(), false, false, SortingLayer::Hero, 0);
+    auto defaultSprite = std::make_shared<spic::Sprite>(idleSprites[0]->Texture(), idleSprites[0]->Color(), false, false, SortingLayer::Enemy, 0);
     GameObjectUtil::LinkComponent(baseEnemy, defaultSprite);
 
     auto idleAnimator = std::make_shared<spic::Animator>(static_cast<int>(idleSprites.size()), idleSprites);
