@@ -1,5 +1,6 @@
 #include "LevelData.hpp"
 #include "../Constants.hpp"
+#include "../Scripts/Enemies/EnemyValue.hpp"
 
 using namespace game;
 
@@ -18,7 +19,7 @@ void LevelData::ClearDeadEnemies(WaveData& wave)
         }
         if (enemy->GetComponent<HealthBehaviour>()->Health() <= 0)
         {
-            Balance += DefaultEnemyKillBalance; //TODO Different value for different enemies?
+            Balance += enemy->GetComponent<EnemyValue>()->Value();
             return true;
         }
         return false;
