@@ -45,3 +45,8 @@ void game::HealAbilityBehaviour::OnTriggerStay2D(const spic::Collider& collider)
 {
     BehaviourScript::OnTriggerStay2D(collider);
 }
+
+std::shared_ptr<game::CoolDownBehaviour>& game::HealAbilityBehaviour::GetCoolDownBehaviour()
+{
+    return _coolDownBehaviour;
+}

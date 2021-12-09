@@ -72,3 +72,8 @@ void game::InvisibilityAbilityBehaviour::OnTriggerStay2D(const spic::Collider& c
 {
     //
 }
+
+std::shared_ptr<game::CoolDownBehaviour>& game::InvisibilityAbilityBehaviour::GetCoolDownBehaviour()
+{
+    return _coolDownBehaviour;
+}

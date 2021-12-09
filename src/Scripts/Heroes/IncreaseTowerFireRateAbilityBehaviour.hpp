@@ -47,6 +47,12 @@ namespace game {
              * @param collider The collider is colliding.
              */
             void OnTriggerStay2D(const spic::Collider& collider) override;
+
+            /**
+             * Getter for the _coolDownBehaviour field
+             * @return the coolDownBehaviour
+             */
+            std::shared_ptr<game::CoolDownBehaviour>& GetCoolDownBehaviour();
     };
 }
 

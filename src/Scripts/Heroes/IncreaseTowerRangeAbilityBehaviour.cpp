@@ -76,3 +76,8 @@ void game::IncreaseTowerRangeAbilityBehaviour::OnTriggerStay2D(const spic::Colli
 {
     //
 }
+
+std::shared_ptr<game::CoolDownBehaviour>& game::IncreaseTowerRangeAbilityBehaviour::GetCoolDownBehaviour()
+{
+    return _coolDownBehaviour;
+}
