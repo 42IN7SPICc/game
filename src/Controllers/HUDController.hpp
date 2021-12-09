@@ -1,6 +1,7 @@
 #ifndef SPIC_GAME_HUDCONROLLER_HPP
 #define SPIC_GAME_HUDCONROLLER_HPP
 
+#include <Text.hpp>
 #include "Button.hpp"
 #include "Color.hpp"
 #include "../Structs/LevelData.hpp"
@@ -23,6 +24,7 @@ namespace game
 
             std::shared_ptr<spic::Button> InitializeTileButton(const std::string& texture, int tileAmount, const std::string& tileTitle, double yLocation);
             std::shared_ptr<spic::Button> InitializeTowerButton(const std::string& texture, int towerCost, const std::string& towerName, double yLocation, spic::Color color);
+            void CreateHudInfo (std::string name, double height, double yPosition, std::string content);
         public:
             HUDController(std::shared_ptr<game::LevelWithTiles> level, std::shared_ptr<LevelData> levelData, std::shared_ptr<game::HudData> hudData);
 

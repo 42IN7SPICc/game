@@ -21,6 +21,15 @@ game::HUDController::HUDController(std::shared_ptr<game::LevelWithTiles> level, 
 
 }
 
+void game::HUDController::CreateHudInfo (std::string name, double height, double yPosition, std::string content) {
+    auto text = std::make_shared<spic::Text>(name, "default", Layer::HUD, HudWidth, height);
+    text->Size(18);
+    text->TextAlignment(Alignment::center);
+    text->Transform().position.y = yPosition;
+    text->Content(content);
+    GameObjectUtil::LinkChild(_rightHud, text);
+}
+
 void game::HUDController::CreateTowerHud()
 {
     auto bombShooterButton = InitializeTowerButton("resources/sprites/towers/shooting/tower_shooting_1.png", 125, "Bommenwerper", -(TileSize + 2) * (TileButtonScale * 4), BomberTowerColor<Color>());
@@ -28,69 +37,26 @@ void game::HUDController::CreateTowerHud()
     auto flamethrowerButton = InitializeTowerButton("resources/sprites/towers/shooting/tower_shooting_1.png", 150, "Vlammenwerper", -(TileSize + 2) * (TileButtonScale * 2), FlamethrowerTowerColor<Color>());
     auto sniperButton = InitializeTowerButton("resources/sprites/towers/shooting/tower_shooting_1.png", 80, "Scherpschutter", -(TileSize + 2) * (TileButtonScale * 1), SniperTowerColor<Color>());
 
-    auto enemiesLeftTextHeader = std::make_shared<spic::Text>("enemies-text-header", "default", Layer::HUD, HudWidth, 20);
-    enemiesLeftTextHeader->Size(18);
-    enemiesLeftTextHeader->TextAlignment(Alignment::center);
-    enemiesLeftTextHeader->Transform().position.y = 100;
-    enemiesLeftTextHeader->Content("Vijanden resterend:");
+    CreateHudInfo("enemies-text-header", 20, 100, "Vijanden resterend:");
+    CreateHudInfo("enemies-text", 20, 120, std::to_string(_levelData->Waves.front().RemainingEnemies()));
 
-    auto enemiesText = std::make_shared<spic::Text>("enemies-text", "default", Layer::HUD, HudWidth, 20);
-    enemiesText->Size(18);
-    enemiesText->TextAlignment(Alignment::center);
-    enemiesText->Transform().position.y = 120;
-    enemiesText->Content(std::to_string(_levelData->Waves.front().RemainingEnemies()));
+    CreateHudInfo("wave-text-header", 20, 150, "Ronde:");
+    CreateHudInfo("wave-text", 20, 170, std::to_string(_levelData->CurrentWave()));
 
-    auto waveTextHeader = std::make_shared<spic::Text>("wave-text-header", "default", Layer::HUD, HudWidth, 20);
-    waveTextHeader->Size(18);
-    waveTextHeader->TextAlignment(Alignment::center);
-    waveTextHeader->Transform().position.y = 150;
-    waveTextHeader->Content("Ronde:");
+    CreateHudInfo("money-text", 20, 200, "$ " + std::to_string(_levelData->Balance));
 
-    auto waveText = std::make_shared<spic::Text>("wave-text", "default", Layer::HUD, HudWidth, 20);
-    waveText->Size(18);
-    waveText->TextAlignment(Alignment::center);
-    waveText->Transform().position.y = 170;
-    waveText->Content(std::to_string(_levelData->CurrentWave()));
+    CreateHudInfo("hero-health-text-header", 20, 230, "Hero:");
+    CreateHudInfo("hero-health-text", 20, 250, "♥ " + std::to_string(_levelData->HeroHealth->Health()));
 
-    auto moneyText = std::make_shared<spic::Text>("money-text", "default", Layer::HUD, HudWidth, 20);
-    moneyText->Size(18);
-    moneyText->TextAlignment(Alignment::center);
-    moneyText->Transform().position.y = 200;
-    moneyText->Content("$ " + std::to_string(_levelData->Balance));
-
-    auto heroHealthTextHeader = std::make_shared<spic::Text>("hero-health-text-header", "default", Layer::HUD, HudWidth, 20);
-    heroHealthTextHeader->Size(18);
-    heroHealthTextHeader->TextAlignment(Alignment::center);
-    heroHealthTextHeader->Transform().position.y = 230;
-    heroHealthTextHeader->Content("Hero:");
-
-    auto heroHealthText = std::make_shared<spic::Text>("hero-health-text", "default", Layer::HUD, HudWidth, 20);
-    heroHealthText->Size(18);
-    heroHealthText->TextAlignment(Alignment::center);
-    heroHealthText->Transform().position.y = 250;
-    heroHealthText->Content("♥ " + std::to_string(_levelData->HeroHealth->Health()));
-
-    auto militaryBaseHealthTextHeader = std::make_shared<spic::Text>("military-base-health-text-header", "default", Layer::HUD, HudWidth, 20);
-    militaryBaseHealthTextHeader->Size(18);
-    militaryBaseHealthTextHeader->TextAlignment(Alignment::center);
-    militaryBaseHealthTextHeader->Transform().position.y = 280;
-    militaryBaseHealthTextHeader->Content("Militaire Basis:");
-
-    auto militaryBaseHealthText = std::make_shared<spic::Text>("military-base-health-text", "default", Layer::HUD, HudWidth, 20);
-    militaryBaseHealthText->Size(18);
-    militaryBaseHealthText->TextAlignment(Alignment::center);
-    militaryBaseHealthText->Transform().position.y = 300;
-    militaryBaseHealthText->Content("♥ " + std::to_string(_levelData->MilitaryBaseHealth->Health()));
+    CreateHudInfo("military-base-health-text-header", 20, 280, "Militaire Basis:");
+    CreateHudInfo("military-base-health-text", 20, 300,"♥ " + std::to_string(_levelData->MilitaryBaseHealth->Health()));
 
     auto nextWaveButton = ButtonPrefabFactory::CreateOutlineButton("next-wave-button", "default", "Start gevecht", true);
     auto text = std::dynamic_pointer_cast<spic::Text>(nextWaveButton->Children()[0]);
     text->Size(20);
     nextWaveButton->Transform().scale = 0.8;
     nextWaveButton->OnClick([this, nextWaveButton]() {
-        if (_gameLostBehavior->IsLevelFailed())
-        {
-            return;
-        }
+        if (_gameLostBehavior->IsLevelFailed()) return;
 
         auto& wave = _levelData->Waves.front();
         if (_levelData->LevelMode == LevelMode::TowerMode)
@@ -108,16 +74,6 @@ void game::HUDController::CreateTowerHud()
     nextWaveButton->Transform().position.y = 350;
 
     _levelData->HeroHealth->GameObject().lock()->Active(true);
-
-    GameObjectUtil::LinkChild(_rightHud, enemiesLeftTextHeader);
-    GameObjectUtil::LinkChild(_rightHud, enemiesText);
-    GameObjectUtil::LinkChild(_rightHud, waveTextHeader);
-    GameObjectUtil::LinkChild(_rightHud, waveText);
-    GameObjectUtil::LinkChild(_rightHud, moneyText);
-    GameObjectUtil::LinkChild(_rightHud, heroHealthTextHeader);
-    GameObjectUtil::LinkChild(_rightHud, heroHealthText);
-    GameObjectUtil::LinkChild(_rightHud, militaryBaseHealthTextHeader);
-    GameObjectUtil::LinkChild(_rightHud, militaryBaseHealthText);
     GameObjectUtil::LinkChild(_rightHud, nextWaveButton);
 }
 
