@@ -13,12 +13,13 @@
 
 using namespace game;
 
-AttackBehaviour::AttackBehaviour(const std::string& targetTag, game::BulletType bulletType, double fireRate, int range, int damage, double bulletSpeed, double damageRadius, bool followTarget, std::shared_ptr<spic::Animator> animator) : _coolDownBehaviour(std::make_shared<CoolDownBehaviour>(fireRate)),
+AttackBehaviour::AttackBehaviour(const std::string& targetTag, game::BulletType bulletType, double fireRate, int range, int damage, double bulletSpeed, int maxPenetrating, double damageRadius, bool followTarget, std::shared_ptr<spic::Animator> animator) : _coolDownBehaviour(std::make_shared<CoolDownBehaviour>(fireRate)),
                                                                                                                                                                                                                                             _targetTag(targetTag),
                                                                                                                                                                                                                                             _bulletType(bulletType),
                                                                                                                                                                                                                                             _range(range),
                                                                                                                                                                                                                                             _damage(damage),
                                                                                                                                                                                                                                             _bulletSpeed(bulletSpeed),
+                                                                                                                                                                                                                                            _maxPenetrating(maxPenetrating),
                                                                                                                                                                                                                                             _damageRadius(damageRadius),
                                                                                                                                                                                                                                             _followTarget(followTarget),
                                                                                                                                                                                                                                             _animator(animator)
@@ -72,7 +73,7 @@ void AttackBehaviour::OnUpdate()
 
 void AttackBehaviour::Shoot(const spic::Point& direction, const spic::Point& position)
 {
-    auto bullet = BulletFactory::CreateBullet(_bulletType, position, _targetTag, direction, _range, _damage, _damageRadius);
+    auto bullet = BulletFactory::CreateBullet(_bulletType, position, _targetTag, direction, _range, _damage, _damageRadius, _maxPenetrating);
 
     if (_animator)
     {
