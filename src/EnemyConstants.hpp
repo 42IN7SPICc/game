@@ -29,6 +29,10 @@ const int GruppenfuhrerEnemyBoostCoolDown = 10; // The cool down between boost a
 const double GruppenfuhrerEnemySpeedBoost = 1.5; // The boost to give to enemies of the Gruppenfuhrer enemy
 const int GruppenfuhrerEnemyBoostTime = 5; // The time the boost lasts of the Gruppenfuhrer enemy
 const double GruppenfuhrerEnemyBoostRange = 100; // The range enemies have to be in for the effect of the Gruppenfuhrer enemy
+template <typename T>
+spic::Color GruppenfuhrerColor() {
+    return T::green();
+}
 
 //Enemy Schutze
 const double SchutzeEnemyFireRate = 3; // The shooting interval of the Schutze enemy
@@ -45,6 +49,10 @@ const int ErkunderEnemyDamage = 2; // The damage of a bullet for the Erkunder en
 const double ErkunderEnemyVelocity = 2; // The movement speed
 const int ErkunderEnemyBulletSpeed = 15; // The bullet velocity of the Erkunder enemy
 const int ErkunderEnemyHealth = 50; // The health of the Erkunder enemy
+template <typename T>
+spic::Color ErkunderColor() {
+    return T::yellow();
+}
 
 //Enemy GhillieAnzugSchutze
 const double GhillieAnzugSchutzeEnemyFireRate = 3; // The shooting interval of the GhillieAnzugSchutze enemy
@@ -56,6 +64,10 @@ const int GhillieAnzugSchutzeEnemyHealth = 75; // The health of the GhillieAnzug
 
 const int GhillieAnzugSchutzeEnemyInvisibleEffectTime = 3; // The time of the invisible effect of the GhillieAnzugSchutze enemy
 const int GhillieAnzugSchutzeEnemyInvisibleCoolDownTime = 5; // The cool down time of the invisible effect of the GhillieAnzugSchutze enemy
+template <typename T>
+spic::Color GhillieAnzugSchutzeColor() {
+    return T::red();
+}
 
 //Enemy Stabsarzt
 const double StabsarztEnemyVelocity = 1.0; // The movement speed
@@ -64,6 +76,10 @@ const int StabsarztEnemyHealth = 100; // The health of the Stabsarzt enemy
 const int StabsarztHealCooldown = 10; // The time between healing actions of the Stabsarzt enemy
 const double StabsarztHealRange = 100; // The maximum distance between the healer and other enemies to heal.
 const int StabsarztHealPercentage = 10; // The percentage to heal other enemies.
+template <typename T>
+spic::Color StabsarztColor() {
+    return T::cyan();
+}
 
 //Enemy Raupenschlepper
 const double RaupenschlepperEnemyVelocity = 0.5; // The movement speed
