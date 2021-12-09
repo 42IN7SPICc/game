@@ -79,6 +79,8 @@ spic::Color WinstonChurchillColor() {
 //Joseph Stalin
 const int JosephStalinDamage = 5; // The damage Joseph Stalin does
 const int JosephStalinDefense = 5; // The defense Joseph Stalin has
+const int JosephStalinAbilityCooldown = 15; // The defense Joseph Stalin has
+const int JosephStalinAbilityDuration = 5; // The defense Joseph Stalin has
 template <typename T>
 spic::Color JosephStalinColor() {
     return T::orange();
