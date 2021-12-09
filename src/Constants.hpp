@@ -116,12 +116,17 @@ const int GhillieAnzugSchutzeEnemyRange = 200; // The detection range of the her
 const int GhillieAnzugSchutzeEnemyDamage = 2; // The damage of a bullet for the GhillieAnzugSchutze enemy
 const int GhillieAnzugSchutzeEnemyBulletSpeed = 25; // The bullet velocity of the GhillieAnzugSchutze enemy
 const int GhillieAnzugSchutzeEnemyHealth = 100; // The health of the GhillieAnzugSchutze enemy
+const int GhillieAnzugSchutzeEnemyInvisibleEffectTime = 3; // The time of the invisible effect of the GhillieAnzugSchutze enemy
+const int GhillieAnzugSchutzeEnemyInvisibleCoolDownTime = 5; // The cool down time of the invisible effect of the GhillieAnzugSchutze enemy
 
 //Enemy Stabsarzt
 const int StabsarztEnemyHealth = 100; // The health of the Stabsarzt enemy
 const int StabsarztHealCooldown = 10; // The time between healing actions of the Stabsarzt enemy
 const double StabsarztHealRange = 100; // The maximum distance between the healer and other enemies to heal.
 const int StabsarztHealPercentage = 10; // The percentage to heal other enemies.
+
+//Enemy Raupenschlepper
+const int RaupenschlepperEnemyHealth = 100; // The health of the Raupenschlepper enemy
 
 //Tower Shotgun
 const double ShotgunTowerFireRate = 5; // The shooting interval of the shotgun tower
