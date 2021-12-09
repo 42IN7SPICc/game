@@ -1,6 +1,7 @@
 #include "LevelData.hpp"
 #include "../Constants.hpp"
 #include "../Scripts/Enemies/EnemyValue.hpp"
+#include "../Scripts/Enemies/EnemyTroopTruckBehaviour.hpp"
 
 using namespace game;
 
@@ -17,7 +18,9 @@ void LevelData::ClearDeadEnemies(WaveData& wave)
             // Delete if the enemy is no longer being referenced to from the scene
             return true;
         }
-        if (enemy->GetComponent<HealthBehaviour>()->Health() <= 0)
+
+        auto troopTruck = enemy->GetComponent<EnemyTroopTruckBehaviour>();
+        if (enemy->GetComponent<HealthBehaviour>()->Health() <= 0 && (!troopTruck || troopTruck->Spawned()))
         {
             Balance += enemy->GetComponent<EnemyValue>()->Value();
             return true;

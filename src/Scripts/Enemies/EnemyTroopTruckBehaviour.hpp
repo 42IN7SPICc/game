@@ -18,6 +18,7 @@ namespace game
             std::shared_ptr<HealthBehaviour> _healthBehaviour;
             EnemyName _enemyName;
             int _count;
+            bool _spawned;
 
         public:
             /**
@@ -54,6 +55,12 @@ namespace game
              * @param collider The collider is colliding.
              */
             void OnTriggerStay2D(const spic::Collider& collider) override;
+
+            /**
+             * @brief Returns true when the contained enemies have spawned
+             * @return status of spawned attribute
+             */
+            [[nodiscard]] bool Spawned() const;
     };
 }
 
