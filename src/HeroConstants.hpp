@@ -4,11 +4,11 @@
 // Generic
 const double HeroScale = 0.1; //default scale on 1
 const int BaseHeroHealth = 20; // Gets multiplied by the hero's defense rating
-const int BaseHeroDamage = 5; // Gets multiplied by the hero's attack rating
+const int BaseHeroDamage = 6; // Gets multiplied by the hero's attack rating
 const int HeroMass = 50; //random chosen mass
 const int HeroVelocity = 15; //random chosen velocity (looks good)
 const double HeroBulletSpeed = 17.5; // random chosen bullet speed (looks alright)
-const double HeroBulletRange = 500; // random chosen bullet speed (looks alright)
+const double HeroBulletRange = 200; // random chosen bullet range (looks alright)
 const double HeroShootingCoolDown = 0.5; // random chosen bullet speed (looks alright)
 const int HeroWidth = 200; //width of hero image
 const int HeroHeight = 320; //height of hero image
