@@ -163,7 +163,7 @@ std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreateRaupenschlepper()
     return enemy;
 }
 
-std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreateBaseEnemy(int attack, int health, double speedMultiplier, const types::sprite_vector& idleSprites, const types::sprite_vector& walkingSprites, const types::sprite_vector& diedSprites)
+std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreateBaseEnemy(int attack, int health, double speedMultiplier, const types::sprite_vector& idleSprites, const types::sprite_vector& walkingSprites, const types::sprite_vector& diedSprites, int value)
 {
     auto baseEnemy = std::make_shared<spic::GameObject>("Enemy", "enemy", Layer::Game);
     baseEnemy->Transform().scale = EnemyScale;

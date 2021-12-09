@@ -33,7 +33,7 @@ void UserAttackBehaviour::OnStart()
 void UserAttackBehaviour::OnUpdate()
 {
     auto levelControllerGameObject = spic::GameObject::Find("LevelController");
-    if(!levelControllerGameObject)
+    if (!levelControllerGameObject)
     {
         throw std::runtime_error("A user attack behaviour requires a level controller for level mode.");
     }

@@ -75,9 +75,10 @@ namespace game
              * @param idleSprites A list of sprites when the enemy is idle.
              * @param walkingSprites A list of sprites when the enemy is walking.
              * @param diedSprites A list of sprites when the enemy is dying.
+             * @param value Amount of money received on killing the enemy.
              * @return The enemy object.
              */
-            static std::shared_ptr<spic::GameObject> CreateBaseEnemy(int attack, int health, double speedMultiplier, const types::sprite_vector& idleSprites, const types::sprite_vector& walkingSprites, const types::sprite_vector& diedSprites);
+            static std::shared_ptr<spic::GameObject> CreateBaseEnemy(int attack, int health, double speedMultiplier, const types::sprite_vector& idleSprites, const types::sprite_vector& walkingSprites, const types::sprite_vector& diedSprites, int value);
     };
 }
 
