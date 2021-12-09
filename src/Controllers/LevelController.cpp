@@ -13,6 +13,7 @@
 #include <vector>
 #include <memory>
 #include "../Constants.hpp"
+#include "../TowerConstants.hpp"
 #include "../Utils/RandomUtil.hpp"
 
 using namespace spic;

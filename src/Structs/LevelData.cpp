@@ -11,7 +11,7 @@ size_t LevelData::CurrentWave() const
 void LevelData::ClearDeadEnemies(WaveData& wave)
 {
     std::erase_if(wave.CurrentEnemies, [this](const std::shared_ptr<spic::GameObject>& enemy) {
-        if (enemy.use_count() <= 1)
+        if (!enemy || enemy.use_count() <= 1)
         {
             // Delete if the enemy is no longer being referenced to from the scene
             return true;

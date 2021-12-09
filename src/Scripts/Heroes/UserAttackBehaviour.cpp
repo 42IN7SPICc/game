@@ -9,7 +9,7 @@
 #include "../../Factories/BulletFactory.hpp"
 #include "../../Utils/PointUtil.hpp"
 #include "../../Utils/GameObjectUtil.hpp"
-#include "../../Constants.hpp"
+#include "../../HeroConstants.hpp"
 #include "../../Controllers/LevelController.hpp"
 
 using namespace game;

@@ -3,7 +3,7 @@
 #include "../Enums/Layer.hpp"
 #include "../Enums/SortingLayer.hpp"
 #include "../Utils/GameObjectUtil.hpp"
-#include "../Constants.hpp"
+#include "../TowerConstants.hpp"
 
 #include <stdexcept>
 #include <Animator.hpp>

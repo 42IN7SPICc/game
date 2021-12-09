@@ -7,7 +7,7 @@
 #include "../Scripts/Enemies/EnemyMovementBehaviour.hpp"
 #include "../Utils/GameObjectUtil.hpp"
 
-#include "../Constants.hpp"
+#include "../EnemyConstants.hpp"
 #include "Animator.hpp"
 #include "CircleCollider.hpp"
 #include "RigidBody.hpp"
