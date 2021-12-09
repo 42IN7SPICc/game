@@ -1,5 +1,6 @@
 #include "IncreaseTowerRangeAbilityBehaviour.hpp"
 #include "../../Constants.hpp"
+#include "../../Factories/AudioSourcePrefabFactory.hpp"
 #include "GameObject.hpp"
 #include "Input.hpp"
 #include "Engine.hpp"
@@ -45,6 +46,9 @@ void game::IncreaseTowerRangeAbilityBehaviour::OnUpdate()
             auto towerRangeObject = std::make_shared<spic::GameObject>("towerRangeObject", "towerRangeObject", Layer::Game);
             auto towerRangeCooldown = std::make_shared<CoolDownBehaviour>(10);
             GameObjectUtil::LinkComponent(towerRangeObject, towerRangeCooldown);
+
+            auto soundEffect = AudioSourcePrefabFactory::CreateAudioObject(game::AudioClipName::ActivateAbility, true, false, 1.0);
+            game::GameObjectUtil::LinkChild(GameObject().lock(), soundEffect);
 
             auto towers = spic::GameObject::FindGameObjectsWithTag("tower");
             for (auto& tower: towers)

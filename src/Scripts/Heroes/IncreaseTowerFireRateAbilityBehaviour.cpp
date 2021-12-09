@@ -2,6 +2,7 @@
 #include "../../Constants.hpp"
 #include "../../Utils/GameObjectUtil.hpp"
 #include "../../Enums/Layer.hpp"
+#include "../../Factories/AudioSourcePrefabFactory.hpp"
 #include "../Common/AttackBehaviour.hpp"
 #include "GameObject.hpp"
 #include "Input.hpp"
@@ -36,7 +37,7 @@ void game::IncreaseTowerFireRateAbilityBehaviour::OnUpdate()
         return;
     }
 
-    if (spic::Input::GetKey(spic::Input::KeyCode::Q))
+    if (spic::Input::GetKey(spic::Input::KeyCode::E))
     {
         if (_coolDownBehaviour->CooledDown())
         {
@@ -45,6 +46,9 @@ void game::IncreaseTowerFireRateAbilityBehaviour::OnUpdate()
             auto towerFireRateObject = std::make_shared<spic::GameObject>("towerFireRateObject", "towerFireRateObject", Layer::Game);
             auto towerFireRateCooldown = std::make_shared<CoolDownBehaviour>(10);
             GameObjectUtil::LinkComponent(towerFireRateObject, towerFireRateCooldown);
+
+            auto soundEffect = AudioSourcePrefabFactory::CreateAudioObject(game::AudioClipName::ActivateAbility, true, false, 1.0);
+            game::GameObjectUtil::LinkChild(GameObject().lock(), soundEffect);
 
             auto towers = spic::GameObject::FindGameObjectsWithTag("tower");
             for (auto& tower: towers)
