@@ -32,7 +32,10 @@ LevelScene::LevelScene(LevelWithTiles& levelWithTiles)
 
     auto levelAudioSource = game::AudioSourcePrefabFactory::CreateAudioObject(AudioClipName::Game, true, true, 0.2);
     auto mainGameObject = std::make_shared<spic::GameObject>("LevelController", "default", Layer::Background);
+
     auto levelController = std::make_shared<game::LevelController>(levelWithTiles, heroHealth, endTowerHealth, game::WavePrefabFactory::GenerateWaves(5));
+    auto hudController = std::make_shared<game::HUDController>();
+
     auto cheatManager = std::make_shared<game::CheatManager>();
     GameObjectUtil::LinkComponent(mainGameObject, levelController);
     GameObjectUtil::LinkComponent(mainGameObject, cheatManager);
@@ -50,5 +53,5 @@ LevelScene::LevelScene(LevelWithTiles& levelWithTiles)
     Contents().push_back(background);
     Contents().push_back(tilesMapObject);
 
-    Contents().push_back(levelController->CreateHUD());
+    Contents().push_back(hudController->CreateHUD());
 }
