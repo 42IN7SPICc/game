@@ -34,7 +34,7 @@ namespace game
              * @param maxRange The maximum distance the bullet can travel.
              * @param maxPenetrating How many targets a bullet can penetrate before stopping (only bulletType = penetrating).
              */
-            explicit BulletBehaviour(BulletType bulletType, const spic::Point& direction, double maxRange, int maxPenetrating = 1);
+            explicit BulletBehaviour(BulletType bulletType, const spic::Point& direction, double maxRange, int maxPenetrating);
 
             /**
              * @brief Triggers when the scripts starts for the first time.

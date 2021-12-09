@@ -18,6 +18,7 @@ namespace game
             int _damage;
             int _radius;
             int _objectsDamaged;
+            int _maxPenetrating;
 
         public:
             /**
@@ -25,8 +26,9 @@ namespace game
              * @param damage The damage to deal on impact.
              * @param targetTag The tag to deal damage to.
              * @param radius The radius to deal damage in.
+             * @param maxPenetrating How many enemies a single bullet can passthrough before disappearing
              */
-            explicit DamageBehaviour(int damage, const std::string& targetTag = "", int radius = 0);
+            explicit DamageBehaviour(int damage, const std::string& targetTag = "", int radius = 0, int maxPenetrating = 1);
 
             /**
              * @brief Give damage to a given health script.
