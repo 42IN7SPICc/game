@@ -10,7 +10,6 @@
 #include "../Factories/ButtonPrefabFactory.hpp"
 #include "LevelController.hpp"
 #include <numeric>
-#include <cmath>
 #include <iomanip>
 #include "../Scripts/Common/CoolDownBehaviour.hpp"
 #include "../Utils/HeroUtil.hpp"
