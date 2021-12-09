@@ -1,11 +1,15 @@
 #ifndef SPIC_GAME_USERMOVEMENTBEHAVIOUR_HPP
 #define SPIC_GAME_USERMOVEMENTBEHAVIOUR_HPP
 
-#include <memory>
+#include <Animator.hpp>
 #include <BehaviourScript.hpp>
 #include <RigidBody.hpp>
-#include <Animator.hpp>
+
 #include "../Common/HealthBehaviour.hpp"
+#include "../../Structs/MapNode.hpp"
+
+#include <map>
+#include <memory>
 
 namespace game
 {
@@ -21,6 +25,7 @@ namespace game
             std::shared_ptr<spic::Animator> _idleAnimator;
             std::shared_ptr<spic::Animator> _walkingAnimator;
             std::shared_ptr<game::HealthBehaviour> _healthBehaviour;
+            std::map<std::string, game::MapNode> _graph;
         public:
             /**
              * @brief Constructs a new instance of a UserMovementBehaviour with given settings.

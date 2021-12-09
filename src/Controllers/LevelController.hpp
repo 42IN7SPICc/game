@@ -14,6 +14,7 @@
 #include "../Structs/LevelWithTiles.hpp"
 #include "../Structs/LevelData.hpp"
 #include "../Enums/LevelMode.hpp"
+#include "../Scripts/Common/GameLostBehaviour.hpp"
 
 namespace game
 {
@@ -63,9 +64,10 @@ namespace game
             /**
              * @brief Builds a level with a given health for the end tower.
              * @param endTowerHealthBehaviour The health of the end tower.
+             * @param animator The animator for the end tile.
              * @return The game object containing the level.
              */
-            std::shared_ptr<spic::GameObject> BuildLevel(const std::shared_ptr<game::HealthBehaviour>& endTowerHealthBehaviour);
+            std::shared_ptr<spic::GameObject> BuildLevel(const std::shared_ptr<game::HealthBehaviour>& endTowerHealthBehaviour, const std::shared_ptr<spic::Animator>& animator);
 
             /**
              * @brief Creates a HUD for the level.
@@ -117,6 +119,29 @@ namespace game
             void ButcherEnemies();
 
             [[nodiscard]] game::LevelMode GetLevelMode() const;
+
+            /**
+             * @brief Add an enemy to the current wave.
+             * @param enemy The enemy to add to the wave.
+             */
+            void AddEnemyToWave(const std::shared_ptr<spic::GameObject>& enemy);
+
+            /**
+             * @brief Whether the a given tile is walkable.
+             * @return Whether the tile is walkable.
+             */
+            static bool Walkable(const TileType& tileType);
+
+            /**
+             * @brief Generate a border for the level with given settings.
+             * @param x The X position of the border.
+             * @param y The Y position of the border.
+             * @param width The width of the border.
+             * @param height The height of the border.
+             * @return A game object containing a border.
+             */
+            static std::shared_ptr<spic::GameObject> CreateLevelBorder(double x, double y, double width, double height);
+
         private:
             spic::Point _startPosition;
             double _timePassed;
@@ -128,6 +153,7 @@ namespace game
             std::map<std::shared_ptr<spic::Button>, int> _buttonTowerCosts;
             game::LevelMode _levelMode;
             bool _strongPathEnabled;
+            std::shared_ptr<game::GameLostBehaviour> _gameLostBehavior;
 
 
             std::shared_ptr<spic::Button> InitializeTileButton(const std::string& texture, int tileAmount, const std::string& tileTitle, double yLocation);

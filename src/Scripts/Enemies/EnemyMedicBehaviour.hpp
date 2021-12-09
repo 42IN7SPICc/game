@@ -1,29 +1,34 @@
-#ifndef SPIC_GAME_HEALTHBARBEHAVIOUR_HPP
-#define SPIC_GAME_HEALTHBARBEHAVIOUR_HPP
+#ifndef SPIC_GAME_ENEMYMEDICBEHAVIOUR_HPP
+#define SPIC_GAME_ENEMYMEDICBEHAVIOUR_HPP
+
+#include "../Common/CoolDownBehaviour.hpp"
 
 #include "BehaviourScript.hpp"
-
-#include "../Common/HealthBehaviour.hpp"
+#include "GameObject.hpp"
 
 #include <memory>
 
 namespace game
 {
     /**
-     * @brief A script to render a health bar linked to a health behaviour.
+     * @brief A behaviour that heals other enemies in a certain range.
      */
-    class HealthBarBehaviour : public spic::BehaviourScript
+    class EnemyMedicBehaviour : public spic::BehaviourScript
     {
         private:
-            double _prevHealth;
-            std::shared_ptr<HealthBehaviour> _healthBehaviour;
+            std::shared_ptr<CoolDownBehaviour> _healCoolDownBehaviour;
+            int _healPercentage;
+            double _healRange;
+            int _healCoolDown;
 
         public:
             /**
-             * @brief Constructs a new instance of an health bar script for a given health behaviour.
-             * @param healthBehaviour The health behaviour to link to.
+             * @brief Constructs a new instance of a EnemyMedicBehaviour with given settings.
+             * @param healPercentage The percentage the targets will be healed (between 1 and 100).
+             * @param healRange The range the targets have to be in to be healed.
+             * @param healCoolDown The times it takes to heal again (in seconds).
              */
-            explicit HealthBarBehaviour(std::shared_ptr<HealthBehaviour> healthBehaviour);
+            EnemyMedicBehaviour(int healPercentage, double healRange, int healCoolDown);
 
             /**
              * @brief Triggers when the scripts starts for the first time.
@@ -55,4 +60,4 @@ namespace game
     };
 }
 
-#endif //SPIC_GAME_HEALTHBARBEHAVIOUR_HPP
+#endif //SPIC_GAME_ENEMYMEDICBEHAVIOUR_HPP

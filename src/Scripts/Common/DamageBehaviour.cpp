@@ -49,14 +49,15 @@ void DamageBehaviour::OnTriggerEnter2D(const spic::Collider& collider)
             if (PointUtil::Distance(currentPos, gameObject->AbsoluteTransform().position) <= _radius)
             {
                 auto healthBehaviour = gameObject->GetComponent<HealthBehaviour>();
-                Damage(healthBehaviour);
+                if (!healthBehaviour->Invincibility())
+                    Damage(healthBehaviour);
             }
         }
     }
     else
     {
         auto healthBehaviour = colliderGameObject->GetComponent<HealthBehaviour>();
-        if (healthBehaviour->Health() > 0)
+        if (healthBehaviour->Health() > 0 && !healthBehaviour->Invincibility())
             Damage(healthBehaviour);
     }
 }

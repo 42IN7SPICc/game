@@ -4,7 +4,6 @@
 #include "../Utils/GameObjectUtil.hpp"
 #include "../Enums/Layer.hpp"
 #include "../Utils/TileUtil.hpp"
-#include "../Scripts/Common/GameLostBehaviour.hpp"
 #include "../Factories/ButtonPrefabFactory.hpp"
 #include "../Factories/EnemyPrefabFactory.hpp"
 #include "../Factories/TowerPrefabFactory.hpp"
@@ -25,8 +24,8 @@ void LevelController::OnStart()
     auto gameWonBehaviour = std::make_shared<game::GameWonBehaviour>(_levelData);
     GameObjectUtil::LinkComponent(parent, gameWonBehaviour);
 
-    auto gameLostBehaviour = std::make_shared<game::GameLostBehaviour>(_levelData);
-    GameObjectUtil::LinkComponent(parent, gameLostBehaviour);
+    _gameLostBehavior = std::make_shared<game::GameLostBehaviour>(_levelData);
+    GameObjectUtil::LinkComponent(parent, _gameLostBehavior);
 
     _levelData.HeroHealth->GameObject().lock()->Transform().position = GameObject::FindWithTag("end_tile")->AbsoluteTransform().position;
 
@@ -184,7 +183,7 @@ std::shared_ptr<spic::GameObject> LevelController::CreateHUD()
     return _rightHud;
 }
 
-std::shared_ptr<spic::GameObject> LevelController::BuildLevel(const std::shared_ptr<game::HealthBehaviour>& endTowerHealthBehaviour)
+std::shared_ptr<spic::GameObject> LevelController::BuildLevel(const std::shared_ptr<game::HealthBehaviour>& endTowerHealthBehaviour, const std::shared_ptr<spic::Animator>& animator)
 {
     auto tileMap = std::make_shared<spic::GameObject>("TileGrid", "tilemap", Layer::Game);
     for (auto levelTile: _level.Tiles)
@@ -203,6 +202,7 @@ std::shared_ptr<spic::GameObject> LevelController::BuildLevel(const std::shared_
 
             GameObjectUtil::LinkComponent(tile, endTileCollider);
             GameObjectUtil::LinkComponent(tile, endTowerHealthBehaviour);
+            GameObjectUtil::LinkComponent(tile, animator);
             GameObjectUtil::LinkComponent(tile, tileRigidBody);
         }
         else if (levelTile.TileType() == TileType::Start)
@@ -249,7 +249,57 @@ std::shared_ptr<spic::GameObject> LevelController::BuildLevel(const std::shared_
             node.NeighbourStrings.push_back(std::to_string(node.X) + "-" + std::to_string(node.Y + 1));
     }
 
+    for (const auto&[key, node]: _levelData.Graph)
+    {
+        if (!Walkable(node.TileType))
+        {
+            for (const auto& neighbourString: node.NeighbourStrings)
+            {
+                if (Walkable(_levelData.Graph[neighbourString].TileType))
+                {
+                    if (!node.TileObject->GetComponent<RigidBody>())
+                        GameObjectUtil::LinkComponent(node.TileObject, std::make_shared<RigidBody>(10, 0, BodyType::staticBody));
+                    if (!node.TileObject->GetComponent<Collider>())
+                        GameObjectUtil::LinkComponent(node.TileObject, std::make_shared<BoxCollider>(TileSize * TileMapScale, TileSize * TileMapScale));
+
+                    break;
+                }
+            }
+        }
+    }
+
+    GameObjectUtil::LinkChild(tileMap, CreateLevelBorder(12 * TileSize, -TileSize, TileSize * TileMapScale * 27, TileSize * TileMapScale)); // Top
+    GameObjectUtil::LinkChild(tileMap, CreateLevelBorder(25 * TileSize, 12 * TileSize, TileSize * TileMapScale, TileSize * TileMapScale * 27)); // Right
+    GameObjectUtil::LinkChild(tileMap, CreateLevelBorder(12 * TileSize, 25 * TileSize, TileSize * TileMapScale * 27, TileSize * TileMapScale)); // Bottom
+    GameObjectUtil::LinkChild(tileMap, CreateLevelBorder(-TileSize, 12 * TileSize, TileSize * TileMapScale, TileSize * TileMapScale * 27)); // Left
+
     return tileMap;
+}
+
+bool LevelController::Walkable(const TileType& tileType)
+{
+    switch (tileType)
+    {
+        case Bushes:
+        case Sand:
+        case Bridge:
+        case Street:
+        case Grass:
+        case Start:
+        case End:
+            return true;
+    }
+    return false;
+}
+
+std::shared_ptr<spic::GameObject> LevelController::CreateLevelBorder(double x, double y, double width, double height)
+{
+    auto border = std::make_shared<spic::GameObject>("Border", "border", Layer::Game);
+    border->Transform().position = {x, y};
+    GameObjectUtil::LinkComponent(border, std::make_shared<spic::RigidBody>(10, 0, BodyType::staticBody));
+    GameObjectUtil::LinkComponent(border, std::make_shared<BoxCollider>(width, height));
+
+    return border;
 }
 
 std::shared_ptr<spic::Button> LevelController::InitializeTileButton(const std::string& texture, int tileAmount, const std::string& tileTitle, double yLocation)
@@ -416,6 +466,11 @@ void LevelController::HandleClickTile(const game::MapNode& clickedTile)
             totalTilesText->Content("Tegels (" + std::to_string(totalTiles) + ")");
         }
     }
+}
+
+void LevelController::AddEnemyToWave(const std::shared_ptr<spic::GameObject>& enemy)
+{
+    _levelData.Waves.front().CurrentEnemies.push_back(enemy);
 }
 
 void LevelController::HandleClickTower(game::MapNode& clickedTile)
@@ -604,6 +659,11 @@ void LevelController::CreateTowerHud()
     text->Size(20);
     nextWaveButton->Transform().scale = 0.8;
     nextWaveButton->OnClick([this, nextWaveButton]() {
+        if (_gameLostBehavior->IsLevelFailed())
+        {
+            return;
+        }
+
         auto& wave = _levelData.Waves.front();
         if (_levelMode == LevelMode::TowerMode)
         {

@@ -1,29 +1,29 @@
-#ifndef SPIC_GAME_HEALTHBARBEHAVIOUR_HPP
-#define SPIC_GAME_HEALTHBARBEHAVIOUR_HPP
+#ifndef SPIC_GAME_ENEMYINVISIBLEBEHAVIOUR_HPP
+#define SPIC_GAME_ENEMYINVISIBLEBEHAVIOUR_HPP
 
 #include "BehaviourScript.hpp"
+#include "Sprite.hpp"
 
+#include "../Common/CoolDownBehaviour.hpp"
 #include "../Common/HealthBehaviour.hpp"
 
 #include <memory>
 
 namespace game
 {
-    /**
-     * @brief A script to render a health bar linked to a health behaviour.
-     */
-    class HealthBarBehaviour : public spic::BehaviourScript
+    class EnemyInvisibleBehaviour : public spic::BehaviourScript
     {
         private:
-            double _prevHealth;
+            int _effectTime;
+            int _coolDownTime;
+
+            std::shared_ptr<CoolDownBehaviour> _effectTimer;
+            std::shared_ptr<CoolDownBehaviour> _effectCoolDown;
             std::shared_ptr<HealthBehaviour> _healthBehaviour;
+            std::shared_ptr<spic::Sprite> _sprite;
 
         public:
-            /**
-             * @brief Constructs a new instance of an health bar script for a given health behaviour.
-             * @param healthBehaviour The health behaviour to link to.
-             */
-            explicit HealthBarBehaviour(std::shared_ptr<HealthBehaviour> healthBehaviour);
+            EnemyInvisibleBehaviour(int effectTime, int coolDownTime);
 
             /**
              * @brief Triggers when the scripts starts for the first time.
@@ -55,4 +55,4 @@ namespace game
     };
 }
 
-#endif //SPIC_GAME_HEALTHBARBEHAVIOUR_HPP
+#endif //SPIC_GAME_ENEMYINVISIBLEBEHAVIOUR_HPP

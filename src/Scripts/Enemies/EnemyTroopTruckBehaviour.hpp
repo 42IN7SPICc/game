@@ -1,29 +1,31 @@
-#ifndef SPIC_GAME_HEALTHBARBEHAVIOUR_HPP
-#define SPIC_GAME_HEALTHBARBEHAVIOUR_HPP
-
-#include "BehaviourScript.hpp"
+#ifndef SPIC_GAME_ENEMYTROOPTRUCKBEHAVIOUR_HPP
+#define SPIC_GAME_ENEMYTROOPTRUCKBEHAVIOUR_HPP
 
 #include "../Common/HealthBehaviour.hpp"
+#include "../../Enums/EnemyName.hpp"
 
-#include <memory>
+#include "BehaviourScript.hpp"
+#include "GameObject.hpp"
 
 namespace game
 {
     /**
-     * @brief A script to render a health bar linked to a health behaviour.
+     * @brief A behaviour script that spawns a given amount of enemies when the current entity dies.
      */
-    class HealthBarBehaviour : public spic::BehaviourScript
+    class EnemyTroopTruckBehaviour : public spic::BehaviourScript
     {
         private:
-            double _prevHealth;
             std::shared_ptr<HealthBehaviour> _healthBehaviour;
+            EnemyName _enemyName;
+            int _count;
 
         public:
             /**
-             * @brief Constructs a new instance of an health bar script for a given health behaviour.
-             * @param healthBehaviour The health behaviour to link to.
+             * @brief Constructs a new instance of an EnemyTroopTruckBehaviour with given settings.
+             * @param enemyName The name of the enemy to spawn.
+             * @param count The amount of enemies to spawn.
              */
-            explicit HealthBarBehaviour(std::shared_ptr<HealthBehaviour> healthBehaviour);
+            EnemyTroopTruckBehaviour(EnemyName enemyName, int count);
 
             /**
              * @brief Triggers when the scripts starts for the first time.
@@ -55,4 +57,4 @@ namespace game
     };
 }
 
-#endif //SPIC_GAME_HEALTHBARBEHAVIOUR_HPP
+#endif //SPIC_GAME_ENEMYTROOPTRUCKBEHAVIOUR_HPP
