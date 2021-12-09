@@ -6,6 +6,7 @@
 #include "../../Enums/Layer.hpp"
 #include "Engine.hpp"
 #include "../../Utils/GameObjectUtil.hpp"
+#include "../../Factories/AudioSourcePrefabFactory.hpp"
 
 game::EnemySuicideAbilityBehaviour::EnemySuicideAbilityBehaviour() : _coolDownBehaviour(std::make_shared<CoolDownBehaviour>(CoolDownBehaviour(JosephStalinAbilityCooldown))),
                                                                      _abilityActive(false)
@@ -48,6 +49,9 @@ void game::EnemySuicideAbilityBehaviour::OnUpdate()
 
             auto abilityTimer = std::make_shared<CoolDownBehaviour>(JosephStalinAbilityDuration);
             GameObjectUtil::LinkComponent(enemySuicideObject, abilityTimer);
+
+            auto soundEffect = AudioSourcePrefabFactory::CreateAudioObject(game::AudioClipName::SuicideAbility, true, false, 1.0);
+            game::GameObjectUtil::LinkChild(GameObject().lock(), soundEffect);
 
             auto enemies = spic::GameObject::FindGameObjectsWithTag("enemy");
             for(auto& enemy : enemies) {
