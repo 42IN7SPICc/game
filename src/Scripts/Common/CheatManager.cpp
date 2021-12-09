@@ -77,6 +77,12 @@ void GameOver()
 void SkipWave()
 {
     Debug::Log("Fired Skip Wave Cheat");
+    auto gameObject = GameObject::Find("LevelController");
+    if (gameObject)
+    {
+        auto levelController = gameObject->GetComponent<game::LevelController>();
+        levelController->SkipWave();
+    }
 }
 
 void NoCoolDown()

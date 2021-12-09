@@ -1,5 +1,5 @@
 #include "AirstrikeAbilityBehaviour.hpp"
-#include "../../Constants.hpp"
+#include "../../HeroConstants.hpp"
 #include "Input.hpp"
 #include "Engine.hpp"
 #include "Animator.hpp"
@@ -12,6 +12,7 @@
 #include "../../Utils/AnimatorUtil.hpp"
 #include "../Common/HealthBehaviour.hpp"
 #include "../../Factories/AudioSourcePrefabFactory.hpp"
+#include "../../Constants.hpp"
 
 game::AirstrikeAbilityBehaviour::AirstrikeAbilityBehaviour() : _coolDownBehaviour(std::make_shared<CoolDownBehaviour>(CoolDownBehaviour(FranklinDRooseveltAirstrikeAbilityCooldown))),
                                                                _bombIsDropped(false)

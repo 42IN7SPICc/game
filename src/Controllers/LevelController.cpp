@@ -12,6 +12,7 @@
 #include <vector>
 #include <memory>
 #include "../Constants.hpp"
+#include "../TowerConstants.hpp"
 #include "../Utils/RandomUtil.hpp"
 
 using namespace spic;
@@ -569,6 +570,20 @@ void LevelController::SetUnlimitedMoney()
 void LevelController::SetInvincibility() const
 {
     _levelData.HeroHealth->Invincibility(!_levelData.HeroHealth->Invincibility());
+}
+
+void LevelController::SkipWave()
+{
+    if (_levelData.Waves.empty()) return;
+    while (!_levelData.Waves.front().EnemyQueue.empty())
+    {
+        _levelData.Waves.front().EnemyQueue.pop();
+    }
+
+    while (!_levelData.Waves.front().CurrentEnemies.empty())
+    {
+        GameObject::Destroy(_levelData.Waves.front().CurrentEnemies.front());
+    }
 }
 
 std::map<std::string, MapNode>& LevelController::GetGraph()

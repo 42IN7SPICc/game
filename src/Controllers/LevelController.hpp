@@ -102,6 +102,11 @@ namespace game
             void SetInvincibility() const;
 
             /**
+             * @brief The cheat for skipping a wave.
+             */
+            void SkipWave();
+
+            /**
              * @brief Get the graph containing all map nodes based on the location.
              * @return The map with nodes and their location.
              */

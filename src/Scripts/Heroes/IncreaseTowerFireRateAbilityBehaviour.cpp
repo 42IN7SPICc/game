@@ -1,5 +1,5 @@
 #include "IncreaseTowerFireRateAbilityBehaviour.hpp"
-#include "../../Constants.hpp"
+#include "../../HeroConstants.hpp"
 #include "../../Utils/GameObjectUtil.hpp"
 #include "../../Enums/Layer.hpp"
 #include "../../Factories/AudioSourcePrefabFactory.hpp"

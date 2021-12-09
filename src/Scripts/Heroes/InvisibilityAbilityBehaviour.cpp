@@ -1,5 +1,5 @@
 #include "InvisibilityAbilityBehaviour.hpp"
-#include "../../Constants.hpp"
+#include "../../HeroConstants.hpp"
 #include <stdexcept>
 #include "GameObject.hpp"
 #include "Engine.hpp"

@@ -3,7 +3,7 @@
 #include "../Enums/Layer.hpp"
 #include "../Enums/SortingLayer.hpp"
 #include "../Utils/GameObjectUtil.hpp"
-#include "../Constants.hpp"
+#include "../TowerConstants.hpp"
 
 #include <stdexcept>
 #include <Animator.hpp>
@@ -44,7 +44,7 @@ std::shared_ptr<spic::GameObject> TowerPrefabFactory::CreateBaseTower(const type
 std::shared_ptr<spic::GameObject> TowerPrefabFactory::CreateBomber()
 {
     types::sprite_vector shootingSprites = AnimatorUtil::CreateSpriteVector(6, "resources/sprites/towers/shooting/tower_shooting_", BomberTowerColor<spic::Color>(), SortingLayer::Enemy);
-    auto attackBehaviour = std::make_shared<AttackBehaviour>("enemy", BulletType::Bomb, BomberTowerFireRate, BomberTowerRange, BomberTowerDamage, BomberTowerBulletSpeed, BomberTowerExplosionRange);
+    auto attackBehaviour = std::make_shared<AttackBehaviour>("enemy", BulletType::Bomb, BomberTowerFireRate, BomberTowerRange, BomberTowerDamage, BomberTowerBulletSpeed, INT16_MAX, BomberTowerExplosionRange);
 
     auto tower = CreateBaseTower(shootingSprites, attackBehaviour);
     auto defaultSprite = std::make_shared<spic::Sprite>(shootingSprites[0]->Texture(), BomberTowerColor<spic::Color>(), false, false, SortingLayer::Tower, 0);
@@ -86,7 +86,7 @@ std::shared_ptr<spic::GameObject> TowerPrefabFactory::CreateSniper()
 {
     types::sprite_vector shootingSprites = AnimatorUtil::CreateSpriteVector(6, "resources/sprites/towers/shooting/tower_shooting_", SniperTowerColor<spic::Color>(), SortingLayer::Enemy);
 
-    auto attackBehaviour = std::make_shared<AttackBehaviour>("enemy", BulletType::Normal, SniperTowerFireRate, SniperTowerRange, SniperTowerDamage, SniperTowerBulletSpeed);
+    auto attackBehaviour = std::make_shared<AttackBehaviour>("enemy", BulletType::Normal, SniperTowerFireRate, SniperTowerRange, SniperTowerDamage, SniperTowerBulletSpeed, SniperMaxPenetrating);
 
     auto tower = CreateBaseTower(shootingSprites, attackBehaviour);
     auto defaultSprite = std::make_shared<spic::Sprite>(shootingSprites[0]->Texture(), SniperTowerColor<spic::Color>(), false, false, SortingLayer::Tower, 0);

@@ -1,5 +1,5 @@
 #include "EnemySuicideAbilityBehaviour.hpp"
-#include "../../Constants.hpp"
+#include "../../HeroConstants.hpp"
 #include "Input.hpp"
 #include "GameObject.hpp"
 #include "../Common/AttackBehaviour.hpp"
