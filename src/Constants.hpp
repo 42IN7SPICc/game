@@ -49,6 +49,8 @@ spic::Color DesmondDossColor() {
 //Bernard IJzerdraat
 const int BernardIJzerdraatDamage = 5; // The damage Bernard IJzerdraat does
 const int BernardIJzerdraatDefense = 3; // The defense Bernard IJzerdraat has
+const int BernardIJzerdraatAbilityCooldown = 5; // Ability Cooldown for Bernard IJzerdraat
+const int BernardIJzerdraatAbilityDuration = 5; // Ability Duration for Bernard IJzerdraat
 template <typename T>
 spic::Color BernardIJzerdraatColor() {
     return T::lime();
