@@ -16,8 +16,6 @@ game::InvisibilityAbilityBehaviour::InvisibilityAbilityBehaviour() : _coolDownBe
 
 void game::InvisibilityAbilityBehaviour::OnStart()
 {
-    if(_healthBehaviour->Health() <= 0) return;
-
     auto parent = GameObject().lock();
     _healthBehaviour = parent->GetComponent<game::HealthBehaviour>();
     if (!_healthBehaviour)
@@ -30,6 +28,8 @@ void game::InvisibilityAbilityBehaviour::OnStart()
 
 void game::InvisibilityAbilityBehaviour::OnUpdate()
 {
+    if(_healthBehaviour->Health() <= 0) return;
+
     if (_abilityActive)
     {
         _sprite->Color(spic::Color(1, 1, 1, 0.5));

@@ -32,7 +32,7 @@ void game::EnemySuicideAbilityBehaviour::OnUpdate()
         {
             enemySuicideObject->Destroy(enemySuicideObject);
             _abilityActive = false;
-            _coolDownBehaviour->CooledDown(true);
+            _coolDownBehaviour->CooledDown(false);
             auto enemies = spic::GameObject::FindGameObjectsWithTag("enemy");
             for(auto& enemy : enemies) {
                 auto attackBehaviour = enemy->GetComponent<game::AttackBehaviour>();
