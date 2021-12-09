@@ -5,6 +5,9 @@
 #include "../Common/CoolDownBehaviour.hpp"
 
 namespace game {
+    /**
+     * @brief A script for handling the airstrike ability for Franklin D Roosevelt
+     */
     class AirstrikeAbilityBehaviour : public spic::BehaviourScript
     {
         private:
