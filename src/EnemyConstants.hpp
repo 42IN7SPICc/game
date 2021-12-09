@@ -16,6 +16,7 @@ const int PanzerEnemyDamage = 30; // The damage of a bullet for the panzer enemy
 const double PanzerEnemyVelocity = 0.25; // The movement speed
 const int PanzerEnemyBulletSpeed = 10; // The bullet velocity of the panzer enemy
 const int PanzerEnemyHealth = 200; // The bullet velocity of the panzer enemy
+const int PanzerEnemyValue = 200; // Value of enemy
 
 //Enemy Gruppenfuhrer
 const double GruppenfuhrerEnemyFireRate = 3; // The shooting interval of the Gruppenfuhrer enemy
@@ -24,6 +25,7 @@ const int GruppenfuhrerEnemyDamage = 2; // The damage of a bullet for the Gruppe
 const double GruppenfuhrerEnemyVelocity = 1; // The movement speed
 const int GruppenfuhrerEnemyBulletSpeed = 15; // The bullet velocity of the Gruppenfuhrer enemy
 const int GruppenfuhrerEnemyHealth = 100; // The health of the Gruppenfuhrer enemy
+const int GruppenfuhrerEnemyValue = 80; // Value of enemy
 
 const int GruppenfuhrerEnemyBoostCoolDown = 10; // The cool down between boost actions of the Gruppenfuhrer enemy
 const double GruppenfuhrerEnemySpeedBoost = 1.5; // The boost to give to enemies of the Gruppenfuhrer enemy
@@ -41,6 +43,7 @@ const int SchutzeEnemyDamage = 2; // The damage of a bullet for the Schutze enem
 const double SchutzeEnemyVelocity = 1; // The movement speed
 const int SchutzeEnemyBulletSpeed = 15; // The bullet velocity of the Schutze enemy
 const int SchutzeEnemyHealth = 75; // The health of the Schutze enemy
+const int SchutzeEnemyValue = 25; // Value of enemy
 
 //Enemy Erkunder
 const double ErkunderEnemyFireRate = 3; // The shooting interval of the Erkunder enemy
@@ -49,6 +52,7 @@ const int ErkunderEnemyDamage = 2; // The damage of a bullet for the Erkunder en
 const double ErkunderEnemyVelocity = 2; // The movement speed
 const int ErkunderEnemyBulletSpeed = 15; // The bullet velocity of the Erkunder enemy
 const int ErkunderEnemyHealth = 50; // The health of the Erkunder enemy
+const int ErkunderEnemyValue = 50; // Value of enemy
 template <typename T>
 spic::Color ErkunderColor() {
     return T::yellow();
@@ -61,6 +65,7 @@ const int GhillieAnzugSchutzeEnemyDamage = 2; // The damage of a bullet for the 
 const double GhillieAnzugEnemyVelocity = 1; // The movement speed
 const int GhillieAnzugSchutzeEnemyBulletSpeed = 25; // The bullet velocity of the GhillieAnzugSchutze enemy
 const int GhillieAnzugSchutzeEnemyHealth = 75; // The health of the GhillieAnzugSchutze enemy
+const int GhillieAnzugSchutzeEnemyValue = 60; // Value of enemy
 
 const int GhillieAnzugSchutzeEnemyInvisibleEffectTime = 3; // The time of the invisible effect of the GhillieAnzugSchutze enemy
 const int GhillieAnzugSchutzeEnemyInvisibleCoolDownTime = 5; // The cool down time of the invisible effect of the GhillieAnzugSchutze enemy
@@ -72,6 +77,7 @@ spic::Color GhillieAnzugSchutzeColor() {
 //Enemy Stabsarzt
 const double StabsarztEnemyVelocity = 1.0; // The movement speed
 const int StabsarztEnemyHealth = 100; // The health of the Stabsarzt enemy
+const int StabsarztEnemyValue = 75; // Value of enemy
 
 const int StabsarztHealCooldown = 10; // The time between healing actions of the Stabsarzt enemy
 const double StabsarztHealRange = 100; // The maximum distance between the healer and other enemies to heal.
@@ -84,5 +90,6 @@ spic::Color StabsarztColor() {
 //Enemy Raupenschlepper
 const double RaupenschlepperEnemyVelocity = 0.5; // The movement speed
 const int RaupenschlepperEnemyHealth = 125; // The health of the Raupenschlepper enemy
+const int RaupenschlepperEnemyValue = 150; // Value of enemy
 
 #endif //SPIC_GAME_ENEMYCONSTANTS_HPP

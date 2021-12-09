@@ -14,8 +14,6 @@
 #include "../Enums/SortingLayer.hpp"
 #include "../Enums/Font.hpp"
 #include "../HeroConstants.hpp"
-
-
 #include "Engine.hpp"
 #include "../Structs/PlayerData.hpp"
 
