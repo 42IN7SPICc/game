@@ -21,6 +21,7 @@ namespace game
 
             std::shared_ptr<spic::GameObject> _rightHud;
             std::shared_ptr<game::GameLostBehaviour> _gameLostBehavior;
+            //std::shared_ptr<
 
             std::shared_ptr<spic::Button> InitializeTileButton(const std::string& texture, int tileAmount, const std::string& tileTitle, double yLocation);
             std::shared_ptr<spic::Button> InitializeTowerButton(const std::string& texture, int towerCost, const std::string& towerName, double yLocation, spic::Color color);

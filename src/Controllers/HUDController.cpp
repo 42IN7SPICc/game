@@ -10,6 +10,10 @@
 #include "../Factories/ButtonPrefabFactory.hpp"
 #include "LevelController.hpp"
 #include <numeric>
+#include <cmath>
+#include <iomanip>
+#include "../Scripts/Common/CoolDownBehaviour.hpp"
+#include "../Utils/HeroUtil.hpp"
 
 using namespace spic;
 using namespace game;
@@ -74,6 +78,12 @@ void game::HUDController::CreateTowerHud()
     nextWaveButton->Transform().position.y = 350;
 
     _levelData->HeroHealth->GameObject().lock()->Active(true);
+    auto hero = _levelData->HeroHealth->GameObject().lock();
+    auto coolDownBehaviour = HeroUtil::GetAbilityCoolDownBehaviour(hero);
+
+    CreateHudInfo("ability-cooldown-timer", 20, 50, "Ability Cooldown");
+    CreateHudInfo("ability-cooldown-timer-text", 20, 70, std::to_string(coolDownBehaviour->CoolDown()) + " seconden");
+
     GameObjectUtil::LinkChild(_rightHud, nextWaveButton);
 }
 
@@ -264,6 +274,16 @@ void HUDController::OnUpdate()
         {
             auto text = std::dynamic_pointer_cast<spic::Text>(child);
             text->Content(_levelData->Waves.empty() ? "0" : std::to_string(_levelData->Waves.front().RemainingEnemies()));
+        }
+        else if (child->Name() == "ability-cooldown-timer-text")
+        {
+            auto text = std::dynamic_pointer_cast<spic::Text>(child);
+            auto coolDownBehaviour = HeroUtil::GetAbilityCoolDownBehaviour(_levelData->HeroHealth->GameObject().lock());
+            if(coolDownBehaviour->CooledDown()) {
+                text->Content("ready!");
+            } else {
+                text->Content(std::to_string((int) coolDownBehaviour->CoolDown()) + " sec");
+            }
         }
     }
 }
