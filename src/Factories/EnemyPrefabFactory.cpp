@@ -64,9 +64,9 @@ std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreateEnemy(EnemyName name
 
 std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreatePanzer()
 {
-    types::sprite_vector idleSprites = AnimatorUtil::CreateSpriteVector(10, "resources/sprites/enemies/soldier/idle/enemy_idle_", SortingLayer::Enemy);
-    types::sprite_vector walkingSprites = AnimatorUtil::CreateSpriteVector(10, "resources/sprites/enemies/soldier/walking/enemy_walking_", SortingLayer::Enemy);
-    types::sprite_vector diedSprites = AnimatorUtil::CreateSpriteVector(9, "resources/sprites/enemies/soldier/died/enemy_died_", SortingLayer::Enemy);
+    types::sprite_vector idleSprites = AnimatorUtil::CreateSpriteVector(8, "resources/sprites/enemies/tank/moving/tank_moving_", SortingLayer::Enemy);
+    types::sprite_vector walkingSprites = AnimatorUtil::CreateSpriteVector(8, "resources/sprites/enemies/tank/moving/tank_moving_", SortingLayer::Enemy);
+    types::sprite_vector diedSprites = AnimatorUtil::CreateSpriteVector(8, "resources/sprites/enemies/tank/moving/tank_moving_", SortingLayer::Enemy);
 
     auto enemy = CreateBaseEnemy(15, PanzerEnemyHealth, 0.5, idleSprites, walkingSprites, diedSprites);
 
@@ -149,9 +149,9 @@ std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreateStabsarzt()
 
 std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreateRaupenschlepper()
 {
-    types::sprite_vector idleSprites = AnimatorUtil::CreateSpriteVector(8, "resources/sprites/truck/truck_moving_", SortingLayer::Enemy);
-    types::sprite_vector walkingSprites = AnimatorUtil::CreateSpriteVector(8, "resources/sprites/truck/truck_moving_", SortingLayer::Enemy);
-    types::sprite_vector diedSprites = AnimatorUtil::CreateSpriteVector(8, "resources/sprites/truck/truck_moving_", SortingLayer::Enemy);
+    types::sprite_vector idleSprites = AnimatorUtil::CreateSpriteVector(10, "resources/sprites/enemies/soldier/idle/enemy_idle_", SortingLayer::Enemy);
+    types::sprite_vector walkingSprites = AnimatorUtil::CreateSpriteVector(10, "resources/sprites/enemies/soldier/walking/enemy_walking_", SortingLayer::Enemy);
+    types::sprite_vector diedSprites = AnimatorUtil::CreateSpriteVector(9, "resources/sprites/enemies/soldier/died/enemy_died_", SortingLayer::Enemy);
 
     auto enemy = CreateBaseEnemy(12, 150, 0.8, idleSprites, walkingSprites, diedSprites);
 
