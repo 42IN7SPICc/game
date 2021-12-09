@@ -1,6 +1,5 @@
 #include "AttackBehaviour.hpp"
 
-#include "HealthBehaviour.hpp"
 #include "../../Factories/BulletFactory.hpp"
 #include "../../Utils/GameObjectUtil.hpp"
 #include "../../Utils/PointUtil.hpp"
@@ -29,10 +28,14 @@ void AttackBehaviour::OnStart()
 {
     auto parent = GameObject().lock();
     GameObjectUtil::LinkComponent(parent, _coolDownBehaviour);
+
+    _healthBehaviour = parent->GetComponent<HealthBehaviour>();
 }
 
 void AttackBehaviour::OnUpdate()
 {
+    if (_healthBehaviour && _healthBehaviour->Health() <= 0) return;
+
     if (!_coolDownBehaviour->CooledDown() && !_followTarget) return;
 
     auto absPosition = GameObject().lock()->AbsoluteTransform().position;
