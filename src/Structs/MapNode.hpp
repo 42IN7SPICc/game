@@ -11,16 +11,29 @@ namespace game
     /**
      * @brief A model for storing information about a node on the map.
      */
-    struct MapNode
+    class MapNode
     {
-        std::vector<std::string> NeighbourStrings{};
-        int X;
-        int Y;
-        game::TileType OriginalTileType;
-        game::TileType TileType;
-        std::shared_ptr<spic::GameObject> TileObject;
-        std::shared_ptr<spic::GameObject> TowerObject;
-        bool Visited;
+        public:
+            std::vector<std::string> NeighbourStrings{};
+            int X;
+            int Y;
+            game::TileType OriginalTileType;
+            game::TileType TileType;
+            std::shared_ptr<spic::GameObject> TileObject;
+            std::shared_ptr<spic::GameObject> TowerObject;
+            bool Visited;
+
+            /**
+             * @brief Compare two MapNodes by X and Y
+             * @return Boolean if they are the same.
+             */
+            bool operator==(const MapNode& other) const;
+
+            /**
+             * @brief MapNode to valid x-y coords
+             * @return Valid x-y coords
+             */
+            [[nodiscard]] std::string ToString() const;
     };
 }
 
