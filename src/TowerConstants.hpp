@@ -1,10 +1,10 @@
 #ifndef SPIC_GAME_TOWERCONSTANTS_HPP
 #define SPIC_GAME_TOWERCONSTANTS_HPP
 
-//Tower Shotgun - 15 dps (has more range then flamethrower)
+//Tower Shotgun - 10 dps (has more range then flamethrower)
 const double ShotgunTowerFireRate = 2; // The shooting interval of the shotgun tower
 const int ShotgunTowerRange = 250; // The detection range of the hero for the shotgun tower
-const int ShotgunTowerDamage = 30; // The damage of a bullet for the shotgun tower
+const int ShotgunTowerDamage = 20; // The damage of a bullet for the shotgun tower
 const int ShotgunTowerBulletSpeed = 15; // The bullet velocity of the shotgun tower
 template<typename T>
 spic::Color ShotgunTowerColor()
@@ -12,21 +12,21 @@ spic::Color ShotgunTowerColor()
     return T::red();
 }
 
-//Tower Flamethrower - 20 dps (stronger but less range then flamethrower)
+//Tower Flamethrower - 60 dps (stronger but less range then shotgun and low accuracy)
 const double FlamethrowerTowerFireRate = 0.1; // The shooting interval of the flamethrower tower
-const int FlamethrowerTowerRange = 80; // The detection range of the hero for the flamethrower tower
-const int FlamethrowerTowerDamage = 2; // The damage of a bullet for the flamethrower tower
-const int FlamethrowerTowerBulletSpeed = 10; // The bullet velocity of the flamethrower tower
+const int FlamethrowerTowerRange = 60; // The detection range of the hero for the flamethrower tower
+const int FlamethrowerTowerDamage = 6; // The damage of a bullet for the flamethrower tower
+const int FlamethrowerTowerBulletSpeed = 30; // The bullet velocity of the flamethrower tower
 template<typename T>
 spic::Color FlamethrowerTowerColor()
 {
     return T::green();
 }
 
-//Tower Bomber - 2 dps (but it multi target)
+//Tower Bomber - 3 dps (but it multi target)
 const double BomberTowerFireRate = 5; // The shooting interval of the bomber tower
-const int BomberTowerRange = 150; // The detection range of the hero for the bomber tower
-const int BomberTowerDamage = 10; // The damage of a bullet for the bomber tower
+const int BomberTowerRange = 100; // The detection range of the hero for the bomber tower
+const int BomberTowerDamage = 15; // The damage of a bullet for the bomber tower
 const int BomberTowerBulletSpeed = 10; // The bullet velocity of the bomber tower
 const int BomberTowerExplosionRange = 64; // The range of an explosion
 template<typename T>

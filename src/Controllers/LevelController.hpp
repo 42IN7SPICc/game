@@ -13,8 +13,10 @@
 #include "GameObject.hpp"
 #include "../Structs/LevelWithTiles.hpp"
 #include "../Structs/LevelData.hpp"
+#include "../Structs/HudData.hpp"
 #include "../Enums/LevelMode.hpp"
 #include "../Scripts/Common/GameLostBehaviour.hpp"
+#include "HUDController.hpp"
 
 namespace game
 {
@@ -23,6 +25,18 @@ namespace game
      */
     class LevelController : public spic::BehaviourScript
     {
+        private:
+            spic::Point _startPosition;
+            std::shared_ptr<game::LevelWithTiles> _level;
+            std::shared_ptr<game::LevelData> _levelData;
+            std::shared_ptr<game::HudData> _hudData;
+
+            double _timePassed;
+            bool _strongPathEnabled;
+            std::shared_ptr<game::GameLostBehaviour> _gameLostBehavior;
+
+            void HandleClickTile(const game::MapNode& clickedTile);
+            void HandleClickTower(game::MapNode& clickedTile);
         public:
             /**
              * @brief Constructs a new instance of a LevelController with given settings.
@@ -30,8 +44,10 @@ namespace game
              * @param heroHealth The health of the hero.
              * @param militaryBaseHealth The health of the end point.
              * @param waves The waves of the level.
+             * @param levelData The data object of the current level
+             * @param hudData The shared data with the HUD controller
              */
-            LevelController(game::LevelWithTiles level, std::shared_ptr<game::HealthBehaviour> heroHealth, std::shared_ptr<game::HealthBehaviour> militaryBaseHealth, std::queue<game::WaveData> waves);
+            LevelController(std::shared_ptr<game::LevelWithTiles> level, std::shared_ptr<game::HealthBehaviour> heroHealth, std::shared_ptr<game::HealthBehaviour> militaryBaseHealth, std::queue<game::WaveData> waves, std::shared_ptr<game::LevelData> levelData, std::shared_ptr<game::HudData> hudData);
 
             /**
              * @brief Triggers when the scripts starts for the first time.
@@ -68,12 +84,6 @@ namespace game
              * @return The game object containing the level.
              */
             std::shared_ptr<spic::GameObject> BuildLevel(const std::shared_ptr<game::HealthBehaviour>& endTowerHealthBehaviour, const std::shared_ptr<spic::Animator>& animator);
-
-            /**
-             * @brief Creates a HUD for the level.
-             * @return The game object containing the hud.
-             */
-            std::shared_ptr<spic::GameObject> CreateHUD();
 
             /**
              * @brief Creates a button for the map.
@@ -147,31 +157,12 @@ namespace game
              */
             static std::shared_ptr<spic::GameObject> CreateLevelBorder(double x, double y, double width, double height);
 
-        private:
-            spic::Point _startPosition;
-            double _timePassed;
-            const game::LevelWithTiles _level;
-            game::LevelData _levelData;
-            std::shared_ptr<spic::Button> _selectedButton;
-            std::shared_ptr<spic::GameObject> _rightHud;
-            std::map<std::shared_ptr<spic::Button>, int> _buttonTileAmounts;
-            std::map<std::shared_ptr<spic::Button>, int> _buttonTowerCosts;
-            game::LevelMode _levelMode;
-            bool _strongPathEnabled;
-            std::shared_ptr<game::GameLostBehaviour> _gameLostBehavior;
-
-
-            std::shared_ptr<spic::Button> InitializeTileButton(const std::string& texture, int tileAmount, const std::string& tileTitle, double yLocation);
-
-            std::shared_ptr<spic::Button> InitializeTowerButton(const std::string& texture, int towerCost, const std::string& towerName, double yLocation, spic::Color color);
-
-            void HandleClickTile(const game::MapNode& clickedTile);
-
-            void HandleClickTower(game::MapNode& clickedTile);
-
+            /**
+             * @brief Check if there is a path from the start tile to the end tile
+             * @param graphCopy A graph with all the map tiles
+             * @return a bool if the path is complete and a queue with the path follow instructions
+             */
             static std::tuple<bool, std::queue<std::string>> CheckIfPathIsComplete(std::map<std::string, MapNode> graphCopy);
-
-            void CreateTowerHud();
     };
 }
 

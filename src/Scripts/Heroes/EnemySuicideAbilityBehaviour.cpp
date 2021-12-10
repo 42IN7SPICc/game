@@ -36,7 +36,10 @@ void game::EnemySuicideAbilityBehaviour::OnUpdate()
             auto enemies = spic::GameObject::FindGameObjectsWithTag("enemy");
             for(auto& enemy : enemies) {
                 auto attackBehaviour = enemy->GetComponent<game::AttackBehaviour>();
-                attackBehaviour->TargetTag("hero");
+                if (attackBehaviour)
+                {
+                    attackBehaviour->TargetTag("hero");
+                }
             }
         }
         return;
@@ -59,7 +62,10 @@ void game::EnemySuicideAbilityBehaviour::OnUpdate()
             auto enemies = spic::GameObject::FindGameObjectsWithTag("enemy");
             for(auto& enemy : enemies) {
                 auto attackBehaviour = enemy->GetComponent<game::AttackBehaviour>();
-                attackBehaviour->TargetTag("enemy");
+                if (attackBehaviour)
+                {
+                    attackBehaviour->TargetTag("enemy");
+                }
             }
 
             scene->Contents().push_back(enemySuicideObject);
@@ -81,4 +87,9 @@ void game::EnemySuicideAbilityBehaviour::OnTriggerExit2D(const spic::Collider& c
 void game::EnemySuicideAbilityBehaviour::OnTriggerStay2D(const spic::Collider& collider)
 {
     //
+}
+
+std::shared_ptr<game::CoolDownBehaviour>& game::EnemySuicideAbilityBehaviour::GetCoolDownBehaviour()
+{
+    return _coolDownBehaviour;
 }

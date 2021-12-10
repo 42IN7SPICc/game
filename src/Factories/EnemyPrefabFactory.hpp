@@ -22,7 +22,7 @@ namespace game
              * @param hasHealthBar Whether the hero has a health bar above themself.
              * @return The enemy object.
              */
-            static std::shared_ptr<spic::GameObject> CreateEnemy(game::EnemyName name, bool hasHealthBar = false);
+            static std::shared_ptr<spic::GameObject> CreateEnemy(game::EnemyName name, bool hasHealthBar);
 
         private:
             /**
