@@ -32,7 +32,7 @@ void game::AirstrikeAbilityBehaviour::OnUpdate()
 
     if(_bombIsDropped) {
         auto bombObject = spic::GameObject::Find("airstrikeBomb");
-        bombObject->Transform().scale *= 0.96 * ( 1 - spic::Time::DeltaTime());
+        bombObject->Transform().scale *= 0.96 * ( 1 - spic::Time::DeltaTime() * spic::Time::TimeScale());
         if (bombObject && bombObject->GetComponent<CoolDownBehaviour>()->CooledDown())
         {
             auto soundEffect = AudioSourcePrefabFactory::CreateAudioObject(game::AudioClipName::NukeAbility, true, false, 1.0);
