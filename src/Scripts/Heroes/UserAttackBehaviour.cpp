@@ -9,7 +9,7 @@
 #include "../../Factories/BulletFactory.hpp"
 #include "../../Utils/PointUtil.hpp"
 #include "../../Utils/GameObjectUtil.hpp"
-#include "../../Constants.hpp"
+#include "../../HeroConstants.hpp"
 #include "../../Controllers/LevelController.hpp"
 
 using namespace game;
@@ -33,7 +33,7 @@ void UserAttackBehaviour::OnStart()
 void UserAttackBehaviour::OnUpdate()
 {
     auto levelControllerGameObject = spic::GameObject::Find("LevelController");
-    if(!levelControllerGameObject)
+    if (!levelControllerGameObject)
     {
         throw std::runtime_error("A user attack behaviour requires a level controller for level mode.");
     }

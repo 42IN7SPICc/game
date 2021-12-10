@@ -1,5 +1,5 @@
 #include "IncreaseTowerFireRateAbilityBehaviour.hpp"
-#include "../../Constants.hpp"
+#include "../../HeroConstants.hpp"
 #include "../../Utils/GameObjectUtil.hpp"
 #include "../../Enums/Layer.hpp"
 #include "../../Factories/AudioSourcePrefabFactory.hpp"
@@ -17,11 +17,14 @@ game::IncreaseTowerFireRateAbilityBehaviour::IncreaseTowerFireRateAbilityBehavio
 void game::IncreaseTowerFireRateAbilityBehaviour::OnStart()
 {
     auto parent = GameObject().lock();
+    _healthBehaviour = parent->GetComponent<game::HealthBehaviour>();
     game::GameObjectUtil::LinkComponent(parent, _coolDownBehaviour);
 }
 
 void game::IncreaseTowerFireRateAbilityBehaviour::OnUpdate()
 {
+    if(_healthBehaviour->Health() <= 0) return;
+
     if(_abilityActivated) {
         auto towerFireRateObject = spic::GameObject::Find("towerFireRateObject");
         if (towerFireRateObject && towerFireRateObject->GetComponent<CoolDownBehaviour>()->CooledDown())

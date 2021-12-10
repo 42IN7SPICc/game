@@ -1,5 +1,5 @@
 #include "EnemySuicideAbilityBehaviour.hpp"
-#include "../../Constants.hpp"
+#include "../../HeroConstants.hpp"
 #include "Input.hpp"
 #include "GameObject.hpp"
 #include "../Common/AttackBehaviour.hpp"
@@ -17,11 +17,14 @@ game::EnemySuicideAbilityBehaviour::EnemySuicideAbilityBehaviour() : _coolDownBe
 void game::EnemySuicideAbilityBehaviour::OnStart()
 {
     auto parent = GameObject().lock();
+    _healthBehaviour = parent->GetComponent<game::HealthBehaviour>();
     game::GameObjectUtil::LinkComponent(parent, _coolDownBehaviour);
 }
 
 void game::EnemySuicideAbilityBehaviour::OnUpdate()
 {
+    if(_healthBehaviour->Health() <= 0) return;
+
     if (_abilityActive)
     {
         auto enemySuicideObject = spic::GameObject::Find("enemySuicideObject");
@@ -29,11 +32,14 @@ void game::EnemySuicideAbilityBehaviour::OnUpdate()
         {
             enemySuicideObject->Destroy(enemySuicideObject);
             _abilityActive = false;
-            _coolDownBehaviour->CooledDown(true);
+            _coolDownBehaviour->CooledDown(false);
             auto enemies = spic::GameObject::FindGameObjectsWithTag("enemy");
             for(auto& enemy : enemies) {
                 auto attackBehaviour = enemy->GetComponent<game::AttackBehaviour>();
-                attackBehaviour->TargetTag("hero");
+                if (attackBehaviour)
+                {
+                    attackBehaviour->TargetTag("hero");
+                }
             }
         }
         return;
@@ -56,7 +62,10 @@ void game::EnemySuicideAbilityBehaviour::OnUpdate()
             auto enemies = spic::GameObject::FindGameObjectsWithTag("enemy");
             for(auto& enemy : enemies) {
                 auto attackBehaviour = enemy->GetComponent<game::AttackBehaviour>();
-                attackBehaviour->TargetTag("enemy");
+                if (attackBehaviour)
+                {
+                    attackBehaviour->TargetTag("enemy");
+                }
             }
 
             scene->Contents().push_back(enemySuicideObject);

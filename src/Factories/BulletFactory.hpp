@@ -25,9 +25,10 @@ namespace game
              * @param range The maximum range the bullet can travel.
              * @param damage The damage the bullet does on impact.
              * @param bombRadius The radius of the bomb on impact (only bulletType = bomb).
+             * @param maxPenetrating How many enemies a single bullet can passthrough before disappearing
              * @return
              */
-            static std::shared_ptr<spic::GameObject> CreateBullet(BulletType bulletType, const spic::Point& position, const std::string& targetTag, const spic::Point& direction, int range, int damage, double bombRadius = 0);
+            static std::shared_ptr<spic::GameObject> CreateBullet(BulletType bulletType, const spic::Point& position, const std::string& targetTag, const spic::Point& direction, int range, int damage, double bombRadius = 0, int maxPenetrating = 1);
 
         private:
             /**

@@ -1,5 +1,5 @@
 #include "AirstrikeAbilityBehaviour.hpp"
-#include "../../Constants.hpp"
+#include "../../HeroConstants.hpp"
 #include "Input.hpp"
 #include "Engine.hpp"
 #include "Animator.hpp"
@@ -12,6 +12,7 @@
 #include "../../Utils/AnimatorUtil.hpp"
 #include "../Common/HealthBehaviour.hpp"
 #include "../../Factories/AudioSourcePrefabFactory.hpp"
+#include "../../Constants.hpp"
 
 game::AirstrikeAbilityBehaviour::AirstrikeAbilityBehaviour() : _coolDownBehaviour(std::make_shared<CoolDownBehaviour>(CoolDownBehaviour(FranklinDRooseveltAirstrikeAbilityCooldown))),
                                                                _bombIsDropped(false)
@@ -21,11 +22,14 @@ game::AirstrikeAbilityBehaviour::AirstrikeAbilityBehaviour() : _coolDownBehaviou
 void game::AirstrikeAbilityBehaviour::OnStart()
 {
     auto parent = GameObject().lock();
+    _healthBehaviour = parent->GetComponent<game::HealthBehaviour>();
     game::GameObjectUtil::LinkComponent(parent, _coolDownBehaviour);
 }
 
 void game::AirstrikeAbilityBehaviour::OnUpdate()
 {
+    if(_healthBehaviour->Health() <= 0) return;
+
     if(_bombIsDropped) {
         auto bombObject = spic::GameObject::Find("airstrikeBomb");
         bombObject->Transform().scale *= 0.96 * ( 1 - spic::Time::DeltaTime());
