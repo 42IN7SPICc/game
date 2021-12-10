@@ -7,6 +7,7 @@
 #include "../Controllers/LevelController.hpp"
 #include "../Enums/Layer.hpp"
 #include "../Factories/AudioSourcePrefabFactory.hpp"
+#include "../Factories/CameraPrefabFactory.hpp"
 #include "../Factories/BackgroundPrefabFactory.hpp"
 #include "../Factories/HeroPrefabFactory.hpp"
 #include "../Scripts/Common/CheatManager.hpp"
@@ -23,6 +24,8 @@ using namespace game;
 
 LevelScene::LevelScene(LevelWithTiles& levelWithTiles)
 {
+    Contents().push_back(CameraPrefabFactory::CreateCamera(Color::black()));
+
     auto background = BackgroundPrefabFactory::CreateBackground(BackgroundName::Menu);
 
     auto hero = game::HeroPrefabFactory::CreateHero(PlayerData::Instance().SelectedHero, true);
