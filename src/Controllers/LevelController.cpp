@@ -4,11 +4,13 @@
 #include "../Utils/GameObjectUtil.hpp"
 #include "../Enums/Layer.hpp"
 #include "../Utils/TileUtil.hpp"
+#include "../Utils/QueueUtil.hpp"
 #include "../Factories/ButtonPrefabFactory.hpp"
 #include "../Factories/EnemyPrefabFactory.hpp"
 #include "../Factories/TowerPrefabFactory.hpp"
 #include <numeric>
 #include <cmath>
+#include <map>
 #include <vector>
 #include <memory>
 #include "../Constants.hpp"
@@ -108,22 +110,22 @@ void LevelController::OnTriggerStay2D(const spic::Collider& collider)
     //
 }
 
-LevelController::LevelController(game::LevelWithTiles level, std::shared_ptr<game::HealthBehaviour> heroHealth, std::shared_ptr<game::HealthBehaviour> militaryBaseHealth, std::queue<game::WaveData> waves) : _timePassed(0),
-                                                                                                                                                                                                               _level(std::move(level)),
-                                                                                                                                                                                                               _levelData(game::LevelData{
-                                                                                                                                                                                                                       level.UnlockThreshold,
-                                                                                                                                                                                                                       std::move(heroHealth),
-                                                                                                                                                                                                                       std::move(militaryBaseHealth),
-                                                                                                                                                                                                                       waves.size(), // Total waves
-                                                                                                                                                                                                                       500,
-                                                                                                                                                                                                                       std::move(waves)
-                                                                                                                                                                                                               }),
-                                                                                                                                                                                                               _levelMode(LevelMode::TileMode),
-                                                                                                                                                                                                               _strongPathEnabled(false)
+LevelController::LevelController(game::LevelWithTiles level, std::shared_ptr <game::HealthBehaviour> heroHealth, std::shared_ptr <game::HealthBehaviour> militaryBaseHealth, std::queue <game::WaveData> waves) : _timePassed(0),
+                                                                                                                                                                                                                  _level(std::move(level)),
+                                                                                                                                                                                                                  _levelData(game::LevelData{
+                                                                                                                                                                                                                          level.UnlockThreshold,
+                                                                                                                                                                                                                          std::move(heroHealth),
+                                                                                                                                                                                                                          std::move(militaryBaseHealth),
+                                                                                                                                                                                                                          waves.size(), // Total waves
+                                                                                                                                                                                                                          500,
+                                                                                                                                                                                                                          std::move(waves)
+                                                                                                                                                                                                                  }),
+                                                                                                                                                                                                                  _levelMode(LevelMode::TileMode),
+                                                                                                                                                                                                                  _strongPathEnabled(false)
 {
 }
 
-std::shared_ptr<spic::GameObject> LevelController::CreateHUD()
+std::shared_ptr <spic::GameObject> LevelController::CreateHUD()
 {
     _rightHud = std::make_shared<spic::GameObject>("RightHud", "hud", Layer::HUD);
     auto rightHudSprite = std::make_shared<spic::Sprite>("resources/sprites/hud/white_block.png", false, false, 3, 1);
@@ -184,7 +186,7 @@ std::shared_ptr<spic::GameObject> LevelController::CreateHUD()
     return _rightHud;
 }
 
-std::shared_ptr<spic::GameObject> LevelController::BuildLevel(const std::shared_ptr<game::HealthBehaviour>& endTowerHealthBehaviour, const std::shared_ptr<spic::Animator>& animator)
+std::shared_ptr <spic::GameObject> LevelController::BuildLevel(const std::shared_ptr <game::HealthBehaviour>& endTowerHealthBehaviour, const std::shared_ptr <spic::Animator>& animator)
 {
     auto tileMap = std::make_shared<spic::GameObject>("TileGrid", "tilemap", Layer::Game);
     for (auto levelTile: _level.Tiles)
@@ -293,7 +295,7 @@ bool LevelController::Walkable(const TileType& tileType)
     return false;
 }
 
-std::shared_ptr<spic::GameObject> LevelController::CreateLevelBorder(double x, double y, double width, double height)
+std::shared_ptr <spic::GameObject> LevelController::CreateLevelBorder(double x, double y, double width, double height)
 {
     auto border = std::make_shared<spic::GameObject>("Border", "border", Layer::Game);
     border->Transform().position = {x, y};
@@ -303,7 +305,7 @@ std::shared_ptr<spic::GameObject> LevelController::CreateLevelBorder(double x, d
     return border;
 }
 
-std::shared_ptr<spic::Button> LevelController::InitializeTileButton(const std::string& texture, int tileAmount, const std::string& tileTitle, double yLocation)
+std::shared_ptr <spic::Button> LevelController::InitializeTileButton(const std::string& texture, int tileAmount, const std::string& tileTitle, double yLocation)
 {
     auto button = std::make_shared<spic::Button>("tile-button-" + texture, "tile_button", Layer::HUD, TileSize, TileSize);
     button->Transform().position.y = yLocation;
@@ -350,7 +352,7 @@ std::shared_ptr<spic::Button> LevelController::InitializeTileButton(const std::s
     return button;
 }
 
-std::shared_ptr<spic::Button> LevelController::InitializeTowerButton(const std::string& texture, int towerCost, const std::string& towerName, double yLocation, spic::Color color)
+std::shared_ptr <spic::Button> LevelController::InitializeTowerButton(const std::string& texture, int towerCost, const std::string& towerName, double yLocation, spic::Color color)
 {
     auto button = std::make_shared<spic::Button>("tower-button-" + texture, "tower_button", Layer::HUD, TowerSpriteSize, TowerSpriteSize);
     button->Transform().scale = TowerButtonScale;
@@ -393,7 +395,7 @@ std::shared_ptr<spic::Button> LevelController::InitializeTowerButton(const std::
     return button;
 }
 
-std::shared_ptr<spic::GameObject> LevelController::CreateMapButton()
+std::shared_ptr <spic::GameObject> LevelController::CreateMapButton()
 {
     double mapSize = sqrt(_level.Tiles.size());
     double buttonSize = mapSize * TileSize;
@@ -469,7 +471,7 @@ void LevelController::HandleClickTile(const game::MapNode& clickedTile)
     }
 }
 
-void LevelController::AddEnemyToWave(const std::shared_ptr<spic::GameObject>& enemy)
+void LevelController::AddEnemyToWave(const std::shared_ptr <spic::GameObject>& enemy)
 {
     _levelData.Waves.front().CurrentEnemies.push_back(enemy);
 }
@@ -509,42 +511,64 @@ void LevelController::HandleClickTower(game::MapNode& clickedTile)
     }
 }
 
-std::tuple<bool, std::queue<std::string>> LevelController::CheckIfPathIsComplete(std::map<std::string, MapNode> graphCopy)
+std::tuple<bool, std::queue<std::string>> LevelController::CheckIfPathIsComplete(std::map <std::string, MapNode> graphCopy)
 {
     MapNode start;
+    MapNode end;
     for (const auto&[key, value]: graphCopy)
     {
         if (value.TileType == TileType::Start)
             start = value;
+
+        else if (value.TileType == TileType::End)
+            end = value;
     }
 
     if (start.NeighbourStrings.empty()) return {false, {}};
+    if (end.NeighbourStrings.empty()) return {false, {}};
 
-    std::vector<std::string> pathTiles;
-    std::queue<std::string> path;
-    pathTiles.push_back(std::to_string(start.X) + "-" + std::to_string(start.Y));
-    while (!pathTiles.empty())
+    std::deque <std::string> unvisitedMapNodes{};
+    std::map <std::string, std::string> previous{};
+
+    unvisitedMapNodes.push_back(start.ToString());
+
+    while (!unvisitedMapNodes.empty())
     {
-        auto& tile = graphCopy[pathTiles[0]];
-        tile.Visited = true;
-        for (auto& stringNeighbour: tile.NeighbourStrings)
+        const auto stringNode = unvisitedMapNodes.front();
+        auto& node = graphCopy[stringNode];
+        unvisitedMapNodes.pop_front();
+
+        for (const auto& stringNeighbour: node.NeighbourStrings)
         {
             const auto& neighbour = graphCopy[stringNeighbour];
-            if (neighbour.TileType == TileType::End)
+
+            if (neighbour.TileType == TileType::Street || neighbour.TileType == TileType::Sand || neighbour.TileType == TileType::Grass || neighbour.TileType == TileType::Bridge || neighbour.TileType == TileType::End || neighbour.TileType == TileType::Start)
             {
-                path.push(stringNeighbour);
-                return {true, path};
-            }
-            if ((neighbour.TileType == TileType::Street || neighbour.TileType == TileType::Sand || neighbour.TileType == TileType::Grass || neighbour.TileType == TileType::Bridge) && !neighbour.Visited)
-            {
-                pathTiles.push_back(std::to_string(neighbour.X) + "-" + std::to_string(neighbour.Y));
-                path.push(std::to_string(neighbour.X) + "-" + std::to_string(neighbour.Y));
+                if (previous.contains(stringNeighbour)) continue;
+
+                previous[stringNeighbour] = stringNode;
+                unvisitedMapNodes.push_back(stringNeighbour);
             }
         }
-        pathTiles.erase(std::find(pathTiles.begin(), pathTiles.end(), pathTiles[0]));
     }
 
-    return {false, {}};
+    if (!previous.contains(end.ToString())) return {false, {}};
+
+    std::queue <std::string> shortest;
+    auto current = end.ToString();
+
+    auto startStr = start.ToString();
+
+    while (current != startStr)
+    {
+        shortest.push(current);
+        current = previous[current];
+    }
+
+    shortest.push(start.ToString());
+    QueueUtil::Reverse(shortest);
+
+    return {true, shortest};
 }
 
 void LevelController::SetUnlimitedPath()
@@ -586,12 +610,12 @@ void LevelController::SkipWave()
     }
 }
 
-std::map<std::string, MapNode>& LevelController::GetGraph()
+std::map <std::string, MapNode>& LevelController::GetGraph()
 {
     return _levelData.Graph;
 }
 
-std::queue<std::string> LevelController::GetPath() const
+std::queue <std::string> LevelController::GetPath() const
 {
     return _levelData.Path;
 }
