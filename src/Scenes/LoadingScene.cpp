@@ -5,6 +5,7 @@
 #include "../Enums/Layer.hpp"
 #include "../Factories/ButtonPrefabFactory.hpp"
 
+#include "Camera.hpp"
 #include "Color.hpp"
 #include "Engine.hpp"
 #include "Text.hpp"
@@ -32,9 +33,12 @@ game::LoadingScene::LoadingScene() : MenuScene("", false)
         spic::Engine::Instance().Shutdown();
     });
 
+    auto camera = std::make_shared<spic::Camera>("Camera", 1, spic::Color::cyan(), 1366, 768);
+    camera->Transform().position = {1366 / 2, 768 / 2};
     Contents().push_back(mainMenuAudioSource);
     Contents().push_back(titleText);
     Contents().push_back(subtitleText);
     Contents().push_back(playButton);
     Contents().push_back(exitButton);
+    Contents().push_back(camera);
 }
