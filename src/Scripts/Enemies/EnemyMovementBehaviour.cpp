@@ -7,6 +7,7 @@
 #include "../../Utils/GameObjectUtil.hpp"
 
 #include "GameObject.hpp"
+#include "Time.hpp"
 
 #include <stdexcept>
 
@@ -92,7 +93,7 @@ void EnemyMovementBehaviour::OnUpdate()
         speedMultiplier = 0.33;
     }
 
-    speedMultiplier *= _velocity;
+    speedMultiplier *= _velocity * spic::Time::DeltaTime() * spic::Time::TimeScale();
 
     if (!_boostCoolDownBehaviour->CooledDown())
     {

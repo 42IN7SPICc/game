@@ -6,7 +6,7 @@ const double EnemyScale = 0.1; // The scale of the enemy game object
 const int EnemyWidth = 200; // The width of the enemy without scale
 const int EnemyHeight = 320; // The height of the enemy without scale
 const int EnemyMass = 50; // Random mass given to the hero
-const int EnemyVelocity = 5; // The walking speed of an enemy
+const int EnemyVelocity = 150; // The walking speed of an enemy
 const int EnemyDeSpawnTime = 4; // The time it takes to de spawn an enemy after death
 
 //Enemy Panzer (first enemy)
