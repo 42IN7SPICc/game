@@ -41,19 +41,16 @@ void game::HUDController::CreateTowerHud()
     auto hero = _levelData->HeroHealth->GameObject().lock();
     _coolDownBehaviour = HeroUtil::GetAbilityCoolDownBehaviour(hero);
 
-    CreateHudInfo("ability-cooldown-timer", 20, 30, "Ability Cooldown");
-    CreateHudInfo("ability-cooldown-timer-text", 20, 50, std::to_string(_coolDownBehaviour->CoolDown()) + " seconden");
+    CreateHudInfo("ability-cooldown-timer", 20, 80, "Ability Cooldown");
+    CreateHudInfo("ability-cooldown-timer-text", 20, 100, std::to_string(_coolDownBehaviour->CoolDown()) + " seconden");
 
-    CreateHudInfo("enemies-text-header", 20, 80, "Vijanden resterend:");
-    CreateHudInfo("enemies-text", 20, 100, std::to_string(_levelData->Waves.front().RemainingEnemies()));
+    CreateHudInfo("enemies-text-header", 20, 130, "Vijanden resterend:");
+    CreateHudInfo("enemies-text", 20, 150, std::to_string(_levelData->Waves.front().RemainingEnemies()));
 
-    CreateHudInfo("wave-text-header", 20, 130, "Ronde:");
-    CreateHudInfo("wave-text", 20, 150, std::to_string(_levelData->CurrentWave()));
+    CreateHudInfo("wave-text-header", 20, 180, "Ronde:");
+    CreateHudInfo("wave-text", 20, 200, std::to_string(_levelData->CurrentWave()));
 
-    CreateHudInfo("money-text", 20, 180, "$ " + std::to_string(_levelData->Balance));
-
-    CreateHudInfo("hero-health-text-header", 20, 210, "Hero:");
-    CreateHudInfo("hero-health-text", 20, 230, "♥ " + std::to_string(_levelData->HeroHealth->Health()));
+    CreateHudInfo("money-text", 20, 230, "$ " + std::to_string(_levelData->Balance));
 
     CreateHudInfo("military-base-health-text-header", 20, 260, "Militaire Basis:");
     auto healthBar = HealthBarFactory::CreateHealthBar(_levelData->MilitaryBaseHealth->GameObject().lock());
@@ -249,12 +246,7 @@ void HUDController::OnUpdate()
 {
     for (const auto& child: _rightHud->Children())
     {
-        if (child->Name() == "hero-health-text")
-        {
-            auto text = std::dynamic_pointer_cast<spic::Text>(child);
-            text->Content("♥ " + std::to_string(_levelData->HeroHealth->Health()));
-        }
-        else if (child->Name() == "money-text")
+        if (child->Name() == "money-text")
         {
             auto text = std::dynamic_pointer_cast<spic::Text>(child);
             text->Content("$ " + std::to_string(_levelData->Balance));
