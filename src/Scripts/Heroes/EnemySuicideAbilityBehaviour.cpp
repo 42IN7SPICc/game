@@ -36,7 +36,10 @@ void game::EnemySuicideAbilityBehaviour::OnUpdate()
             auto enemies = spic::GameObject::FindGameObjectsWithTag("enemy");
             for(auto& enemy : enemies) {
                 auto attackBehaviour = enemy->GetComponent<game::AttackBehaviour>();
-                attackBehaviour->TargetTag("hero");
+                if (attackBehaviour)
+                {
+                    attackBehaviour->TargetTag("hero");
+                }
             }
         }
         return;
@@ -59,7 +62,10 @@ void game::EnemySuicideAbilityBehaviour::OnUpdate()
             auto enemies = spic::GameObject::FindGameObjectsWithTag("enemy");
             for(auto& enemy : enemies) {
                 auto attackBehaviour = enemy->GetComponent<game::AttackBehaviour>();
-                attackBehaviour->TargetTag("enemy");
+                if (attackBehaviour)
+                {
+                    attackBehaviour->TargetTag("enemy");
+                }
             }
 
             scene->Contents().push_back(enemySuicideObject);
