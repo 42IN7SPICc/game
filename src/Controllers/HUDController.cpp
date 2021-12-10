@@ -1,17 +1,18 @@
 #include "HUDController.hpp"
-#include "../Utils/GameObjectUtil.hpp"
+#include "LevelController.hpp"
 #include "Text.hpp"
 #include "GameObject.hpp"
 #include "Color.hpp"
 #include "Sprite.hpp"
 #include "Debug.hpp"
 #include "../Constants.hpp"
+#include "../TowerConstants.hpp"
 #include "../Enums/Layer.hpp"
+#include "../Utils/HeroUtil.hpp"
+#include "../Utils/GameObjectUtil.hpp"
 #include "../Factories/ButtonPrefabFactory.hpp"
 #include "../Factories/HealthBarFactory.hpp"
-#include "LevelController.hpp"
 #include <numeric>
-#include "../Utils/HeroUtil.hpp"
 
 using namespace spic;
 using namespace game;
@@ -23,7 +24,7 @@ game::HUDController::HUDController(std::shared_ptr<game::LevelWithTiles> level, 
 
 }
 
-void game::HUDController::CreateHudInfo (std::string name, double height, double yPosition, std::string content) {
+void game::HUDController::CreateHudInfo (const std::string& name, const double& height, const double& yPosition, const std::string& content) {
     auto text = std::make_shared<spic::Text>(name, "default", Layer::HUD, HudWidth, height);
     text->Size(18);
     text->TextAlignment(Alignment::center);
@@ -202,11 +203,9 @@ std::shared_ptr<spic::Button> game::HUDController::InitializeTileButton(const st
     GameObjectUtil::LinkChild(button, buttonText);
 
     auto labelText = std::make_shared<spic::Text>("button-label-text-" + texture, "tile_label_text", Layer::HUD, 100, TileSize);
-
     labelText->Transform().position.y = yLocation;
-    labelText->Transform().position.x = TileSize * TileButtonScale + 5;
-    labelText->Size(11);
-
+    labelText->Transform().position.x = TileSize * TileButtonScale;
+    labelText->Size(18);
     labelText->Content(tileTitle);
     GameObjectUtil::LinkChild(_rightHud, labelText);
 

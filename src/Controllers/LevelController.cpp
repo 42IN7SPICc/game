@@ -387,15 +387,15 @@ void LevelController::SetInvincibility() const
 
 void LevelController::SkipWave()
 {
-    if (_levelData.Waves.empty()) return;
-    while (!_levelData.Waves.front().EnemyQueue.empty())
+    if (_levelData->Waves.empty()) return;
+    while (!_levelData->Waves.front().EnemyQueue.empty())
     {
-        _levelData.Waves.front().EnemyQueue.pop();
+        _levelData->Waves.front().EnemyQueue.pop();
     }
 
-    while (!_levelData.Waves.front().CurrentEnemies.empty())
+    while (!_levelData->Waves.front().CurrentEnemies.empty())
     {
-        GameObject::Destroy(_levelData.Waves.front().CurrentEnemies.front());
+        GameObject::Destroy(_levelData->Waves.front().CurrentEnemies.front());
     }
 }
 

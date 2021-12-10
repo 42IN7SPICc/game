@@ -26,7 +26,7 @@ namespace game
 
             std::shared_ptr<spic::Button> InitializeTileButton(const std::string& texture, int tileAmount, const std::string& tileTitle, double yLocation);
             std::shared_ptr<spic::Button> InitializeTowerButton(const std::string& texture, int towerCost, const std::string& towerName, double yLocation, spic::Color color);
-            void CreateHudInfo (std::string name, double height, double yPosition, std::string content);
+            void CreateHudInfo (const std::string& name, const double& height, const double& yPosition, const std::string& content);
             void CreateTowerHud();
         public:
             /**
