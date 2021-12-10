@@ -10,48 +10,13 @@
 #include "../Factories/ButtonPrefabFactory.hpp"
 #include "../Enums/Font.hpp"
 #include "../Enums/Layer.hpp"
+#include "../Scripts/Menu/ConfettiBehaviour.hpp"
 #include "../Utils/RandomUtil.hpp"
 #include "../Utils/GameObjectUtil.hpp"
 #include "../Factories/AudioSourcePrefabFactory.hpp"
 #include "../Constants.hpp"
 
 using namespace spic;
-
-namespace game
-{
-    class ConfettiBehaviour : public spic::BehaviourScript
-    {
-        public:
-            void OnStart() override
-            {
-                //
-            }
-
-            void OnUpdate() override
-            {
-                //
-            }
-
-            void OnTriggerEnter2D(const Collider& collider) override
-            {
-                if (!collider.GameObject().expired() && collider.GameObject().lock()->Tag() == "confetti_bound")
-                {
-                    GameObject().lock()->Transform().position.y = -25;
-                    GameObject().lock()->Transform().position.x = game::RandomUtil::Next(ConfettiXRangeMin, ConfettiXRangeMax);
-                }
-            }
-
-            void OnTriggerExit2D(const Collider& collider) override
-            {
-                //
-            }
-
-            void OnTriggerStay2D(const Collider& collider) override
-            {
-                //
-            }
-    };
-}
 
 game::VictoryScene::VictoryScene() : MenuScene("", false, BackgroundName::Victory)
 {
