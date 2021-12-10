@@ -2,6 +2,7 @@
 
 #include "../Factories/BackgroundPrefabFactory.hpp"
 #include "../Factories/ButtonPrefabFactory.hpp"
+#include "../Factories/CameraPrefabFactory.hpp"
 #include "../Enums/Layer.hpp"
 #include "../Enums/Font.hpp"
 
@@ -15,6 +16,8 @@ using namespace spic;
 
 MenuScene::MenuScene(const std::string& title, bool hasBackButton, BackgroundName backgroundName)
 {
+    Contents().push_back(CameraPrefabFactory::CreateCamera(Color::black()));
+
     Contents().push_back(BackgroundPrefabFactory::CreateBackground(backgroundName));
 
     if (!title.empty())
