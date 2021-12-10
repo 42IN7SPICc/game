@@ -182,11 +182,13 @@ std::shared_ptr<spic::GameObject> LevelController::BuildLevel(const std::shared_
     return tileMap;
 }
 
-bool LevelController::Walkable(const TileType& tileType)
+bool LevelController::Walkable(const TileType& tileType, bool isHero)
 {
     switch (tileType)
     {
         case Bushes:
+            return isHero;
+
         case Sand:
         case Bridge:
         case Street:
@@ -355,7 +357,7 @@ std::tuple<bool, std::queue<std::string>> LevelController::CheckIfPathIsComplete
         {
             const auto& neighbour = graphCopy[stringNeighbour];
 
-            if (neighbour.TileType == TileType::Street || neighbour.TileType == TileType::Sand || neighbour.TileType == TileType::Grass || neighbour.TileType == TileType::Bridge || neighbour.TileType == TileType::End || neighbour.TileType == TileType::Start)
+            if (Walkable(neighbour.TileType, false))
             {
                 if (previous.contains(stringNeighbour)) continue;
 
