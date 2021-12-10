@@ -8,10 +8,9 @@
 #include "../Constants.hpp"
 #include "../Enums/Layer.hpp"
 #include "../Factories/ButtonPrefabFactory.hpp"
+#include "../Factories/HealthBarFactory.hpp"
 #include "LevelController.hpp"
 #include <numeric>
-#include <iomanip>
-#include "../Scripts/Common/CoolDownBehaviour.hpp"
 #include "../Utils/HeroUtil.hpp"
 
 using namespace spic;
@@ -39,20 +38,27 @@ void game::HUDController::CreateTowerHud()
     auto shotgunButton = InitializeTowerButton("resources/sprites/towers/shooting/tower_shooting_1.png", 100, "Shotgun", -(TileSize + 2) * (TileButtonScale * 3), ShotgunTowerColor<Color>());
     auto flamethrowerButton = InitializeTowerButton("resources/sprites/towers/shooting/tower_shooting_1.png", 150, "Vlammenwerper", -(TileSize + 2) * (TileButtonScale * 2), FlamethrowerTowerColor<Color>());
     auto sniperButton = InitializeTowerButton("resources/sprites/towers/shooting/tower_shooting_1.png", 80, "Scherpschutter", -(TileSize + 2) * (TileButtonScale * 1), SniperTowerColor<Color>());
+    auto hero = _levelData->HeroHealth->GameObject().lock();
+    _coolDownBehaviour = HeroUtil::GetAbilityCoolDownBehaviour(hero);
 
-    CreateHudInfo("enemies-text-header", 20, 100, "Vijanden resterend:");
-    CreateHudInfo("enemies-text", 20, 120, std::to_string(_levelData->Waves.front().RemainingEnemies()));
+    CreateHudInfo("ability-cooldown-timer", 20, 30, "Ability Cooldown");
+    CreateHudInfo("ability-cooldown-timer-text", 20, 50, std::to_string(_coolDownBehaviour->CoolDown()) + " seconden");
 
-    CreateHudInfo("wave-text-header", 20, 150, "Ronde:");
-    CreateHudInfo("wave-text", 20, 170, std::to_string(_levelData->CurrentWave()));
+    CreateHudInfo("enemies-text-header", 20, 80, "Vijanden resterend:");
+    CreateHudInfo("enemies-text", 20, 100, std::to_string(_levelData->Waves.front().RemainingEnemies()));
 
-    CreateHudInfo("money-text", 20, 200, "$ " + std::to_string(_levelData->Balance));
+    CreateHudInfo("wave-text-header", 20, 130, "Ronde:");
+    CreateHudInfo("wave-text", 20, 150, std::to_string(_levelData->CurrentWave()));
 
-    CreateHudInfo("hero-health-text-header", 20, 230, "Hero:");
-    CreateHudInfo("hero-health-text", 20, 250, "♥ " + std::to_string(_levelData->HeroHealth->Health()));
+    CreateHudInfo("money-text", 20, 180, "$ " + std::to_string(_levelData->Balance));
 
-    CreateHudInfo("military-base-health-text-header", 20, 280, "Militaire Basis:");
-    CreateHudInfo("military-base-health-text", 20, 300,"♥ " + std::to_string(_levelData->MilitaryBaseHealth->Health()));
+    CreateHudInfo("hero-health-text-header", 20, 210, "Hero:");
+    CreateHudInfo("hero-health-text", 20, 230, "♥ " + std::to_string(_levelData->HeroHealth->Health()));
+
+    CreateHudInfo("military-base-health-text-header", 20, 260, "Militaire Basis:");
+    auto healthBar = HealthBarFactory::CreateHealthBar(_levelData->MilitaryBaseHealth->GameObject().lock());
+    healthBar->Transform().position.y = 290;
+    GameObjectUtil::LinkChild(_rightHud, healthBar);
 
     auto nextWaveButton = ButtonPrefabFactory::CreateOutlineButton("next-wave-button", "default", "Start gevecht", true);
     auto text = std::dynamic_pointer_cast<spic::Text>(nextWaveButton->Children()[0]);
@@ -67,6 +73,7 @@ void game::HUDController::CreateTowerHud()
             _levelData->LevelMode = LevelMode::WaveMode;
             auto text = std::dynamic_pointer_cast<spic::Text>(nextWaveButton->Children()[0]);
             text->Content("Volgende ronde");
+            _levelData->HeroHealth->GameObject().lock()->Active(true);
         }
         if (wave.RemainingEnemies() == 0 && _levelData->LevelMode == LevelMode::WaveMode)
         {
@@ -75,13 +82,6 @@ void game::HUDController::CreateTowerHud()
         }
     });
     nextWaveButton->Transform().position.y = 350;
-
-    _levelData->HeroHealth->GameObject().lock()->Active(true);
-    auto hero = _levelData->HeroHealth->GameObject().lock();
-    auto coolDownBehaviour = HeroUtil::GetAbilityCoolDownBehaviour(hero);
-
-    CreateHudInfo("ability-cooldown-timer", 20, 50, "Ability Cooldown");
-    CreateHudInfo("ability-cooldown-timer-text", 20, 70, std::to_string(coolDownBehaviour->CoolDown()) + " seconden");
 
     GameObjectUtil::LinkChild(_rightHud, nextWaveButton);
 }
@@ -254,11 +254,6 @@ void HUDController::OnUpdate()
             auto text = std::dynamic_pointer_cast<spic::Text>(child);
             text->Content("♥ " + std::to_string(_levelData->HeroHealth->Health()));
         }
-        else if (child->Name() == "military-base-health-text")
-        {
-            auto text = std::dynamic_pointer_cast<spic::Text>(child);
-            text->Content("♥ " + std::to_string(_levelData->MilitaryBaseHealth->Health()));
-        }
         else if (child->Name() == "money-text")
         {
             auto text = std::dynamic_pointer_cast<spic::Text>(child);
@@ -277,11 +272,10 @@ void HUDController::OnUpdate()
         else if (child->Name() == "ability-cooldown-timer-text")
         {
             auto text = std::dynamic_pointer_cast<spic::Text>(child);
-            auto coolDownBehaviour = HeroUtil::GetAbilityCoolDownBehaviour(_levelData->HeroHealth->GameObject().lock());
-            if(coolDownBehaviour->CooledDown()) {
+            if(_coolDownBehaviour->CooledDown()) {
                 text->Content("ready!");
             } else {
-                text->Content(std::to_string((int) coolDownBehaviour->CoolDown()) + " sec");
+                text->Content(std::to_string((int) _coolDownBehaviour->CoolDown() + 1) + " sec");
             }
         }
     }
