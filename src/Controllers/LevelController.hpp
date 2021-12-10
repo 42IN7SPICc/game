@@ -143,9 +143,11 @@ namespace game
 
             /**
              * @brief Whether the a given tile is walkable.
+             * @param tileType The type of the tile to check.
+             * @param isHero If the entity is a hero, false meaning he is an enemy.
              * @return Whether the tile is walkable.
              */
-            static bool Walkable(const TileType& tileType);
+            static bool Walkable(const TileType& tileType, bool isHero = true);
 
             /**
              * @brief Generate a border for the level with given settings.

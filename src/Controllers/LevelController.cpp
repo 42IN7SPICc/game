@@ -4,10 +4,12 @@
 #include "../Utils/GameObjectUtil.hpp"
 #include "../Enums/Layer.hpp"
 #include "../Utils/TileUtil.hpp"
+#include "../Utils/QueueUtil.hpp"
 #include "../Factories/ButtonPrefabFactory.hpp"
 #include "../Factories/EnemyPrefabFactory.hpp"
 #include "../Factories/TowerPrefabFactory.hpp"
 #include <cmath>
+#include <map>
 #include <vector>
 #include <memory>
 #include <numeric>
@@ -180,11 +182,13 @@ std::shared_ptr<spic::GameObject> LevelController::BuildLevel(const std::shared_
     return tileMap;
 }
 
-bool LevelController::Walkable(const TileType& tileType)
+bool LevelController::Walkable(const TileType& tileType, bool isHero)
 {
     switch (tileType)
     {
         case Bushes:
+            return isHero;
+
         case Sand:
         case Bridge:
         case Street:
@@ -325,39 +329,61 @@ void LevelController::HandleClickTower(game::MapNode& clickedTile)
 std::tuple<bool, std::queue<std::string>> LevelController::CheckIfPathIsComplete(std::map<std::string, MapNode> graphCopy)
 {
     MapNode start;
+    MapNode end;
     for (const auto&[key, value]: graphCopy)
     {
         if (value.TileType == TileType::Start)
             start = value;
+
+        else if (value.TileType == TileType::End)
+            end = value;
     }
 
     if (start.NeighbourStrings.empty()) return {false, {}};
+    if (end.NeighbourStrings.empty()) return {false, {}};
 
-    std::vector<std::string> pathTiles;
-    std::queue<std::string> path;
-    pathTiles.push_back(std::to_string(start.X) + "-" + std::to_string(start.Y));
-    while (!pathTiles.empty())
+    std::deque<std::string> unvisitedMapNodes{};
+    std::map<std::string, std::string> previous{};
+
+    unvisitedMapNodes.push_back(start.ToString());
+
+    while (!unvisitedMapNodes.empty())
     {
-        auto& tile = graphCopy[pathTiles[0]];
-        tile.Visited = true;
-        for (auto& stringNeighbour: tile.NeighbourStrings)
+        const auto stringNode = unvisitedMapNodes.front();
+        auto& node = graphCopy[stringNode];
+        unvisitedMapNodes.pop_front();
+
+        for (const auto& stringNeighbour: node.NeighbourStrings)
         {
             const auto& neighbour = graphCopy[stringNeighbour];
-            if (neighbour.TileType == TileType::End)
+
+            if (Walkable(neighbour.TileType, false))
             {
-                path.push(stringNeighbour);
-                return {true, path};
-            }
-            if ((neighbour.TileType == TileType::Street || neighbour.TileType == TileType::Sand || neighbour.TileType == TileType::Grass || neighbour.TileType == TileType::Bridge) && !neighbour.Visited)
-            {
-                pathTiles.push_back(std::to_string(neighbour.X) + "-" + std::to_string(neighbour.Y));
-                path.push(std::to_string(neighbour.X) + "-" + std::to_string(neighbour.Y));
+                if (previous.contains(stringNeighbour)) continue;
+
+                previous[stringNeighbour] = stringNode;
+                unvisitedMapNodes.push_back(stringNeighbour);
             }
         }
-        pathTiles.erase(std::find(pathTiles.begin(), pathTiles.end(), pathTiles[0]));
     }
 
-    return {false, {}};
+    if (!previous.contains(end.ToString())) return {false, {}};
+
+    std::queue<std::string> shortest;
+    auto current = end.ToString();
+
+    auto startStr = start.ToString();
+
+    while (current != startStr)
+    {
+        shortest.push(current);
+        current = previous[current];
+    }
+
+    shortest.push(start.ToString());
+    QueueUtil::Reverse(shortest);
+
+    return {true, shortest};
 }
 
 void LevelController::SetUnlimitedPath()
