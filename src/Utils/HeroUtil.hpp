@@ -2,7 +2,9 @@
 #define SPIC_GAME_HEROUTIL_HPP
 
 #include <string>
+#include <vector>
 #include "../Enums/HeroName.hpp"
+#include "../Scripts/Common/CoolDownBehaviour.hpp"
 
 namespace game
 {
@@ -18,6 +20,13 @@ namespace game
              * @return String of the hero name
              */
             static std::string NameToString(game::HeroName heroName);
+
+            /**
+             * @brief Get the abilityCooldownBehaviour of a hero
+             * @param heroName heroName as a string
+             * @return CoolDownBehaviour of the ability
+             */
+            static std::shared_ptr<game::CoolDownBehaviour> GetAbilityCoolDownBehaviour(std::shared_ptr<spic::GameObject> hero);
     };
 }
 

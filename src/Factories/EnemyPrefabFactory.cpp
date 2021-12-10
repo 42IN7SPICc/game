@@ -27,25 +27,25 @@ std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreateEnemy(EnemyName name
 
     switch (name)
     {
-        case EnemyName::Panzer:
+        case EnemyName::Tank:
             enemy = CreatePanzer();
             break;
-        case EnemyName::Gruppenfuhrer:
+        case EnemyName::General:
             enemy = CreateGruppenfuhrer();
             break;
-        case EnemyName::Schutze:
+        case EnemyName::Soldier:
             enemy = CreateSchutze();
             break;
-        case EnemyName::Erkunder:
+        case EnemyName::Scout:
             enemy = CreateErkunder();
             break;
-        case EnemyName::GhillieAnzugSchutze:
+        case EnemyName::Sniper:
             enemy = CreateGhillieAnzugSchutze();
             break;
-        case EnemyName::Stabsarzt:
+        case EnemyName::Healer:
             enemy = CreateStabsarzt();
             break;
-        case EnemyName::Raupenschlepper:
+        case EnemyName::InfantryTransport:
             enemy = CreateRaupenschlepper();
             break;
         default:
@@ -154,12 +154,12 @@ std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreateStabsarzt()
 std::shared_ptr<spic::GameObject> EnemyPrefabFactory::CreateRaupenschlepper()
 {
     types::sprite_vector idleSprites = AnimatorUtil::CreateSpriteVector(1, "resources/sprites/enemies/truck/idle/truck_idle_", SortingLayer::Enemy);
-    types::sprite_vector walkingSprites = AnimatorUtil::CreateSpriteVector(4, "resources/sprites/enemies/truck/walking/truck_moving_", SortingLayer::Enemy);
+    types::sprite_vector walkingSprites = AnimatorUtil::CreateSpriteVector(4, "resources/sprites/enemies/truck/moving/truck_moving_", SortingLayer::Enemy);
     types::sprite_vector diedSprites = AnimatorUtil::CreateSpriteVector(1, "resources/sprites/enemies/truck/died/truck_died_", SortingLayer::Enemy);
 
     auto enemy = CreateBaseEnemy(12, RaupenschlepperEnemyHealth, RaupenschlepperEnemyVelocity, idleSprites, walkingSprites, diedSprites, RaupenschlepperEnemyValue);
 
-    GameObjectUtil::LinkComponent(enemy, std::make_shared<EnemyTroopTruckBehaviour>(EnemyName::Schutze, 6));
+    GameObjectUtil::LinkComponent(enemy, std::make_shared<EnemyTroopTruckBehaviour>(EnemyName::Soldier, 6));
 
     return enemy;
 }

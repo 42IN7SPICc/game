@@ -1,27 +1,16 @@
-#ifndef SPIC_GAME_ENEMYSUICIDEABILITYBEHAVIOUR_HPP
-#define SPIC_GAME_ENEMYSUICIDEABILITYBEHAVIOUR_HPP
+#ifndef SPIC_GAME_CONFETTIBEHAVIOUR_HPP
+#define SPIC_GAME_CONFETTIBEHAVIOUR_HPP
 
 #include "BehaviourScript.hpp"
-#include "../Common/CoolDownBehaviour.hpp"
-#include "../Common/HealthBehaviour.hpp"
 
-namespace game {
+namespace game
+{
     /**
-     * @brief A script for handling the Enemy Suidcide ability for Joseph Stalin
+     * @brief Script for moving confetti objects back to the top of the screen.
      */
-    class EnemySuicideAbilityBehaviour : public spic::BehaviourScript
+    class ConfettiBehaviour : public spic::BehaviourScript
     {
-        private:
-            std::shared_ptr<game::CoolDownBehaviour> _coolDownBehaviour;
-            std::shared_ptr<game::HealthBehaviour> _healthBehaviour;
-            bool _abilityActive;
-
         public:
-            /**
-             * @brief Constructor for the EnemySuicideAbilityBehaviour
-             */
-            EnemySuicideAbilityBehaviour();
-
             /**
              * @brief Triggers when the scripts starts for the first time.
              */
@@ -49,14 +38,7 @@ namespace game {
              * @param collider The collider is colliding.
              */
             void OnTriggerStay2D(const spic::Collider& collider) override;
-
-            /**
-             * Getter for the _coolDownBehaviour field
-             * @return the coolDownBehaviour
-             */
-            std::shared_ptr<game::CoolDownBehaviour>& GetCoolDownBehaviour();
     };
 }
 
-
-#endif
+#endif //SPIC_GAME_CONFETTIBEHAVIOUR_HPP

@@ -8,13 +8,13 @@ namespace game
      */
     enum class EnemyName
     {
-        Panzer,
-        Gruppenfuhrer,
-        Schutze,
-        Erkunder,
-        GhillieAnzugSchutze,
-        Stabsarzt,
-        Raupenschlepper,
+        Tank,
+        General,
+        Soldier,
+        Scout,
+        Sniper,
+        Healer,
+        InfantryTransport,
     };
 }
 

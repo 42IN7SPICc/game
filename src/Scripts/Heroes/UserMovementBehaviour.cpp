@@ -3,6 +3,7 @@
 #include <Input.hpp>
 #include <GameObject.hpp>
 #include <RigidBody.hpp>
+#include "Time.hpp"
 
 #include "../../Constants.hpp"
 #include "../../Controllers/LevelController.hpp"
@@ -111,6 +112,7 @@ void game::UserMovementBehaviour::OnUpdate()
 
     if (moving)
     {
+        movementMultiplier *= spic::Time::DeltaTime() * spic::Time::TimeScale();
         movementForce.x *= movementMultiplier;
         movementForce.y *= movementMultiplier;
 

@@ -3,6 +3,7 @@
 
 #include "WaveData.hpp"
 #include "MapNode.hpp"
+#include "../Enums/LevelMode.hpp"
 #include "../Scripts/Common/HealthBehaviour.hpp"
 #include <queue>
 
@@ -19,6 +20,7 @@ namespace game
         const size_t TotalWaves;
         size_t Balance;
         std::queue<WaveData> Waves;
+        game::LevelMode LevelMode;
         std::map<std::string, game::MapNode> Graph;
         std::queue<std::string> Path;
 

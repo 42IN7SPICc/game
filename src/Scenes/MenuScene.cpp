@@ -7,6 +7,7 @@
 #include "../Enums/Font.hpp"
 
 #include "Text.hpp"
+#include "../Constants.hpp"
 
 #include <memory>
 #include <stdexcept>
@@ -23,7 +24,7 @@ MenuScene::MenuScene(const std::string& title, bool hasBackButton, BackgroundNam
     if (!title.empty())
     {
         auto titleText = std::make_shared<Text>("Title Text", "text_title", Layer::HUD, 1166, 100, title, Font::Title, 82, Alignment::left, Color::white());
-        titleText->Transform().position = {683, 141};
+        titleText->Transform().position = {ScreenWidth / 2.0, 141};
 
         Contents().push_back(titleText);
     }

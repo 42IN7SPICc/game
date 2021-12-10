@@ -1,6 +1,7 @@
 #include "Api.hpp"
 
 #include "Scenes/LoadingScene.hpp"
+#include "Constants.hpp"
 
 #include <exception>
 
@@ -25,7 +26,7 @@ void ShowMessage(const std::string& title, std::string message)
     if (message.empty()) message = ErrorMessage;
 
 #ifdef __linux__
-    std::cout << title << ": " << message;
+        std::cout << title << ": " << message;
 #elif _WIN32
     MessageBox(nullptr, message.c_str(), title.c_str(), MB_ICONERROR | MB_OK);
 #endif
@@ -37,7 +38,7 @@ int main(int argc, char* args[])
     {
         Engine& engine = Engine::Instance();
 
-        EngineConfig config{{"Avans Wars", 1366, 786, true}};
+        EngineConfig config{{"Avans Wars", ScreenWidth, ScreenHeight, true}};
 #if !NDEBUG
         config.window.fullscreen = false;
 #endif

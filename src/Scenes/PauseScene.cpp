@@ -6,6 +6,7 @@
 
 #include "Engine.hpp"
 #include "Text.hpp"
+#include "../Constants.hpp"
 
 using namespace game;
 using namespace spic;
@@ -13,16 +14,16 @@ using namespace spic;
 PauseScene::PauseScene() : MenuScene("", true, BackgroundName::Pause)
 {
     auto titleText = std::make_shared<Text>("Pause Text", "text_pause", Layer::HUD, 1166, 100, "PAUSE", Font::Title, 64, Alignment::center, Color::white());
-    titleText->Transform().position = {683, 132};
+    titleText->Transform().position = {ScreenWidth / 2.0, 132};
 
     auto resumeButton = ButtonPrefabFactory::CreateOutlineButton("Resume Button", "button_resume", "RESUME");
-    resumeButton->Transform().position = {683, 350};
+    resumeButton->Transform().position = {ScreenWidth / 2.0, 350};
     resumeButton->OnClick([]() {
         Engine::Instance().PopScene();
     });
 
     auto exitButton = ButtonPrefabFactory::CreateOutlineButton("Exit Button", "button_exit", "EXIT");
-    exitButton->Transform().position = {683, 475};
+    exitButton->Transform().position = {ScreenWidth / 2.0, 475};
     exitButton->OnClick([]() {
         Engine::Instance().PopScene();
         Engine::Instance().PopScene();

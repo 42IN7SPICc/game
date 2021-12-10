@@ -32,7 +32,7 @@ void game::AirstrikeAbilityBehaviour::OnUpdate()
 
     if(_bombIsDropped) {
         auto bombObject = spic::GameObject::Find("airstrikeBomb");
-        bombObject->Transform().scale *= 0.96 * ( 1 - spic::Time::DeltaTime());
+        bombObject->Transform().scale *= 0.96 * ( 1 - spic::Time::DeltaTime() * spic::Time::TimeScale());
         if (bombObject && bombObject->GetComponent<CoolDownBehaviour>()->CooledDown())
         {
             auto soundEffect = AudioSourcePrefabFactory::CreateAudioObject(game::AudioClipName::NukeAbility, true, false, 1.0);
@@ -89,4 +89,9 @@ void game::AirstrikeAbilityBehaviour::OnTriggerExit2D(const spic::Collider& coll
 void game::AirstrikeAbilityBehaviour::OnTriggerStay2D(const spic::Collider& collider)
 {
     //
+}
+
+std::shared_ptr<game::CoolDownBehaviour>& game::AirstrikeAbilityBehaviour::GetCoolDownBehaviour()
+{
+    return _coolDownBehaviour;
 }
