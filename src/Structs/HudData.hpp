@@ -9,11 +9,8 @@ namespace game
 {
     struct HudData
     {
-        HudData()
+        HudData() : SelectedButton(nullptr), ButtonTileAmounts({}), ButtonTowerCosts({})
         {
-            SelectedButton = nullptr;
-            ButtonTileAmounts = {};
-            ButtonTowerCosts = {};
         }
 
         std::shared_ptr<spic::Button> SelectedButton;
