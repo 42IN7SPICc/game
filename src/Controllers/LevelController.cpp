@@ -213,16 +213,8 @@ std::shared_ptr<spic::GameObject> LevelController::CreateMapButton()
     double mapSize = sqrt(_level->Tiles.size());
     double buttonSize = mapSize * TileSize;
     auto mapTileButton = std::make_shared<spic::Button>("Map_Button", "map_button", Layer::Game, buttonSize, buttonSize);
-    mapTileButton->
-
-            Transform()
-
-            .position.x += (buttonSize / 2.0) - TileSize / 2.0;
-    mapTileButton->
-
-            Transform()
-
-            .position.y += (buttonSize / 2.0) - TileSize / 2.0;
+    mapTileButton->Transform().position.x += (buttonSize / 2.0) - TileSize / 2.0;
+    mapTileButton->Transform().position.y += (buttonSize / 2.0) - TileSize / 2.0;
 
     mapTileButton->OnClick([this]() {
         auto mousePositions = Input::MousePosition();
