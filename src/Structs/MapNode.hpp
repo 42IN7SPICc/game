@@ -23,8 +23,16 @@ namespace game
             std::shared_ptr<spic::GameObject> TowerObject;
             bool Visited;
 
+            /**
+             * @brief Compare two MapNodes by X and Y
+             * @return Boolean if they are the same.
+             */
             bool operator==(const MapNode& other) const;
 
+            /**
+             * @brief MapNode to valid x-y coords
+             * @return Valid x-y coords
+             */
             [[nodiscard]] std::string ToString() const;
     };
 }
