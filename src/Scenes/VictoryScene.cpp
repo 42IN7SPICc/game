@@ -1,19 +1,20 @@
-#include <Engine.hpp>
-#include <Color.hpp>
-#include <Text.hpp>
-#include <RigidBody.hpp>
-#include <CircleCollider.hpp>
-#include <Sprite.hpp>
-#include <BehaviourScript.hpp>
-#include <BoxCollider.hpp>
 #include "VictoryScene.hpp"
-#include "../Factories/ButtonPrefabFactory.hpp"
+
+#include <BoxCollider.hpp>
+#include <CircleCollider.hpp>
+#include <Color.hpp>
+#include <Engine.hpp>
+#include <RigidBody.hpp>
+#include <Sprite.hpp>
+#include <Text.hpp>
+
 #include "../Enums/Font.hpp"
 #include "../Enums/Layer.hpp"
+#include "../Factories/AudioSourcePrefabFactory.hpp"
+#include "../Factories/ButtonPrefabFactory.hpp"
 #include "../Scripts/Menu/ConfettiBehaviour.hpp"
 #include "../Utils/RandomUtil.hpp"
 #include "../Utils/GameObjectUtil.hpp"
-#include "../Factories/AudioSourcePrefabFactory.hpp"
 #include "../Constants.hpp"
 
 using namespace spic;
@@ -30,6 +31,8 @@ game::VictoryScene::VictoryScene() : MenuScene("", false, BackgroundName::Victor
     exitButton->OnClick([]() {
         Engine::Instance().PopScene();
     });
+    GameObjectUtil::LinkComponent(exitButton, std::make_shared<BoxCollider>(exitButton->Width(), exitButton->Height()));
+    GameObjectUtil::LinkComponent(exitButton, std::make_shared<RigidBody>(1, 0, BodyType::staticBody));
 
     for (int i = 0; i < AmountOfConfetti; ++i)
     {
@@ -40,8 +43,10 @@ game::VictoryScene::VictoryScene() : MenuScene("", false, BackgroundName::Victor
     bottomBound->Transform().position.x = ScreenWidth / 2;
     bottomBound->Transform().position.y = -ConfettiYRangeMin;
     auto bottomBoundCollider = std::make_shared<BoxCollider>(ScreenWidth + 1000, 50);
+    bottomBoundCollider->IsTrigger(true);
     GameObjectUtil::LinkComponent(bottomBound, bottomBoundCollider);
     GameObjectUtil::LinkComponent(bottomBound, std::make_shared<RigidBody>(1, 0, BodyType::staticBody));
+    game::GameObjectUtil::LinkComponent(bottomBound, std::make_shared<game::ConfettiBehaviour>());
 
     Contents().push_back(victoryAudioSource);
     Contents().push_back(titleText);
@@ -51,7 +56,7 @@ game::VictoryScene::VictoryScene() : MenuScene("", false, BackgroundName::Victor
 
 std::shared_ptr<spic::GameObject> game::VictoryScene::GenerateConfetti()
 {
-    auto confettiObject = std::make_shared<GameObject>("confetti", "confetti_bound", Layer::Game);
+    auto confettiObject = std::make_shared<GameObject>("confetti", "confetti", Layer::Game);
     confettiObject->Transform().position.x = game::RandomUtil::Next(ConfettiXRangeMin, ConfettiXRangeMax);
     confettiObject->Transform().position.y = game::RandomUtil::Next(ConfettiYRangeMin, ConfettiYRangeMax);
     confettiObject->Transform().scale = game::RandomUtil::NextDouble(ConfettiMinSize, ConfettiMaxSize);
@@ -59,10 +64,7 @@ std::shared_ptr<spic::GameObject> game::VictoryScene::GenerateConfetti()
     int randomConfettiId = game::RandomUtil::Next(1, 4);
     game::GameObjectUtil::LinkComponent(confettiObject, std::make_shared<Sprite>("resources/sprites/hud/effects/confetti_" + std::to_string(randomConfettiId) + ".png", false, false, 0, 0));
 
-    auto circleCollider = std::make_shared<CircleCollider>(1);
-    circleCollider->IsTrigger(true);
-    game::GameObjectUtil::LinkComponent(confettiObject, circleCollider);
+    game::GameObjectUtil::LinkComponent(confettiObject, std::make_shared<CircleCollider>(confettiObject->Transform().scale * 256));
     game::GameObjectUtil::LinkComponent(confettiObject, std::make_shared<RigidBody>(10, game::RandomUtil::NextDouble(ConfettiMinGravity, ConfettiMaxGravity), BodyType::dynamicBody));
-    game::GameObjectUtil::LinkComponent(confettiObject, std::make_shared<game::ConfettiBehaviour>());
     return confettiObject;
 }
