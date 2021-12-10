@@ -1,15 +1,15 @@
 #include "LoadingScene.hpp"
 
 #include "SaveSelectionScene.hpp"
-#include "../Constants.hpp"
 #include "../Enums/Font.hpp"
 #include "../Enums/Layer.hpp"
 #include "../Factories/ButtonPrefabFactory.hpp"
-#include "../Factories/AudioSourcePrefabFactory.hpp"
 
 #include "Color.hpp"
 #include "Engine.hpp"
 #include "Text.hpp"
+#include "../Factories/AudioSourcePrefabFactory.hpp"
+#include "../Constants.hpp"
 
 game::LoadingScene::LoadingScene() : MenuScene("", false)
 {
