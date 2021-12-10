@@ -29,7 +29,7 @@ void game::GameLostBehaviour::OnUpdate()
             OnLevelFailed();
         }
 
-        _lostForTime += spic::Time::DeltaTime();
+        _lostForTime += spic::Time::DeltaTime() * spic::Time::TimeScale();
     }
 }
 
