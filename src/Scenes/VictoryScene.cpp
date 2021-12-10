@@ -65,6 +65,6 @@ std::shared_ptr<spic::GameObject> game::VictoryScene::GenerateConfetti()
     game::GameObjectUtil::LinkComponent(confettiObject, std::make_shared<Sprite>("resources/sprites/hud/effects/confetti_" + std::to_string(randomConfettiId) + ".png", false, false, 0, 0));
 
     game::GameObjectUtil::LinkComponent(confettiObject, std::make_shared<CircleCollider>(confettiObject->Transform().scale * 256));
-    game::GameObjectUtil::LinkComponent(confettiObject, std::make_shared<RigidBody>(10, game::RandomUtil::NextDouble(ConfettiMinGravity, ConfettiMaxGravity), BodyType::dynamicBody));
+    game::GameObjectUtil::LinkComponent(confettiObject, std::make_shared<RigidBody>(game::RandomUtil::NextDouble(ConfettiMinGravity, ConfettiMaxGravity), 1.5, BodyType::dynamicBody));
     return confettiObject;
 }
