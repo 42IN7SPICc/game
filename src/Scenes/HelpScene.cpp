@@ -16,7 +16,7 @@ HelpScene::HelpScene(const std::shared_ptr<spic::GameObject>& audio) : MenuScene
     creditsText->Transform().position = {366.5, 400};
     creditsText->Size(24);
     creditsText->TextColor(Color::white());
-    creditsText->Content("Avans Wars WW2 heeft als doel het verdedigen van het eindpunt. Leg een pad van het beginpunt naar het eindpunt, plaats verschillende torens in je land en verras de vijanden met je geweldige verdediging! Start de waves en gebruik de speciale vaardigheid van je held om de vijanden uit je land te jagen! Als er geen vijandelijke troepen meer zijn heb je gewonnen, maar als er te veel vijanden bij je eindpunt zijn binnengedrongen veroveren ze je land en heb je verloren... Ben jij in staat om je land te verslaan?\n");
+    creditsText->Content("Avans Wars WW2 heeft als doel het verdedigen van het eindpunt. Leg een pad van het beginpunt naar het eindpunt, plaats verschillende torens in je land en verras de vijanden met je geweldige verdediging! Start de waves en gebruik de speciale vaardigheid van je held om de vijanden uit je land te jagen! Als er geen vijandelijke troepen meer zijn heb je gewonnen, maar als er te veel vijanden bij je eindpunt zijn binnengedrongen veroveren ze je land en heb je verloren... Ben jij in staat om je land te verdedigen?\n");
 
     auto controlsText = std::make_shared<Text>("Controls Text", "text_controls", Layer::HUD, 266.5, 400);
     controlsText->Transform().position = {866.25, 400};
