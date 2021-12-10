@@ -194,7 +194,7 @@ std::queue<game::WaveData> game::WavePrefabFactory::GenerateWaves(size_t count)
 
     for (int i = 0; i < count; ++i)
     {
-        result.push(GenerateWave(4));
+        result.push(GenerateWave(i));
     }
 
     return result;
