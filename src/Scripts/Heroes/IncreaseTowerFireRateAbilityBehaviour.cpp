@@ -79,3 +79,8 @@ void game::IncreaseTowerFireRateAbilityBehaviour::OnTriggerStay2D(const spic::Co
 {
     //
 }
+
+std::shared_ptr<game::CoolDownBehaviour>& game::IncreaseTowerFireRateAbilityBehaviour::GetCoolDownBehaviour()
+{
+    return _coolDownBehaviour;
+}

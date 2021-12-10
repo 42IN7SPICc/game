@@ -15,7 +15,7 @@ const int PanzerEnemyRange = 200; // The detection range of the hero for the pan
 const int PanzerEnemyDamage = 30; // The damage of a bullet for the panzer enemy
 const double PanzerEnemyVelocity = 0.25; // The movement speed
 const int PanzerEnemyBulletSpeed = 10; // The bullet velocity of the panzer enemy
-const int PanzerEnemyHealth = 200; // The bullet velocity of the panzer enemy
+const int PanzerEnemyHealth = 500; // The health / armor of the panzer tank
 const int PanzerEnemyValue = 200; // Value of enemy
 
 //Enemy Gruppenfuhrer
@@ -24,7 +24,7 @@ const int GruppenfuhrerEnemyRange = 200; // The detection range of the hero for 
 const int GruppenfuhrerEnemyDamage = 2; // The damage of a bullet for the Gruppenfuhrer enemy
 const double GruppenfuhrerEnemyVelocity = 1; // The movement speed
 const int GruppenfuhrerEnemyBulletSpeed = 15; // The bullet velocity of the Gruppenfuhrer enemy
-const int GruppenfuhrerEnemyHealth = 100; // The health of the Gruppenfuhrer enemy
+const int GruppenfuhrerEnemyHealth = 175; // The health of the Gruppenfuhrer enemy
 const int GruppenfuhrerEnemyValue = 80; // Value of enemy
 
 const int GruppenfuhrerEnemyBoostCoolDown = 10; // The cool down between boost actions of the Gruppenfuhrer enemy
@@ -42,7 +42,7 @@ const int SchutzeEnemyRange = 200; // The detection range of the hero for the Sc
 const int SchutzeEnemyDamage = 2; // The damage of a bullet for the Schutze enemy
 const double SchutzeEnemyVelocity = 1; // The movement speed
 const int SchutzeEnemyBulletSpeed = 15; // The bullet velocity of the Schutze enemy
-const int SchutzeEnemyHealth = 75; // The health of the Schutze enemy
+const int SchutzeEnemyHealth = 150; // The health of the Schutze enemy
 const int SchutzeEnemyValue = 25; // Value of enemy
 
 //Enemy Erkunder
@@ -51,7 +51,7 @@ const int ErkunderEnemyRange = 200; // The detection range of the hero for the E
 const int ErkunderEnemyDamage = 2; // The damage of a bullet for the Erkunder enemy
 const double ErkunderEnemyVelocity = 2; // The movement speed
 const int ErkunderEnemyBulletSpeed = 15; // The bullet velocity of the Erkunder enemy
-const int ErkunderEnemyHealth = 50; // The health of the Erkunder enemy
+const int ErkunderEnemyHealth = 125; // The health of the Erkunder enemy
 const int ErkunderEnemyValue = 50; // Value of enemy
 template <typename T>
 spic::Color ErkunderColor() {
@@ -64,7 +64,7 @@ const int GhillieAnzugSchutzeEnemyRange = 200; // The detection range of the her
 const int GhillieAnzugSchutzeEnemyDamage = 2; // The damage of a bullet for the GhillieAnzugSchutze enemy
 const double GhillieAnzugEnemyVelocity = 1; // The movement speed
 const int GhillieAnzugSchutzeEnemyBulletSpeed = 25; // The bullet velocity of the GhillieAnzugSchutze enemy
-const int GhillieAnzugSchutzeEnemyHealth = 75; // The health of the GhillieAnzugSchutze enemy
+const int GhillieAnzugSchutzeEnemyHealth = 150; // The health of the GhillieAnzugSchutze enemy
 const int GhillieAnzugSchutzeEnemyValue = 60; // Value of enemy
 
 const int GhillieAnzugSchutzeEnemyInvisibleEffectTime = 3; // The time of the invisible effect of the GhillieAnzugSchutze enemy
@@ -76,7 +76,7 @@ spic::Color GhillieAnzugSchutzeColor() {
 
 //Enemy Stabsarzt
 const double StabsarztEnemyVelocity = 1.0; // The movement speed
-const int StabsarztEnemyHealth = 100; // The health of the Stabsarzt enemy
+const int StabsarztEnemyHealth = 175; // The health of the Stabsarzt enemy
 const int StabsarztEnemyValue = 75; // Value of enemy
 
 const int StabsarztHealCooldown = 10; // The time between healing actions of the Stabsarzt enemy
@@ -89,7 +89,7 @@ spic::Color StabsarztColor() {
 
 //Enemy Raupenschlepper
 const double RaupenschlepperEnemyVelocity = 0.5; // The movement speed
-const int RaupenschlepperEnemyHealth = 125; // The health of the Raupenschlepper enemy
+const int RaupenschlepperEnemyHealth = 200; // The health of the Raupenschlepper enemy
 const int RaupenschlepperEnemyValue = 150; // Value of enemy
 
 #endif //SPIC_GAME_ENEMYCONSTANTS_HPP

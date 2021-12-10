@@ -1,5 +1,7 @@
 #include "LevelScene.hpp"
 
+#include <memory>
+
 #include "GameObject.hpp"
 
 #include "../Controllers/LevelController.hpp"
@@ -32,13 +34,31 @@ LevelScene::LevelScene(LevelWithTiles& levelWithTiles)
 
     auto levelAudioSource = game::AudioSourcePrefabFactory::CreateAudioObject(AudioClipName::Game, true, true, 0.2);
     auto mainGameObject = std::make_shared<spic::GameObject>("LevelController", "default", Layer::Background);
-    auto levelController = std::make_shared<game::LevelController>(levelWithTiles, heroHealth, endTowerHealth, game::WavePrefabFactory::GenerateWaves(1));
+
+    auto waves = game::WavePrefabFactory::GenerateWaves(5);
+    auto levelData = std::make_shared<game::LevelData>(game::LevelData {
+            levelWithTiles.UnlockThreshold,
+            std::move(heroHealth),
+            std::move(endTowerHealth),
+            waves.size(), // Total waves
+            500,
+            std::move(waves),
+            LevelMode::TileMode
+    });
+
+    auto sharedLevel = std::make_shared<LevelWithTiles>(levelWithTiles);
+    auto hudData = std::make_shared<game::HudData>();
+
+    auto levelController = std::make_shared<game::LevelController>(sharedLevel, heroHealth, endTowerHealth, waves, levelData, hudData);
+    auto hudController = std::make_shared<game::HUDController>(sharedLevel, levelData, hudData);
+
     auto cheatManager = std::make_shared<game::CheatManager>();
     GameObjectUtil::LinkComponent(mainGameObject, levelController);
+    GameObjectUtil::LinkComponent(mainGameObject, hudController);
     GameObjectUtil::LinkComponent(mainGameObject, cheatManager);
     GameObjectUtil::LinkComponent(mainGameObject, std::make_shared<PauseSceneBehaviour>());
 
-    auto tilesMapObject = levelController->BuildLevel(endTowerHealth, animation);
+    auto tilesMapObject = levelController->BuildLevel(levelData->MilitaryBaseHealth, animation);
     tilesMapObject->Transform().position.x = MapX;
     tilesMapObject->Transform().position.y = MapY;
     tilesMapObject->Transform().scale = TileMapScale;
@@ -50,5 +70,5 @@ LevelScene::LevelScene(LevelWithTiles& levelWithTiles)
     Contents().push_back(background);
     Contents().push_back(tilesMapObject);
 
-    Contents().push_back(levelController->CreateHUD());
+    Contents().push_back(hudController->CreateHUD());
 }

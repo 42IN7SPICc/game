@@ -88,3 +88,8 @@ void game::EnemySuicideAbilityBehaviour::OnTriggerStay2D(const spic::Collider& c
 {
     //
 }
+
+std::shared_ptr<game::CoolDownBehaviour>& game::EnemySuicideAbilityBehaviour::GetCoolDownBehaviour()
+{
+    return _coolDownBehaviour;
+}

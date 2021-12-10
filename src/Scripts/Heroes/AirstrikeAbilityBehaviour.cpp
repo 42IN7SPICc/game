@@ -90,3 +90,8 @@ void game::AirstrikeAbilityBehaviour::OnTriggerStay2D(const spic::Collider& coll
 {
     //
 }
+
+std::shared_ptr<game::CoolDownBehaviour>& game::AirstrikeAbilityBehaviour::GetCoolDownBehaviour()
+{
+    return _coolDownBehaviour;
+}
