@@ -27,7 +27,6 @@ namespace game
     {
         private:
             spic::Point _startPosition;
-
             std::shared_ptr<game::LevelWithTiles> _level;
             std::shared_ptr<game::LevelData> _levelData;
             std::shared_ptr<game::HudData> _hudData;
@@ -37,9 +36,7 @@ namespace game
             std::shared_ptr<game::GameLostBehaviour> _gameLostBehavior;
 
             void HandleClickTile(const game::MapNode& clickedTile);
-
             void HandleClickTower(game::MapNode& clickedTile);
-
         public:
             /**
              * @brief Constructs a new instance of a LevelController with given settings.
@@ -47,6 +44,8 @@ namespace game
              * @param heroHealth The health of the hero.
              * @param militaryBaseHealth The health of the end point.
              * @param waves The waves of the level.
+             * @param levelData The data object of the current level
+             * @param hudData The shared data with the HUD controller
              */
             LevelController(std::shared_ptr<game::LevelWithTiles> level, std::shared_ptr<game::HealthBehaviour> heroHealth, std::shared_ptr<game::HealthBehaviour> militaryBaseHealth, std::queue<game::WaveData> waves, std::shared_ptr<game::LevelData> levelData, std::shared_ptr<game::HudData> hudData);
 
