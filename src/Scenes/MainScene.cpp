@@ -3,10 +3,10 @@
 
 #include "Debug.hpp"
 #include "HelpScene.hpp"
+#include "StatsScene.hpp"
 #include "LevelSelectionScene.hpp"
 #include "../Factories/ButtonPrefabFactory.hpp"
 #include "../Factories/HeroPrefabFactory.hpp"
-#include "../Utils/RandomUtil.hpp"
 #include "../Utils/HeroUtil.hpp"
 #include "../Scripts/Heroes/UserAttackBehaviour.hpp"
 #include "../Scripts/Heroes/UserMovementBehaviour.hpp"
@@ -28,8 +28,14 @@ MainScene::MainScene(const std::shared_ptr<spic::GameObject>& audio) : MenuScene
         Engine::Instance().PushScene(scene);
     });
 
+    auto statsButton = ButtonPrefabFactory::CreateOutlineButton("Stats Button", "button_stats", "VOORTGANG");
+    statsButton->Transform().position = {225, 425};
+    statsButton->OnClick([audio]() {
+        Engine::Instance().PushScene(std::make_shared<StatsScene>(audio));
+    });
+
     auto helpButton = ButtonPrefabFactory::CreateOutlineButton("Help Button", "button_help", "HELP");
-    helpButton->Transform().position = {225, 425};
+    helpButton->Transform().position = {225, 550};
     helpButton->OnClick([audio]() {
         Engine::Instance().PushScene(std::make_shared<HelpScene>(audio));
     });
@@ -90,6 +96,7 @@ MainScene::MainScene(const std::shared_ptr<spic::GameObject>& audio) : MenuScene
 
     Contents().push_back(audio);
     Contents().push_back(playButton);
+    Contents().push_back(statsButton);
     Contents().push_back(helpButton);
     Contents().push_back(backButton);
     Contents().push_back(leftArrowButton);
