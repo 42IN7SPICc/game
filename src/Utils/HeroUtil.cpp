@@ -40,7 +40,7 @@ std::string game::HeroUtil::NameToAbilityString(game::HeroName heroName)
         case WinstonChurchill:
             return "Verhogen schietsnelheid van torens";
         case JosephStalin:
-            return "Enemy self attack";
+            return "Vijanden op elkaar laten schieten";
     }
 
     throw std::runtime_error("The given hero doesn't have an ability.");
