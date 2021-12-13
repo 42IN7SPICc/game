@@ -27,7 +27,7 @@ namespace game
              * @param maxHealth The health of the entity.
              * @param despawnTime The time it takes to despawn after dying (0 to disable).
              */
-            HealthBehaviour(std::shared_ptr<spic::Animator> diedAnimator, int maxHealth, double despawnTime = 0);
+            HealthBehaviour(std::shared_ptr<spic::Animator> diedAnimator, int maxHealth, double despawnTime);
 
             /**
              * @brief Triggers when the scripts starts for the first time.

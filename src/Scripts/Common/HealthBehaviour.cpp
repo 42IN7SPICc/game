@@ -1,4 +1,5 @@
 #include "HealthBehaviour.hpp"
+#include "../../Structs/PlayerData.hpp"
 #include <Input.hpp>
 #include <GameObject.hpp>
 #include <Debug.hpp>
@@ -39,6 +40,14 @@ void game::HealthBehaviour::Damage(int damage)
         {
             _health = 0;
             if (_diedAnimator) _diedAnimator->Play(false);
+
+            if (_despawnTime == 0) // if health behaviour is hero because hero has no despawn time
+            {
+                auto& playerData = PlayerData::Instance();
+                playerData.HeroDeaths += 1;
+                if (playerData.HeroDeaths > playerData.MostHeroDeaths)
+                    playerData.MostHeroDeaths = playerData.HeroDeaths;
+            }
         }
         else if (_health > _maxHealth)
         {
