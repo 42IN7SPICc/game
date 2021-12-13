@@ -2,9 +2,9 @@
 
 #include "../../Constants.hpp"
 #include "../../Controllers/LevelController.hpp"
-#include "../../Utils/StringUtil.hpp"
-#include "../../Utils/PointUtil.hpp"
-#include "../../Utils/GameObjectUtil.hpp"
+#include "Utils/StringUtil.hpp"
+#include "Utils/PointUtil.hpp"
+#include "Utils/GameObjectUtil.hpp"
 
 #include "GameObject.hpp"
 #include "Time.hpp"
@@ -53,7 +53,7 @@ void EnemyMovementBehaviour::OnStart()
     }
 
     _boostCoolDownBehaviour = std::make_shared<CoolDownBehaviour>(0);
-    GameObjectUtil::LinkComponent(parent, _boostCoolDownBehaviour);
+    spic::GameObjectUtil::LinkComponent(parent, _boostCoolDownBehaviour);
 }
 
 void EnemyMovementBehaviour::Boost(int time, double multiplier)
@@ -103,7 +103,7 @@ void EnemyMovementBehaviour::OnUpdate()
     auto toLocation = _graph[_path.front()];
 
     double distance;
-    auto force = PointUtil::CalculateDirectionalPoint(enemyPosition, toLocation.TileObject->AbsoluteTransform().position, speedMultiplier, distance);
+    auto force = spic::PointUtil::CalculateDirectionalPoint(enemyPosition, toLocation.TileObject->AbsoluteTransform().position, speedMultiplier, distance);
 
     _rigidBody->AddForce(force);
 

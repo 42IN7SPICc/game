@@ -4,7 +4,7 @@
 #include "GameObject.hpp"
 #include "Engine.hpp"
 #include "Input.hpp"
-#include "../../Utils/GameObjectUtil.hpp"
+#include "Utils/GameObjectUtil.hpp"
 #include "../../Enums/Layer.hpp"
 #include "../../Factories/AudioSourcePrefabFactory.hpp"
 
@@ -23,7 +23,7 @@ void game::InvisibilityAbilityBehaviour::OnStart()
         throw std::runtime_error("The EnemyInvisibleBehaviour requires a HealthBehaviour");
     }
     _sprite = parent->GetComponent<spic::Sprite>();
-    game::GameObjectUtil::LinkComponent(parent, _coolDownBehaviour);
+    spic::GameObjectUtil::LinkComponent(parent, _coolDownBehaviour);
 }
 
 void game::InvisibilityAbilityBehaviour::OnUpdate()
@@ -53,10 +53,10 @@ void game::InvisibilityAbilityBehaviour::OnUpdate()
             _healthBehaviour->Invincibility(true);
             auto invisibilityDurationObject = std::make_shared<spic::GameObject>("invisibilityDurationObject", "invisibilityDurationObject", Layer::Game);
             auto invisibilityDurationCooldown = std::make_shared<CoolDownBehaviour>(BernardIJzerdraatAbilityDuration);
-            game::GameObjectUtil::LinkComponent(invisibilityDurationObject, invisibilityDurationCooldown);
+            spic::GameObjectUtil::LinkComponent(invisibilityDurationObject, invisibilityDurationCooldown);
 
             auto soundEffect = AudioSourcePrefabFactory::CreateAudioObject(game::AudioClipName::ActivateAbility, true, false, 1.0);
-            game::GameObjectUtil::LinkChild(GameObject().lock(), soundEffect);
+            spic::GameObjectUtil::LinkChild(GameObject().lock(), soundEffect);
 
             auto scene = spic::Engine::Instance().PeekScene();
             scene->Contents().push_back(invisibilityDurationObject);

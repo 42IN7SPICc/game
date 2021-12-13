@@ -1,5 +1,5 @@
 #include "LevelManager.hpp"
-#include "FileManager.hpp"
+#include "Managers/FileManager.hpp"
 #include "JsonFacade.hpp"
 
 using namespace game;
@@ -8,7 +8,7 @@ LevelWithTiles LevelManager::LoadLevelWithTiles(const std::string& file)
 {
     try
     {
-        auto contents = FileManager::Load(file);
+        auto contents = spic::FileManager::Load(file);
         std::string value{"[" + contents + "]"};
         auto level = spic::JsonFacade::Deserialize<LevelWithTiles>(value);
         level.File = file;
@@ -25,7 +25,7 @@ Level LevelManager::LoadLevel(const std::string& file)
 {
     try
     {
-        auto contents = FileManager::Load(file);
+        auto contents = spic::FileManager::Load(file);
         std::string value{"[" + contents + "]"};
         auto level = spic::JsonFacade::Deserialize<Level>(value);
         level.File = file;
@@ -42,7 +42,7 @@ std::map<std::string, Level> LevelManager::GetAll()
 {
     std::map<std::string, Level> result{};
 
-    for (const auto& file : FileManager::GetFolderFiles("./resources/levels", ".json"))
+    for (const auto& file : spic::FileManager::GetFolderFiles("./resources/levels", ".json"))
     {
         auto level = LoadLevel(file.File);
         level.File = file.File;

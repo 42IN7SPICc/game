@@ -5,7 +5,7 @@
 #include "../../Enums/AudioClipName.hpp"
 #include "../../Factories/AudioSourcePrefabFactory.hpp"
 #include "Time.hpp"
-#include "../../Utils/GameObjectUtil.hpp"
+#include "Utils/GameObjectUtil.hpp"
 
 void game::GameLostBehaviour::OnStart()
 {
@@ -22,7 +22,7 @@ void game::GameLostBehaviour::OnUpdate()
             _dying = true;
 
             auto explosionAudioSource = game::AudioSourcePrefabFactory::CreateAudioSource(AudioClipName::Explosion, true, false, 1.0);
-            GameObjectUtil::LinkComponent(GameObject().lock(), explosionAudioSource);
+            spic::GameObjectUtil::LinkComponent(GameObject().lock(), explosionAudioSource);
         }
 
         if (_lostForTime >= 3.0) {

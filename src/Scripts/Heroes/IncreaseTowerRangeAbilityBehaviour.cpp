@@ -6,7 +6,7 @@
 #include "Engine.hpp"
 #include "../../Enums/Layer.hpp"
 #include "../Common/AttackBehaviour.hpp"
-#include "../../Utils/GameObjectUtil.hpp"
+#include "Utils/GameObjectUtil.hpp"
 
 game::IncreaseTowerRangeAbilityBehaviour::IncreaseTowerRangeAbilityBehaviour() : _coolDownBehaviour(std::make_shared<CoolDownBehaviour>(CoolDownBehaviour(FranklinDRooseveltTowerRangeAbilityCooldown))),
                                                                                  _abilityActivated(false)
@@ -18,7 +18,7 @@ void game::IncreaseTowerRangeAbilityBehaviour::OnStart()
 {
     auto parent = GameObject().lock();
     _healthBehaviour = parent->GetComponent<game::HealthBehaviour>();
-    game::GameObjectUtil::LinkComponent(parent, _coolDownBehaviour);
+    spic::GameObjectUtil::LinkComponent(parent, _coolDownBehaviour);
 }
 
 void game::IncreaseTowerRangeAbilityBehaviour::OnUpdate()
@@ -48,10 +48,10 @@ void game::IncreaseTowerRangeAbilityBehaviour::OnUpdate()
             auto scene = spic::Engine::Instance().PeekScene();
             auto towerRangeObject = std::make_shared<spic::GameObject>("towerRangeObject", "towerRangeObject", Layer::Game);
             auto towerRangeCooldown = std::make_shared<CoolDownBehaviour>(10);
-            GameObjectUtil::LinkComponent(towerRangeObject, towerRangeCooldown);
+            spic::GameObjectUtil::LinkComponent(towerRangeObject, towerRangeCooldown);
 
             auto soundEffect = AudioSourcePrefabFactory::CreateAudioObject(game::AudioClipName::ActivateAbility, true, false, 1.0);
-            game::GameObjectUtil::LinkChild(GameObject().lock(), soundEffect);
+            spic::GameObjectUtil::LinkChild(GameObject().lock(), soundEffect);
 
             auto towers = spic::GameObject::FindGameObjectsWithTag("tower");
             for (auto& tower: towers)

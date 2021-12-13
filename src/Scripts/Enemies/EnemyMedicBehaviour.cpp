@@ -1,8 +1,8 @@
 #include "EnemyMedicBehaviour.hpp"
 
 #include "../Common/HealthBehaviour.hpp"
-#include "../../Utils/GameObjectUtil.hpp"
-#include "../../Utils/PointUtil.hpp"
+#include "Utils/GameObjectUtil.hpp"
+#include "Utils/PointUtil.hpp"
 
 #include "Engine.hpp"
 
@@ -33,7 +33,7 @@ void EnemyMedicBehaviour::OnStart()
 {
     _healCoolDownBehaviour = std::make_shared<CoolDownBehaviour>(_healCoolDown);
 
-    GameObjectUtil::LinkComponent(GameObject().lock(), _healCoolDownBehaviour);
+    spic::GameObjectUtil::LinkComponent(GameObject().lock(), _healCoolDownBehaviour);
 }
 
 void EnemyMedicBehaviour::OnUpdate()
@@ -50,7 +50,7 @@ void EnemyMedicBehaviour::OnUpdate()
             auto healthBehaviour = target->GetComponent<HealthBehaviour>();
             if (!healthBehaviour || healthBehaviour->Health() <= 0) continue;
 
-            auto distance = PointUtil::Distance(absPosition, target->AbsoluteTransform().position);
+            auto distance = spic::PointUtil::Distance(absPosition, target->AbsoluteTransform().position);
             if (distance > _healRange) continue;
 
             healthBehaviours.push_back(healthBehaviour);

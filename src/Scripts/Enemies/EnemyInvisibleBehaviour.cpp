@@ -1,6 +1,6 @@
 #include "EnemyInvisibleBehaviour.hpp"
 
-#include "../../Utils/GameObjectUtil.hpp"
+#include "Utils/GameObjectUtil.hpp"
 
 #include "Color.hpp"
 
@@ -27,11 +27,11 @@ void game::EnemyInvisibleBehaviour::OnStart()
     _sprite = parent->GetComponent<spic::Sprite>();
 
     _effectCoolDown = std::make_shared<CoolDownBehaviour>(_coolDownTime);
-    GameObjectUtil::LinkComponent(parent, _effectCoolDown);
+    spic::GameObjectUtil::LinkComponent(parent, _effectCoolDown);
 
     _effectTimer = std::make_shared<CoolDownBehaviour>(_effectTime);
     _effectTimer->CooledDown(true);
-    GameObjectUtil::LinkComponent(parent, _effectTimer);
+    spic::GameObjectUtil::LinkComponent(parent, _effectTimer);
 }
 
 void game::EnemyInvisibleBehaviour::OnUpdate()

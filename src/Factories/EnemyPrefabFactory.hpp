@@ -4,7 +4,7 @@
 #include "GameObject.hpp"
 #include "Sprite.hpp"
 
-#include "../Utils/AnimatorUtil.hpp"
+#include "Utils/AnimatorUtil.hpp"
 
 #include "../Enums/EnemyName.hpp"
 
@@ -78,7 +78,7 @@ namespace game
              * @param value Amount of money received on killing the enemy.
              * @return The enemy object.
              */
-            static std::shared_ptr<spic::GameObject> CreateBaseEnemy(int attack, int health, double speedMultiplier, const types::sprite_vector& idleSprites, const types::sprite_vector& walkingSprites, const types::sprite_vector& diedSprites, int value);
+            static std::shared_ptr<spic::GameObject> CreateBaseEnemy(int attack, int health, double speedMultiplier, const spic::types::sprite_vector& idleSprites, const spic::types::sprite_vector& walkingSprites, const spic::types::sprite_vector& diedSprites, int value);
     };
 }
 

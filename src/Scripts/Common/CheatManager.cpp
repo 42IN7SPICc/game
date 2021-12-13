@@ -15,7 +15,7 @@
 using namespace spic;
 using namespace game;
 
-void UnlimitedMoney()
+void CheatManager::UnlimitedMoney()
 {
     Debug::Log("Fired `Unlimited` Money Cheat");
     auto gameObject = GameObject::Find("LevelController");
@@ -26,7 +26,7 @@ void UnlimitedMoney()
     }
 }
 
-void Invincibility()
+void CheatManager::Invincibility()
 {
     Debug::Log("Fired Invincibility Cheat");
     auto gameObject = GameObject::Find("LevelController");
@@ -37,7 +37,7 @@ void Invincibility()
     }
 }
 
-void Butcher()
+void CheatManager::Butcher()
 {
     Debug::Log("Fired Butcher Cheat");
     auto gameObject = GameObject::Find("LevelController");
@@ -48,7 +48,7 @@ void Butcher()
     }
 }
 
-void Victory()
+void CheatManager::Victory()
 {
     Debug::Log("Fired Victory Cheat");
     auto levelController = GameObject::Find("LevelController");
@@ -62,7 +62,7 @@ void Victory()
     }
 }
 
-void GameOver()
+void CheatManager::GameOver()
 {
     Debug::Log("Fired Game Over Cheat");
     auto levelController = GameObject::Find("LevelController");
@@ -76,7 +76,7 @@ void GameOver()
     }
 }
 
-void SkipWave()
+void CheatManager::SkipWave()
 {
     Debug::Log("Fired Skip Wave Cheat");
     auto gameObject = GameObject::Find("LevelController");
@@ -87,7 +87,7 @@ void SkipWave()
     }
 }
 
-void NoCoolDown()
+void CheatManager::NoCoolDown()
 {
     Debug::Log("Fired No CoolDown Cheat");
     auto gameObject = GameObject::Find("LevelController");
@@ -98,7 +98,7 @@ void NoCoolDown()
     }
 }
 
-void UnlockLevels()
+void CheatManager::UnlockLevels()
 {
     Debug::Log("Fired Unlock Levels Cheat");
     PlayerData::Instance().LevelsCompleted = 1000;
@@ -111,7 +111,7 @@ void UnlockLevels()
     }
 }
 
-void UnlimitedPath()
+void CheatManager::UnlimitedPath()
 {
     auto gameObject = GameObject::Find("LevelController");
     if (gameObject)
@@ -121,7 +121,7 @@ void UnlimitedPath()
     }
 }
 
-void StrongPath()
+void CheatManager::StrongPath()
 {
     auto gameObject = GameObject::Find("LevelController");
     if (gameObject)
