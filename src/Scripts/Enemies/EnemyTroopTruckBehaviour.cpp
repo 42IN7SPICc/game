@@ -4,7 +4,7 @@
 #include "../../Constants.hpp"
 #include "../../Controllers/LevelController.hpp"
 #include "../../Factories/EnemyPrefabFactory.hpp"
-#include "../../Utils/RandomUtil.hpp"
+#include "Utils/RandomUtil.hpp"
 
 #include "Engine.hpp"
 
@@ -43,8 +43,8 @@ void game::EnemyTroopTruckBehaviour::OnUpdate()
         {
             auto enemy = EnemyPrefabFactory::CreateEnemy(_enemyName, true);
             enemy->Transform() = parentTransform;
-            enemy->Transform().position.x += (RandomUtil::NextDouble(0, MaxDistance) - DistanceOffset);
-            enemy->Transform().position.y += (RandomUtil::NextDouble(0, MaxDistance) - DistanceOffset);
+            enemy->Transform().position.x += (spic::RandomUtil::NextDouble(0, MaxDistance) - DistanceOffset);
+            enemy->Transform().position.y += (spic::RandomUtil::NextDouble(0, MaxDistance) - DistanceOffset);
             enemy->GetComponent<EnemyMovementBehaviour>()->Path(parentPath);
             scene->Contents().push_back(enemy);
             levelController->AddEnemyToWave(enemy);

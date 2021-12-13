@@ -7,7 +7,7 @@
 #include "../Enums/Layer.hpp"
 #include "../Enums/SortingLayer.hpp"
 #include "../Scripts/Common/BulletBehaviour.hpp"
-#include "../Utils/GameObjectUtil.hpp"
+#include "Utils/GameObjectUtil.hpp"
 
 #include <stdexcept>
 
@@ -21,14 +21,14 @@ std::shared_ptr<spic::GameObject> BulletFactory::CreateBullet(BulletType bulletT
     // Collider
     auto collider = std::make_shared<spic::CircleCollider>(8);
     collider->IsTrigger(true);
-    GameObjectUtil::LinkComponent(bullet, collider);
+    spic::GameObjectUtil::LinkComponent(bullet, collider);
 
     // Behaviour scripts
-    GameObjectUtil::LinkComponent(bullet, std::make_shared<BulletBehaviour>(bulletType, direction, range, maxPenetrating));
-    GameObjectUtil::LinkComponent(bullet, std::make_shared<DamageBehaviour>(damage, targetTag, (bulletType == BulletType::Bomb ? bombRadius : 0), maxPenetrating));
+    spic::GameObjectUtil::LinkComponent(bullet, std::make_shared<BulletBehaviour>(bulletType, direction, range, maxPenetrating));
+    spic::GameObjectUtil::LinkComponent(bullet, std::make_shared<DamageBehaviour>(damage, targetTag, (bulletType == BulletType::Bomb ? bombRadius : 0), maxPenetrating));
 
     // Sprite
-    GameObjectUtil::LinkComponent(bullet, std::make_shared<spic::Sprite>(GetBulletSprite(bulletType), false, false, SortingLayer::Bullet, 0));
+    spic::GameObjectUtil::LinkComponent(bullet, std::make_shared<spic::Sprite>(GetBulletSprite(bulletType), false, false, SortingLayer::Bullet, 0));
     spic::Engine::Instance().PeekScene()->Contents().push_back(bullet);
 
     return bullet;

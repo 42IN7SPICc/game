@@ -7,8 +7,8 @@
 
 #include "../Common/BulletBehaviour.hpp"
 #include "../../Factories/BulletFactory.hpp"
-#include "../../Utils/PointUtil.hpp"
-#include "../../Utils/GameObjectUtil.hpp"
+#include "Utils/PointUtil.hpp"
+#include "Utils/GameObjectUtil.hpp"
 #include "../../HeroConstants.hpp"
 #include "../../Controllers/LevelController.hpp"
 
@@ -27,7 +27,7 @@ void UserAttackBehaviour::OnStart()
     {
         throw std::runtime_error("A user attack behaviour requires a valid health behaviour.");
     }
-    GameObjectUtil::LinkComponent(GameObject().lock(), _coolDownBehaviour);
+    spic::GameObjectUtil::LinkComponent(GameObject().lock(), _coolDownBehaviour);
 }
 
 void UserAttackBehaviour::OnUpdate()
@@ -48,7 +48,7 @@ void UserAttackBehaviour::OnUpdate()
         auto parentPosition = parent->AbsoluteTransform().position;
         auto mousePosition = spic::Input::MousePosition();
 
-        auto force = PointUtil::CalculateDirectionalPoint(parentPosition, mousePosition, _velocityMultiplier);
+        auto force = spic::PointUtil::CalculateDirectionalPoint(parentPosition, mousePosition, _velocityMultiplier);
 
         // Bullet game object
         auto bullet = BulletFactory::CreateBullet(BulletType::Normal, parentPosition, "enemy", force, HeroBulletRange, _damage);

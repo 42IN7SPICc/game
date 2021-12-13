@@ -3,7 +3,7 @@
 #include "GameObject.hpp"
 
 #include "HealthBehaviour.hpp"
-#include "../../Utils/PointUtil.hpp"
+#include "Utils/PointUtil.hpp"
 
 #include <stdexcept>
 #include <Debug.hpp>
@@ -49,7 +49,7 @@ void DamageBehaviour::OnTriggerEnter2D(const spic::Collider& collider)
 
         for (const auto& gameObject: gameObjects)
         {
-            if (PointUtil::Distance(currentPos, gameObject->AbsoluteTransform().position) <= _radius)
+            if (spic::PointUtil::Distance(currentPos, gameObject->AbsoluteTransform().position) <= _radius)
             {
                 auto healthBehaviour = gameObject->GetComponent<HealthBehaviour>();
                 if (!healthBehaviour->Invincibility())

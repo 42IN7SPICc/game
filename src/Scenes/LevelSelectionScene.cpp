@@ -8,7 +8,7 @@
 #include "Text.hpp"
 #include "Engine.hpp"
 #include "../Scripts/Common/CheatManager.hpp"
-#include "../Utils/GameObjectUtil.hpp"
+#include "Utils/GameObjectUtil.hpp"
 
 using namespace game;
 
@@ -21,7 +21,7 @@ LevelSelectionScene::LevelSelectionScene(const std::shared_ptr<spic::GameObject>
 
     auto cheatGameObject = std::make_shared<spic::GameObject>("cheats-manager","cheat-manager",0);
     auto cheatManager = std::make_shared<game::CheatManager>();
-    game::GameObjectUtil::LinkComponent(cheatGameObject, cheatManager);
+    spic::GameObjectUtil::LinkComponent(cheatGameObject, cheatManager);
 
     Contents().push_back(cheatGameObject);
 
@@ -60,7 +60,7 @@ void LevelSelectionScene::LoadLevels(bool reload)
                 spic::Engine::Instance().PushScene(scene);
             });
 
-            GameObjectUtil::LinkChild(levelsObject, button);
+            spic::GameObjectUtil::LinkChild(levelsObject, button);
         }
         else
         {
@@ -74,7 +74,7 @@ void LevelSelectionScene::LoadLevels(bool reload)
                 validationTextForButtonValidation->Content("Je kunt dit level nog niet spelen! Speel eerst: " + _levels[i-1].Title);
             });
 
-            GameObjectUtil::LinkChild(levelsObject, button);
+            spic::GameObjectUtil::LinkChild(levelsObject, button);
         }
     }
 
@@ -82,7 +82,7 @@ void LevelSelectionScene::LoadLevels(bool reload)
     validationTextForButtonValidation->Size(20);
     validationTextForButtonValidation->TextColor(spic::Color::white());
     validationTextForButtonValidation->Active(false);
-    GameObjectUtil::LinkChild(levelsObject, validationTextForButtonValidation);
+    spic::GameObjectUtil::LinkChild(levelsObject, validationTextForButtonValidation);
 
     Contents().push_back(levelsObject);
     Contents().push_back(validationTextForButtonValidation);
