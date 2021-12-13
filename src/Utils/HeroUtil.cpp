@@ -24,7 +24,26 @@ std::string game::HeroUtil::NameToString(game::HeroName heroName)
             return "Joseph Stalin";
     }
 
-    throw std::runtime_error("Couldn't find a string with this HeroName");
+    throw std::runtime_error("The given hero doesn't have a name.");
+}
+
+std::string game::HeroUtil::NameToAbilityString(game::HeroName heroName)
+{
+    switch (heroName)
+    {
+        case DesmondDoss:
+            return "Zichzelf helen";
+        case BernardIJzerdraat:
+            return "Ontzichtbaar worden voor vijanden";
+        case FranklinDRoosevelt:
+            return "Luchtaanvallen inroepen";
+        case WinstonChurchill:
+            return "Verhogen schietsnelheid van torens";
+        case JosephStalin:
+            return "Vijanden op elkaar laten schieten";
+    }
+
+    throw std::runtime_error("The given hero doesn't have an ability.");
 }
 
 std::shared_ptr<game::CoolDownBehaviour> game::HeroUtil::GetAbilityCoolDownBehaviour(std::shared_ptr<spic::GameObject> hero)
