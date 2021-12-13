@@ -16,6 +16,7 @@
 #include "../Constants.hpp"
 #include "../TowerConstants.hpp"
 #include "../Utils/RandomUtil.hpp"
+#include "../Utils/HeroUtil.hpp"
 
 using namespace spic;
 using namespace game;
@@ -24,7 +25,8 @@ LevelController::LevelController(std::shared_ptr<game::LevelWithTiles> level, st
                                                                                                                                                                                                                                                                                                               _level(std::move(level)),
                                                                                                                                                                                                                                                                                                               _levelData(levelData),
                                                                                                                                                                                                                                                                                                               _strongPathEnabled(false),
-                                                                                                                                                                                                                                                                                                              _hudData(hudData)
+                                                                                                                                                                                                                                                                                                              _hudData(hudData),
+                                                                                                                                                                                                                                                                                                              _noCoolDown(false)
 {
 }
 
@@ -45,6 +47,12 @@ void LevelController::OnStart()
 
 void LevelController::OnUpdate()
 {
+    if(_noCoolDown) {
+        auto hero = _levelData->HeroHealth->GameObject().lock();
+        auto abilty = game::HeroUtil::GetAbilityCoolDownBehaviour(hero);
+        abilty->CoolDown(0);
+        abilty->CooledDown(true);
+    }
     if (_levelData->LevelMode == LevelMode::TowerMode || _levelData->LevelMode == LevelMode::WaveMode)
     {
         _timePassed += Time::DeltaTime() * Time::TimeScale();
@@ -459,4 +467,9 @@ void LevelController::ButcherEnemies()
 game::LevelMode LevelController::GetLevelMode() const
 {
     return _levelData->LevelMode;
+}
+
+void LevelController::ToggleInfiniteCoolDown()
+{
+    _noCoolDown = !_noCoolDown;
 }
