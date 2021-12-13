@@ -40,6 +40,8 @@ LevelScene::LevelScene(LevelWithTiles& levelWithTiles)
 
     auto waves = game::WavePrefabFactory::GenerateWaves(5);
     auto levelData = std::make_shared<game::LevelData>(game::LevelData {
+            0,
+            0,
             levelWithTiles.UnlockThreshold,
             std::move(heroHealth),
             std::move(endTowerHealth),
