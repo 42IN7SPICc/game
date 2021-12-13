@@ -14,6 +14,7 @@ namespace game
     {
         private:
             std::shared_ptr<spic::Text> _heroNameText;
+            std::shared_ptr<spic::Text> _heroAbilityText;
 
         public:
             /**
