@@ -90,6 +90,12 @@ void SkipWave()
 void NoCoolDown()
 {
     Debug::Log("Fired No CoolDown Cheat");
+    auto gameObject = GameObject::Find("LevelController");
+    if (gameObject)
+    {
+        auto levelController = gameObject->GetComponent<game::LevelController>();
+        levelController->ToggleInfiniteCoolDown();
+    }
 }
 
 void UnlockLevels()
