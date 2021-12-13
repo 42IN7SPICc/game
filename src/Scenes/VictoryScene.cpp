@@ -13,8 +13,8 @@
 #include "../Factories/AudioSourcePrefabFactory.hpp"
 #include "../Factories/ButtonPrefabFactory.hpp"
 #include "../Scripts/Menu/ConfettiBehaviour.hpp"
-#include "../Utils/RandomUtil.hpp"
-#include "../Utils/GameObjectUtil.hpp"
+#include "Utils/RandomUtil.hpp"
+#include "Utils/GameObjectUtil.hpp"
 #include "../Constants.hpp"
 
 using namespace spic;
@@ -46,7 +46,7 @@ game::VictoryScene::VictoryScene() : MenuScene("", false, BackgroundName::Victor
     bottomBoundCollider->IsTrigger(true);
     GameObjectUtil::LinkComponent(bottomBound, bottomBoundCollider);
     GameObjectUtil::LinkComponent(bottomBound, std::make_shared<RigidBody>(1, 0, BodyType::staticBody));
-    game::GameObjectUtil::LinkComponent(bottomBound, std::make_shared<game::ConfettiBehaviour>());
+    spic::GameObjectUtil::LinkComponent(bottomBound, std::make_shared<game::ConfettiBehaviour>());
 
     Contents().push_back(victoryAudioSource);
     Contents().push_back(titleText);
@@ -57,14 +57,14 @@ game::VictoryScene::VictoryScene() : MenuScene("", false, BackgroundName::Victor
 std::shared_ptr<spic::GameObject> game::VictoryScene::GenerateConfetti()
 {
     auto confettiObject = std::make_shared<GameObject>("confetti", "confetti", Layer::Game);
-    confettiObject->Transform().position.x = game::RandomUtil::Next(ConfettiXRangeMin, ConfettiXRangeMax);
-    confettiObject->Transform().position.y = game::RandomUtil::Next(ConfettiYRangeMin, ConfettiYRangeMax);
-    confettiObject->Transform().scale = game::RandomUtil::NextDouble(ConfettiMinSize, ConfettiMaxSize);
+    confettiObject->Transform().position.x = spic::RandomUtil::Next(ConfettiXRangeMin, ConfettiXRangeMax);
+    confettiObject->Transform().position.y = spic::RandomUtil::Next(ConfettiYRangeMin, ConfettiYRangeMax);
+    confettiObject->Transform().scale = spic::RandomUtil::NextDouble(ConfettiMinSize, ConfettiMaxSize);
 
-    int randomConfettiId = game::RandomUtil::Next(1, 4);
-    game::GameObjectUtil::LinkComponent(confettiObject, std::make_shared<Sprite>("resources/sprites/hud/effects/confetti_" + std::to_string(randomConfettiId) + ".png", false, false, 0, 0));
+    int randomConfettiId = spic::RandomUtil::Next(1, 4);
+    spic::GameObjectUtil::LinkComponent(confettiObject, std::make_shared<Sprite>("resources/sprites/hud/effects/confetti_" + std::to_string(randomConfettiId) + ".png", false, false, 0, 0));
 
-    game::GameObjectUtil::LinkComponent(confettiObject, std::make_shared<CircleCollider>(confettiObject->Transform().scale * 256));
-    game::GameObjectUtil::LinkComponent(confettiObject, std::make_shared<RigidBody>(game::RandomUtil::NextDouble(ConfettiMinGravity, ConfettiMaxGravity), 1.5, BodyType::dynamicBody));
+    spic::GameObjectUtil::LinkComponent(confettiObject, std::make_shared<CircleCollider>(confettiObject->Transform().scale * 256));
+    spic::GameObjectUtil::LinkComponent(confettiObject, std::make_shared<RigidBody>(spic::RandomUtil::NextDouble(ConfettiMinGravity, ConfettiMaxGravity), 1.5, BodyType::dynamicBody));
     return confettiObject;
 }

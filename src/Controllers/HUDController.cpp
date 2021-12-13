@@ -9,7 +9,7 @@
 #include "../TowerConstants.hpp"
 #include "../Enums/Layer.hpp"
 #include "../Utils/HeroUtil.hpp"
-#include "../Utils/GameObjectUtil.hpp"
+#include "Utils/GameObjectUtil.hpp"
 #include "../Factories/ButtonPrefabFactory.hpp"
 #include "../Factories/HealthBarFactory.hpp"
 #include <numeric>

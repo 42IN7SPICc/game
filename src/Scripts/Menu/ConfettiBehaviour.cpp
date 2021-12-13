@@ -2,7 +2,7 @@
 
 #include "GameObject.hpp"
 #include "../../Constants.hpp"
-#include "../../Utils/RandomUtil.hpp"
+#include "Utils/RandomUtil.hpp"
 
 using namespace game;
 
@@ -22,7 +22,7 @@ void ConfettiBehaviour::OnTriggerEnter2D(const spic::Collider& collider)
         if (parent->Tag() == "confetti")
         {
             parent->Transform().position.y = -25;
-            parent->Transform().position.x = game::RandomUtil::Next(ConfettiXRangeMin, ConfettiXRangeMax);
+            parent->Transform().position.x = spic::RandomUtil::Next(ConfettiXRangeMin, ConfettiXRangeMax);
         }
     }
 }

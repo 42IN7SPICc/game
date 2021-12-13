@@ -1,10 +1,10 @@
 #include "Api.hpp"
 #include "LevelController.hpp"
 #include "../Scripts/Common/GameWonBehaviour.hpp"
-#include "../Utils/GameObjectUtil.hpp"
+#include "Utils/GameObjectUtil.hpp"
 #include "../Enums/Layer.hpp"
 #include "../Utils/TileUtil.hpp"
-#include "../Utils/QueueUtil.hpp"
+#include "Utils/QueueUtil.hpp"
 #include "../Factories/ButtonPrefabFactory.hpp"
 #include "../Factories/EnemyPrefabFactory.hpp"
 #include "../Factories/TowerPrefabFactory.hpp"
@@ -14,7 +14,7 @@
 #include <memory>
 #include <numeric>
 #include "../Constants.hpp"
-#include "../Utils/RandomUtil.hpp"
+#include "Utils/RandomUtil.hpp"
 #include "../Utils/HeroUtil.hpp"
 #include "../Structs/PlayerData.hpp"
 #include "../TowerConstants.hpp"

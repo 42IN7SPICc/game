@@ -3,7 +3,7 @@
 
 #include "../Enums/TowerName.hpp"
 #include "../Scripts/Common/AttackBehaviour.hpp"
-#include "../Utils/AnimatorUtil.hpp"
+#include "Utils/AnimatorUtil.hpp"
 
 #include "GameObject.hpp"
 
@@ -45,7 +45,7 @@ namespace game
              * @param attackBehaviour A script that handles attacking the enemies.
              * @return The tower object.
              */
-            static std::shared_ptr<spic::GameObject> CreateBaseTower(const types::sprite_vector& shootingSprites, std::shared_ptr<AttackBehaviour> attackBehaviour);
+            static std::shared_ptr<spic::GameObject> CreateBaseTower(const spic::types::sprite_vector& shootingSprites, std::shared_ptr<AttackBehaviour> attackBehaviour);
 
         public:
             /**
