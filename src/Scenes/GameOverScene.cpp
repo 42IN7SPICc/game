@@ -9,7 +9,7 @@
 
 using namespace spic;
 
-game::GameOverScene::GameOverScene() : MenuScene("", false, BackgroundName::GameOver)
+game::GameOverScene::GameOverScene() : MenuScene("", 0, BackgroundName::GameOver)
 {
     auto gameOverAudioSource = game::AudioSourcePrefabFactory::CreateAudioObject(AudioClipName::GameOver, true, true, 1.0);
 

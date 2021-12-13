@@ -11,7 +11,7 @@
 using namespace game;
 using namespace spic;
 
-PauseScene::PauseScene() : MenuScene("", true, BackgroundName::Pause)
+PauseScene::PauseScene() : MenuScene("", 1, BackgroundName::Pause)
 {
     auto titleText = std::make_shared<Text>("Pause Text", "text_pause", Layer::HUD, 1166, 100, "PAUSE", Font::Title, 64, Alignment::center, Color::white());
     titleText->Transform().position = {ScreenWidth / 2.0, 132};

@@ -12,6 +12,12 @@ namespace game
     {
         public:
             /**
+             * @brief Constructor.
+             * @param popAmount Amount of scenes to pop
+             */
+            explicit CloseSceneBehaviour(int popAmount = 1);
+
+            /**
              * @brief Triggers when the scripts starts for the first time.
              */
             void OnStart() override;
@@ -38,6 +44,9 @@ namespace game
              * @param collider The collider is colliding.
              */
             void OnTriggerStay2D(const spic::Collider& collider) override;
+
+        private:
+            int _popAmount;
     };
 }
 
