@@ -301,16 +301,16 @@ void LevelController::HandleClickTower(game::MapNode& clickedTile)
             TowerName towerType;
             switch (_hudData->ButtonTowerCosts[_hudData->SelectedButton]) //current switch on tower cost - maybe change in future of type check
             {
-                case 80:
+                case SniperTowerCost:
                     towerType = TowerName::Sniper;
                     break;
-                case 125:
+                case BomberTowerCost:
                     towerType = TowerName::Bomber;
                     break;
-                case 150:
+                case FlamethrowerTowerCost:
                     towerType = TowerName::Flamethrower;
                     break;
-                case 100:
+                case ShotgunTowerCost:
                 default:
                     towerType = TowerName::Shotgun;
                     break;

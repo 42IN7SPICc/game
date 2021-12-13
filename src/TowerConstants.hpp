@@ -14,7 +14,7 @@ spic::Color ShotgunTowerColor()
 }
 
 //Tower Flamethrower - 60 dps (stronger but less range then shotgun and low accuracy)
-const int FlamethrowerTowerCost = 200; // The amount of money it takes or the player to buy one
+const int FlamethrowerTowerCost = 350; // The amount of money it takes or the player to buy one
 const double FlamethrowerTowerFireRate = 0.1; // The shooting interval of the flamethrower tower
 const int FlamethrowerTowerRange = 60; // The detection range of the hero for the flamethrower tower
 const int FlamethrowerTowerDamage = 6; // The damage of a bullet for the flamethrower tower
@@ -29,7 +29,7 @@ spic::Color FlamethrowerTowerColor()
 const int BomberTowerCost = 600; // The amount of money it takes or the player to buy one
 const double BomberTowerFireRate = 5; // The shooting interval of the bomber tower
 const int BomberTowerRange = 100; // The detection range of the hero for the bomber tower
-const int BomberTowerDamage = 15; // The damage of a bullet for the bomber tower
+const int BomberTowerDamage = 10; // The damage of a bullet for the bomber tower
 const int BomberTowerBulletSpeed = 10; // The bullet velocity of the bomber tower
 const int BomberTowerExplosionRange = 64; // The range of an explosion
 template<typename T>
@@ -39,7 +39,7 @@ spic::Color BomberTowerColor()
 }
 
 //Tower Sniper - 6.25 dps
-const int SniperTowerCost = 600; // The amount of money it takes or the player to buy one
+const int SniperTowerCost = 550; // The amount of money it takes or the player to buy one
 const double SniperTowerFireRate = 8; // The shooting interval of the sniper tower
 const int SniperTowerRange = 500; // The detection range of the hero for the sniper tower
 const int SniperTowerDamage = 50; // The damage of a bullet for the sniper tower
