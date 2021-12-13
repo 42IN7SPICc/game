@@ -326,8 +326,9 @@ void LevelController::HandleClickTower(game::MapNode& clickedTile)
             _levelData->Balance -= _hudData->ButtonTowerCosts[_hudData->SelectedButton];
             auto& playerData = game::PlayerData::Instance();
             playerData.TowersPlaced += 1;
-            if (playerData.TowersPlaced > playerData.MostTowersPlaced)
-                playerData.MostTowersPlaced = playerData.TowersPlaced;
+            _levelData->TowersPlaced++;
+            if (_levelData->TowersPlaced > playerData.MostTowersPlaced)
+                playerData.MostTowersPlaced = _levelData->TowersPlaced;
         }
     }
 }

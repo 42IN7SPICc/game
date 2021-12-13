@@ -19,6 +19,7 @@ namespace game
             double _despawnDuration;
             double _despawnTime;
             bool _invincibility;
+            int _diedCount;
 
         public:
             /**

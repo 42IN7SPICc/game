@@ -15,6 +15,8 @@ namespace game
     struct LevelData
     {
         const int LevelThreshold;
+        int HeroDeaths;
+        int TowersPlaced;
         std::shared_ptr<game::HealthBehaviour> HeroHealth;
         std::shared_ptr<game::HealthBehaviour> MilitaryBaseHealth;
         const size_t TotalWaves;

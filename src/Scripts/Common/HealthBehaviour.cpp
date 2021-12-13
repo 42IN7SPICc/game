@@ -1,5 +1,6 @@
 #include "HealthBehaviour.hpp"
 #include "../../Structs/PlayerData.hpp"
+#include "../../Controllers/LevelController.hpp"
 #include <Input.hpp>
 #include <GameObject.hpp>
 #include <Debug.hpp>
@@ -10,7 +11,8 @@ game::HealthBehaviour::HealthBehaviour(std::shared_ptr<spic::Animator> diedAnima
                                                                                                                           _diedAnimator(std::move(diedAnimator)),
                                                                                                                           _despawnDuration(despawnTime),
                                                                                                                           _despawnTime(despawnTime),
-                                                                                                                          _invincibility(false)
+                                                                                                                          _invincibility(false),
+                                                                                                                          _diedCount(0)
 {
 }
 
@@ -39,14 +41,15 @@ void game::HealthBehaviour::Damage(int damage)
         if (_health <= 0)
         {
             _health = 0;
+            _diedCount += 1;
             if (_diedAnimator) _diedAnimator->Play(false);
 
             if (_despawnTime == 0) // if health behaviour is hero because hero has no despawn time
             {
                 auto& playerData = PlayerData::Instance();
                 playerData.HeroDeaths += 1;
-                if (playerData.HeroDeaths > playerData.MostHeroDeaths)
-                    playerData.MostHeroDeaths = playerData.HeroDeaths;
+                if (_diedCount > playerData.MostHeroDeaths)
+                    playerData.MostHeroDeaths = _diedCount;
             }
         }
         else if (_health > _maxHealth)
