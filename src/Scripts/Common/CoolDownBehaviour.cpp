@@ -11,7 +11,7 @@ game::CoolDownBehaviour::CoolDownBehaviour(double coolDown) : _cooledDown(false)
 
 void game::CoolDownBehaviour::OnStart()
 {
-    spic::Debug::Log("CoolDownBehaviour Started");
+    //
 }
 
 void game::CoolDownBehaviour::OnUpdate()
