@@ -6,6 +6,8 @@
 // Primary window
 const int ScreenWidth = 1366; // Width of the screen
 const int ScreenHeight = 768; // Height of the screen
+const double ScreenCenterWidth = ScreenWidth / 2.0;
+const double ScreenCenterHeight = ScreenHeight / 2.0;
 
 //Game HUD and Level
 const int HudWidth = 250; // Width of the HUD inside a level
