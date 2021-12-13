@@ -6,6 +6,10 @@
 using namespace game;
 using namespace spic;
 
+CloseSceneBehaviour::CloseSceneBehaviour(int popAmount) : _popAmount(popAmount)
+{
+}
+
 void CloseSceneBehaviour::OnStart()
 {
 }
@@ -14,7 +18,10 @@ void CloseSceneBehaviour::OnUpdate()
 {
     if (Input::GetKeyUp(spic::Input::KeyCode::ESCAPE))
     {
-        Engine::Instance().PopScene();
+        for (int i = 0; i < _popAmount; ++i)
+        {
+            spic::Engine::Instance().PopScene();
+        }
     }
 }
 

@@ -18,10 +18,10 @@ namespace game
             /**
              * @brief Constructs a new instance of a CreditScene.
              * @param title The title of the scene.
-             * @param hasBackButton Whether the scene has a back button.
+             * @param backButtonAmount Amount of scenes to pop when pressing back (no button if 0)
              * @param backgroundName The name of the background for the scene.
              */
-            MenuScene(const std::string& title, bool hasBackButton, BackgroundName backgroundName = BackgroundName::Menu);
+            MenuScene(const std::string& title, int backButtonAmount = 0, BackgroundName backgroundName = BackgroundName::Menu);
     };
 }
 

@@ -12,7 +12,7 @@
 using namespace game;
 using namespace spic;
 
-CreditScene::CreditScene(const std::shared_ptr<spic::GameObject>& audio) : MenuScene("Credits", true)
+CreditScene::CreditScene(const std::shared_ptr<spic::GameObject>& audio) : MenuScene("Credits", 1)
 {
     auto creditsText = std::make_shared<Text>("Credits Text", "text_credits", Layer::HUD, 1166, 400);
     creditsText->Transform().position = {ScreenWidth / 2.0, 450};
