@@ -16,6 +16,7 @@
 #include "../Constants.hpp"
 #include "../Utils/RandomUtil.hpp"
 #include "../Structs/PlayerData.hpp"
+#include "../TowerConstants.hpp"
 
 using namespace spic;
 using namespace game;

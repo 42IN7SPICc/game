@@ -60,8 +60,8 @@ void GameWonBehaviour::OnLevelCompleted()
     if (playerData.LevelsCompleted == _levelData.LevelThreshold)
     {
         playerData.LevelsCompleted += 1;
-        playerData.WavesPlayed += 1;
     }
+    playerData.WavesPlayed += 1;
     SaveGameManager::Save();
 
     spic::Engine::Instance().PopScene();
