@@ -19,7 +19,7 @@ const int FrameItems = 2;
 const double FrameItemWidth = ScreenWidth * (1.0 / FrameItems) - FrameWidthOffset;
 const double FrameItemPosXOffset = FrameItemWidth * 0.5;
 
-StatsScene::StatsScene(const std::shared_ptr<spic::GameObject>& audio) : MenuScene("Voortgang", true, BackgroundName::Menu)
+StatsScene::StatsScene(const std::shared_ptr<spic::GameObject>& audio) : MenuScene("Voortgang", 1, BackgroundName::Menu)
 {
     auto textLeftObject = std::make_shared<spic::Text>("", "text_stats_left", Layer::HUD, FrameItemWidth, FrameHeight);
     textLeftObject->Transform().position = {ScreenCenterWidth - FrameItemPosXOffset, FramePosY};

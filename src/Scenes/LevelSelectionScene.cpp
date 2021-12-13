@@ -12,7 +12,7 @@
 
 using namespace game;
 
-LevelSelectionScene::LevelSelectionScene(const std::shared_ptr<spic::GameObject>& audio) : MenuScene("Level selectie", true)
+LevelSelectionScene::LevelSelectionScene(const std::shared_ptr<spic::GameObject>& audio) : MenuScene("Level selectie", 1)
 {
     _levelSelectionController = std::make_shared<LevelSelectionController>();
     _levelSelectionController->InitializeLevels();

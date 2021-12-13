@@ -10,7 +10,7 @@
 using namespace game;
 
 SaveSelectionScene::SaveSelectionScene(const std::shared_ptr<spic::GameObject>& audio) : _mainMenuAudio(audio),
-                                                                                         MenuScene("Selecteer spelbestand", true, BackgroundName::Menu)
+                                                                                         MenuScene("Selecteer spelbestand", 1, BackgroundName::Menu)
 {
     CreateSaveButton("ALPHA", "alpha", 300);
     CreateSaveButton("BRAVO", "bravo", 400);
