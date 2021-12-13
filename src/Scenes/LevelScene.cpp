@@ -33,13 +33,15 @@ LevelScene::LevelScene(LevelWithTiles& levelWithTiles)
     auto heroHealth = hero->GetComponent<HealthBehaviour>();
 
     auto animation = std::make_shared<spic::Animator>(8, AnimatorUtil::CreateSpriteVector(10, "resources/sprites/tiles/end_exploding/end_exploding_"));
-    auto endTowerHealth = std::make_shared<game::HealthBehaviour>(animation, EndTowerHealth);
+    auto endTowerHealth = std::make_shared<game::HealthBehaviour>(animation, EndTowerHealth, 99999);
 
     auto levelAudioSource = game::AudioSourcePrefabFactory::CreateAudioObject(AudioClipName::Game, true, true, 0.2);
     auto mainGameObject = std::make_shared<spic::GameObject>("LevelController", "default", Layer::Background);
 
     auto waves = game::WavePrefabFactory::GenerateWaves(5);
     auto levelData = std::make_shared<game::LevelData>(game::LevelData {
+            0,
+            0,
             levelWithTiles.UnlockThreshold,
             std::move(heroHealth),
             std::move(endTowerHealth),

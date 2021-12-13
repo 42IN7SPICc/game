@@ -14,9 +14,10 @@
 #include <memory>
 #include <numeric>
 #include "../Constants.hpp"
-#include "../TowerConstants.hpp"
 #include "../Utils/RandomUtil.hpp"
 #include "../Utils/HeroUtil.hpp"
+#include "../Structs/PlayerData.hpp"
+#include "../TowerConstants.hpp"
 
 using namespace spic;
 using namespace game;
@@ -76,6 +77,7 @@ void LevelController::OnUpdate()
 
             if (wave.RemainingEnemies() == 0)
             {
+                PlayerData::Instance().WavesPlayed += 1;
                 _levelData->LevelMode = LevelMode::TowerMode;
             }
         }
@@ -229,8 +231,8 @@ std::shared_ptr<spic::GameObject> LevelController::CreateMapButton()
     mapTileButton->OnClick([this]() {
         auto mousePositions = Input::MousePosition();
         double scaledTileSize = TileSize * TileMapScale;
-        int x = ((mousePositions.x - MapX) + (scaledTileSize / 2)) / scaledTileSize;
-        int y = ((mousePositions.y - MapY) + (scaledTileSize / 2)) / scaledTileSize;
+        int x = static_cast<int>(((mousePositions.x - MapX) + (scaledTileSize / 2)) / scaledTileSize);
+        int y = static_cast<int>(((mousePositions.y - MapY) + (scaledTileSize / 2)) / scaledTileSize);
 
         if (_levelData->LevelMode == LevelMode::TileMode)
         {
@@ -330,6 +332,11 @@ void LevelController::HandleClickTower(game::MapNode& clickedTile)
             Engine::Instance().PeekScene()->Contents().push_back(tower);
             clickedTile.TowerObject = tower;
             _levelData->Balance -= _hudData->ButtonTowerCosts[_hudData->SelectedButton];
+            auto& playerData = game::PlayerData::Instance();
+            playerData.TowersPlaced += 1;
+            _levelData->TowersPlaced++;
+            if (_levelData->TowersPlaced > playerData.MostTowersPlaced)
+                playerData.MostTowersPlaced = _levelData->TowersPlaced;
         }
     }
 }
