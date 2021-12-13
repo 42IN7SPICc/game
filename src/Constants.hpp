@@ -19,6 +19,7 @@ const double TileMapScale = static_cast<double>(ScreenHeight) / VerticalTileCoun
 const int MapY = static_cast<int>(TileSize * TileMapScale / 2.0); // Starting y location of the map
 const int MapX = static_cast<int>((ScreenWidth - HudWidth) / 2.0 - (TileSize * TileMapScale * (HorizontalTileCount - 1)) / 2.0 - MapY); // Starting x location of the map
 const int EndTowerHealth = 10;
+const int StartingLevelBalance = 1000;
 
 //Confetti
 const int AmountOfConfetti = 100;
