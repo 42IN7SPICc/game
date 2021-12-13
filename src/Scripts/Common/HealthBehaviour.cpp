@@ -49,7 +49,7 @@ void game::HealthBehaviour::Damage(int damage)
 
 void game::HealthBehaviour::OnStart()
 {
-    spic::Debug::Log("HealthBehaviour Started");
+    //
 }
 
 void game::HealthBehaviour::OnUpdate()

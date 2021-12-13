@@ -22,6 +22,13 @@ namespace game
             static std::string NameToString(game::HeroName heroName);
 
             /**
+             * @brief Turns ability of a hero enum into std::string
+             * @param heroName Name of the hero
+             * @return String of the hero ability
+             */
+            static std::string NameToAbilityString(game::HeroName heroName);
+
+            /**
              * @brief Get the abilityCooldownBehaviour of a hero
              * @param heroName heroName as a string
              * @return CoolDownBehaviour of the ability
