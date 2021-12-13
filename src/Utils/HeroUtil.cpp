@@ -34,7 +34,7 @@ std::string game::HeroUtil::NameToAbilityString(game::HeroName heroName)
         case DesmondDoss:
             return "Zichzelf helen";
         case BernardIJzerdraat:
-            return "Invisible for enemies";
+            return "Ontzichtbaar worden voor vijanden";
         case FranklinDRoosevelt:
             return "Call an airstrike";
         case WinstonChurchill:
