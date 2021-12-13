@@ -73,7 +73,7 @@ MainScene::MainScene(const std::shared_ptr<spic::GameObject>& audio) : MenuScene
     _heroAbilityText->TextAlignment(Alignment::center);
     _heroAbilityText->Font(Font::CaptureIt);
     _heroAbilityText->TextColor(Color::white());
-    _heroAbilityText->Size(45);
+    _heroAbilityText->Size(32);
     _heroAbilityText->Transform().position = {1000.0, 490 + (HeroHeight / 2.0)};
 
     HeroSwapper(0);
