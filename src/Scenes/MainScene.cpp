@@ -47,10 +47,10 @@ MainScene::MainScene(const std::shared_ptr<spic::GameObject>& audio) : MenuScene
         Engine::Instance().PushScene(std::make_shared<CreditScene>(audio));
     });
 
-    auto backButton = ButtonPrefabFactory::CreateOutlineButton("Back Button", "button_back", "TERUG");
+    auto backButton = ButtonPrefabFactory::CreateOutlineButton("Exit Button", "button_exit", "SLUITEN");
     backButton->Transform().position = {225, 675};
     backButton->OnClick([]() {
-        Engine::Instance().PopScene();
+        Engine::Instance().Shutdown();
     });
 
     auto currentHero = PlayerData::Instance().SelectedHero;
