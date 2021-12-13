@@ -25,7 +25,6 @@ using namespace game;
 LevelScene::LevelScene(LevelWithTiles& levelWithTiles)
 {
     Contents().push_back(CameraPrefabFactory::CreateCamera(Color::black()));
-
     auto background = BackgroundPrefabFactory::CreateBackground(BackgroundName::Menu);
 
     auto hero = game::HeroPrefabFactory::CreateHero(PlayerData::Instance().SelectedHero, true);
@@ -36,10 +35,14 @@ LevelScene::LevelScene(LevelWithTiles& levelWithTiles)
     auto endTowerHealth = std::make_shared<game::HealthBehaviour>(animation, EndTowerHealth, 99999);
 
     auto levelAudioSource = game::AudioSourcePrefabFactory::CreateAudioObject(AudioClipName::Game, true, true, 0.2);
+    auto wooshAudioSource = game::AudioSourcePrefabFactory::CreateAudioSource(game::AudioClipName::SceneSwap, false, false, 1.0);
+    spic::GameObjectUtil::LinkComponent(levelAudioSource, wooshAudioSource);
+    wooshAudioSource->Play(false);
+
     auto mainGameObject = std::make_shared<spic::GameObject>("LevelController", "default", Layer::Background);
 
     auto waves = game::WavePrefabFactory::GenerateWaves(5);
-    auto levelData = std::make_shared<game::LevelData>(game::LevelData {
+    auto levelData = std::make_shared<game::LevelData>(game::LevelData{
             0,
             0,
             levelWithTiles.UnlockThreshold,

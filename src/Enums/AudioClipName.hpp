@@ -16,7 +16,8 @@ namespace game
         NukeAbility,
         HealAbility,
         ActivateAbility,
-        SuicideAbility
+        SuicideAbility,
+        SceneSwap
     };
 }
 

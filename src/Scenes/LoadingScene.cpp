@@ -14,7 +14,7 @@
 
 game::LoadingScene::LoadingScene() : MenuScene("", 0)
 {
-    auto mainMenuAudioSource = game::AudioSourcePrefabFactory::CreateAudioObject(AudioClipName::MainMenu, true, true, 1.0);
+    auto mainMenuAudioSource = game::AudioSourcePrefabFactory::CreateAudioObject(AudioClipName::MainMenu, true, true, 0.2);
 
     auto titleText = std::make_shared<spic::Text>("Game Title Text", "text_title_game", game::Layer::HUD, 1166, 100, "Avans Wars", game::Font::Title, 92, spic::Alignment::center, spic::Color::white());
     titleText->Transform().position = {ScreenWidth / 2.0, 196};
