@@ -9,6 +9,8 @@
 #include "../../Controllers/LevelController.hpp"
 #include "../../Structs/PlayerData.hpp"
 #include "../../Persistence/SaveGameManager.hpp"
+#include "Engine.hpp"
+#include "../../Scenes/LevelSelectionScene.hpp"
 
 using namespace spic;
 using namespace game;
@@ -95,6 +97,12 @@ void UnlockLevels()
     Debug::Log("Fired Unlock Levels Cheat");
     PlayerData::Instance().LevelsCompleted = 1000;
     SaveGameManager::Save();
+
+    auto scene = spic::Engine::Instance().PeekScene();
+    auto levelSelectionScene = std::dynamic_pointer_cast<game::LevelSelectionScene>(scene);
+    if(levelSelectionScene) {
+        levelSelectionScene->LoadLevels(true);
+    }
 }
 
 void UnlimitedPath()
