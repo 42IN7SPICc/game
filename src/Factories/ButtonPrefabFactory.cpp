@@ -20,7 +20,7 @@ std::shared_ptr<spic::Button> ButtonPrefabFactory::CreateOutlineButton(const std
 
     auto buttonText = std::make_shared<spic::Text>(name + "_text", tag + "_text", Layer::HUD, 250, 85);
     buttonText->Content(text);
-    buttonText->Size(38);
+    buttonText->Size(36);
     if (invert_color)
     {
         buttonText->TextColor(spic::Color::black());
