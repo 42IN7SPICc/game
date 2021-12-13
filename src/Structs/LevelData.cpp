@@ -1,7 +1,7 @@
 #include "LevelData.hpp"
-#include "../Constants.hpp"
 #include "../Scripts/Enemies/EnemyValue.hpp"
 #include "../Scripts/Enemies/EnemyTroopTruckBehaviour.hpp"
+#include "PlayerData.hpp"
 
 using namespace game;
 
@@ -23,6 +23,7 @@ void LevelData::ClearDeadEnemies(WaveData& wave)
         if (enemy->GetComponent<HealthBehaviour>()->Health() <= 0 && (!troopTruck || troopTruck->Spawned()))
         {
             Balance += enemy->GetComponent<EnemyValue>()->Value();
+            PlayerData::Instance().KillCount += 1;
             return true;
         }
         return false;
