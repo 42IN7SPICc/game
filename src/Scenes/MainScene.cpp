@@ -25,7 +25,7 @@
 using namespace spic;
 using namespace game;
 
-MainScene::MainScene(const std::shared_ptr<spic::GameObject>& audio) : MenuScene("Avans Wars: WW2", true)
+MainScene::MainScene(const std::shared_ptr<spic::GameObject>& audio) : MenuScene("Avans Wars: WW2", 2)
 {
     auto playButton = ButtonPrefabFactory::CreateOutlineButton("Play Button", "button_play", "SPELEN");
     playButton->Transform().position = {225, 300};

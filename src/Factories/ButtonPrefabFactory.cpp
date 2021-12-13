@@ -81,16 +81,19 @@ std::shared_ptr<spic::Button> ButtonPrefabFactory::CreateSquareOutlineButton(con
     return button;
 }
 
-std::shared_ptr<spic::Button> ButtonPrefabFactory::CreateCloseButton(const spic::Point& position)
+std::shared_ptr<spic::Button> ButtonPrefabFactory::CreateCloseButton(const spic::Point& position, int popAmount)
 {
     auto button = std::make_shared<spic::Button>("Close Button", "button_close", Layer::HUD, 48, 48);
     button->Transform().position = position;
-    button->OnClick([]() {
-        spic::Engine::Instance().PopScene();
+    button->OnClick([popAmount]() {
+        for (int i = 0; i < popAmount; ++i)
+        {
+            spic::Engine::Instance().PopScene();
+        }
     });
 
     auto buttonSprite = std::make_shared<spic::Sprite>("resources/sprites/hud/buttons/back.png", false, false, SortingLayer::HudButton, 0);
-    auto closeSceneBehaviour = std::make_shared<CloseSceneBehaviour>();
+    auto closeSceneBehaviour = std::make_shared<CloseSceneBehaviour>(popAmount);
 
     spic::GameObjectUtil::LinkComponent(button, buttonSprite);
     spic::GameObjectUtil::LinkComponent(button, closeSceneBehaviour);

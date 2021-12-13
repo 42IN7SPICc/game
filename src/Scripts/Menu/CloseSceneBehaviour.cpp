@@ -6,6 +6,10 @@
 using namespace game;
 using namespace spic;
 
+CloseSceneBehaviour::CloseSceneBehaviour(int popAmount) : _popAmount(popAmount)
+{
+}
+
 void CloseSceneBehaviour::OnStart()
 {
 }

@@ -10,7 +10,7 @@
 using namespace game;
 using namespace spic;
 
-HelpScene::HelpScene(const std::shared_ptr<spic::GameObject>& audio) : MenuScene("Help", true)
+HelpScene::HelpScene(const std::shared_ptr<spic::GameObject>& audio) : MenuScene("Help", 1)
 {
     auto creditsText = std::make_shared<Text>("Help Text", "text_help", Layer::HUD, 533, 400);
     creditsText->Transform().position = {366.5, 400};

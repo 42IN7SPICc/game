@@ -15,7 +15,7 @@
 using namespace game;
 using namespace spic;
 
-MenuScene::MenuScene(const std::string& title, bool hasBackButton, BackgroundName backgroundName)
+MenuScene::MenuScene(const std::string& title, int backButtonAmount, BackgroundName backgroundName)
 {
     Contents().push_back(CameraPrefabFactory::CreateCamera(Color::black()));
 
@@ -29,8 +29,8 @@ MenuScene::MenuScene(const std::string& title, bool hasBackButton, BackgroundNam
         Contents().push_back(titleText);
     }
 
-    if (hasBackButton)
+    if (backButtonAmount > 0)
     {
-        Contents().push_back(ButtonPrefabFactory::CreateCloseButton());
+        Contents().push_back(ButtonPrefabFactory::CreateCloseButton({49, 49}, backButtonAmount));
     }
 }

@@ -19,7 +19,7 @@
 
 using namespace spic;
 
-game::VictoryScene::VictoryScene() : MenuScene("", false, BackgroundName::Victory)
+game::VictoryScene::VictoryScene() : MenuScene("", 0, BackgroundName::Victory)
 {
     auto victoryAudioSource = game::AudioSourcePrefabFactory::CreateAudioObject(AudioClipName::Victory, true, true, 1.0);
 

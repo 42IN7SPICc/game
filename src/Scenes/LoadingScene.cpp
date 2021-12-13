@@ -12,7 +12,7 @@
 #include "Engine.hpp"
 #include "Text.hpp"
 
-game::LoadingScene::LoadingScene() : MenuScene("", false)
+game::LoadingScene::LoadingScene() : MenuScene("", 0)
 {
     auto mainMenuAudioSource = game::AudioSourcePrefabFactory::CreateAudioObject(AudioClipName::MainMenu, true, true, 1.0);
 

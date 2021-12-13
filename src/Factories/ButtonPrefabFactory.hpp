@@ -48,7 +48,7 @@ namespace game
              * @param position The position of the button.
              * @return The button object.
              */
-            static std::shared_ptr<spic::Button> CreateCloseButton(const spic::Point& position = {49, 49});
+            static std::shared_ptr<spic::Button> CreateCloseButton(const spic::Point& position = {49, 49}, int popAmount = 1);
 
             /**
              * @brief Create a button for the hero switching
