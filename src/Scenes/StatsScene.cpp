@@ -26,7 +26,7 @@ StatsScene::StatsScene(const std::shared_ptr<spic::GameObject>& audio) : MenuSce
     textLeftObject->TextColor(spic::Color::white());
     textLeftObject->TextAlignment(spic::Alignment::center);
     textLeftObject->Size(24);
-    textLeftObject->Content("Levels voltooid\nTotaal aantal waves gespeeld\n\nTotaal aantal torens geplaatst\nMeeste toren geplaatst in een level\n\nTotaal aantal vijandend vermoord\nHeld dood gegaan\nHeld vaakst dood gegaan in een level\n");
+    textLeftObject->Content("Levels voltooid\nTotaal aantal waves gespeeld\n\nTotaal aantal torens geplaatst\nMeeste toren geplaatst in een level\n\nTotaal aantal vijandend vermoord\nHeld dood gegaan\nHeld vaakst dood gegaan in een level");
 
     const auto& playerData = PlayerData::Instance();
     std::stringstream playerStats{};
@@ -35,8 +35,8 @@ StatsScene::StatsScene(const std::shared_ptr<spic::GameObject>& audio) : MenuSce
     playerStats << playerData.TowersPlaced << "\n";
     playerStats << playerData.MostTowersPlaced << "\n\n";
     playerStats << playerData.KillCount << "\n";
-    playerStats << playerData.HeroDeathCount << " keer\n";
-    playerStats << playerData.MostHeroDeaths << " keer\n";
+    playerStats << playerData.HeroDeaths << " keer\n";
+    playerStats << playerData.MostHeroDeaths << " keer";
 
     auto textRightObject = std::make_shared<spic::Text>("", "text_stats_right", Layer::HUD, FrameItemWidth, FrameHeight);
     textRightObject->Transform().position = {ScreenCenterWidth + FrameItemPosXOffset, FramePosY};
