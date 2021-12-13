@@ -14,8 +14,8 @@
 #include <memory>
 #include <numeric>
 #include "../Constants.hpp"
-#include "../TowerConstants.hpp"
 #include "../Utils/RandomUtil.hpp"
+#include "../Structs/PlayerData.hpp"
 
 using namespace spic;
 using namespace game;
@@ -68,6 +68,7 @@ void LevelController::OnUpdate()
 
             if (wave.RemainingEnemies() == 0)
             {
+                PlayerData::Instance().WavesPlayed += 1;
                 _levelData->LevelMode = LevelMode::TowerMode;
             }
         }
@@ -322,6 +323,10 @@ void LevelController::HandleClickTower(game::MapNode& clickedTile)
             Engine::Instance().PeekScene()->Contents().push_back(tower);
             clickedTile.TowerObject = tower;
             _levelData->Balance -= _hudData->ButtonTowerCosts[_hudData->SelectedButton];
+            auto& playerData = game::PlayerData::Instance();
+            playerData.TowersPlaced += 1;
+            if (playerData.TowersPlaced > playerData.MostTowersPlaced)
+                playerData.MostTowersPlaced = playerData.TowersPlaced;
         }
     }
 }
