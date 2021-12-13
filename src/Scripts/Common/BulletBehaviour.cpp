@@ -1,7 +1,7 @@
 #include "BulletBehaviour.hpp"
 
-#include "../../Utils/GameObjectUtil.hpp"
-#include "../../Utils/PointUtil.hpp"
+#include "Utils/GameObjectUtil.hpp"
+#include "Utils/PointUtil.hpp"
 
 #include <Time.hpp>
 
@@ -25,7 +25,7 @@ void BulletBehaviour::OnStart()
     if (!_rigidBody)
     {
         _rigidBody = std::make_shared<spic::RigidBody>(1, 0, spic::BodyType::dynamicBody);
-        GameObjectUtil::LinkComponent(parent, _rigidBody);
+        spic::GameObjectUtil::LinkComponent(parent, _rigidBody);
     }
 
     _damageBehaviour = parent->GetComponent<DamageBehaviour>();
@@ -52,7 +52,7 @@ void BulletBehaviour::OnUpdate()
     auto yWithTimeScale = _direction->y * deltaTimeScale;
     _rigidBody->AddForce(spic::Point{xWithTimeScale, yWithTimeScale});
 
-    auto distance = PointUtil::Distance(_startPos, parent->AbsoluteTransform().position);
+    auto distance = spic::PointUtil::Distance(_startPos, parent->AbsoluteTransform().position);
     if (distance >= _maxRange)
     {
         spic::GameObject::Destroy(parent);

@@ -5,7 +5,7 @@
 #include "Text.hpp"
 
 #include "../Scripts/Menu/CloseSceneBehaviour.hpp"
-#include "../Utils/GameObjectUtil.hpp"
+#include "Utils/GameObjectUtil.hpp"
 #include "../Enums/Layer.hpp"
 #include "../Enums/SortingLayer.hpp"
 
@@ -31,8 +31,8 @@ std::shared_ptr<spic::Button> ButtonPrefabFactory::CreateOutlineButton(const std
     }
     buttonText->TextAlignment(spic::Alignment::center);
 
-    GameObjectUtil::LinkComponent(button, buttonSprite);
-    GameObjectUtil::LinkChild(button, buttonText);
+    spic::GameObjectUtil::LinkComponent(button, buttonSprite);
+    spic::GameObjectUtil::LinkChild(button, buttonText);
 
     return button;
 }
@@ -57,8 +57,8 @@ std::shared_ptr<spic::Button> ButtonPrefabFactory::CreateWideOutlineButton(const
     }
     buttonText->TextAlignment(spic::Alignment::center);
 
-    GameObjectUtil::LinkComponent(button, buttonSprite);
-    GameObjectUtil::LinkChild(button, buttonText);
+    spic::GameObjectUtil::LinkComponent(button, buttonSprite);
+    spic::GameObjectUtil::LinkChild(button, buttonText);
 
     return button;
 }
@@ -75,8 +75,8 @@ std::shared_ptr<spic::Button> ButtonPrefabFactory::CreateSquareOutlineButton(con
     buttonText->TextColor(spic::Color::white());
     buttonText->TextAlignment(spic::Alignment::center);
 
-    GameObjectUtil::LinkComponent(button, buttonSprite);
-    GameObjectUtil::LinkChild(button, buttonText);
+    spic::GameObjectUtil::LinkComponent(button, buttonSprite);
+    spic::GameObjectUtil::LinkChild(button, buttonText);
 
     return button;
 }
@@ -92,8 +92,8 @@ std::shared_ptr<spic::Button> ButtonPrefabFactory::CreateCloseButton(const spic:
     auto buttonSprite = std::make_shared<spic::Sprite>("resources/sprites/hud/buttons/back.png", false, false, SortingLayer::HudButton, 0);
     auto closeSceneBehaviour = std::make_shared<CloseSceneBehaviour>();
 
-    GameObjectUtil::LinkComponent(button, buttonSprite);
-    GameObjectUtil::LinkComponent(button, closeSceneBehaviour);
+    spic::GameObjectUtil::LinkComponent(button, buttonSprite);
+    spic::GameObjectUtil::LinkComponent(button, closeSceneBehaviour);
 
     return button;
 }
@@ -105,6 +105,6 @@ std::shared_ptr<spic::Button> ButtonPrefabFactory::CreateSwitchHeroButton(const 
     button->OnClick(callback);
 
     auto buttonSprite = std::make_shared<spic::Sprite>("resources/sprites/hud/buttons/back.png", false, false, SortingLayer::HudButton, 0);
-    GameObjectUtil::LinkComponent(button, buttonSprite);
+    spic::GameObjectUtil::LinkComponent(button, buttonSprite);
     return button;
 }

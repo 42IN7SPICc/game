@@ -1,6 +1,6 @@
 #include "BackgroundPrefabFactory.hpp"
 
-#include "../Utils/GameObjectUtil.hpp"
+#include "Utils/GameObjectUtil.hpp"
 #include "../Enums/Layer.hpp"
 
 #include "Sprite.hpp"
@@ -31,7 +31,7 @@ std::shared_ptr<spic::GameObject> BackgroundPrefabFactory::CreateBackground(Back
 
     auto backgroundSprite = std::make_shared<spic::Sprite>("resources/sprites/menu/backgrounds/" + imageSrc + ".png", false, false, 0, 0);
 
-    GameObjectUtil::LinkComponent(background, backgroundSprite);
+    spic::GameObjectUtil::LinkComponent(background, backgroundSprite);
 
     return background;
 }

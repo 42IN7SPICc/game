@@ -1,6 +1,6 @@
 #include "SaveGameManager.hpp"
 
-#include "FileManager.hpp"
+#include "Managers/FileManager.hpp"
 #include "JsonFacade.hpp"
 
 #include "Debug.hpp"
@@ -15,14 +15,14 @@ void SaveGameManager::Save()
 void SaveGameManager::Save(const PlayerData& playerData)
 {
     auto contents = spic::JsonFacade::Serialize(playerData);
-    FileManager::Save(playerData.File, contents);
+    spic::FileManager::Save(playerData.File, contents);
 }
 
 PlayerData SaveGameManager::Load(const std::string& file)
 {
     try
     {
-        auto contents = FileManager::Load(file);
+        auto contents = spic::FileManager::Load(file);
         auto playerData = spic::JsonFacade::Deserialize<PlayerData>(contents);
 
         return playerData;
@@ -40,7 +40,7 @@ std::map<std::string, PlayerData> SaveGameManager::GetAll()
     std::string path = "./resources/saves";
     std::string extension = ".json";
 
-    for (const auto& file: FileManager::GetFolderFiles(path, extension))
+    for (const auto& file: spic::FileManager::GetFolderFiles(path, extension))
     {
         try
         {

@@ -1,8 +1,8 @@
 #include "EnemySpeedBoostBehaviour.hpp"
 
 #include "EnemyMovementBehaviour.hpp"
-#include "../../Utils/PointUtil.hpp"
-#include "../../Utils/GameObjectUtil.hpp"
+#include "Utils/PointUtil.hpp"
+#include "Utils/GameObjectUtil.hpp"
 
 #include "Engine.hpp"
 #include "GameObject.hpp"
@@ -28,7 +28,7 @@ void game::EnemySpeedBoostBehaviour::OnStart()
 {
     _coolDownBehaviour = std::make_shared<CoolDownBehaviour>(_boostCoolDown);
 
-    GameObjectUtil::LinkComponent(GameObject().lock(), _coolDownBehaviour);
+    spic::GameObjectUtil::LinkComponent(GameObject().lock(), _coolDownBehaviour);
 }
 
 void game::EnemySpeedBoostBehaviour::OnUpdate()
@@ -45,7 +45,7 @@ void game::EnemySpeedBoostBehaviour::OnUpdate()
 
             if (target->Tag() != "enemy") continue;
 
-            auto distance = PointUtil::Distance(absPosition, target->AbsoluteTransform().position);
+            auto distance = spic::PointUtil::Distance(absPosition, target->AbsoluteTransform().position);
             if (distance > _boostRange) continue;
 
             movementBehaviours.push_back(target->GetComponent<EnemyMovementBehaviour>());

@@ -1,6 +1,6 @@
 #include "IncreaseTowerFireRateAbilityBehaviour.hpp"
 #include "../../HeroConstants.hpp"
-#include "../../Utils/GameObjectUtil.hpp"
+#include "Utils/GameObjectUtil.hpp"
 #include "../../Enums/Layer.hpp"
 #include "../../Factories/AudioSourcePrefabFactory.hpp"
 #include "../Common/AttackBehaviour.hpp"
@@ -18,7 +18,7 @@ void game::IncreaseTowerFireRateAbilityBehaviour::OnStart()
 {
     auto parent = GameObject().lock();
     _healthBehaviour = parent->GetComponent<game::HealthBehaviour>();
-    game::GameObjectUtil::LinkComponent(parent, _coolDownBehaviour);
+    spic::GameObjectUtil::LinkComponent(parent, _coolDownBehaviour);
 }
 
 void game::IncreaseTowerFireRateAbilityBehaviour::OnUpdate()
@@ -48,10 +48,10 @@ void game::IncreaseTowerFireRateAbilityBehaviour::OnUpdate()
             auto scene = spic::Engine::Instance().PeekScene();
             auto towerFireRateObject = std::make_shared<spic::GameObject>("towerFireRateObject", "towerFireRateObject", Layer::Game);
             auto towerFireRateCooldown = std::make_shared<CoolDownBehaviour>(10);
-            GameObjectUtil::LinkComponent(towerFireRateObject, towerFireRateCooldown);
+            spic::GameObjectUtil::LinkComponent(towerFireRateObject, towerFireRateCooldown);
 
             auto soundEffect = AudioSourcePrefabFactory::CreateAudioObject(game::AudioClipName::ActivateAbility, true, false, 1.0);
-            game::GameObjectUtil::LinkChild(GameObject().lock(), soundEffect);
+            spic::GameObjectUtil::LinkChild(GameObject().lock(), soundEffect);
 
             auto towers = spic::GameObject::FindGameObjectsWithTag("tower");
             for (auto& tower: towers)

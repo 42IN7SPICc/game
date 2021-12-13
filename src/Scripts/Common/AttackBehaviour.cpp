@@ -1,8 +1,8 @@
 #include "AttackBehaviour.hpp"
 
 #include "../../Factories/BulletFactory.hpp"
-#include "../../Utils/GameObjectUtil.hpp"
-#include "../../Utils/PointUtil.hpp"
+#include "Utils/GameObjectUtil.hpp"
+#include "Utils/PointUtil.hpp"
 
 #include "Engine.hpp"
 #include "Sprite.hpp"
@@ -28,7 +28,7 @@ AttackBehaviour::AttackBehaviour(const std::string& targetTag, game::BulletType 
 void AttackBehaviour::OnStart()
 {
     auto parent = GameObject().lock();
-    GameObjectUtil::LinkComponent(parent, _coolDownBehaviour);
+    spic::GameObjectUtil::LinkComponent(parent, _coolDownBehaviour);
 
     _healthBehaviour = parent->GetComponent<HealthBehaviour>();
 }
@@ -50,7 +50,7 @@ void AttackBehaviour::OnUpdate()
         if (!healthBehaviour || healthBehaviour->Health() <= 0 || healthBehaviour->Invincibility()) continue;
 
         auto targetPosition = target->AbsoluteTransform().position;
-        auto distance = PointUtil::Distance(absPosition, targetPosition);
+        auto distance = spic::PointUtil::Distance(absPosition, targetPosition);
         if (distance > _range) continue;
 
         targets.emplace(distance, targetPosition);
@@ -62,12 +62,12 @@ void AttackBehaviour::OnUpdate()
 
     if (_followTarget)
     {
-        GameObject().lock()->Transform().rotation = PointUtil::Degrees(absPosition, target.second);
+        GameObject().lock()->Transform().rotation = spic::PointUtil::Degrees(absPosition, target.second);
     }
 
     if (!_coolDownBehaviour->CooledDown()) return;
 
-    auto direction = PointUtil::CalculateDirectionalPoint(absPosition, target.second, _bulletSpeed);
+    auto direction = spic::PointUtil::CalculateDirectionalPoint(absPosition, target.second, _bulletSpeed);
 
     Shoot(direction, absPosition);
 
