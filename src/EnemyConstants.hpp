@@ -13,10 +13,10 @@ const int EnemyDeSpawnTime = 4; // The time it takes to de spawn an enemy after 
 const double PanzerEnemyFireRate = 10; // The shooting interval of the panzer enemy
 const int PanzerEnemyRange = 200; // The detection range of the hero for the panzer enemy
 const int PanzerEnemyDamage = 30; // The damage of a bullet for the panzer enemy
-const double PanzerEnemyVelocity = 0.25; // The movement speed
-const int PanzerEnemyBulletSpeed = 10; // The bullet velocity of the panzer enemy
-const int PanzerEnemyHealth = 500; // The health / armor of the panzer tank
-const int PanzerEnemyValue = 200; // Value of enemy
+const double PanzerEnemyVelocity = 0.5; // The movement speed
+const int PanzerEnemyBulletSpeed = 6; // The bullet velocity of the panzer enemy
+const int PanzerEnemyHealth = 1000; // The health / armor of the panzer tank
+const int PanzerEnemyValue = 400; // Value of enemy
 
 //Enemy Gruppenfuhrer
 const double GruppenfuhrerEnemyFireRate = 3; // The shooting interval of the Gruppenfuhrer enemy
@@ -25,7 +25,7 @@ const int GruppenfuhrerEnemyDamage = 2; // The damage of a bullet for the Gruppe
 const double GruppenfuhrerEnemyVelocity = 1; // The movement speed
 const int GruppenfuhrerEnemyBulletSpeed = 15; // The bullet velocity of the Gruppenfuhrer enemy
 const int GruppenfuhrerEnemyHealth = 175; // The health of the Gruppenfuhrer enemy
-const int GruppenfuhrerEnemyValue = 80; // Value of enemy
+const int GruppenfuhrerEnemyValue = 60; // Value of enemy
 
 const int GruppenfuhrerEnemyBoostCoolDown = 10; // The cool down between boost actions of the Gruppenfuhrer enemy
 const double GruppenfuhrerEnemySpeedBoost = 1.5; // The boost to give to enemies of the Gruppenfuhrer enemy
@@ -88,8 +88,8 @@ spic::Color StabsarztColor() {
 }
 
 //Enemy Raupenschlepper
-const double RaupenschlepperEnemyVelocity = 0.5; // The movement speed
-const int RaupenschlepperEnemyHealth = 200; // The health of the Raupenschlepper enemy
+const double RaupenschlepperEnemyVelocity = 0.7; // The movement speed
+const int RaupenschlepperEnemyHealth = 350; // The health of the Raupenschlepper enemy
 const int RaupenschlepperEnemyValue = 150; // Value of enemy
 
 #endif //SPIC_GAME_ENEMYCONSTANTS_HPP

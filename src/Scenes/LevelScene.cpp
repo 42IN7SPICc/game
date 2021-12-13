@@ -44,7 +44,7 @@ LevelScene::LevelScene(LevelWithTiles& levelWithTiles)
             std::move(heroHealth),
             std::move(endTowerHealth),
             waves.size(), // Total waves
-            500,
+            StartingLevelBalance,
             std::move(waves),
             LevelMode::TileMode
     });
