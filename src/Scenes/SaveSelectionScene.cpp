@@ -46,7 +46,8 @@ void SaveSelectionScene::CreateSaveButton(const std::string& displayName, const 
     double buttonX = spic::Engine::Instance().Config().window.width / 2.0;
     auto saveExists = this->SaveExists(saveName);
 
-    if (saveExists) {
+    if (saveExists)
+    {
         auto save = this->LoadSave(saveName);
         std::string buttonText = displayName + " : " + std::to_string(save.LevelsCompleted) + "/3 levels";
 
@@ -59,7 +60,8 @@ void SaveSelectionScene::CreateSaveButton(const std::string& displayName, const 
 
         Contents().push_back(button);
     }
-    else {
+    else
+    {
         std::string buttonText = "NIEUW BESTAND MAKEN";
         auto button = ButtonPrefabFactory::CreateWideOutlineButton("Button Save 1", "button_save_1", buttonText, true);
         button->Transform().position = {buttonX, buttonY};
