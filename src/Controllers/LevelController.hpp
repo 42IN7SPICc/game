@@ -33,6 +33,7 @@ namespace game
 
             double _timePassed;
             bool _strongPathEnabled;
+            bool _noCoolDown;
             std::shared_ptr<game::GameLostBehaviour> _gameLostBehavior;
 
             void HandleClickTile(const game::MapNode& clickedTile);
@@ -165,6 +166,11 @@ namespace game
              * @return a bool if the path is complete and a queue with the path follow instructions
              */
             static std::tuple<bool, std::queue<std::string>> CheckIfPathIsComplete(std::map<std::string, MapNode> graphCopy);
+
+            /**
+             * @brief Toggle the infinite cooldown cheat
+             */
+            void ToggleInfiniteCoolDown();
     };
 }
 

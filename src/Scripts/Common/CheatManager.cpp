@@ -9,6 +9,8 @@
 #include "../../Controllers/LevelController.hpp"
 #include "../../Structs/PlayerData.hpp"
 #include "../../Persistence/SaveGameManager.hpp"
+#include "Engine.hpp"
+#include "../../Scenes/LevelSelectionScene.hpp"
 
 using namespace spic;
 using namespace game;
@@ -88,6 +90,12 @@ void SkipWave()
 void NoCoolDown()
 {
     Debug::Log("Fired No CoolDown Cheat");
+    auto gameObject = GameObject::Find("LevelController");
+    if (gameObject)
+    {
+        auto levelController = gameObject->GetComponent<game::LevelController>();
+        levelController->ToggleInfiniteCoolDown();
+    }
 }
 
 void UnlockLevels()
@@ -95,6 +103,12 @@ void UnlockLevels()
     Debug::Log("Fired Unlock Levels Cheat");
     PlayerData::Instance().LevelsCompleted = 1000;
     SaveGameManager::Save();
+
+    auto scene = spic::Engine::Instance().PeekScene();
+    auto levelSelectionScene = std::dynamic_pointer_cast<game::LevelSelectionScene>(scene);
+    if(levelSelectionScene) {
+        levelSelectionScene->LoadLevels(true);
+    }
 }
 
 void UnlimitedPath()
@@ -117,11 +131,6 @@ void StrongPath()
     }
 }
 
-void ExpBoost()
-{
-    Debug::Log("Fired Exp Boost Cheat");
-}
-
 void CheatManager::OnStart()
 {
     _cheats[Input::KeyCode::U] = []() { return UnlimitedMoney(); };
@@ -134,7 +143,6 @@ void CheatManager::OnStart()
     _cheats[Input::KeyCode::A] = []() { return UnlockLevels(); };
     _cheats[Input::KeyCode::P] = []() { return UnlimitedPath(); };
     _cheats[Input::KeyCode::Q] = []() { return StrongPath(); };
-    _cheats[Input::KeyCode::E] = []() { return ExpBoost(); };
 }
 
 void CheatManager::OnUpdate()

@@ -15,6 +15,7 @@
 #include <numeric>
 #include "../Constants.hpp"
 #include "../Utils/RandomUtil.hpp"
+#include "../Utils/HeroUtil.hpp"
 #include "../Structs/PlayerData.hpp"
 #include "../TowerConstants.hpp"
 
@@ -25,7 +26,8 @@ LevelController::LevelController(std::shared_ptr<game::LevelWithTiles> level, st
                                                                                                                                                                                                                                                                                                               _level(std::move(level)),
                                                                                                                                                                                                                                                                                                               _levelData(levelData),
                                                                                                                                                                                                                                                                                                               _strongPathEnabled(false),
-                                                                                                                                                                                                                                                                                                              _hudData(hudData)
+                                                                                                                                                                                                                                                                                                              _hudData(hudData),
+                                                                                                                                                                                                                                                                                                              _noCoolDown(false)
 {
 }
 
@@ -46,6 +48,12 @@ void LevelController::OnStart()
 
 void LevelController::OnUpdate()
 {
+    if(_noCoolDown) {
+        auto hero = _levelData->HeroHealth->GameObject().lock();
+        auto abilty = game::HeroUtil::GetAbilityCoolDownBehaviour(hero);
+        abilty->CoolDown(0);
+        abilty->CooledDown(true);
+    }
     if (_levelData->LevelMode == LevelMode::TowerMode || _levelData->LevelMode == LevelMode::WaveMode)
     {
         _timePassed += Time::DeltaTime() * Time::TimeScale();
@@ -426,10 +434,19 @@ void LevelController::SkipWave()
         _levelData->Waves.front().EnemyQueue.pop();
     }
 
+    //Don't remove enemies in this loop, it will break the game
     while (!_levelData->Waves.front().CurrentEnemies.empty())
     {
-        GameObject::Destroy(_levelData->Waves.front().CurrentEnemies.front());
+        _levelData->Waves.front().CurrentEnemies.pop_back();
     }
+
+    auto remainingEnemies = GameObject::FindGameObjectsWithTag("enemy");
+    for(auto& enemy : remainingEnemies) {
+        GameObject::Destroy(enemy);
+    }
+
+    _levelData->Waves.pop();
+    _levelData->HeroHealth->Health(_levelData->HeroHealth->MaxHealth());
 }
 
 std::map<std::string, MapNode>& LevelController::GetGraph()
@@ -457,4 +474,9 @@ void LevelController::ButcherEnemies()
 game::LevelMode LevelController::GetLevelMode() const
 {
     return _levelData->LevelMode;
+}
+
+void LevelController::ToggleInfiniteCoolDown()
+{
+    _noCoolDown = !_noCoolDown;
 }
