@@ -54,45 +54,23 @@ MainScene::MainScene(const std::shared_ptr<spic::GameObject>& audio) : MenuScene
         PlayerData::Instance().SelectedHero = currentHero;
     }
 
-    auto heroNameText = std::make_shared<spic::Text>("hero-name-text", "hero-name-text", SortingLayer::HudText, HeroWidth + 300, 100);
-    heroNameText->Content(HeroUtil::NameToString(currentHero));
-    heroNameText->TextAlignment(Alignment::center);
-    heroNameText->Font(Font::CaptureIt);
-    heroNameText->TextColor(Color::white());
-    heroNameText->Size(45);
-    heroNameText->Transform().position = {1000.0, 430 - (HeroHeight / 2.0)};
+    _heroNameText = std::make_shared<spic::Text>("hero-name-text", "hero-name-text", SortingLayer::HudText, HeroWidth + 300, 100);
+    _heroNameText->Content(HeroUtil::NameToString(currentHero));
+    _heroNameText->TextAlignment(Alignment::center);
+    _heroNameText->Font(Font::CaptureIt);
+    _heroNameText->TextColor(Color::white());
+    _heroNameText->Size(45);
+    _heroNameText->Transform().position = {1000.0, 430 - (HeroHeight / 2.0)};
 
-    auto createHero = [this](HeroName currentHero) {
-        auto hero = GameObject::Find("Hero");
-        if (hero) GameObject::Destroy(hero);
+    HeroSwapper(0);
 
-        hero = HeroPrefabFactory::CreateHero(currentHero);
-        hero->Transform().position = {1000, 460};
-        hero->Transform().scale = 1;
-        hero->GetComponent<UserMovementBehaviour>()->Controllable(false);
-        hero->RemoveComponent(hero->GetComponent<UserAttackBehaviour>());
-        Contents().push_back(hero);
-    };
-
-    createHero(currentHero);
-    auto heroSwitcher = [currentHero, heroNameText, createHero](int amount) mutable {
-        int heroIndex = static_cast<int>(currentHero) + amount;
-        if (heroIndex > 4) heroIndex = 0;
-        if (heroIndex < 0) heroIndex = 4;
-        currentHero = static_cast<HeroName>(heroIndex);
-        PlayerData::Instance().SelectedHero = currentHero;
-        heroNameText->Content(HeroUtil::NameToString(currentHero));
-        createHero(currentHero);
-    };
-
-    auto leftArrowButton = ButtonPrefabFactory::CreateSwitchHeroButton({850, 460}, [heroSwitcher]() mutable {
-        heroSwitcher(-1);
+    auto leftArrowButton = ButtonPrefabFactory::CreateSwitchHeroButton({850, 460}, [this]() {
+        this->HeroSwapper(-1);
     });
 
-    auto rightArrowButton = ButtonPrefabFactory::CreateSwitchHeroButton({1150, 460}, [heroSwitcher]() mutable {
-        heroSwitcher(1);
+    auto rightArrowButton = ButtonPrefabFactory::CreateSwitchHeroButton({1150, 460}, [this]() {
+        this->HeroSwapper(1);
     });
-
     rightArrowButton->Transform().rotation = 180;
 
     Contents().push_back(audio);
@@ -102,5 +80,32 @@ MainScene::MainScene(const std::shared_ptr<spic::GameObject>& audio) : MenuScene
     Contents().push_back(backButton);
     Contents().push_back(leftArrowButton);
     Contents().push_back(rightArrowButton);
-    Contents().push_back(heroNameText);
+    Contents().push_back(_heroNameText);
+}
+
+void MainScene::HeroSwapper(int amount)
+{
+    auto heroIndex = static_cast<int>(PlayerData::Instance().SelectedHero) + amount;
+    if (heroIndex < 0) heroIndex = 4;
+    if (heroIndex > 4) heroIndex = 0;
+    PlayerData::Instance().SelectedHero = static_cast<HeroName>(heroIndex);
+
+    CreateHero();
+}
+
+void MainScene::CreateHero()
+{
+    auto heroName = PlayerData::Instance().SelectedHero;
+
+    _heroNameText->Content(HeroUtil::NameToString(heroName));
+
+    auto hero = GameObject::Find("Hero");
+    if (hero) GameObject::Destroy(hero);
+
+    hero = HeroPrefabFactory::CreateHero(heroName);
+    hero->Transform().position = {1000, 460};
+    hero->Transform().scale = 1;
+    hero->GetComponent<UserMovementBehaviour>()->Controllable(false);
+    hero->RemoveComponent(hero->GetComponent<UserAttackBehaviour>());
+    Contents().push_back(hero);
 }
