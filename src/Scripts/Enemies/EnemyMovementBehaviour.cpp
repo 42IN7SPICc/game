@@ -86,11 +86,11 @@ void EnemyMovementBehaviour::OnUpdate()
     double speedMultiplier = 1.0;
     if (tileLocation.TileType == TileType::Grass)
     {
-        speedMultiplier = 0.66;
+        speedMultiplier = 0.75;
     }
     else if (tileLocation.TileType == TileType::Sand)
     {
-        speedMultiplier = 0.33;
+        speedMultiplier = 0.5;
     }
 
     speedMultiplier *= _velocity * spic::Time::DeltaTime() * spic::Time::TimeScale();
