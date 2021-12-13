@@ -117,11 +117,6 @@ void StrongPath()
     }
 }
 
-void ExpBoost()
-{
-    Debug::Log("Fired Exp Boost Cheat");
-}
-
 void CheatManager::OnStart()
 {
     _cheats[Input::KeyCode::U] = []() { return UnlimitedMoney(); };
@@ -134,7 +129,6 @@ void CheatManager::OnStart()
     _cheats[Input::KeyCode::A] = []() { return UnlockLevels(); };
     _cheats[Input::KeyCode::P] = []() { return UnlimitedPath(); };
     _cheats[Input::KeyCode::Q] = []() { return StrongPath(); };
-    _cheats[Input::KeyCode::E] = []() { return ExpBoost(); };
 }
 
 void CheatManager::OnUpdate()
