@@ -1,24 +1,23 @@
 #include "MainScene.hpp"
 
-#include "CreditScene.hpp"
 #include "HelpScene.hpp"
 #include "LevelSelectionScene.hpp"
+#include "StatsScene.hpp"
+#include "../HeroConstants.hpp"
 #include "../Enums/Font.hpp"
 #include "../Enums/SortingLayer.hpp"
 #include "../Factories/ButtonPrefabFactory.hpp"
 #include "../Factories/HeroPrefabFactory.hpp"
-#include "../HeroConstants.hpp"
-#include "../Scripts/Heroes/UserAttackBehaviour.hpp"
-#include "../Scripts/Heroes/UserMovementBehaviour.hpp"
 #include "../Scripts/Heroes/AirstrikeAbilityBehaviour.hpp"
 #include "../Scripts/Heroes/EnemySuicideAbilityBehaviour.hpp"
 #include "../Scripts/Heroes/HealAbilityBehaviour.hpp"
 #include "../Scripts/Heroes/IncreaseTowerFireRateAbilityBehaviour.hpp"
 #include "../Scripts/Heroes/IncreaseTowerRangeAbilityBehaviour.hpp"
 #include "../Scripts/Heroes/InvisibilityAbilityBehaviour.hpp"
+#include "../Scripts/Heroes/UserAttackBehaviour.hpp"
+#include "../Scripts/Heroes/UserMovementBehaviour.hpp"
 #include "../Structs/PlayerData.hpp"
 #include "../Utils/HeroUtil.hpp"
-#include "../Utils/RandomUtil.hpp"
 
 #include "Engine.hpp"
 #include "Debug.hpp"
@@ -35,21 +34,21 @@ MainScene::MainScene(const std::shared_ptr<spic::GameObject>& audio) : MenuScene
         Engine::Instance().PushScene(scene);
     });
 
+    auto statsButton = ButtonPrefabFactory::CreateOutlineButton("Stats Button", "button_stats", "VOORTGANG");
+    statsButton->Transform().position = {225, 425};
+    statsButton->OnClick([audio]() {
+        Engine::Instance().PushScene(std::make_shared<StatsScene>(audio));
+    });
+
     auto helpButton = ButtonPrefabFactory::CreateOutlineButton("Help Button", "button_help", "HELP");
-    helpButton->Transform().position = {225, 425};
+    helpButton->Transform().position = {225, 550};
     helpButton->OnClick([audio]() {
         Engine::Instance().PushScene(std::make_shared<HelpScene>(audio));
     });
 
-    auto creditsButton = ButtonPrefabFactory::CreateOutlineButton("Credits Button", "button_credits", "CREDITS");
-    creditsButton->Transform().position = {225, 550};
-    creditsButton->OnClick([audio]() {
-        Engine::Instance().PushScene(std::make_shared<CreditScene>(audio));
-    });
-
-    auto backButton = ButtonPrefabFactory::CreateOutlineButton("Exit Button", "button_exit", "SLUITEN");
-    backButton->Transform().position = {225, 675};
-    backButton->OnClick([]() {
+    auto exitButton = ButtonPrefabFactory::CreateOutlineButton("Exit Button", "button_exit", "SLUITEN");
+    exitButton->Transform().position = {225, 675};
+    exitButton->OnClick([]() {
         Engine::Instance().Shutdown();
     });
 
@@ -89,9 +88,9 @@ MainScene::MainScene(const std::shared_ptr<spic::GameObject>& audio) : MenuScene
 
     Contents().push_back(audio);
     Contents().push_back(playButton);
-    Contents().push_back(creditsButton);
+    Contents().push_back(statsButton);
     Contents().push_back(helpButton);
-    Contents().push_back(backButton);
+    Contents().push_back(exitButton);
     Contents().push_back(leftArrowButton);
     Contents().push_back(rightArrowButton);
     Contents().push_back(_heroNameText);

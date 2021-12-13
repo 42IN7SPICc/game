@@ -11,6 +11,9 @@
 
 namespace game
 {
+    /**
+     * @brief An script that makes the enemy invisible.
+     */
     class EnemyInvisibleBehaviour : public spic::BehaviourScript
     {
         private:
@@ -23,6 +26,11 @@ namespace game
             std::shared_ptr<spic::Sprite> _sprite;
 
         public:
+            /**
+             * @brief Constructs a new instance of an EnemyInvisibleBehaviour with given settings.
+             * @param effectTime The time the effect lasts (in seconds).
+             * @param coolDownTime The time it takes to cool down after the effect has finished (in seconds).
+             */
             EnemyInvisibleBehaviour(int effectTime, int coolDownTime);
 
             /**
