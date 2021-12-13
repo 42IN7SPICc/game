@@ -12,31 +12,14 @@ using namespace game;
 SaveSelectionScene::SaveSelectionScene(const std::shared_ptr<spic::GameObject>& audio) : _mainMenuAudio(audio),
                                                                                          MenuScene("Selecteer spelbestand", true, BackgroundName::Menu)
 {
-    auto buttonSave1 = ButtonPrefabFactory::CreateSquareOutlineButton("Button Save 1", "button_save_1", this->SaveExists("alpha") ? "ALPHA" : "LEEG");
-    buttonSave1->Transform().position = {ScreenWidth / 2.0 - 400, 469};
-    buttonSave1->OnClick([this]() {
-        this->LoadSave("alpha");
-    });
-
-    auto buttonSave2 = ButtonPrefabFactory::CreateSquareOutlineButton("Button Save 2", "button_save_2", this->SaveExists("bravo") ? "BRAVO" : "LEEG");
-    buttonSave2->Transform().position = {ScreenWidth / 2.0, 469};
-    buttonSave2->OnClick([this]() {
-        this->LoadSave("bravo");
-    });
-
-    auto buttonSave3 = ButtonPrefabFactory::CreateSquareOutlineButton("Button Save 3", "button_save_3", this->SaveExists("charlie") ? "CHARLIE" : "LEEG");
-    buttonSave3->Transform().position = {ScreenWidth / 2.0 + 400, 469};
-    buttonSave3->OnClick([this]() {
-        this->LoadSave("charlie");
-    });
+    CreateSaveButton("ALPHA", "alpha", 300);
+    CreateSaveButton("BRAVO", "bravo", 400);
+    CreateSaveButton("CHARLIE", "charlie", 500);
 
     Contents().push_back(audio);
-    Contents().push_back(buttonSave1);
-    Contents().push_back(buttonSave2);
-    Contents().push_back(buttonSave3);
 }
 
-void SaveSelectionScene::LoadSave(const std::string& saveName)
+PlayerData SaveSelectionScene::LoadSave(const std::string& saveName)
 {
     auto saves = SaveGameManager::GetAll();
 
@@ -49,13 +32,43 @@ void SaveSelectionScene::LoadSave(const std::string& saveName)
         saves.emplace(saveName, playerData);
     }
 
-    PlayerData::Instance(saves[saveName]);
-
-    spic::Engine::Instance().PushScene(std::make_shared<MainScene>(_mainMenuAudio));
+    return saves[saveName];
 }
 
 bool SaveSelectionScene::SaveExists(const std::string& saveName) const
 {
     auto saves = SaveGameManager::GetAll();
     return saves.contains(saveName);
+}
+
+void SaveSelectionScene::CreateSaveButton(const std::string& displayName, const std::string& saveName, double buttonY)
+{
+    double buttonX = spic::Engine::Instance().Config().window.width / 2.0;
+    auto saveExists = this->SaveExists(saveName);
+
+    if (saveExists) {
+        auto save = this->LoadSave(saveName);
+        std::string buttonText = displayName + " : " + std::to_string(save.LevelsCompleted) + "/3 levels";
+
+        auto button = ButtonPrefabFactory::CreateWideOutlineButton("Button Save 1", "button_save_1", buttonText);
+        button->Transform().position = {buttonX, buttonY};
+        button->OnClick([this, save]() {
+            PlayerData::Instance(save);
+            spic::Engine::Instance().PushScene(std::make_shared<MainScene>(_mainMenuAudio));
+        });
+
+        Contents().push_back(button);
+    }
+    else {
+        std::string buttonText = "NIEUW BESTAND MAKEN";
+        auto button = ButtonPrefabFactory::CreateWideOutlineButton("Button Save 1", "button_save_1", buttonText, true);
+        button->Transform().position = {buttonX, buttonY};
+        button->OnClick([this, saveName]() {
+            auto save = this->LoadSave(saveName);
+            PlayerData::Instance(save);
+            spic::Engine::Instance().PushScene(std::make_shared<MainScene>(_mainMenuAudio));
+        });
+
+        Contents().push_back(button);
+    }
 }

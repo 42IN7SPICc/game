@@ -2,6 +2,7 @@
 #define SPIC_GAME_SAVESELECTIONSCENE_HPP
 
 #include "MenuScene.hpp"
+#include "../Structs/PlayerData.hpp"
 
 #include <string>
 
@@ -26,8 +27,9 @@ namespace game
              * @brief Loads a save game file by name and switches to main menu scene
              * @param saveName name of the save file to load
              */
-            void LoadSave(const std::string& saveName);
+            PlayerData LoadSave(const std::string& saveName);
             [[nodiscard]] bool SaveExists(const std::string& saveName) const;
+            void CreateSaveButton(const std::string& displayName, const std::string& saveName, double buttonY);
     };
 }
 
