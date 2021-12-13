@@ -12,19 +12,19 @@ using namespace game;
 SaveSelectionScene::SaveSelectionScene(const std::shared_ptr<spic::GameObject>& audio) : _mainMenuAudio(audio),
                                                                                          MenuScene("Selecteer spelbestand", true, BackgroundName::Menu)
 {
-    auto buttonSave1 = ButtonPrefabFactory::CreateSquareOutlineButton("Button Save 1", "button_save_1", "ALPHA");
+    auto buttonSave1 = ButtonPrefabFactory::CreateSquareOutlineButton("Button Save 1", "button_save_1", this->SaveExists("alpha") ? "ALPHA" : "LEEG");
     buttonSave1->Transform().position = {ScreenWidth / 2.0 - 400, 469};
     buttonSave1->OnClick([this]() {
         this->LoadSave("alpha");
     });
 
-    auto buttonSave2 = ButtonPrefabFactory::CreateSquareOutlineButton("Button Save 2", "button_save_2", "BRAVO");
+    auto buttonSave2 = ButtonPrefabFactory::CreateSquareOutlineButton("Button Save 2", "button_save_2", this->SaveExists("bravo") ? "BRAVO" : "LEEG");
     buttonSave2->Transform().position = {ScreenWidth / 2.0, 469};
     buttonSave2->OnClick([this]() {
-        this->LoadSave("beta");
+        this->LoadSave("bravo");
     });
 
-    auto buttonSave3 = ButtonPrefabFactory::CreateSquareOutlineButton("Button Save 3", "button_save_3", "CHARLIE");
+    auto buttonSave3 = ButtonPrefabFactory::CreateSquareOutlineButton("Button Save 3", "button_save_3", this->SaveExists("charlie") ? "CHARLIE" : "LEEG");
     buttonSave3->Transform().position = {ScreenWidth / 2.0 + 400, 469};
     buttonSave3->OnClick([this]() {
         this->LoadSave("charlie");
@@ -52,4 +52,10 @@ void SaveSelectionScene::LoadSave(const std::string& saveName)
     PlayerData::Instance(saves[saveName]);
 
     spic::Engine::Instance().PushScene(std::make_shared<MainScene>(_mainMenuAudio));
+}
+
+bool SaveSelectionScene::SaveExists(const std::string& saveName) const
+{
+    auto saves = SaveGameManager::GetAll();
+    return saves.contains(saveName);
 }

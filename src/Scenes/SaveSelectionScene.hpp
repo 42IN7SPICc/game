@@ -27,6 +27,7 @@ namespace game
              * @param saveName name of the save file to load
              */
             void LoadSave(const std::string& saveName);
+            bool SaveExists(const std::string& saveName) const;
     };
 }
 
