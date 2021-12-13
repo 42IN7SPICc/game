@@ -13,6 +13,9 @@
 
 namespace game
 {
+    /**
+     * @brief A script that polls updates from other components to display them in the HUD
+     */
     class HUDController : public spic::BehaviourScript
     {
         private:

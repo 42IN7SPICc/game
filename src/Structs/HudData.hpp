@@ -7,6 +7,9 @@
 
 namespace game
 {
+    /**
+     * @brief A script that stores information about the HUD.
+     */
     struct HudData
     {
         HudData() : SelectedButton(nullptr), ButtonTileAmounts({}), ButtonTowerCosts({})
