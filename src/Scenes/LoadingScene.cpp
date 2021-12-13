@@ -1,15 +1,16 @@
 #include "LoadingScene.hpp"
 
+#include "CreditScene.hpp"
 #include "SaveSelectionScene.hpp"
+#include "../Constants.hpp"
 #include "../Enums/Font.hpp"
 #include "../Enums/Layer.hpp"
+#include "../Factories/AudioSourcePrefabFactory.hpp"
 #include "../Factories/ButtonPrefabFactory.hpp"
 
 #include "Color.hpp"
 #include "Engine.hpp"
 #include "Text.hpp"
-#include "../Factories/AudioSourcePrefabFactory.hpp"
-#include "../Constants.hpp"
 
 game::LoadingScene::LoadingScene() : MenuScene("", false)
 {
@@ -33,9 +34,18 @@ game::LoadingScene::LoadingScene() : MenuScene("", false)
         spic::Engine::Instance().Shutdown();
     });
 
+    auto creditsButton = ButtonPrefabFactory::CreateOutlineButton("Credits Button", "button_credits", "CREDITS");
+    creditsButton->Transform().position = {
+            (creditsButton->Width() / 2) + 25, ScreenHeight - (creditsButton->Height() / 2) - 25
+    };
+    creditsButton->OnClick([mainMenuAudioSource]() {
+        spic::Engine::Instance().PushScene(std::make_shared<CreditScene>(mainMenuAudioSource));
+    });
+
     Contents().push_back(mainMenuAudioSource);
     Contents().push_back(titleText);
     Contents().push_back(subtitleText);
     Contents().push_back(playButton);
     Contents().push_back(exitButton);
+    Contents().push_back(creditsButton);
 }
