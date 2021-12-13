@@ -20,7 +20,7 @@
 #include "../Utils/HeroUtil.hpp"
 
 #include "Engine.hpp"
-#include "Debug.hpp"
+#include "../Factories/AudioSourcePrefabFactory.hpp"
 
 using namespace spic;
 using namespace game;
@@ -85,6 +85,10 @@ MainScene::MainScene(const std::shared_ptr<spic::GameObject>& audio) : MenuScene
         this->HeroSwapper(1);
     });
     rightArrowButton->Transform().rotation = 180;
+
+    auto wooshSound = game::AudioSourcePrefabFactory::CreateAudioSource(game::AudioClipName::SceneSwap, false, false, 0.0);
+    wooshSound->Play(false);
+    wooshSound->Stop();
 
     Contents().push_back(audio);
     Contents().push_back(playButton);

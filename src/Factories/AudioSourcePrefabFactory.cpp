@@ -36,6 +36,9 @@ std::shared_ptr<spic::AudioSource> game::AudioSourcePrefabFactory::CreateAudioSo
         case AudioClipName::SuicideAbility:
             audioSrc = "abilities/russian.wav";
             break;
+        case AudioClipName::SceneSwap:
+            audioSrc = "woosh.wav";
+            break;
         default:
             throw std::runtime_error("Audio clip has not been defined.");
     }
