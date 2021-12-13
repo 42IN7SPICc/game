@@ -10,8 +10,8 @@
 
 #include <stdexcept>
 
-const double MaxDistance = TileSize * TileMapScale * 1.5;
-const double DistanceOffset = TileSize / 2;
+const double MaxDistance = TileSize * TileMapScale * 0.9;
+const double DistanceOffset = MaxDistance / 2;
 
 game::EnemyTroopTruckBehaviour::EnemyTroopTruckBehaviour(game::EnemyName enemyName, int count) : _enemyName(enemyName),
                                                                                                  _count(count),
