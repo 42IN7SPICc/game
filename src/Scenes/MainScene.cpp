@@ -2,7 +2,6 @@
 #include "MainScene.hpp"
 
 #include "Debug.hpp"
-#include "CreditScene.hpp"
 #include "HelpScene.hpp"
 #include "LevelSelectionScene.hpp"
 #include "../Factories/ButtonPrefabFactory.hpp"
@@ -33,12 +32,6 @@ MainScene::MainScene(const std::shared_ptr<spic::GameObject>& audio) : MenuScene
     helpButton->Transform().position = {225, 425};
     helpButton->OnClick([audio]() {
         Engine::Instance().PushScene(std::make_shared<HelpScene>(audio));
-    });
-
-    auto creditsButton = ButtonPrefabFactory::CreateOutlineButton("Credits Button", "button_credits", "CREDITS");
-    creditsButton->Transform().position = {225, 550};
-    creditsButton->OnClick([audio]() {
-        Engine::Instance().PushScene(std::make_shared<CreditScene>(audio));
     });
 
     auto backButton = ButtonPrefabFactory::CreateOutlineButton("Back Button", "button_back", "TERUG");
@@ -97,7 +90,6 @@ MainScene::MainScene(const std::shared_ptr<spic::GameObject>& audio) : MenuScene
 
     Contents().push_back(audio);
     Contents().push_back(playButton);
-    Contents().push_back(creditsButton);
     Contents().push_back(helpButton);
     Contents().push_back(backButton);
     Contents().push_back(leftArrowButton);
