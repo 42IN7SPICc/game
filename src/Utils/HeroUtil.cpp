@@ -38,7 +38,7 @@ std::string game::HeroUtil::NameToAbilityString(game::HeroName heroName)
         case FranklinDRoosevelt:
             return "Luchtaanvallen inroepen";
         case WinstonChurchill:
-            return "Increase tower fire rate";
+            return "Verhogen schietsnelheid van torens";
         case JosephStalin:
             return "Enemy self attack";
     }
