@@ -28,8 +28,6 @@ void game::AirstrikeAbilityBehaviour::OnStart()
 
 void game::AirstrikeAbilityBehaviour::OnUpdate()
 {
-    if(_healthBehaviour->Health() <= 0) return;
-
     if(_bombIsDropped) {
         auto bombObject = spic::GameObject::Find("airstrikeBomb");
         bombObject->Transform().scale *= 0.96 * ( 1 - spic::Time::DeltaTime() * spic::Time::TimeScale());
@@ -47,6 +45,8 @@ void game::AirstrikeAbilityBehaviour::OnUpdate()
         }
         return;
     }
+
+    if(_healthBehaviour->Health() <= 0) return;
 
     if (spic::Input::GetKey(spic::Input::KeyCode::E))
     {
