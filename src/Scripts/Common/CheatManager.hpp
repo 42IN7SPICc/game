@@ -17,6 +17,26 @@ namespace game
         private:
             std::map<spic::Input::KeyCode, std::function<void()>> _cheats{};
 
+            static void UnlimitedMoney();
+
+            static void Invincibility();
+
+            static void Butcher();
+
+            static void Victory();
+
+            static void GameOver();
+
+            static void SkipWave();
+
+            static void NoCoolDown();
+
+            static void UnlockLevels();
+
+            static void UnlimitedPath();
+
+            static void StrongPath();
+
         public:
             /**
              * @brief Triggers when the scripts starts for the first time.
