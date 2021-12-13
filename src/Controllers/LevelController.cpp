@@ -419,10 +419,19 @@ void LevelController::SkipWave()
         _levelData->Waves.front().EnemyQueue.pop();
     }
 
+    //Don't remove enemies in this loop, it will break the game
     while (!_levelData->Waves.front().CurrentEnemies.empty())
     {
-        GameObject::Destroy(_levelData->Waves.front().CurrentEnemies.front());
+        _levelData->Waves.front().CurrentEnemies.pop_back();
     }
+
+    auto remainingEnemies = GameObject::FindGameObjectsWithTag("enemy");
+    for(auto& enemy : remainingEnemies) {
+        GameObject::Destroy(enemy);
+    }
+
+    _levelData->Waves.pop();
+    _levelData->HeroHealth->Health(_levelData->HeroHealth->MaxHealth());
 }
 
 std::map<std::string, MapNode>& LevelController::GetGraph()
