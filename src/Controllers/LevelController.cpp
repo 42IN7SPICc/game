@@ -38,9 +38,6 @@ void LevelController::OnStart()
     auto gameWonBehaviour = std::make_shared<game::GameWonBehaviour>(*_levelData);
     GameObjectUtil::LinkComponent(parent, gameWonBehaviour);
 
-    _gameLostBehavior = std::make_shared<game::GameLostBehaviour>(*_levelData);
-    GameObjectUtil::LinkComponent(parent, _gameLostBehavior);
-
     _levelData->HeroHealth->GameObject().lock()->Transform().position = GameObject::FindWithTag("end_tile")->AbsoluteTransform().position;
 
     _startPosition = GameObject::FindWithTag("start_tile")->AbsoluteTransform().position;

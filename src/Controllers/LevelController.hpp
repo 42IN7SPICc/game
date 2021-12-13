@@ -34,7 +34,6 @@ namespace game
             double _timePassed;
             bool _strongPathEnabled;
             bool _noCoolDown;
-            std::shared_ptr<game::GameLostBehaviour> _gameLostBehavior;
 
             void HandleClickTile(const game::MapNode& clickedTile);
             void HandleClickTower(game::MapNode& clickedTile);
