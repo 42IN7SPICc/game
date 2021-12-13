@@ -32,7 +32,7 @@ std::string game::HeroUtil::NameToAbilityString(game::HeroName heroName)
     switch (heroName)
     {
         case DesmondDoss:
-            return "Heal himself";
+            return "Zichzelf helen";
         case BernardIJzerdraat:
             return "Invisible for enemies";
         case FranklinDRoosevelt:
