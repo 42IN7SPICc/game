@@ -10,6 +10,7 @@
 
 #include <stdexcept>
 #include <utility>
+#include <Utils/PointUtil.hpp>
 
 using namespace spic;
 
@@ -66,27 +67,25 @@ void game::UserMovementBehaviour::OnUpdate()
     {
         if (Input::GetKey(Input::KeyCode::W))
         {
-            movementForce.y -= _velocity;
+            movementForce.y -= 1;
             moving = true;
         }
-
-        if (Input::GetKey(Input::KeyCode::S))
+        else if (Input::GetKey(Input::KeyCode::S))
         {
-            movementForce.y += _velocity;
+            movementForce.y += 1;
             moving = true;
         }
 
         if (Input::GetKey(Input::KeyCode::A))
         {
-            movementForce.x -= _velocity;
+            movementForce.x -= 1;
             moving = true;
             auto sprite = parent->GetComponent<spic::Sprite>();
             sprite->FlipX(true);
         }
-
-        if (Input::GetKey(Input::KeyCode::D))
+        else if (Input::GetKey(Input::KeyCode::D))
         {
-            movementForce.x += _velocity;
+            movementForce.x += 1;
             moving = true;
         }
 
@@ -94,8 +93,8 @@ void game::UserMovementBehaviour::OnUpdate()
         {
             auto enemyPosition = parent->AbsoluteTransform().position;
             double scaledTileSize = TileSize * TileMapScale;
-            int tileXLocation = ((enemyPosition.x - MapX) + (scaledTileSize / 2)) / scaledTileSize;
-            int tileYLocation = ((enemyPosition.y - MapY) + (scaledTileSize / 2)) / scaledTileSize;
+            int tileXLocation = static_cast<int>(((enemyPosition.x - MapX) + (scaledTileSize / 2)) / scaledTileSize);
+            int tileYLocation = static_cast<int>(((enemyPosition.y - MapY) + (scaledTileSize / 2)) / scaledTileSize);
 
             auto tileLocation = _graph[std::to_string(tileXLocation) + "-" + std::to_string(tileYLocation)];
 
@@ -112,11 +111,14 @@ void game::UserMovementBehaviour::OnUpdate()
 
     if (moving)
     {
-        movementMultiplier *= spic::Time::DeltaTime() * spic::Time::TimeScale();
-        movementForce.x *= movementMultiplier;
-        movementForce.y *= movementMultiplier;
+        auto movementForceLength = spic::PointUtil::Distance(movementForce);
 
-        _rigidBody->AddForce(movementForce);
+        auto calculatedMovementForce = Point{
+                movementForce.x / movementForceLength * _velocity * movementMultiplier * spic::Time::DeltaTime() * spic::Time::TimeScale(),
+                movementForce.y / movementForceLength * _velocity * movementMultiplier * spic::Time::DeltaTime() * spic::Time::TimeScale()
+        };
+
+        _rigidBody->AddForce(calculatedMovementForce);
         _idleAnimator->Stop();
         _walkingAnimator->Play(true);
     }
