@@ -76,8 +76,8 @@ void EnemyMovementBehaviour::OnUpdate()
 
     auto enemyPosition = parent->AbsoluteTransform().position;
     double scaledTileSize = TileSize * TileMapScale;
-    int tileXLocation = ((enemyPosition.x - MapX) + (scaledTileSize / 2)) / scaledTileSize;
-    int tileYLocation = ((enemyPosition.y - MapY) + (scaledTileSize / 2)) / scaledTileSize;
+    int tileXLocation = static_cast<int>(((enemyPosition.x - MapX) + (scaledTileSize / 2)) / scaledTileSize);
+    int tileYLocation = static_cast<int>(((enemyPosition.y - MapY) + (scaledTileSize / 2)) / scaledTileSize);
 
     auto tileLocation = _graph[std::to_string(tileXLocation) + "-" + std::to_string(tileYLocation)];
 
