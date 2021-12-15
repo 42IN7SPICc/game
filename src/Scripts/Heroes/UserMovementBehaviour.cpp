@@ -11,7 +11,6 @@
 #include <stdexcept>
 #include <utility>
 #include <Utils/PointUtil.hpp>
-#include <Debug.hpp>
 
 using namespace spic;
 
@@ -118,8 +117,6 @@ void game::UserMovementBehaviour::OnUpdate()
                 movementForce.x / movementForceLength * _velocity * movementMultiplier * spic::Time::DeltaTime() * spic::Time::TimeScale(),
                 movementForce.y / movementForceLength * _velocity * movementMultiplier * spic::Time::DeltaTime() * spic::Time::TimeScale()
         };
-
-        spic::Debug::Log(std::to_string(spic::PointUtil::Distance(calculatedMovementForce)));
 
         _rigidBody->AddForce(calculatedMovementForce);
         _idleAnimator->Stop();
