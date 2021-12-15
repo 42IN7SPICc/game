@@ -12,7 +12,7 @@ const int EnemyDeSpawnTime = 4; // The time it takes to de spawn an enemy after 
 //Enemy Panzer (first enemy)
 const double PanzerEnemyFireRate = 10; // The shooting interval of the panzer enemy
 const int PanzerEnemyRange = 200; // The detection range of the hero for the panzer enemy
-const int PanzerEnemyDamage = 30; // The damage of a bullet for the panzer enemy
+const int PanzerEnemyDamage = 18; // The damage of a bullet for the panzer enemy
 const double PanzerEnemyVelocity = 0.5; // The movement speed
 const int PanzerEnemyBulletSpeed = 6; // The bullet velocity of the panzer enemy
 const int PanzerEnemyHealth = 1000; // The health / armor of the panzer tank
