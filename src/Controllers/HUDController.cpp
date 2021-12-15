@@ -24,7 +24,8 @@ game::HUDController::HUDController(std::shared_ptr<game::LevelWithTiles> level, 
 
 }
 
-void game::HUDController::CreateHudInfo (const std::string& name, const double& height, const double& yPosition, const std::string& content) {
+void game::HUDController::CreateHudInfo(const std::string& name, const double& height, const double& yPosition, const std::string& content)
+{
     auto text = std::make_shared<spic::Text>(name, "default", Layer::HUD, HudWidth, height);
     text->Size(18);
     text->TextAlignment(Alignment::center);
@@ -49,7 +50,7 @@ void game::HUDController::CreateTowerHud()
     CreateHudInfo("enemies-text", 20, 150, std::to_string(_levelData->Waves.front().RemainingEnemies()));
 
     CreateHudInfo("wave-text-header", 20, 180, "Ronde:");
-    CreateHudInfo("wave-text", 20, 200, std::to_string(_levelData->CurrentWave()));
+    CreateHudInfo("wave-text", 20, 200, std::to_string(_levelData->CurrentWave()) + " van de " + std::to_string(_levelData->TotalWaves));
 
     CreateHudInfo("money-text", 20, 230, "$ " + std::to_string(_levelData->Balance));
 
@@ -252,7 +253,7 @@ void HUDController::OnUpdate()
         else if (child->Name() == "wave-text")
         {
             auto text = std::dynamic_pointer_cast<spic::Text>(child);
-            text->Content(std::to_string(_levelData->CurrentWave()));
+            text->Content(std::to_string(_levelData->CurrentWave()) + " van de " + std::to_string(_levelData->TotalWaves));
         }
         else if (child->Name() == "enemies-text")
         {
@@ -262,9 +263,12 @@ void HUDController::OnUpdate()
         else if (child->Name() == "ability-cooldown-timer-text")
         {
             auto text = std::dynamic_pointer_cast<spic::Text>(child);
-            if(_coolDownBehaviour->CooledDown()) {
+            if (_coolDownBehaviour->CooledDown())
+            {
                 text->Content("ready!");
-            } else {
+            }
+            else
+            {
                 text->Content(std::to_string((int) _coolDownBehaviour->CoolDown() + 1) + " sec");
             }
         }
