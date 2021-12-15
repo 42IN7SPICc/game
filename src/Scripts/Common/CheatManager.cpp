@@ -101,7 +101,7 @@ void CheatManager::NoCoolDown()
 void CheatManager::UnlockLevels()
 {
     Debug::Log("Fired Unlock Levels Cheat");
-    PlayerData::Instance().LevelsCompleted = 1000;
+    PlayerData::Instance().LevelsCompleted = 3;
     SaveGameManager::Save();
 
     auto scene = spic::Engine::Instance().PeekScene();
