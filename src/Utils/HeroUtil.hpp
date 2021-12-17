@@ -27,13 +27,6 @@ namespace game
              * @return String of the hero ability
              */
             static std::string NameToAbilityString(game::HeroName heroName);
-
-            /**
-             * @brief Get the abilityCooldownBehaviour of a hero
-             * @param heroName heroName as a string
-             * @return CoolDownBehaviour of the ability
-             */
-            static std::shared_ptr<game::CoolDownBehaviour> GetAbilityCoolDownBehaviour(std::shared_ptr<spic::GameObject> hero);
     };
 }
 
