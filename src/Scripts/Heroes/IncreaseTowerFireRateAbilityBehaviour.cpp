@@ -14,6 +14,14 @@ game::IncreaseTowerFireRateAbilityBehaviour::IncreaseTowerFireRateAbilityBehavio
 
 }
 
+void game::IncreaseTowerFireRateAbilityBehaviour::OnStart()
+{
+    AbilityBehaviour::OnStart();
+    auto parent = GameObject().lock();
+    _audioSource = AudioSourcePrefabFactory::CreateAudioSource(game::AudioClipName::ActivateAbility, false, false, 1.0);
+    spic::GameObjectUtil::LinkComponent(parent, _audioSource);
+}
+
 void game::IncreaseTowerFireRateAbilityBehaviour::OnUpdate()
 {
     if (_healthBehaviour->Health() <= 0) return;
@@ -45,8 +53,7 @@ void game::IncreaseTowerFireRateAbilityBehaviour::OnUpdate()
             auto towerFireRateCooldown = std::make_shared<CoolDownBehaviour>(10);
             spic::GameObjectUtil::LinkComponent(towerFireRateObject, towerFireRateCooldown);
 
-            auto soundEffect = AudioSourcePrefabFactory::CreateAudioObject(game::AudioClipName::ActivateAbility, true, false, 1.0);
-            spic::GameObjectUtil::LinkChild(GameObject().lock(), soundEffect);
+            _audioSource->Play(false);
 
             auto towers = spic::GameObject::FindGameObjectsWithTag("tower");
             for (auto& tower: towers)
