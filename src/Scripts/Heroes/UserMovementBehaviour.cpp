@@ -100,11 +100,11 @@ void game::UserMovementBehaviour::OnUpdate()
 
             if (tileLocation.TileType == Grass)
             {
-                movementMultiplier = 0.66;
+                movementMultiplier = GrassSpeedMultiplier;
             }
             else if (tileLocation.TileType == Sand)
             {
-                movementMultiplier = 0.33;
+                movementMultiplier = SandSpeedMultiplier;
             }
         }
     }

@@ -23,6 +23,10 @@ const int MapX = static_cast<int>((ScreenWidth - HudWidth) / 2.0 - (TileSize * T
 const int EndTowerHealth = 10;
 const int StartingLevelBalance = 1000;
 
+// Tile speed multipliers
+const double GrassSpeedMultiplier = 0.75;
+const double SandSpeedMultiplier = 0.5;
+
 //Confetti
 const int AmountOfConfetti = 100;
 const int ConfettiYRangeMin = -ScreenHeight - 200;

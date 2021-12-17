@@ -76,21 +76,21 @@ void EnemyMovementBehaviour::OnUpdate()
 
     auto enemyPosition = parent->AbsoluteTransform().position;
     double scaledTileSize = TileSize * TileMapScale;
-    int tileXLocation = ((enemyPosition.x - MapX) + (scaledTileSize / 2)) / scaledTileSize;
-    int tileYLocation = ((enemyPosition.y - MapY) + (scaledTileSize / 2)) / scaledTileSize;
+    int tileXLocation = static_cast<int>(((enemyPosition.x - MapX) + (scaledTileSize / 2)) / scaledTileSize);
+    int tileYLocation = static_cast<int>(((enemyPosition.y - MapY) + (scaledTileSize / 2)) / scaledTileSize);
 
-    auto tileLocation = _graph[std::to_string(tileXLocation) + "-" + std::to_string(tileYLocation)];
+    auto currentTile = _graph[std::to_string(tileXLocation) + "-" + std::to_string(tileYLocation)];
 
     if (_path.empty()) return;
 
     double speedMultiplier = 1.0;
-    if (tileLocation.TileType == TileType::Grass)
+    if (currentTile.TileType == TileType::Grass)
     {
-        speedMultiplier = 0.75;
+        speedMultiplier = GrassSpeedMultiplier;
     }
-    else if (tileLocation.TileType == TileType::Sand)
+    else if (currentTile.TileType == TileType::Sand)
     {
-        speedMultiplier = 0.5;
+        speedMultiplier = SandSpeedMultiplier;
     }
 
     speedMultiplier *= _velocity * spic::Time::DeltaTime() * spic::Time::TimeScale();
