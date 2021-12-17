@@ -86,6 +86,12 @@ namespace game
             std::shared_ptr<spic::GameObject> BuildLevel(const std::shared_ptr<game::HealthBehaviour>& endTowerHealthBehaviour, const std::shared_ptr<spic::Animator>& animator);
 
             /**
+             * @brief Builds the in world colliders to prevent the hero and enemies of walking on non walkable tiles.
+             * @param levelData the level data to build the colliders for
+             */
+            static void InitializeWorldColliders(const game::LevelData& levelData);
+
+            /**
              * @brief Creates a button for the map.
              * @return The game object containing the button.
              */

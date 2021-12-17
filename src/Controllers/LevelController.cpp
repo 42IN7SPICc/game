@@ -163,13 +163,23 @@ std::shared_ptr<spic::GameObject> LevelController::BuildLevel(const std::shared_
             node.NeighbourStrings.push_back(std::to_string(node.X) + "-" + std::to_string(node.Y + 1));
     }
 
-    for (const auto&[key, node]: _levelData->Graph)
+    GameObjectUtil::LinkChild(tileMap, CreateLevelBorder(12 * TileSize, -TileSize, TileSize * TileMapScale * 27, TileSize * TileMapScale)); // Top
+    GameObjectUtil::LinkChild(tileMap, CreateLevelBorder(25 * TileSize, 12 * TileSize, TileSize * TileMapScale, TileSize * TileMapScale * 27)); // Right
+    GameObjectUtil::LinkChild(tileMap, CreateLevelBorder(12 * TileSize, 25 * TileSize, TileSize * TileMapScale * 27, TileSize * TileMapScale)); // Bottom
+    GameObjectUtil::LinkChild(tileMap, CreateLevelBorder(-TileSize, 12 * TileSize, TileSize * TileMapScale, TileSize * TileMapScale * 27)); // Left
+
+    return tileMap;
+}
+
+void LevelController::InitializeWorldColliders(const game::LevelData& levelData)
+{
+    for (const auto&[key, node]: levelData.Graph)
     {
         if (!Walkable(node.TileType))
         {
             for (const auto& neighbourString: node.NeighbourStrings)
             {
-                if (Walkable(_levelData->Graph[neighbourString].TileType))
+                if (Walkable(levelData.Graph.at(neighbourString).TileType))
                 {
                     if (!node.TileObject->GetComponent<RigidBody>())
                         GameObjectUtil::LinkComponent(node.TileObject, std::make_shared<RigidBody>(10, 0, BodyType::staticBody));
@@ -181,13 +191,6 @@ std::shared_ptr<spic::GameObject> LevelController::BuildLevel(const std::shared_
             }
         }
     }
-
-    GameObjectUtil::LinkChild(tileMap, CreateLevelBorder(12 * TileSize, -TileSize, TileSize * TileMapScale * 27, TileSize * TileMapScale)); // Top
-    GameObjectUtil::LinkChild(tileMap, CreateLevelBorder(25 * TileSize, 12 * TileSize, TileSize * TileMapScale, TileSize * TileMapScale * 27)); // Right
-    GameObjectUtil::LinkChild(tileMap, CreateLevelBorder(12 * TileSize, 25 * TileSize, TileSize * TileMapScale * 27, TileSize * TileMapScale)); // Bottom
-    GameObjectUtil::LinkChild(tileMap, CreateLevelBorder(-TileSize, 12 * TileSize, TileSize * TileMapScale, TileSize * TileMapScale * 27)); // Left
-
-    return tileMap;
 }
 
 bool LevelController::Walkable(const TileType& tileType, bool isHero)

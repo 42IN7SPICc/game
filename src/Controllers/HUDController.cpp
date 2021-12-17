@@ -112,6 +112,7 @@ std::shared_ptr<spic::GameObject> HUDController::CreateHUD()
         auto[pathCompleted, path] = game::LevelController::CheckIfPathIsComplete(_levelData->Graph);
         if (pathCompleted)
         {
+            game::LevelController::InitializeWorldColliders(*_levelData);
             _levelData->LevelMode = LevelMode::TowerMode;
             _levelData->Path = path;
             auto childrenCopy = rightHud->Children();
