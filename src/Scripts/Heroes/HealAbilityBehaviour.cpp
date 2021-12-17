@@ -15,6 +15,9 @@ void game::HealAbilityBehaviour::OnStart()
     auto parent = GameObject().lock();
     spic::GameObjectUtil::LinkComponent(parent, _coolDownBehaviour);
     _healthBehaviour = parent->GetComponent<HealthBehaviour>();
+    _audioSource = AudioSourcePrefabFactory::CreateAudioSource(game::AudioClipName::HealAbility, false, false, 1.0);
+    spic::GameObjectUtil::LinkComponent(parent, _audioSource);
+
 }
 
 void game::HealAbilityBehaviour::OnUpdate()
