@@ -1,9 +1,11 @@
 #ifndef SPIC_GAME_INVISIBILITYABILITYBEHAVIOUR_HPP
 #define SPIC_GAME_INVISIBILITYABILITYBEHAVIOUR_HPP
 
+#include <AudioSource.hpp>
 #include "AbilityBehaviour.hpp"
 
-namespace game {
+namespace game
+{
     /**
      * @brief A script for handling the invisibility ability for Bernard IJzerdraat
      */
@@ -11,6 +13,7 @@ namespace game {
     {
         private:
             std::shared_ptr<spic::Sprite> _sprite;
+            std::shared_ptr<spic::AudioSource> _audioSource;
             bool _abilityActive;
 
         public:
@@ -30,6 +33,5 @@ namespace game {
             void OnUpdate() override;
     };
 }
-
 
 #endif

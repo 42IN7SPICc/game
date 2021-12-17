@@ -18,11 +18,13 @@ void game::InvisibilityAbilityBehaviour::OnStart()
     AbilityBehaviour::OnStart();
     auto parent = GameObject().lock();
     _sprite = parent->GetComponent<spic::Sprite>();
+    _audioSource = AudioSourcePrefabFactory::CreateAudioSource(game::AudioClipName::ActivateAbility, false, false, 1.0);
+    spic::GameObjectUtil::LinkComponent(parent, _audioSource);
 }
 
 void game::InvisibilityAbilityBehaviour::OnUpdate()
 {
-    if(_healthBehaviour->Health() <= 0) return;
+    if (_healthBehaviour->Health() <= 0) return;
 
     if (_abilityActive)
     {
@@ -49,8 +51,7 @@ void game::InvisibilityAbilityBehaviour::OnUpdate()
             auto invisibilityDurationCooldown = std::make_shared<CoolDownBehaviour>(BernardIJzerdraatAbilityDuration);
             spic::GameObjectUtil::LinkComponent(invisibilityDurationObject, invisibilityDurationCooldown);
 
-            auto soundEffect = AudioSourcePrefabFactory::CreateAudioObject(game::AudioClipName::ActivateAbility, true, false, 1.0);
-            spic::GameObjectUtil::LinkChild(GameObject().lock(), soundEffect);
+            _audioSource->Play(false);
 
             auto scene = spic::Engine::Instance().PeekScene();
             scene->Contents().push_back(invisibilityDurationObject);
