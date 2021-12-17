@@ -1,27 +1,26 @@
-#ifndef SPIC_GAME_INCREASETOWERRANGEABILITY_HPP
-#define SPIC_GAME_INCREASETOWERRANGEABILITY_HPP
+#ifndef SPIC_GAME_ABILITYBEHAVIOUR_HPP
+#define SPIC_GAME_ABILITYBEHAVIOUR_HPP
 
 #include "BehaviourScript.hpp"
 #include "../Common/CoolDownBehaviour.hpp"
 #include "../Common/HealthBehaviour.hpp"
 
-namespace game
-{
+namespace game {
     /**
-     * @brief A script for handling the Tower Range ability for Franklin D Roosevelt
+     * @brief An abstract class for hero abilities
      */
-    class IncreaseTowerRangeAbilityBehaviour : public spic::BehaviourScript
+    class AbilityBehaviour : public spic::BehaviourScript
     {
-        private:
+        protected:
             std::shared_ptr<game::CoolDownBehaviour> _coolDownBehaviour;
             std::shared_ptr<game::HealthBehaviour> _healthBehaviour;
-            bool _abilityActivated;
 
         public:
             /**
-             * @brief Constructor for the IncreaseTowerRangeAbilityBehaviour
+             * @brief Constructor for a empty ability behaviour
+             * @param coolDown the coolDown time of the ability
              */
-            IncreaseTowerRangeAbilityBehaviour();
+            explicit AbilityBehaviour(double coolDown);
 
             /**
              * @brief Triggers when the scripts starts for the first time.
@@ -60,4 +59,4 @@ namespace game
 }
 
 
-#endif
+#endif //SPIC_GAME_ABILITYBEHAVIOUR_HPP

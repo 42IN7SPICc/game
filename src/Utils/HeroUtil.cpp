@@ -45,29 +45,3 @@ std::string game::HeroUtil::NameToAbilityString(game::HeroName heroName)
 
     throw std::runtime_error("The given hero doesn't have an ability.");
 }
-
-std::shared_ptr<game::CoolDownBehaviour> game::HeroUtil::GetAbilityCoolDownBehaviour(std::shared_ptr<spic::GameObject> hero)
-{
-    auto healAbility = hero->GetComponent<game::HealAbilityBehaviour>();
-    if(healAbility) {
-        return healAbility->GetCoolDownBehaviour();
-    }
-    auto invisibilityAbility = hero->GetComponent<game::InvisibilityAbilityBehaviour>();
-    if(invisibilityAbility) {
-        return invisibilityAbility->GetCoolDownBehaviour();
-    }
-    auto airstrikeAbility = hero->GetComponent<game::AirstrikeAbilityBehaviour>();
-    if(airstrikeAbility) {
-        return airstrikeAbility->GetCoolDownBehaviour();
-    }
-    auto fireRateAbility = hero->GetComponent<game::IncreaseTowerFireRateAbilityBehaviour>();
-    if(fireRateAbility) {
-        return fireRateAbility->GetCoolDownBehaviour();
-    }
-    auto suicideAbility = hero->GetComponent<game::EnemySuicideAbilityBehaviour>();
-    if(suicideAbility) {
-        return suicideAbility->GetCoolDownBehaviour();
-    }
-
-    throw std::runtime_error("Couldn't find a CoolDownBehaviour for this hero");
-}

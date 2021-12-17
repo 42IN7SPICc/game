@@ -1,14 +1,13 @@
 #include "InvisibilityAbilityBehaviour.hpp"
-#include "../../HeroConstants.hpp"
-#include <stdexcept>
 #include "GameObject.hpp"
 #include "Engine.hpp"
 #include "Input.hpp"
 #include "Utils/GameObjectUtil.hpp"
 #include "../../Enums/Layer.hpp"
 #include "../../Factories/AudioSourcePrefabFactory.hpp"
+#include "../../HeroConstants.hpp"
 
-game::InvisibilityAbilityBehaviour::InvisibilityAbilityBehaviour() : _coolDownBehaviour(std::make_shared<CoolDownBehaviour>(CoolDownBehaviour(BernardIJzerdraatAbilityCooldown))),
+game::InvisibilityAbilityBehaviour::InvisibilityAbilityBehaviour() : AbilityBehaviour(BernardIJzerdraatAbilityCooldown),
                                                                      _abilityActive(false)
 {
 
@@ -16,14 +15,9 @@ game::InvisibilityAbilityBehaviour::InvisibilityAbilityBehaviour() : _coolDownBe
 
 void game::InvisibilityAbilityBehaviour::OnStart()
 {
+    AbilityBehaviour::OnStart();
     auto parent = GameObject().lock();
-    _healthBehaviour = parent->GetComponent<game::HealthBehaviour>();
-    if (!_healthBehaviour)
-    {
-        throw std::runtime_error("The EnemyInvisibleBehaviour requires a HealthBehaviour");
-    }
     _sprite = parent->GetComponent<spic::Sprite>();
-    spic::GameObjectUtil::LinkComponent(parent, _coolDownBehaviour);
 }
 
 void game::InvisibilityAbilityBehaviour::OnUpdate()
@@ -62,24 +56,4 @@ void game::InvisibilityAbilityBehaviour::OnUpdate()
             scene->Contents().push_back(invisibilityDurationObject);
         }
     }
-}
-
-void game::InvisibilityAbilityBehaviour::OnTriggerEnter2D(const spic::Collider& collider)
-{
-    //
-}
-
-void game::InvisibilityAbilityBehaviour::OnTriggerExit2D(const spic::Collider& collider)
-{
-    //
-}
-
-void game::InvisibilityAbilityBehaviour::OnTriggerStay2D(const spic::Collider& collider)
-{
-    //
-}
-
-std::shared_ptr<game::CoolDownBehaviour>& game::InvisibilityAbilityBehaviour::GetCoolDownBehaviour()
-{
-    return _coolDownBehaviour;
 }

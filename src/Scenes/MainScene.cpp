@@ -9,11 +9,6 @@
 #include "../Factories/ButtonPrefabFactory.hpp"
 #include "../Factories/HeroPrefabFactory.hpp"
 #include "../Scripts/Heroes/AirstrikeAbilityBehaviour.hpp"
-#include "../Scripts/Heroes/EnemySuicideAbilityBehaviour.hpp"
-#include "../Scripts/Heroes/HealAbilityBehaviour.hpp"
-#include "../Scripts/Heroes/IncreaseTowerFireRateAbilityBehaviour.hpp"
-#include "../Scripts/Heroes/IncreaseTowerRangeAbilityBehaviour.hpp"
-#include "../Scripts/Heroes/InvisibilityAbilityBehaviour.hpp"
 #include "../Scripts/Heroes/UserAttackBehaviour.hpp"
 #include "../Scripts/Heroes/UserMovementBehaviour.hpp"
 #include "../Structs/PlayerData.hpp"
@@ -126,11 +121,6 @@ void MainScene::CreateHero()
     hero->Transform().scale = 1;
     hero->GetComponent<UserMovementBehaviour>()->Controllable(false);
     hero->RemoveComponent(hero->GetComponent<UserAttackBehaviour>());
-    hero->RemoveComponent(hero->GetComponent<AirstrikeAbilityBehaviour>());
-    hero->RemoveComponent(hero->GetComponent<EnemySuicideAbilityBehaviour>());
-    hero->RemoveComponent(hero->GetComponent<HealAbilityBehaviour>());
-    hero->RemoveComponent(hero->GetComponent<IncreaseTowerFireRateAbilityBehaviour>());
-    hero->RemoveComponent(hero->GetComponent<IncreaseTowerRangeAbilityBehaviour>());
-    hero->RemoveComponent(hero->GetComponent<InvisibilityAbilityBehaviour>());
+    hero->RemoveComponent(hero->GetComponent<AbilityBehaviour>());
     Contents().push_back(hero);
 }

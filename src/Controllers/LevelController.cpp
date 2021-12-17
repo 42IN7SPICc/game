@@ -18,6 +18,7 @@
 #include "../Utils/HeroUtil.hpp"
 #include "../Structs/PlayerData.hpp"
 #include "../TowerConstants.hpp"
+#include "../Scripts/Heroes/AbilityBehaviour.hpp"
 
 using namespace spic;
 using namespace game;
@@ -47,9 +48,9 @@ void LevelController::OnUpdate()
 {
     if(_noCoolDown) {
         auto hero = _levelData->HeroHealth->GameObject().lock();
-        auto abilty = game::HeroUtil::GetAbilityCoolDownBehaviour(hero);
-        abilty->CoolDown(0);
-        abilty->CooledDown(true);
+        auto ability = hero->GetComponent<game::AbilityBehaviour>()->GetCoolDownBehaviour();
+        ability->CoolDown(0);
+        ability->CooledDown(true);
     }
     if (_levelData->LevelMode == LevelMode::TowerMode || _levelData->LevelMode == LevelMode::WaveMode)
     {

@@ -10,7 +10,6 @@
 #include "../Scripts/Heroes/HealAbilityBehaviour.hpp"
 #include "../Scripts/Heroes/InvisibilityAbilityBehaviour.hpp"
 #include "../Scripts/Heroes/AirstrikeAbilityBehaviour.hpp"
-#include "../Scripts/Heroes/IncreaseTowerRangeAbilityBehaviour.hpp"
 #include "../Scripts/Heroes/IncreaseTowerFireRateAbilityBehaviour.hpp"
 #include "../Scripts/Heroes/EnemySuicideAbilityBehaviour.hpp"
 #include "../Scripts/Heroes/UserMovementBehaviour.hpp"
@@ -79,10 +78,8 @@ std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateBernardIJzerdra
 std::shared_ptr<spic::GameObject> game::HeroPrefabFactory::CreateFranklinDRoosevelt()
 {
     auto base_hero = CreateBaseHero(FranklinDRooseveltDamage, FranklinDRooseveltDefense, FranklinDRooseveltColor<spic::Color>());
-    auto airStrikeAbility = std::make_shared<game::AirstrikeAbilityBehaviour>();
-    auto towerRangeAbility = std::make_shared<game::IncreaseTowerRangeAbilityBehaviour>();
-    spic::GameObjectUtil::LinkComponent(base_hero, airStrikeAbility);
-    spic::GameObjectUtil::LinkComponent(base_hero, towerRangeAbility);
+    auto ability = std::make_shared<game::AirstrikeAbilityBehaviour>();
+    spic::GameObjectUtil::LinkComponent(base_hero, ability);
 
     return base_hero;
 }
