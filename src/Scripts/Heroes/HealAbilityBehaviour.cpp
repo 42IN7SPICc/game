@@ -15,18 +15,19 @@ void game::HealAbilityBehaviour::OnStart()
     auto parent = GameObject().lock();
     spic::GameObjectUtil::LinkComponent(parent, _coolDownBehaviour);
     _healthBehaviour = parent->GetComponent<HealthBehaviour>();
+    _audioSource = AudioSourcePrefabFactory::CreateAudioSource(game::AudioClipName::HealAbility, false, false, 1.0);
+    spic::GameObjectUtil::LinkComponent(parent, _audioSource);
 }
 
 void game::HealAbilityBehaviour::OnUpdate()
 {
-    if(_healthBehaviour->Health() <= 0) return;
+    if (_healthBehaviour->Health() <= 0) return;
 
     if (spic::Input::GetKey(spic::Input::KeyCode::E))
     {
         if (_coolDownBehaviour->CooledDown())
         {
-            auto soundEffect = AudioSourcePrefabFactory::CreateAudioObject(game::AudioClipName::HealAbility, true, false, 1.0);
-            spic::GameObjectUtil::LinkChild(GameObject().lock(), soundEffect);
+            _audioSource->Play(false);
             _healthBehaviour->Health(_healthBehaviour->Health() + DesmondDossHealAbilityAmount);
             _coolDownBehaviour->CooledDown(false);
         }

@@ -2,6 +2,7 @@
 #define SPIC_GAME_HEALABILITYBEHAVIOUR_HPP
 
 #include <BehaviourScript.hpp>
+#include <AudioSource.hpp>
 #include "../Common/CoolDownBehaviour.hpp"
 #include "../Common/HealthBehaviour.hpp"
 
@@ -15,6 +16,7 @@ namespace game
         private:
             std::shared_ptr<game::CoolDownBehaviour> _coolDownBehaviour;
             std::shared_ptr<game::HealthBehaviour> _healthBehaviour;
+            std::shared_ptr<spic::AudioSource> _audioSource;
 
         public:
             /**
