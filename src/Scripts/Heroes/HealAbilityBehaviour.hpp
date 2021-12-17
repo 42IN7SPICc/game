@@ -21,6 +21,11 @@ namespace game
             HealAbilityBehaviour();
 
             /**
+            * @brief Triggers when the scripts starts for the first time.
+            */
+            void OnStart() override;
+
+            /**
              * @brief Triggers every frame when the script is active.
              */
             void OnUpdate() override;

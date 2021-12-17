@@ -25,12 +25,12 @@ namespace game {
             /**
              * @brief Triggers when the scripts starts for the first time.
              */
-            void OnStart() override;
+            virtual void OnStart() override;
 
             /**
              * @brief Triggers every frame when the script is active.
              */
-            void OnUpdate() override;
+            virtual void OnUpdate() override;
 
             /**
              * @brief Triggers when the script collides with a collider.

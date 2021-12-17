@@ -11,6 +11,7 @@ game::HealAbilityBehaviour::HealAbilityBehaviour() : AbilityBehaviour(DesmondDos
 
 void game::HealAbilityBehaviour::OnStart()
 {
+    game::AbilityBehaviour::OnStart();
     auto parent = GameObject().lock();
     spic::GameObjectUtil::LinkComponent(parent, _coolDownBehaviour);
     _healthBehaviour = parent->GetComponent<HealthBehaviour>();
