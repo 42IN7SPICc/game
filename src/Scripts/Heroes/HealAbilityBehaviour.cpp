@@ -1,20 +1,12 @@
 #include "HealAbilityBehaviour.hpp"
-#include "GameObject.hpp"
 #include "Input.hpp"
 #include "Utils/GameObjectUtil.hpp"
 #include "../../HeroConstants.hpp"
 #include "../../Factories/AudioSourcePrefabFactory.hpp"
 
-game::HealAbilityBehaviour::HealAbilityBehaviour() : _coolDownBehaviour(std::make_shared<CoolDownBehaviour>(CoolDownBehaviour(DesmondDossHealAbilityCoolDown)))
+game::HealAbilityBehaviour::HealAbilityBehaviour() : AbilityBehaviour(DesmondDossHealAbilityCoolDown)
 {
 
-}
-
-void game::HealAbilityBehaviour::OnStart()
-{
-    auto parent = GameObject().lock();
-    spic::GameObjectUtil::LinkComponent(parent, _coolDownBehaviour);
-    _healthBehaviour = parent->GetComponent<HealthBehaviour>();
 }
 
 void game::HealAbilityBehaviour::OnUpdate()
@@ -31,24 +23,4 @@ void game::HealAbilityBehaviour::OnUpdate()
             _coolDownBehaviour->CooledDown(false);
         }
     }
-}
-
-void game::HealAbilityBehaviour::OnTriggerEnter2D(const spic::Collider& collider)
-{
-    BehaviourScript::OnTriggerEnter2D(collider);
-}
-
-void game::HealAbilityBehaviour::OnTriggerExit2D(const spic::Collider& collider)
-{
-    BehaviourScript::OnTriggerExit2D(collider);
-}
-
-void game::HealAbilityBehaviour::OnTriggerStay2D(const spic::Collider& collider)
-{
-    BehaviourScript::OnTriggerStay2D(collider);
-}
-
-std::shared_ptr<game::CoolDownBehaviour>& game::HealAbilityBehaviour::GetCoolDownBehaviour()
-{
-    return _coolDownBehaviour;
 }
