@@ -13,6 +13,11 @@ void game::AbilityBehaviour::OnStart()
     spic::GameObjectUtil::LinkComponent(parent, _coolDownBehaviour);
 }
 
+std::shared_ptr<game::CoolDownBehaviour>& game::AbilityBehaviour::GetCoolDownBehaviour()
+{
+    return _coolDownBehaviour;
+}
+
 void game::AbilityBehaviour::OnUpdate()
 {
     //
@@ -31,9 +36,4 @@ void game::AbilityBehaviour::OnTriggerExit2D(const spic::Collider& collider)
 void game::AbilityBehaviour::OnTriggerStay2D(const spic::Collider& collider)
 {
     //
-}
-
-std::shared_ptr<game::CoolDownBehaviour>& game::AbilityBehaviour::GetCoolDownBehaviour()
-{
-    return _coolDownBehaviour;
 }
