@@ -6,6 +6,9 @@
 #include "../Common/HealthBehaviour.hpp"
 
 namespace game {
+    /**
+     * @brief An abstract class for hero abilities
+     */
     class AbilityBehaviour : public spic::BehaviourScript
     {
         protected:
@@ -14,7 +17,7 @@ namespace game {
 
         public:
             /**
-             * Constructor for a empty ability behaviour
+             * @brief Constructor for a empty ability behaviour
              * @param coolDown the coolDown time of the ability
              */
             explicit AbilityBehaviour(double coolDown);
