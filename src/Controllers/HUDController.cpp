@@ -8,10 +8,10 @@
 #include "../Constants.hpp"
 #include "../TowerConstants.hpp"
 #include "../Enums/Layer.hpp"
-#include "../Utils/HeroUtil.hpp"
 #include "Utils/GameObjectUtil.hpp"
 #include "../Factories/ButtonPrefabFactory.hpp"
 #include "../Factories/HealthBarFactory.hpp"
+#include "../Scripts/Heroes/AbilityBehaviour.hpp"
 #include <numeric>
 
 using namespace spic;
@@ -41,7 +41,7 @@ void game::HUDController::CreateTowerHud()
     auto flamethrowerButton = InitializeTowerButton("resources/sprites/towers/shooting/tower_shooting_1.png", FlamethrowerTowerCost, "Vlammenwerper", -(TileSize + 2) * (TileButtonScale * 2), FlamethrowerTowerColor<Color>());
     auto sniperButton = InitializeTowerButton("resources/sprites/towers/shooting/tower_shooting_1.png", SniperTowerCost, "Scherpschutter", -(TileSize + 2) * (TileButtonScale * 1), SniperTowerColor<Color>());
     auto hero = _levelData->HeroHealth->GameObject().lock();
-    _coolDownBehaviour = HeroUtil::GetAbilityCoolDownBehaviour(hero);
+    _coolDownBehaviour = hero->GetComponent<game::AbilityBehaviour>()->GetCoolDownBehaviour();
 
     CreateHudInfo("ability-cooldown-timer", 20, 80, "Ability Cooldown");
     CreateHudInfo("ability-cooldown-timer-text", 20, 100, std::to_string(_coolDownBehaviour->CoolDown()) + " seconden");

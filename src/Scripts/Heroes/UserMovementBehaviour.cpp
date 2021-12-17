@@ -127,8 +127,11 @@ void game::UserMovementBehaviour::OnUpdate()
         _walkingAnimator->Stop();
         _idleAnimator->Play(true);
     }
+}
 
-    parent->Transform().rotation = 0;
+void game::UserMovementBehaviour::OnLateUpdate()
+{
+    GameObject().lock()->Transform().rotation = 0;
 }
 
 void game::UserMovementBehaviour::OnTriggerEnter2D(const spic::Collider& collider)

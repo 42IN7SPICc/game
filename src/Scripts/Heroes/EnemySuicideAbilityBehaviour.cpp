@@ -1,24 +1,16 @@
 #include "EnemySuicideAbilityBehaviour.hpp"
-#include "../../HeroConstants.hpp"
 #include "Input.hpp"
 #include "GameObject.hpp"
-#include "../Common/AttackBehaviour.hpp"
-#include "../../Enums/Layer.hpp"
 #include "Engine.hpp"
 #include "Utils/GameObjectUtil.hpp"
+#include "../Common/AttackBehaviour.hpp"
 #include "../../Factories/AudioSourcePrefabFactory.hpp"
+#include "../../Enums/Layer.hpp"
+#include "../../HeroConstants.hpp"
 
-game::EnemySuicideAbilityBehaviour::EnemySuicideAbilityBehaviour() : _coolDownBehaviour(std::make_shared<CoolDownBehaviour>(CoolDownBehaviour(JosephStalinAbilityCooldown))),
-                                                                     _abilityActive(false)
+game::EnemySuicideAbilityBehaviour::EnemySuicideAbilityBehaviour() : AbilityBehaviour(JosephStalinAbilityCooldown), _abilityActive(false)
 {
 
-}
-
-void game::EnemySuicideAbilityBehaviour::OnStart()
-{
-    auto parent = GameObject().lock();
-    _healthBehaviour = parent->GetComponent<game::HealthBehaviour>();
-    spic::GameObjectUtil::LinkComponent(parent, _coolDownBehaviour);
 }
 
 void game::EnemySuicideAbilityBehaviour::OnUpdate()
@@ -72,24 +64,4 @@ void game::EnemySuicideAbilityBehaviour::OnUpdate()
             _abilityActive = true;
         }
     }
-}
-
-void game::EnemySuicideAbilityBehaviour::OnTriggerEnter2D(const spic::Collider& collider)
-{
-    //
-}
-
-void game::EnemySuicideAbilityBehaviour::OnTriggerExit2D(const spic::Collider& collider)
-{
-    //
-}
-
-void game::EnemySuicideAbilityBehaviour::OnTriggerStay2D(const spic::Collider& collider)
-{
-    //
-}
-
-std::shared_ptr<game::CoolDownBehaviour>& game::EnemySuicideAbilityBehaviour::GetCoolDownBehaviour()
-{
-    return _coolDownBehaviour;
 }
