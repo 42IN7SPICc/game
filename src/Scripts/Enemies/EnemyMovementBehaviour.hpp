@@ -86,6 +86,11 @@ namespace game
              * @param path The desired value.
              */
             void Path(const std::queue<std::string>& path);
+
+            /**
+             * @brief Triggers after all Update functions have been called.
+             */
+            void OnLateUpdate() override;
     };
 }
 

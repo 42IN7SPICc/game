@@ -116,6 +116,11 @@ void EnemyMovementBehaviour::OnUpdate()
     _sprite->FlipX(force.x < 0);
 }
 
+void EnemyMovementBehaviour::OnLateUpdate()
+{
+    GameObject().lock()->Transform().rotation = 0;
+}
+
 void EnemyMovementBehaviour::OnTriggerEnter2D(const spic::Collider& collider)
 {
 }
