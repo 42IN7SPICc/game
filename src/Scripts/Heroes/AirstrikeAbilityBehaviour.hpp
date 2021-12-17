@@ -1,9 +1,6 @@
 #ifndef SPIC_GAME_AIRSTRIKEABILITYBEHAVIOUR_HPP
 #define SPIC_GAME_AIRSTRIKEABILITYBEHAVIOUR_HPP
 
-#include "BehaviourScript.hpp"
-#include "../Common/CoolDownBehaviour.hpp"
-#include "../Common/HealthBehaviour.hpp"
 #include "AbilityBehaviour.hpp"
 
 namespace game {

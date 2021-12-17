@@ -1,5 +1,4 @@
 #include "AirstrikeAbilityBehaviour.hpp"
-#include "../../HeroConstants.hpp"
 #include "Input.hpp"
 #include "Engine.hpp"
 #include "Animator.hpp"
@@ -8,10 +7,11 @@
 #include "../../Enums/SortingLayer.hpp"
 #include "../../Enums/Layer.hpp"
 #include "../../Enums/AudioClipName.hpp"
-#include "Utils/GameObjectUtil.hpp"
-#include "Utils/AnimatorUtil.hpp"
 #include "../../Factories/AudioSourcePrefabFactory.hpp"
 #include "../../Constants.hpp"
+#include "../../HeroConstants.hpp"
+#include "Utils/GameObjectUtil.hpp"
+#include "Utils/AnimatorUtil.hpp"
 
 game::AirstrikeAbilityBehaviour::AirstrikeAbilityBehaviour() : AbilityBehaviour(FranklinDRooseveltAirstrikeAbilityCooldown), _bombIsDropped(false)
 {
