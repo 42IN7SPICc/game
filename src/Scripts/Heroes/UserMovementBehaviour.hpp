@@ -75,6 +75,11 @@ namespace game
              * @param collider The collider is colliding.
              */
             void OnTriggerStay2D(const spic::Collider& collider) override;
+
+            /**
+             * @brief Triggers after all Update functions have been called.
+             */
+            void OnLateUpdate() override;
     };
 }
 
