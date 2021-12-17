@@ -21,7 +21,7 @@ void game::AirstrikeAbilityBehaviour::OnStart()
 {
     game::AbilityBehaviour::OnStart();
     auto parent = GameObject().lock();
-    _audioSource = AudioSourcePrefabFactory::CreateAudioSource(game::AudioClipName::NukeAbility, true, false, 1.0);
+    _audioSource = AudioSourcePrefabFactory::CreateAudioSource(game::AudioClipName::NukeAbility, false, false, 1.0);
     spic::GameObjectUtil::LinkComponent(parent, _audioSource);
 }
 

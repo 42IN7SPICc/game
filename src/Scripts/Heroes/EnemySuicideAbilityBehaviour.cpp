@@ -17,7 +17,9 @@ game::EnemySuicideAbilityBehaviour::EnemySuicideAbilityBehaviour() : AbilityBeha
 void game::EnemySuicideAbilityBehaviour::OnStart()
 {
     AbilityBehaviour::OnStart();
+    auto parent = GameObject().lock();
     _audioSource = AudioSourcePrefabFactory::CreateAudioSource(game::AudioClipName::SuicideAbility, false, false, 1.0);
+    spic::GameObjectUtil::LinkComponent(parent, _audioSource);
 }
 
 
