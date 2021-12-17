@@ -4,7 +4,8 @@
 #include <AudioSource.hpp>
 #include "AbilityBehaviour.hpp"
 
-namespace game {
+namespace game
+{
     /**
      * @brief A script for handling the airstrike ability for Franklin D Roosevelt
      */
@@ -19,6 +20,11 @@ namespace game {
              * @brief Constructs a new instance of a AirstrikeAbilityBehaviour.
              */
             AirstrikeAbilityBehaviour();
+
+            /**
+            * @brief Triggers when the scripts starts for the first time.
+            */
+            void OnStart() override;
 
             /**
              * @brief Triggers every frame when the script is active.
