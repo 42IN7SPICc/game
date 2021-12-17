@@ -15,6 +15,7 @@ game::InvisibilityAbilityBehaviour::InvisibilityAbilityBehaviour() : AbilityBeha
 
 void game::InvisibilityAbilityBehaviour::OnStart()
 {
+    AbilityBehaviour::OnStart();
     auto parent = GameObject().lock();
     _sprite = parent->GetComponent<spic::Sprite>();
 }
