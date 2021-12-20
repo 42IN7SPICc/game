@@ -1,15 +1,18 @@
 #ifndef SPIC_GAME_AIRSTRIKEABILITYBEHAVIOUR_HPP
 #define SPIC_GAME_AIRSTRIKEABILITYBEHAVIOUR_HPP
 
+#include <AudioSource.hpp>
 #include "AbilityBehaviour.hpp"
 
-namespace game {
+namespace game
+{
     /**
      * @brief A script for handling the airstrike ability for Franklin D Roosevelt
      */
     class AirstrikeAbilityBehaviour : public game::AbilityBehaviour
     {
         private:
+            std::shared_ptr<spic::AudioSource> _audioSource;
             bool _bombIsDropped;
 
         public:
@@ -17,6 +20,11 @@ namespace game {
              * @brief Constructs a new instance of a AirstrikeAbilityBehaviour.
              */
             AirstrikeAbilityBehaviour();
+
+            /**
+            * @brief Triggers when the scripts starts for the first time.
+            */
+            void OnStart() override;
 
             /**
              * @brief Triggers every frame when the script is active.

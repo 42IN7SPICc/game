@@ -35,7 +35,8 @@ void LevelSelectionScene::LoadLevels(bool reload)
         levelsObject = std::make_shared<spic::GameObject>("levels-container", "levels-container", 0);
     }
     if(reload) {
-        for(auto& child : levelsObject->Children()) {
+        auto children = levelsObject->Children();
+        for(auto& child : children) {
             levelsObject->RemoveChild(child);
         }
     }
@@ -84,6 +85,6 @@ void LevelSelectionScene::LoadLevels(bool reload)
     validationTextForButtonValidation->Active(false);
     spic::GameObjectUtil::LinkChild(levelsObject, validationTextForButtonValidation);
 
-    Contents().push_back(levelsObject);
-    Contents().push_back(validationTextForButtonValidation);
+    if (!reload)
+        Contents().push_back(levelsObject);
 }

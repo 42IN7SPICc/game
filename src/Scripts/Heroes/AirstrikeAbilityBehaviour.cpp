@@ -17,19 +17,28 @@ game::AirstrikeAbilityBehaviour::AirstrikeAbilityBehaviour() : AbilityBehaviour(
 {
 }
 
+void game::AirstrikeAbilityBehaviour::OnStart()
+{
+    game::AbilityBehaviour::OnStart();
+    auto parent = GameObject().lock();
+    _audioSource = AudioSourcePrefabFactory::CreateAudioSource(game::AudioClipName::NukeAbility, false, false, 1.0);
+    spic::GameObjectUtil::LinkComponent(parent, _audioSource);
+}
+
 void game::AirstrikeAbilityBehaviour::OnUpdate()
 {
-    if(_bombIsDropped) {
+    if (_bombIsDropped)
+    {
         auto bombObject = spic::GameObject::Find("airstrikeBomb");
-        bombObject->Transform().scale *= 0.96 * ( 1 - spic::Time::DeltaTime() * spic::Time::TimeScale());
+        bombObject->Transform().scale *= 0.96 * (1 - spic::Time::DeltaTime() * spic::Time::TimeScale());
         if (bombObject && bombObject->GetComponent<CoolDownBehaviour>()->CooledDown())
         {
-            auto soundEffect = AudioSourcePrefabFactory::CreateAudioObject(game::AudioClipName::NukeAbility, true, false, 1.0);
-            spic::GameObjectUtil::LinkChild(GameObject().lock(), soundEffect);
+            _audioSource->Play(false);
             bombObject->Destroy(bombObject);
             _bombIsDropped = false;
             auto enemies = spic::GameObject::FindGameObjectsWithTag("enemy");
-            for(auto& enemy : enemies) {
+            for (auto& enemy: enemies)
+            {
                 auto health = enemy->GetComponent<HealthBehaviour>();
                 health->Damage(FranklinDRooseveltAirstrikeAbilityDamage);
             }
@@ -37,7 +46,7 @@ void game::AirstrikeAbilityBehaviour::OnUpdate()
         return;
     }
 
-    if(_healthBehaviour->Health() <= 0) return;
+    if (_healthBehaviour->Health() <= 0) return;
 
     if (spic::Input::GetKey(spic::Input::KeyCode::E))
     {
@@ -46,7 +55,7 @@ void game::AirstrikeAbilityBehaviour::OnUpdate()
             _bombIsDropped = true;
             auto scene = spic::Engine::Instance().PeekScene();
             auto bombObject = std::make_shared<spic::GameObject>("airstrikeBomb", "airstrikeBomb", Layer::Game);
-            bombObject->Transform().position = {ScreenWidth / 2 - 90, ScreenHeight / 2};
+            bombObject->Transform().position = {ScreenWidth / 2.0 - 90, ScreenHeight / 2.0};
             bombObject->Transform().scale = 1;
 
             std::vector<std::shared_ptr<spic::Sprite>> airstrikeSprites = spic::AnimatorUtil::CreateSpriteVector(8, "resources/sprites/abilities/airstrike/airstrike_", SortingLayer::Hero);

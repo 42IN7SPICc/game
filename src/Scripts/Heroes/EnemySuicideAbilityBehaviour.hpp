@@ -1,9 +1,11 @@
 #ifndef SPIC_GAME_ENEMYSUICIDEABILITYBEHAVIOUR_HPP
 #define SPIC_GAME_ENEMYSUICIDEABILITYBEHAVIOUR_HPP
 
+#include <AudioSource.hpp>
 #include "AbilityBehaviour.hpp"
 
-namespace game {
+namespace game
+{
     /**
      * @brief A script for handling the Enemy Suidcide ability for Joseph Stalin
      */
@@ -11,6 +13,7 @@ namespace game {
     {
         private:
             bool _abilityActive;
+            std::shared_ptr<spic::AudioSource> _audioSource;
 
         public:
             /**
@@ -19,11 +22,15 @@ namespace game {
             EnemySuicideAbilityBehaviour();
 
             /**
+            * @brief Triggers when the scripts starts for the first time.
+            */
+            void OnStart() override;
+
+            /**
              * @brief Triggers every frame when the script is active.
              */
             void OnUpdate() override;
     };
 }
-
 
 #endif

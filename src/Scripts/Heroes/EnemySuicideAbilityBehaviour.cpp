@@ -8,14 +8,24 @@
 #include "../../Enums/Layer.hpp"
 #include "../../HeroConstants.hpp"
 
-game::EnemySuicideAbilityBehaviour::EnemySuicideAbilityBehaviour() : AbilityBehaviour(JosephStalinAbilityCooldown), _abilityActive(false)
+game::EnemySuicideAbilityBehaviour::EnemySuicideAbilityBehaviour() : AbilityBehaviour(JosephStalinAbilityCooldown),
+                                                                     _abilityActive(false)
 {
 
 }
 
+void game::EnemySuicideAbilityBehaviour::OnStart()
+{
+    AbilityBehaviour::OnStart();
+    auto parent = GameObject().lock();
+    _audioSource = AudioSourcePrefabFactory::CreateAudioSource(game::AudioClipName::SuicideAbility, false, false, 1.0);
+    spic::GameObjectUtil::LinkComponent(parent, _audioSource);
+}
+
+
 void game::EnemySuicideAbilityBehaviour::OnUpdate()
 {
-    if(_healthBehaviour->Health() <= 0) return;
+    if (_healthBehaviour->Health() <= 0) return;
 
     if (_abilityActive)
     {
@@ -26,7 +36,8 @@ void game::EnemySuicideAbilityBehaviour::OnUpdate()
             _abilityActive = false;
             _coolDownBehaviour->CooledDown(false);
             auto enemies = spic::GameObject::FindGameObjectsWithTag("enemy");
-            for(auto& enemy : enemies) {
+            for (auto& enemy: enemies)
+            {
                 auto attackBehaviour = enemy->GetComponent<game::AttackBehaviour>();
                 if (attackBehaviour)
                 {
@@ -48,11 +59,11 @@ void game::EnemySuicideAbilityBehaviour::OnUpdate()
             auto abilityTimer = std::make_shared<CoolDownBehaviour>(JosephStalinAbilityDuration);
             spic::GameObjectUtil::LinkComponent(enemySuicideObject, abilityTimer);
 
-            auto soundEffect = AudioSourcePrefabFactory::CreateAudioObject(game::AudioClipName::SuicideAbility, true, false, 1.0);
-            spic::GameObjectUtil::LinkChild(GameObject().lock(), soundEffect);
+            _audioSource->Play(false);
 
             auto enemies = spic::GameObject::FindGameObjectsWithTag("enemy");
-            for(auto& enemy : enemies) {
+            for (auto& enemy: enemies)
+            {
                 auto attackBehaviour = enemy->GetComponent<game::AttackBehaviour>();
                 if (attackBehaviour)
                 {
